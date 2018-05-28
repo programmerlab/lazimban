@@ -192,29 +192,24 @@ class HomeController extends Controller
 
      /*----------*/
     public function productCategory( $category=null)
-    {    
+    {   
         $request = new Request;
         $q = Input::get('q'); 
          
         $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
-          
+           
         if(count($catID)>0){ 
             $products = Product::with('category')->where('product_category',$catID->id)->orderBy('id','asc')->get();
-             
+            
             if($products->count()==0)
             {
-                 $cat =  Category::where('parent_id',$catID->id)->get(['id']);
-
-                 foreach ($cat as $key => $value) {
-                   $id[] = $value->id;
-                 }
-
-                  $products = Product::with('category')->whereIn('product_category',$catID->id) 
+                  
+                  $products = Product::with('category')->whereIn('product_category',[$catID->id]) 
                                 ->orderBy('id','asc')
                                 ->get();
                  if($q)
                  {
-                    $products = Product::with('category')->whereIn('product_category',$catID->id)
+                    $products = Product::with('category')->whereIn('product_category',[$catID->id])
                                 ->where('product_title','LIKE','%'.$q.'%')
                                 ->orderBy('id','asc')
                                 ->get();
