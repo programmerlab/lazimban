@@ -154,14 +154,14 @@ class HomeController extends Controller
      /*----------*/
     public function mainCategory( $category=null)
     {   
-        
+       
         $request = new Request;
         $q = Input::get('q'); 
          
-        $catID = Category::where('slug',$category)->first(); 
+         $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
         if(count($catID)>0){ 
 
-            $sub_cat = Category::where('parent_id', $catID->id)->lists('id');
+            $sub_cat = Category::where('parent_id', $catID->id)->Orwhere('id', $catID->id)->lists('id');
              
             $products = Product::with('category')->whereIn('product_category',$sub_cat)->orderBy('id','asc')->get();
              
@@ -196,7 +196,7 @@ class HomeController extends Controller
         $request = new Request;
         $q = Input::get('q'); 
          
-        $catID = Category::where('name',$category)->first();
+        $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
           
         if(count($catID)>0){ 
             $products = Product::with('category')->where('product_category',$catID->id)->orderBy('id','asc')->get();
