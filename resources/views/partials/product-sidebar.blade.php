@@ -9,9 +9,7 @@
                <br> 
               <div style="visibility: visible; animation-name: fadeInUp;" class="sidebar-widget wow fadeInUp animated">
                
-                <h3 class="section-title">shop by</h3>
-
-                 <div class="head"><i class="icon fa fa-baRS"></i> shop by  </div>
+                <h3 class="section-title">shop by</h3> 
                 <div class="widget-header">
                   <h4 class="widget-title">Category</h4>
                 </div>
