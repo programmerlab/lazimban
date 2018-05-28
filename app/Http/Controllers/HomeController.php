@@ -192,7 +192,7 @@ class HomeController extends Controller
 
      /*----------*/
     public function productCategory( $category=null)
-    {   dd('ds');
+    {    
         $request = new Request;
         $q = Input::get('q'); 
          

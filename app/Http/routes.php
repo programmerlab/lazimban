@@ -35,7 +35,7 @@ Route::get('category',[
 Route::get('{category}/{name}',[
           'as' => 'productcategoryByname', 
           'uses'  => 'HomeController@productCategory'
-        ])->where('name', '[A-Za-z]+')->where('name','!=','myaccount');
+        ])->where('name', '[A-Za-z]+','name','!=','myaccount');
 
 Route::get('checkout',[
           'as' => 'checkout',
