@@ -1,7 +1,7 @@
- <div class="col-xs-12 col-sm-12 col-md-3 sidebar">        
+      
    <!-- ================================== TOP NAVIGATION ================================== -->
         <div class="side-menu animate-dropdown">
-          <div class="head"><i class="icon fa fa-baRS"></i> Categories</div>
+          <div class="head"><i class="icon fa fa-baRS"></i> Categories  </div>
           <nav class="yamm megamenu-horizontal">
             <ul class="nav"> 
 
@@ -12,15 +12,15 @@
                    
                       <li class="yamm-content">
                         <div class="row">
-                            <div class="col-sm-12 col-md-3">
+                            <div class="col-sm-12 col-md-12">
                               <ul class="links list-unstyled">
                                 @if(count($value['child'])>0)
                                 @foreach($value['child'] as $subCat)
-                                  <li><a href="{{ url($value['name'].'/'.$subCat['slug']) }}">{{$subCat['name']}}</a></li> 
+                                  <li><a href="{{ url(str_slug($value['name'],'-').'/'.str_slug($subCat['slug'],'-')) }}">{{$subCat['name']}}</a></li> 
                                 @endforeach
                                 @else
                                  <li>
-                                 <a href="{{ url($value['name'].'/'.$value['slug']) }}">{{$value['name']}}</a></li> 
+                                 <a href="{{ url(str_slug($value['name'],'-').'/'.str_slug($value['slug'],'-')) }}">{{$value['name']}}</a></li> 
                                 @endif
                               </ul>
                             </div>  
@@ -45,6 +45,3 @@
           <!-- /.megamenu-horizontal --> 
         </div>
         <!-- /.side-menu --> 
-        <!-- ================================== TOP NAVIGATION : END ================================== -->
-        <div class="app-img outer-bottom-xs"><img alt="app" src="{{ asset('public/enduser/assets/images/app-img.jpg')}}" /></div>
-    </div>

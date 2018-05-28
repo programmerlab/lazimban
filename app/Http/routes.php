@@ -32,10 +32,17 @@ Route::get('category',[
           'uses'  => 'HomeController@productCategory'
         ]); 
 
+Route::get('myaccount/login',[
+          'as' => 'showLoginForm',
+          'uses'  => 'ProductController@showLoginForm'
+        ])->where(['name'=>'myaccount','name'=>'[A-Za-z]+']); 
+
 Route::get('{category}/{name}',[
           'as' => 'productcategoryByname', 
           'uses'  => 'HomeController@productCategory'
-        ])->where('name', '[A-Za-z]+','name','!=','myaccount');
+        ]);
+
+
 
 Route::get('checkout',[
           'as' => 'checkout',
@@ -196,10 +203,6 @@ Route::get('signout', function(App\User $user , Illuminate\Http\Request $request
    
 
 
-Route::get('myaccount/login',[
-          'as' => 'showLoginForm',
-          'uses'  => 'ProductController@showLoginForm'
-        ]); 
 
 Route::get('myaccount',[
           'as' => 'myaccount',
