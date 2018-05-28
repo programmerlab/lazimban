@@ -65,7 +65,7 @@
                   </li>
                 </ul>
                 <input class="search-field" name="q" value="{{ $q or ''}}" placeholder="Search here..." />
-               <button type="submit" class="search-button"></button> </div>
+               <button type="submit" class="search-button" style="position: absolute;"></button> </div>
             </form>
           </div>
           <!-- /.search-area --> 
