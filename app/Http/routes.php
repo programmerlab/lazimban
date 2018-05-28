@@ -15,20 +15,27 @@ Route::match(['post','get'],'cat','HomeController@index');
 
 
 
-Route::get('product-details/{id}',[
+Route::get('{name}/{id}',[
           'as' => 'productDetails',
           'uses'  => 'HomeController@productDetail'
-        ]); 
+        ])->where('id', '[0-9]+');
 
-Route::get('product-category',[
+
+
+Route::get('category/{name}',[
+          'as' => 'productcategory',
+          'uses'  => 'HomeController@mainCategory'
+        ]);
+
+Route::get('category',[
           'as' => 'productcategory',
           'uses'  => 'HomeController@productCategory'
         ]); 
 
-Route::get('product-category/{category}/{name}/{id}',[
+Route::get('{category}/{name}',[
           'as' => 'productcategoryByname', 
           'uses'  => 'HomeController@productCategory'
-        ]); 
+        ])->where('name', '[A-Za-z]+')->where('name','!=','myaccount');
 
 Route::get('checkout',[
           'as' => 'checkout',
@@ -111,12 +118,15 @@ Route::get('checkout',[
        'uses' =>  'ProductController@getProduct'
        ]);
 
-  Route::get('/addToCart/{id}', [ 
+  Route::get('{name}/addToCart/{id}', [ 
         'as' => '',
        'uses' =>   'ProductController@addToCart'
        ]);
 
-   Route::get('/buyNow/{id}', [ 
+  
+
+
+    Route::get('{name}/buyNow/{id}', [ 
         'as' => '',
        'uses' =>   'ProductController@buyNow'
        ]);

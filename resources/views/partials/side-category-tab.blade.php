@@ -16,11 +16,11 @@
                               <ul class="links list-unstyled">
                                 @if(count($value['child'])>0)
                                 @foreach($value['child'] as $subCat)
-                                  <li><a href="{{ url('product-category/'.$value['name'].'/'.$subCat['slug'].'/'.$subCat['id']) }}">{{$subCat['name']}}</a></li> 
+                                  <li><a href="{{ url($value['name'].'/'.$subCat['slug']) }}">{{$subCat['name']}}</a></li> 
                                 @endforeach
                                 @else
                                  <li>
-                                 <a href="{{ url('product-category/'.$value['name'].'/'.$value['slug'].'/'.$value['id']) }}">{{$value['name']}}</a></li> 
+                                 <a href="{{ url($value['name'].'/'.$value['slug']) }}">{{$value['name']}}</a></li> 
                                 @endif
                               </ul>
                             </div>  

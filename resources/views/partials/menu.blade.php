@@ -46,16 +46,20 @@
         <div class="col-xs-12 col-sm-12 col-md-6 top-search-holder"> 
           <!-- /.contact-row --> 
           <!-- ============================================================= SEARCH AREA ============================================================= -->
-          <div class="search-area">
+          <div class="search-area"> 
             <form >
               <div class="control-group">
                 <ul class="categories-filter animate-dropdown">
                   <li class="dropdown"> <a class="dropdown-toggle"  data-toggle="dropdown" href="category.html">
                   {{ $category or 'Categories' }} <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" > 
+
                         @foreach($categories as $key => $value)
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ url('product-category/'.$value['name'].'/'.$value['slug'].'/'.$value['id']) }}">- {{$value['name']}}</a></li>
-                     
+                      <li role="presentation">
+                          
+                          <a role="menuitem" tabindex="-1" href="{{ url('category/'.str_slug($value['name'],'-')) }}">-{{$value['name']}}</a>
+
+                      </li> 
                       @endforeach
                     </ul>
                   </li>
@@ -72,15 +76,15 @@
           <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
           
           <div class="dropdown dropdown-cart"> <a href="##" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
-            <div class="items-cart-inner">
-              <div class="top-cart">  </div>
+            <div class="items-cart-inner" style="background: #085a9a">
+              <div class="top-cart" style="background: #085a9a; margin-left: 3px">  </div>
               
               <div class="total-price-basket"> <span class="lbl">{{$total_item}} items /</span> <span class="total-price"> <span class="sign">RS</span><span class="value">{{$sub_total}}</span> </span> </div>
             </div>
             </a>
             <ul class="dropdown-menu">
               <li>
-                <div class="cart-item product-summary">
+                <div class="cart-item product-summ#fdd922ary">
                  <!--  <div class="row">
                     <div class="col-xs-4">
                       <div class="image"> <a href="detail.html"><img src="{{ asset('public/enduser/assets/images/cart.jpg')}}" alt=""></a> </div>

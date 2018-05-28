@@ -135,7 +135,7 @@ class ProductController extends Controller {
     }
 
 
-    public function addToCart(Request $request, $id) 
+    public function addToCart(Request $request, $name,$id) 
     { 
         
          $item =  $request->get('item'); 
@@ -155,8 +155,8 @@ class ProductController extends Controller {
          
     }
 
-    public function buyNow(Request $request, $id) 
-    { 
+    public function buyNow(Request $request, $name,$id) 
+    {    
          $item =  $request->get('item'); 
          if($item ){
             $qty = substr($item,-1);
@@ -430,9 +430,11 @@ class ProductController extends Controller {
     }
     public function showLoginForm(Request $request)
     {
-         $cart       = Cart::content(); 
+  
+        $cart       = Cart::content(); 
         $products   = Product::with('category')->orderBy('id','asc')->get();
         $categories = Category::nested()->get(); 
+        
         return view('end-user.login',compact('categories','products','category','cart'));
 
     }
@@ -447,8 +449,7 @@ class ProductController extends Controller {
     }
 
     public function myaccount(Request $request)
-    {   
-
+    {    
         if($this->user_id=="")
         {      
             return Redirect::to('myaccount/login');

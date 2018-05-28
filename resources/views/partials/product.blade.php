@@ -140,7 +140,7 @@
                         <div class="col col-sm-4 col-lg-4">
                           <div class="product-image">
                             <div class="image" style="float: left"> 
-                            <a href="{{ url('product-details/'.$product->id) }}" > 
+                            <a href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}" > 
                               <img src="{{ asset('storage/uploads/products/'. $product->photo) }}" alt="">
                             </a>
                              </div>
@@ -150,7 +150,7 @@
                         <!-- /.col -->
                         <div class="col col-sm-8 col-lg-8">
                           <div class="product-info">
-                            <h3 class="name"><a href="{{ url('product-details/'.$product->id)}}">{{$product->product_title}}</a></h3>
+                            <h3 class="name"><a href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}">{{$product->product_title}}</a></h3>
                             <br>
                             
                             <div class="product-price"> 
