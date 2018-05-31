@@ -6,66 +6,12 @@
               <div class="filter-tabs">
                 <ul id="filter-tabs" class="nav nav-tabs nav-tab-box nav-tab-fa-icon">
                   <li class="active"> <a data-toggle="tab" href="index.htm#grid-container"><i class="icon fa fa-th-large"></i>Grid</a> </li>
-                  <li><a data-toggle="tab" href="index.htm#list-container"><i class="icon fa fa-th-list"></i>List</a></li>
+                  <li><a data-toggle="tab" href="#list-container"><i class="icon fa fa-th-list"></i>List</a></li>
                 </ul>
               </div>
               <!-- /.filter-tabs --> 
             </div>
-            <!-- /.col -->
-            <div class="col col-sm-12 col-md-6">
-             <!--  <div class="col col-sm-3 col-md-6 no-padding">
-                <div class="lbl-cnt"> <span class="lbl">Sort by</span>
-                  <div class="fld inline">
-                    <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> Position <span class="caret"></span> </button>
-                      <ul role="menu" class="dropdown-menu">
-                        <li role="presentation"><a href="index.htm#">position</a></li>
-                        <li role="presentation"><a href="index.htm#">Price:Lowest first</a></li>
-                        <li role="presentation"><a href="index.htm#">Price:HIghest first</a></li>
-                        <li role="presentation"><a href="index.htm#">Product Name:A to Z</a></li>
-                      </ul>
-                    </div>
-                  </div> 
-                </div> 
-              </div> -->
-              <!-- /.col -->
-             <!--  <div class="col col-sm-3 col-md-6 no-padding">
-                <div class="lbl-cnt"> <span class="lbl">Show</span>
-                  <div class="fld inline">
-                    <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> 1 <span class="caret"></span> </button>
-                      <ul role="menu" class="dropdown-menu">
-                        <li role="presentation"><a href="index.htm#">1</a></li>
-                        <li role="presentation"><a href="index.htm#">2</a></li>
-                        <li role="presentation"><a href="index.htm#">3</a></li>
-                        <li role="presentation"><a href="index.htm#">4</a></li>
-                        <li role="presentation"><a href="index.htm#">5</a></li>
-                        <li role="presentation"><a href="index.htm#">6</a></li>
-                        <li role="presentation"><a href="index.htm#">7</a></li>
-                        <li role="presentation"><a href="index.htm#">8</a></li>
-                        <li role="presentation"><a href="index.htm#">9</a></li>
-                        <li role="presentation"><a href="index.htm#">10</a></li>
-                      </ul>
-                    </div>
-                  </div> 
-                </div> 
-              </div> -->
-              <!-- /.col --> 
-            </div>
-            <!-- /.col -->
-           <!--  <div class="col col-sm-6 col-md-4 text-right">
-              <div class="pagination-container">
-                <ul class="list-inline list-unstyled">
-                  <li class="prev"><a href="index.htm#"><i class="fa fa-angle-left"></i></a></li>
-                  <li><a href="index.htm#">1</a></li>
-                  <li class="active"><a href="index.htm#">2</a></li>
-                  <li><a href="index.htm#">3</a></li>
-                  <li><a href="index.htm#">4</a></li>
-                  <li class="next"><a href="index.htm#"><i class="fa fa-angle-right"></i></a></li>
-                </ul> 
-              </div> 
-              </div> -->
-            <!-- /.col --> 
+           
           </div>
           <!-- /.row --> 
         </div>
@@ -105,7 +51,7 @@
                         <div class="cart clearfix animate-effect">
                           <div class="action">
                             <ul class="list-unstyled">
-                                 <li class="lnk wishlist"> <a class="add-to-cart" href="{{ url('product-details/'.$product->id) }}" title="Show product details"> <i class="fa fa-shopping-cart"></i>  View Details </a> </li>
+                                 <li class="lnk wishlist"> <a class="add-to-cart" href="{{ url($product->url) }}" title="Show product details"> <i class="fa fa-shopping-cart"></i>  View Details </a> </li>
                             </ul>
                           </div>
                           <!-- /.action --> 
@@ -140,7 +86,7 @@
                         <div class="col col-sm-4 col-lg-4">
                           <div class="product-image">
                             <div class="image" style="float: left"> 
-                            <a href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}" > 
+                            <a href="{{ url($product->url) }}" > 
                               <img src="{{ asset('storage/uploads/products/'. $product->photo) }}" alt="">
                             </a>
                              </div>
@@ -150,7 +96,7 @@
                         <!-- /.col -->
                         <div class="col col-sm-8 col-lg-8">
                           <div class="product-info">
-                            <h3 class="name"><a href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}">{{$product->product_title}}</a></h3>
+                            <h3 class="name"><a href="{{ url($product->url) }}">{{$product->product_title}}</a></h3>
                             <br>
                             
                             <div class="product-price"> 
@@ -162,7 +108,7 @@
                             <!-- /.product-price -->
                             <div class="description m-t-10">{!! str_limit($product->description,100) !!}
 
-                            <a href="{{ url('product-details/'.$product->id) }}"> More</a>   </div>
+                            <a href="{{ url($product->url) }}"> More</a>   </div>
                             <div class="cart clearfix animate-effect">
                               <div class="action" col-md-12> 
                                   

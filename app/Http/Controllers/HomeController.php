@@ -182,7 +182,7 @@ class HomeController extends Controller
             $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
 
         }
-        
+       
         $categories = Category::nested()->get(); 
         return view('end-user.category',compact('categories','products','category','q','category'));   
     }
@@ -219,7 +219,7 @@ class HomeController extends Controller
             $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
 
         }
-        
+       
         $categories = Category::nested()->get(); 
         return view('end-user.category',compact('categories','products','category','q','category'));   
     }

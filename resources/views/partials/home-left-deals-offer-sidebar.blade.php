@@ -11,7 +11,7 @@
           <div class="products">
             <div class="hot-deal-wrapper">
               <div class="image">
-              <a href="{{url(str_slug($result->product_title).'/'.$result->id)}}"> 
+              <a href="{{$result->url}}"> 
                <img style="height: 200px;" src="{{ asset('storage/uploads/products/'. $result->photo) }}" alt="{{ $result->product_title }}"> </a> </div>
               <div class="sale-offer-tag"><span>10%<br>
                 off</span></div> 
@@ -19,7 +19,7 @@
             <!-- /.hot-deal-wrapper -->
             
              <div class="product-info text-left m-t-20">
-                <h3 class="name"><a href="{{url(str_slug($result->product_title).'/'.$result->id)}}">{{ $result->product_title }}</a> ({{ $result->views+100 }} views) </h3>
+                <h3 class="name"><a href="{{$result->url}}">{{ $result->product_title }}</a> ({{ $result->views+100 }} views) </h3>
                 <div class="rating rateit-small"></div>
                 <div class="product-price"> 
                 <span class="price"> INR  {{ $result->price - ($result->price*$result->discount)/100 }} </span> 
