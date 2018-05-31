@@ -101,10 +101,7 @@ class ProductController extends Controller {
 
     public function showProduct(Request $request, Product $product)
     {    
-        $products       = Product::with('category')->where(function($q){
-            $q->groupBy('product_category');
-             $q->orderBy('views','desc');
-        })->groupBy('product_category')->get(); 
+        $products       = Product::with('category')->groupBy('product_category')->orderBy('views','desc')->get(); 
 
         $product_new    = Product::with('category')->orderBy('id','desc')->groupBy('product_category')->Paginate(12); 
         $categories     = Category::nested()->get();  
