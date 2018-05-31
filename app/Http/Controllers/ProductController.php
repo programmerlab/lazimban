@@ -148,7 +148,7 @@ class ProductController extends Controller {
 
     public function addToCart(Request $request, $name,$id) 
     { 
-        
+       
          $item =  $request->get('item'); 
          if($item ){
             $qty = substr($item,-1);
@@ -162,6 +162,7 @@ class ProductController extends Controller {
         }
         $cart = Cart::content();  
        // $request->session()->put('key', 'value');
+        
          return Redirect::to(url()->previous());
          
     }

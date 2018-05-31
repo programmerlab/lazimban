@@ -81,8 +81,8 @@
                         <input class="form-control unicase-form-control text-input" name="password" id="exampleInputPassword1" placeholder="" type="password">
                         <a href="index.htm#" class="forgot-password">Forgot your Password?</a>
                       </div>
-                      <button type="submit"  class="btn-upper btn btn-primary checkout-page-button">Login</button>
-                      <span id="loginError"></span>
+                      <button type="button"  onclick="loginBtn()" class="btn-upper btn btn-primary checkout-page-button" >Login</button>
+                      <span id="loginError" style="color: red"></span>
                     </form>
                 </div>  
                 <!-- already-registered-login -->       
