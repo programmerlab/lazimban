@@ -46,13 +46,15 @@
             <div class="owl-carousel home-owl-carousel custom-carousel owl-theme" data-item="4">
              
             @foreach($categories as $key => $value) 
+
               @foreach($products as $key2 => $product)  
+             
               @if($value['id']!=$product->category->parent_id)  
                 <div class="item item-carousel">
                   <div class="products">
                     <div class="product">
                       <div class="product-image">
-                        <div class="image"> <a href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}">
+                        <div class="image"> <a href="{{ url($product->category->category_name.'/'.$product->category->slug.'/'.str_slug($product->product_title,'-') ) }}">
                           <img  src="{{ asset('storage/uploads/products/'. $product->photo) }}" alt=""></a> 
                         </div>
                         <!-- /.image --> 
@@ -63,7 +65,7 @@
                       <div class="product-info text-left">
                         <h3 class="name">
 
-                        <a href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}">{{$product->product_title}}</a> </h3>
+                        <a href="{{ url($product->category->category_name.'/'.$product->category->slug.'/'.str_slug($product->product_title,'-') ) }}">{{$product->product_title}}</a> </h3>
                         <div class="rating rateit-small"></div>
                         <div class="description"> ({{ $product->views+100 }} views) </div>
                        <div class="product-price"> <span class="price"> Rs {{$product->price-($product->price*$product->discount)/100}} </span> <span class="price-before-discount">RS {{$product->price}}</span>  </div>
@@ -75,7 +77,7 @@
                         <div class="action">
                           <ul class="list-unstyled">
                              
-                            <li class="lnk wishlist"> <a class="add-to-cart" href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}" title="Show product details"> <i class="fa fa-shopping-cart"></i>  View Details </a> </li>
+                            <li class="lnk wishlist"> <a class="add-to-cart" href="{{  url($product->category->category_name.'/'.$product->category->slug.'/'.str_slug($product->product_title,'-') ) }}" title="Show product details"> <i class="fa fa-shopping-cart"></i>  View Details </a> </li>
                             
                           </ul>
                         </div>
@@ -118,7 +120,7 @@
                   <div class="products">
                     <div class="product">
                       <div class="product-image">
-                        <div class="image"> <a href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}">
+                        <div class="image"> <a href="{{  url($product->category->category_name.'/'.$product->category->slug.'/'.str_slug($product->product_title,'-') ) }}">
                           <img  src="{{ asset('storage/uploads/products/'. $product->photo) }}" alt=""></a> 
                         </div>
                         <!-- /.image --> 
@@ -127,7 +129,7 @@
                       <!-- /.product-image -->
                       
                       <div class="product-info text-left">
-                        <h3 class="name"><a href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}">{{$product->product_title}}</a></h3>
+                        <h3 class="name"><a href="{{  url($product->category->category_name.'/'.$product->category->slug.'/'.str_slug($product->product_title,'-') ) }}">{{$product->product_title}}</a></h3>
                         <div class="rating rateit-small"></div>
                         <div class="description">({{ $product->views+100 }} views)</div>
                        <div class="product-price"> <span class="price"> RS {{$product->price-($product->price*$product->discount)/100}} </span> <span class="price-before-discount">RS {{$product->price}}</span> </div>
@@ -139,7 +141,7 @@
                         <div class="action">
                           <ul class="list-unstyled">
                              
-                            <li class="lnk wishlist"> <a class="add-to-cart" href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}" title="Show product details"> <i class="fa fa-shopping-cart"></i>  View Details </a> </li>
+                            <li class="lnk wishlist"> <a class="add-to-cart" href="{{  url($product->category->category_name.'/'.$product->category->slug.'/'.str_slug($product->product_title,'-') ) }}" title="Show product details"> <i class="fa fa-shopping-cart"></i>  View Details </a> </li>
                             
                           </ul>
                         </div>
@@ -221,7 +223,7 @@
                   <div class="products">
                     <div class="product">
                       <div class="product-image">
-                        <div class="image"> <a href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}">
+                        <div class="image"> <a href="{{  url($product->category->category_name.'/'.$product->category->slug.'/'.str_slug($product->product_title,'-') ) }}">
                           <img  src="{{ asset('storage/uploads/products/'. $product->photo) }}" alt=""></a> 
                         </div>
                         <!-- /.image --> 
@@ -230,7 +232,7 @@
                       <!-- /.product-image -->
                       
                       <div class="product-info text-left">
-                        <h3 class="name"><a href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}">{{$product->product_title}}</a></h3>
+                        <h3 class="name"><a href="{{  url($product->category->category_name.'/'.$product->category->slug.'/'.str_slug($product->product_title,'-') ) }}">{{$product->product_title}}</a></h3>
                         <div class="rating rateit-small"></div>
                         <div class="description">({{ $product->views+100 }} views)</div>
                        <div class="product-price"> <span class="price"> RS {{$product->price-($product->price*$product->discount)/100}} </span> <span class="price-before-discount">RS {{$product->price}}</span> </div>
@@ -242,7 +244,7 @@
                         <div class="action">
                           <ul class="list-unstyled">
                              
-                            <li class="lnk wishlist"> <a class="add-to-cart" href="{{ url(str_slug($product->product_title,'-').'/'.$product->id) }}" title="Show product details"> <i class="fa fa-shopping-cart"></i>  View Details </a> </li>
+                            <li class="lnk wishlist"> <a class="add-to-cart" href="{{  url($product->category->category_name.'/'.$product->category->slug.'/'.str_slug($product->product_title,'-') ) }}" title="Show product details"> <i class="fa fa-shopping-cart"></i>  View Details </a> </li>
                             
                           </ul>
                         </div>
