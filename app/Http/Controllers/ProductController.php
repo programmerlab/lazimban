@@ -99,7 +99,21 @@ class ProductController extends Controller {
  
     }
 
-    protected $categories;
+    public function showProduct(Request $request, Product $product)
+    {    
+        $products       = Product::with('category')->where(function($q){
+            $q->groupBy('product_category');
+             $q->orderBy('views','desc');
+        })->groupBy('product_category')->get(); 
+
+        $product_new    = Product::with('category')->orderBy('id','desc')->groupBy('product_category')->Paginate(12); 
+        $categories     = Category::nested()->get();  
+        
+
+
+ 
+        return view('end-user.home', compact('special_deals','hot_products','banner_path1', 'banner_path2','categories','products','product_new')); 
+    }
 
     /*
      * Dashboard
@@ -228,21 +242,7 @@ class ProductController extends Controller {
         return Redirect::to('product');
     }
 
-    public function showProduct(Request $request, Product $product)
-    {    
-        $products       = Product::with('category')->where(function($q){
-            $q->groupBy('product_category');
-             $q->orderBy('views','desc');
-        })->groupBy('product_category')->get(); 
-
-        $product_new    = Product::with('category')->orderBy('id','desc')->groupBy('product_category')->Paginate(12); 
-        $categories     = Category::nested()->get();  
-        
-
-
- 
-        return view('end-user.home', compact('special_deals','hot_products','banner_path1', 'banner_path2','categories','products','product_new')); 
-    }
+    
 
     public function getProduct(Request $request, Product $product)
     {

@@ -63,10 +63,7 @@ class HomeController extends Controller
          View::share('website_url',$website_url);
          View::share('contact_number',$contact_number);
          View::share('company_address',$company_address);
-         View::share('banner',$banner); 
- 
- 
-      // dd(Route::currentRouteName());
+         View::share('banner',$banner);  
 
     }
 
