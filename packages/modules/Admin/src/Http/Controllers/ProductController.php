@@ -209,6 +209,7 @@ class ProductController extends Controller {
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->url               =   $url;
+            $product->slug              =   str_slug($request->get('product_title'));
             $product->save(); 
         }else{
             $product->product_title      =   $request->get('product_title');
@@ -220,6 +221,7 @@ class ProductController extends Controller {
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->url                =   $url;
+            $product->slug              =   str_slug($request->get('product_title'));
             $product->save(); 
         }
         return Redirect::to(route('product'))
