@@ -28,10 +28,11 @@ Route::get('category/{name}',[
         ]);
 
 
-Route::get('{categoryName}/{subCategoryName}/{productName}',[
-          'as' => 'productName',
-          'uses'  => 'HomeController@productDetail'
-        ]);
+Route::get('{name}/addToCart/{id}', [ 
+        'as' => '',
+       'uses' =>   'ProductController@addToCart'
+       ]);
+
 
 
 
@@ -133,12 +134,7 @@ Route::get('checkout',[
        'uses' =>  'ProductController@getProduct'
        ]);
 
-  Route::get('{name}/addToCart/{id}', [ 
-        'as' => '',
-       'uses' =>   'ProductController@addToCart'
-       ]);
 
-  
 
 
     Route::get('{name}/buyNow/{id}', [ 
@@ -230,6 +226,12 @@ Route::post('myaccount/signup',[
         ]); 
         
         
+  
+
+Route::get('{categoryName}/{subCategoryName}/{productName}',[
+          'as' => 'productName',
+          'uses'  => 'HomeController@productDetail'
+        ]);
 
 
 Route::post('login',function(App\User $user , Illuminate\Http\Request $request){ 
@@ -263,6 +265,7 @@ Route::post('Ajaxlogin',function(App\User $user , Illuminate\Http\Request $reque
                // return  json_encode(['msg'=>'success','code'=>200,'data'=>Auth::user()]); 
           }else{  
                return  json_encode(['msg'=>'Invalid email or password','code'=>500,'data'=>$request->all()]); 
+               //return Redirect::to(url()->previous());
               } 
       }); 
              

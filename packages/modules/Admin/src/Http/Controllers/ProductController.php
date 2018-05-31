@@ -125,7 +125,7 @@ class ProductController extends Controller {
 
      public function getCategoryById($id){
         $url =  Category::with('parent')->where('id',$id)->first();
-        $parent = isset($url->parent)?$url->parent->slug:'category';
+        $parent = isset($url->parent)?$url->parent->slug:'product';
         
         return  $parent.'/'.$url->slug.'/';
     }
