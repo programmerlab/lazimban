@@ -108,7 +108,6 @@ class ProductController extends Controller {
 
         $product_new    = Product::with('category')->orderBy('id','desc')->groupBy('product_category')->Paginate(12); 
         $categories     = Category::nested()->get();  
-        
 
 
  
@@ -121,6 +120,7 @@ class ProductController extends Controller {
 
     public function index(Request $request) 
     {  
+        
         $cart = Cart::content();  
         $pid = [];
         foreach ($cart as $key => $value) {
