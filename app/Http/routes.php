@@ -27,6 +27,14 @@ Route::get('category/{name}',[
           'uses'  => 'HomeController@mainCategory'
         ]);
 
+
+Route::get('{categoryName}/{subCategoryName}/{productName}',[
+          'as' => 'productName',
+          'uses'  => 'HomeController@productDetail'
+        ]);
+
+
+
 Route::get('category',[
           'as' => 'productcategory',
           'uses'  => 'HomeController@productCategory'

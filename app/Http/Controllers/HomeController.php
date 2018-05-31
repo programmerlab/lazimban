@@ -227,14 +227,16 @@ class HomeController extends Controller
         return view('end-user.category',compact('categories','products','category','q','category'));   
     }
     /*----------*/
-    public function productDetail($productName=null,$id=null)
+    public function productDetail($categoryName=null,$subCategoryName=null,$productName=null)
     {   
-        $product = Product::with('category')->where('id',$id)->first();
+         
+        $product = Product::with('category')->where('slug',$productName)->first();
+        
         $categories = Category::nested()->get();  
          
         if($product==null)
         {
-             $url =  URL::previous().'?error=InvaliAcess'; 
+             $url =  URL::previous().'?error=InvaliAccess'; 
               return Redirect::to($url);
         }else{
           $product->views=$product->views+1;
