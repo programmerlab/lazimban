@@ -33,7 +33,7 @@ class Product extends Eloquent {
      *
      * @var array
      */
-    protected $fillable = ['product_title','product_category','price','description','discount'];  // All field of user table here    
+    protected $fillable = ['product_title','product_category','price','description','discount','meta_key','meta_description'];  // All field of user table here    
 
 
     /**

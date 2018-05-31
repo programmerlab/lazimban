@@ -63,10 +63,7 @@ class HomeController extends Controller
          View::share('website_url',$website_url);
          View::share('contact_number',$contact_number);
          View::share('company_address',$company_address);
-         View::share('banner',$banner); 
- 
- 
-      // dd(Route::currentRouteName());
+         View::share('banner',$banner);  
 
     }
 
@@ -159,7 +156,7 @@ class HomeController extends Controller
         $q = Input::get('q'); 
          
          $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
-        if(count($catID)>0){ 
+        if($catID!=null && $catID->count()){ 
 
             $sub_cat = Category::where('parent_id', $catID->id)->Orwhere('id', $catID->id)->lists('id');
              
@@ -185,7 +182,7 @@ class HomeController extends Controller
             $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
 
         }
-        
+       
         $categories = Category::nested()->get(); 
         return view('end-user.category',compact('categories','products','category','q','category'));   
     }
@@ -198,7 +195,7 @@ class HomeController extends Controller
          
         $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
            
-        if(count($catID)>0){ 
+        if($catID!=null && $catID->count()){ 
             $products = Product::with('category')->where('product_category',$catID->id)->orderBy('id','asc')->get();
             
             if($products->count()==0)
@@ -222,7 +219,7 @@ class HomeController extends Controller
             $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
 
         }
-        
+       
         $categories = Category::nested()->get(); 
         return view('end-user.category',compact('categories','products','category','q','category'));   
     }
