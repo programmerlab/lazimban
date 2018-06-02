@@ -45,19 +45,21 @@
         
         <div class="col-xs-12 col-sm-12 col-md-6 top-search-holder"> 
           <!-- /.contact-row --> 
-          <!-- ============================================================= SEARCH AREA ============================================================= -->
+          <!-- ============================================================= SEARCH AREA 
+          {{ $category or 'Categories' }}
+          ============================================================= -->
           <div class="search-area"> 
             <form >
               <div class="control-group">
                 <ul class="categories-filter animate-dropdown">
                   <li class="dropdown"> <a class="dropdown-toggle"  data-toggle="dropdown" href="category.html">
-                  {{ $category or 'Categories' }} <b class="caret"></b></a>
+                  Categories <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" > 
 
-                        @foreach($categories as $key => $value)
+                        @foreach($category_list as $key => $value)
                       <li role="presentation">
                           
-                          <a role="menuitem" tabindex="-1" href="{{ url('category/'.str_slug($value['name'],'-')) }}">-{{$value['name']}}</a>
+                          <a role="menuitem" tabindex="-1" href="{{ url($value['slug']) }}">-{{$value['name']}}</a>
 
                       </li> 
                       @endforeach

@@ -27,13 +27,11 @@
                               <ul>
                                @if(count($value['child'])>0)
                                     @foreach($value['child'] as $subCat)
-                                      <li><a href="{{ url(str_slug($value['name'],'-').'/'.str_slug($subCat['name'],'-')) }}">{{$subCat['name']}}</a></li> 
-
-                                                    
+                                      <li><a href="{{ url($subCat['slug']) }}">{{$subCat['name']}}</a></li> 
                                     @endforeach
                                     @else
                                      <li>
-                                     <a href="{{ url(str_slug($value['name'],'-').'/'.str_slug($value['name'],'-')) }}">{{$value['name']}}</a></li> 
+                                     <a href="{{ url($value['slug']) }}">{{$value['name']}}</a></li> 
                                 @endif
                               </ul>
                             </div>

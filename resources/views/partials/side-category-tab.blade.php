@@ -6,7 +6,7 @@
             <ul class="nav"> 
 
               @foreach($categories as $key => $value)
-                  <li class="dropdown menu-item"> <a href="{{ url('product-category/'.$value['slug'].'/'.$value['id']) }}" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-shopping-bag" aria-hidden="true"></i>{{$value['name']}}</a>
+                  <li class="dropdown menu-item"> <a href="{{ url($value['slug']) }}" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-shopping-bag" aria-hidden="true"></i>{{$value['name']}}</a>
                     <ul class="dropdown-menu mega-menu">
                       
                    
@@ -16,11 +16,11 @@
                               <ul class="links list-unstyled">
                                 @if(count($value['child'])>0)
                                 @foreach($value['child'] as $subCat)
-                                  <li><a href="{{ url(str_slug($value['name'],'-').'/'.str_slug($subCat['slug'],'-')) }}">{{$subCat['name']}}</a></li> 
+                                  <li><a href="{{ url($subCat['slug']) }}">{{$subCat['name']}}</a></li> 
                                 @endforeach
                                 @else
                                  <li>
-                                 <a href="{{ url(str_slug($value['name'],'-').'/'.str_slug($value['slug'],'-')) }}">{{$value['name']}}</a></li> 
+                                 <a href="{{ url($value['slug']) }}">{{$value['name']}}</a></li> 
                                 @endif
                               </ul>
                             </div>  
