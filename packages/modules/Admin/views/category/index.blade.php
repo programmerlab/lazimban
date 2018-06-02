@@ -44,8 +44,7 @@
                                         <table class="table table-hover table-condensed">
                                           <thead>
                                             <tr>
-                                                  <th>Sno</th>  
-                                                  <th>category - Sub Category list</th> 
+                                                  <th>Category - Sub-Category list</th> 
                                                   <th>Action</th>
                                               </tr>
                                               @if(count($result_set )==0)
@@ -63,22 +62,22 @@
                                             <?php $i=1; ?>
                                             @foreach ($result_set as $key => $childs) 
                                               @foreach ($childs as $key => $child) 
-                                               <thead>
-                                                <tbody>    
                                                   <tr>
-                                                      <td>@if($child['parent_id']==0) {{ $i++ }}  @endif </td>
-                                                      <td>  
+                                                      <td style="border-left: 0px solid">  
+                                                       <ul style="padding-top: 10px" >
                                                         @if($child['parent_id']==0) 
                                                         <?php  $pid = $child['id']; ?>
                                                         @endif  
+                                                         
                                                           @if($child['parent_id']== $pid)
-                                                          {{ str_repeat('-', $child['level']).$child['cname'] }}
-                                                          @else   
+                                                           {!! str_repeat('<li style="border: 1px solid #3c8dbc; display: inline;  padding: 5px 7px; background-color: #3c8dbc;"></li>', $child['level']) !!} 
+                                                           <li style="border: 1px solid #ccc; display: inline; margin-right: 5px; padding: 5px 7px;"> {{ ucfirst($child['cname']) }} </li>
+                                                          @else 
                                                          <?php $pid = $child['id']; ?>
-                                                         {{ str_repeat('-', $child['level']).$child['cname'] }}
-
+                                                         {!! str_repeat('<li style="border: 1px solid #3c8dbc; display: inline;  padding: 5px 7px; background-color: #3c8dbc;"></li>', $child['level']) !!} <li style="border: 1px solid #ccc; display: inline; margin-right: 5px; padding: 5px 7px;"> {{ ucfirst($child['cname']) }} </li>
+                                                       
                                                         @endif
-
+                                                        </ul>
                                                          
                                                       </td> 
                                                       <td> @if($child['parent_id']==0)
@@ -96,64 +95,11 @@
 
                                                       </td>
                                                   </tr> 
-                                                </tbody>
-                                              </thead>
                                               @endforeach
                                              @endforeach   
                                           </table>
                                         </div>       
-                                      <hr>
-                                      <div class="box-body table-responsive no-padding" >
-                                        <center><h3><b>Category</b><!--3--></h3></center><hr>
-                                        <table class="table table-hover table-condensed">
-                                            <thead><tr>
-                                                    <th>Sno</th> 
-                                                    <th>Category Name</th> 
-                                                    <th>Created Date</th> 
-                                                    <th>Action</th>
-                                                </tr>
-                                                @if(count($categories )==0)
-                                                    <tr>
-                                                      <td colspan="7">
-                                                        <div class="alert alert-danger alert-dismissable">
-                                                          <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                                                          <i class="icon fa fa-check"></i>  
-                                                          {{ 'Record not found. Try again !' }}
-                                                        </div>
-                                                      </td>
-                                                    </tr>
-                                                  @endif
-                                                   <?php $i=0; ?>
-                                                @foreach ($categories  as $key => $result)  
-                                                  @if($result->parent_id==0) 
-                                             <thead>
-                                              <tbody>    
-                                                <tr>
-                                                    <td>{{ ++$i }}</td>
-                                                    <td>{{ $result->name }}  
-                                                        <a href="{{ route('category.edit',$result->id)}}">
-                                                            <i class="fa fa-fw fa-pencil-square-o" title="edit"></i> 
-                                                        </a></td> 
-                                                    
-                                                    <td>
-                                                        {!! Carbon\Carbon::parse($result->created_at)->format('m-d-Y H:i:s A'); !!}
-                                                    </td>
-                                                    
-                                                    <td> 
-
-                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$result->id, 'route' => array('category.destroy', $result->id))) !!}
-                                                        <button class='delbtn btn btn-danger btn-xs' type="submit" name="remove_levels" value="delete" id="{{$result->id}}"><i class="fa fa-fw fa-trash" title="Delete"></i></button>
-                                                        
-                                                         {!! Form::close() !!}
-
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                                <thead>
-                                                @endif
-                                                @endforeach 
-                                            </table>
-                                      </div>   
+                                       
                                  </div>
                             </div>
                         </div>
