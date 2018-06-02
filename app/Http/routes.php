@@ -28,6 +28,21 @@ Route::get('category/{name}',[
         ]);
 
 
+Route::get('{subCategoryName}/{productName}',[
+          'as' => 'productName',
+          'uses'  => 'HomeController@productDetail'
+        ]);
+
+
+
+
+Route::get('{name}',[
+          'as' => 'productcategory',
+          'uses'  => 'HomeController@mainCategory'
+        ]);
+
+
+
 Route::get('{name}/addToCart/{id}', [ 
         'as' => '',
        'uses' =>   'ProductController@addToCart'
@@ -228,10 +243,6 @@ Route::post('myaccount/signup',[
         
   
 
-Route::get('{categoryName}/{subCategoryName}/{productName}',[
-          'as' => 'productName',
-          'uses'  => 'HomeController@productDetail'
-        ]);
 
 
 Route::post('login',function(App\User $user , Illuminate\Http\Request $request){ 

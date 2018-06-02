@@ -2,7 +2,7 @@
 	<div class="sidebar-module-container">
 			 
     <div class="sidebar-widget hot-deals wow fadeInUp outer-bottom-xs">
-      <h3 class="section-title">hot deals</h3>
+      <h3 class="section-title">hot deals </h3>
       <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
         
        @foreach($hot_products as $result)
@@ -10,7 +10,7 @@
           <div class="products">
             <div class="hot-deal-wrapper">
               <div class="image">
-              <a href="{{$result->url}}"> 
+              <a href="{{ url($result->url)}}"> 
                <img style="height: 200px;" src="{{ asset('storage/uploads/products/'. $result->photo) }}" alt="{{ $result->product_title }}"> </a> </div>
               <div class="sale-offer-tag"><span>10%<br>
                 off</span></div> 

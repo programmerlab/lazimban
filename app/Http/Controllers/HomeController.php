@@ -151,7 +151,7 @@ class HomeController extends Controller
      /*----------*/
     public function mainCategory( $category=null)
     {   
-       
+      // dd($category);
         $request = new Request;
         $q = Input::get('q'); 
          
@@ -224,9 +224,9 @@ class HomeController extends Controller
         return view('end-user.category',compact('categories','products','category','q','category'));   
     }
     /*----------*/
-    public function productDetail($categoryName=null,$subCategoryName=null,$productName=null)
+    public function productDetail($subCategoryName=null,$productName=null)
     {   
-         
+        
         $product = Product::with('category')->where('slug',$productName)->first();
         
         $categories = Category::nested()->get();  
