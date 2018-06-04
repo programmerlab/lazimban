@@ -54,7 +54,7 @@
                                         @foreach($categories as $key => $value)  
                                             @foreach($product_new as $key2 => $product) 
                                                 <div class="item">
-                                                     <a href="{{ url('product-details/'.$product->id) }}"><img src="{{ asset('storage/uploads/products/'. $product->photo) }}"></a>
+                                                     <a href="{{ url($product->url) }}"><img src="{{ asset('storage/uploads/products/'. $product->photo) }}"></a>
                                                         <h2>{{$product->product_title}} </h2>
                                                     </a>
                                                 </div>
