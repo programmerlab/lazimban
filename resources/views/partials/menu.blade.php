@@ -54,7 +54,7 @@
                   {{ $category or 'Categories' }} <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" > 
                         @foreach($categories as $key => $value)
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ url('product-category/'.$value['name'].'/'.$value['slug'].'/'.$value['id']) }}">- {{$value['name']}}</a></li>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ url($value['slug']) }}">- {{$value['name']}}</a></li>
                      
                       @endforeach
                     </ul>

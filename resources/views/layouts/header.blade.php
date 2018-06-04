@@ -69,7 +69,7 @@
                                                            <ul class="dropdown-menu" role="menu">
                                                            @foreach($categories as $key => $value)
                                                                <li role="presentation">
-                                                                    <a role="menuitem" tabindex="-1" href="{{ url('product-category/'.$value['name'].'/'.$value['slug'].'/'.$value['id']) }}">- {{$value['name']}}</a>
+                                                                    <a role="menuitem" tabindex="-1" href="{{ url($value['slug']) }}">- {{$value['name']}}</a>
                                                                </li>
                                                            @endforeach                                                            
                                                            </ul>
@@ -115,7 +115,7 @@
                                       <nav role="navigation" class="navbar-collapse">
                                       <ul class="nav navbar-nav">
                                       @foreach($categories as $key => $value)
-                                      <li><a href="{{ url('product-category/'.$value['name'].'/'.$value['slug'].'/'.$value['id']) }}">{{ $value['name'] }}</a></li>
+                                      <li><a href="{{ url($value['slug']) }}">{{ $value['name'] }}</a></li>
                                       @endforeach
                                       
                                       </ul>

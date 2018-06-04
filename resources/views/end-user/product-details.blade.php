@@ -30,8 +30,12 @@
                             </table>
         					<div class="quantity_outer">
                             	<input type="number" value="1" onchange="updateCart(this.value)" min=1>
-                                <a href="{{ url('addToCart/'.$product->id) }}"><button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">Add to Cart</button></a>
-                                <a href="{{ url('buyNow/'.$product->id) }}"><button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">Buy</button></a>                                    
+                                 <a href="{{ url(str_slug($product->product_title,'-').'/addToCart/'.$product->id) }}" id="addToCart" >
+
+                                <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">Add to Cart</button></a>
+                                
+                                <a href="{{ url(str_slug($product->product_title,'-').'/buyNow/'.$product->id) }}" >
+                                <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">Buy</button></a>                                    
                             </div>
                             <div class="category_list">
                             	<span><strong>Description:</strong></span> <span>{!! str_limit($product->description,100) !!}</span>

@@ -16,7 +16,7 @@
             <!-- /.hot-deal-wrapper -->
             
              <div class="product-info text-left m-t-20">
-                <h3 class="name"><a href="detail.html">{{ $result->product_title }}</a> ({{ $result->views+100 }} views) </h3>
+                <h3 class="name"><a href="{{ url($result->url) }}">{{ $result->product_title }}</a> ({{ $result->views+100 }} views) </h3>
                 <div class="rating rateit-small"></div>
                 <div class="product-price"> 
                 <span class="price"> INR  {{ $result->price - ($result->price*$result->discount)/100 }} </span> 

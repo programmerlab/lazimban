@@ -51,7 +51,7 @@ class ProductController extends Controller {
     private $user_id;
 
     public function __construct(Request $request, Settings $setting) {
-        
+
         View::share('category_name', $request->segment(1));
         View::share('total_item',Cart::content()->count());
         View::share('sub_total',Cart::subtotal());  
@@ -96,11 +96,20 @@ class ProductController extends Controller {
 
           
       //  dd(Route::currentRouteName());
-     // echo "xxxxxx"; die;
  
     }
 
-    protected $categories;
+    public function showProduct(Request $request, Product $product)
+    {    
+        $products       = Product::with('category')->groupBy('product_category')->orderBy('views','desc')->get(); 
+
+        $product_new    = Product::with('category')->orderBy('id','desc')->groupBy('product_category')->Paginate(12); 
+        $categories     = Category::nested()->get();  
+
+
+ 
+        return view('end-user.home', compact('special_deals','hot_products','banner_path1', 'banner_path2','categories','products','product_new')); 
+    }
 
     /*
      * Dashboard
@@ -108,6 +117,7 @@ class ProductController extends Controller {
 
     public function index(Request $request) 
     {  
+        
         $cart = Cart::content();  
         $pid = [];
         foreach ($cart as $key => $value) {
@@ -136,9 +146,9 @@ class ProductController extends Controller {
     }
 
 
-    public function addToCart(Request $request, $id) 
+    public function addToCart(Request $request, $name,$id) 
     { 
-        
+       
          $item =  $request->get('item'); 
          if($item ){
             $qty = substr($item,-1);
@@ -152,12 +162,13 @@ class ProductController extends Controller {
         }
         $cart = Cart::content();  
        // $request->session()->put('key', 'value');
+        
          return Redirect::to(url()->previous());
          
     }
 
-    public function buyNow(Request $request, $id) 
-    { 
+    public function buyNow(Request $request, $name,$id) 
+    {    
          $item =  $request->get('item'); 
          if($item ){
             $qty = substr($item,-1);
@@ -229,21 +240,7 @@ class ProductController extends Controller {
         return Redirect::to('product');
     }
 
-    public function showProduct(Request $request, Product $product)
-    {   
-        $products       = Product::with('category')->where(function($q){
-            $q->groupBy('product_category');
-             $q->orderBy('views','desc');
-        })->groupBy('product_category')->get(); 
-
-        $product_new    = Product::with('category')->orderBy('id','desc')->groupBy('product_category')->Paginate(12); 
-        $categories     = Category::nested()->get();  
-        
-
-
-        
-        return view('end-user.home', compact('special_deals','hot_products','banner_path1', 'banner_path2','categories','products','product_new')); 
-    }
+    
 
     public function getProduct(Request $request, Product $product)
     {
@@ -431,9 +428,11 @@ class ProductController extends Controller {
     }
     public function showLoginForm(Request $request)
     {
-         $cart       = Cart::content(); 
+  
+        $cart       = Cart::content(); 
         $products   = Product::with('category')->orderBy('id','asc')->get();
         $categories = Category::nested()->get(); 
+        
         return view('end-user.login',compact('categories','products','category','cart'));
 
     }
@@ -448,8 +447,7 @@ class ProductController extends Controller {
     }
 
     public function myaccount(Request $request)
-    {   
-        
+    {    
         if($this->user_id=="")
         {      
             return Redirect::to('myaccount/login');

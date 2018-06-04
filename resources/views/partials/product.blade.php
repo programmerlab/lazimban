@@ -74,7 +74,7 @@
            
             <div class="tab-pane  " id="grid-container">
               <div class="category-product">
-                <div class="row">
+                <div class="row"> 
                  @if($products->count()==0) Record not found @endif 
                  @foreach($products as $key => $product)
                   <div style="visibility: hidden; animation-name: none;" class="col-sm-6 col-md-4 wow fadeInUp">
@@ -105,7 +105,7 @@
                         <div class="cart clearfix animate-effect">
                           <div class="action">
                             <ul class="list-unstyled">
-                                 <li class="lnk wishlist"> <a class="add-to-cart" href="{{ url('product-details/'.$product->id) }}" title="Show product details"> <i class="fa fa-shopping-cart"></i>  View Details </a> </li>
+                                 <li class="lnk wishlist"> <a class="add-to-cart" href="{{ url($product->url) }}" title="Show product details"> <i class="fa fa-shopping-cart"></i>  View Details 2 </a> </li>
                             </ul>
                           </div>
                           <!-- /.action --> 
@@ -140,7 +140,7 @@
                         <div class="col col-sm-4 col-lg-4">
                           <div class="product-image">
                             <div class="image" style="float: left"> 
-                            <a href="{{ url('product-details/'.$product->id) }}" > 
+                            <a href="{{ url($product->url) }}" > 
                               <img src="{{ asset('storage/uploads/products/'. $product->photo) }}" alt="">
                             </a>
                              </div>
@@ -150,7 +150,7 @@
                         <!-- /.col -->
                         <div class="col col-sm-8 col-lg-8">
                           <div class="product-info">
-                            <h3 class="name"><a href="{{ url('product-details/'.$product->id)}}">{{$product->product_title}}</a></h3>
+                            <h3 class="name"><a href="{{ url($product->url)}}">{{$product->product_title}}</a></h3>
                             <br>
                             
                             <div class="product-price"> 
@@ -162,7 +162,7 @@
                             <!-- /.product-price -->
                             <div class="description m-t-10">{!! str_limit($product->description,100) !!}
 
-                            <a href="{{ url('product-details/'.$product->id) }}"> More</a>   </div>
+                            <a href="{{ url($product->url) }}"> More</a>   </div>
                             <div class="cart clearfix animate-effect">
                               <div class="action" col-md-12> 
                                   

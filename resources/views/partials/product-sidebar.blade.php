@@ -5,7 +5,7 @@
          <nav class="yamm megamenu-horizontal">
             <ul class="nav">  
               @foreach($categories as $key => $value)
-                  <li class="dropdown menu-item"> <a href="{{ url('product-category/'.$value['slug'].'/'.$value['id']) }}" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-shopping-bag" aria-hidden="true"></i>{{$value['name']}}</a>
+                  <li class="dropdown menu-item"> <a href="{{ url($value['slug']) }}" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-shopping-bag" aria-hidden="true"></i>{{$value['name']}}</a>
                     <ul class="dropdown-menu mega-menu"> 
                       <li class="yamm-content">
                         <div class="row">
@@ -13,11 +13,11 @@
                               <ul class="links list-unstyled">
                                 @if(count($value['child'])>0)
                                 @foreach($value['child'] as $subCat)
-                                  <li><a href="{{ url('product-category/'.$value['name'].'/'.$subCat['slug'].'/'.$subCat['id']) }}">{{$subCat['name']}}</a></li> 
+                                  <li><a href="{{ url($subCat['slug']) }}">{{$subCat['name']}}</a></li> 
                                 @endforeach
                                 @else
                                  <li>
-                                 <a href="{{ url('product-category/'.$value['name'].'/'.$value['slug'].'/'.$value['id']) }}">{{$value['name']}}</a></li> 
+                                 <a href="{{ url($value['slug']) }}">{{$value['name']}}</a></li> 
                                 @endif
                               </ul>
                             </div>  
@@ -58,11 +58,11 @@
                               <ul>
                                @if(count($value['child'])>0)
                                 @foreach($value['child'] as $subCat)
-                                  <li><a href="{{ url('product-category/'.$value['name'].'/'.$subCat['slug'].'/'.$subCat['id']) }}">{{$subCat['name']}}</a></li> 
+                                  <li><a href="{{ url($subCat['slug']) }}">{{$subCat['name']}}</a></li> 
                                 @endforeach
                                 @else
                                  <li>
-                                 <a href="{{ url('product-category/'.$value['name'].'/'.$value['slug'].'/'.$value['id']) }}">{{$value['name']}}</a></li> 
+                                 <a href="{{ url($value['slug']) }}">{{$value['name']}}</a></li> 
                                 @endif
                               </ul>
                             </div>

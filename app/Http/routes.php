@@ -14,29 +14,59 @@
 Route::match(['post','get'],'cat','HomeController@index');
 
 
-//&********************************
 
-//Route::get('{category}/{name}',[
-//          'as' => 'productcategoryByname', 
-//          'uses'  => 'HomeController@productCategory'
-//        ]);
-//************************************
-
-
-Route::get('product-details/{id}',[
+Route::get('{name}/{id}',[
           'as' => 'productDetails',
           'uses'  => 'HomeController@productDetail'
-        ]); 
+        ])->where('id', '[0-9]+');
 
-Route::get('product-category',[
+
+
+Route::get('category/{name}',[
+          'as' => 'productcategory',
+          'uses'  => 'HomeController@mainCategory'
+        ]);
+
+
+Route::get('{subCategoryName}/{productName}',[
+          'as' => 'productName',
+          'uses'  => 'HomeController@productDetail'
+        ]);
+
+
+
+
+Route::get('{name}',[
+          'as' => 'productcategory',
+          'uses'  => 'HomeController@mainCategory'
+        ]);
+
+
+
+Route::get('{name}/addToCart/{id}', [ 
+        'as' => '',
+       'uses' =>   'ProductController@addToCart'
+       ]);
+
+
+
+
+Route::get('category',[
           'as' => 'productcategory',
           'uses'  => 'HomeController@productCategory'
         ]); 
 
-Route::get('product-category/{category}/{name}/{id}',[
+Route::get('myaccount/login',[
+          'as' => 'showLoginForm',
+          'uses'  => 'ProductController@showLoginForm'
+        ])->where(['name'=>'myaccount','name'=>'[A-Za-z]+']); 
+
+Route::get('{category}/{name}',[
           'as' => 'productcategoryByname', 
           'uses'  => 'HomeController@productCategory'
-        ]); 
+        ]);
+
+
 
 Route::get('checkout',[
           'as' => 'checkout',
@@ -119,12 +149,10 @@ Route::get('checkout',[
        'uses' =>  'ProductController@getProduct'
        ]);
 
-  Route::get('/addToCart/{id}', [ 
-        'as' => '',
-       'uses' =>   'ProductController@addToCart'
-       ]);
 
-   Route::get('/buyNow/{id}', [ 
+
+
+    Route::get('{name}/buyNow/{id}', [ 
         'as' => '',
        'uses' =>   'ProductController@buyNow'
        ]);
@@ -194,10 +222,6 @@ Route::get('signout', function(App\User $user , Illuminate\Http\Request $request
    
 
 
-Route::get('myaccount/login',[
-          'as' => 'showLoginForm',
-          'uses'  => 'ProductController@showLoginForm'
-        ]); 
 
 Route::get('myaccount',[
           'as' => 'myaccount',
@@ -217,6 +241,8 @@ Route::post('myaccount/signup',[
         ]); 
         
         
+  
+
 
 
 Route::post('login',function(App\User $user , Illuminate\Http\Request $request){ 
@@ -228,8 +254,8 @@ Route::post('login',function(App\User $user , Illuminate\Http\Request $request){
              
                 return redirect()->intended('/'); 
           }else{  
-              return redirect('myaccount/login')
-                          //->back()
+              return redirect()
+                          ->back()
                           ->withInput()  
                           ->withErrors(['message'=>'Invalid email or password. Try again!']);
               } 
@@ -250,6 +276,7 @@ Route::post('Ajaxlogin',function(App\User $user , Illuminate\Http\Request $reque
                // return  json_encode(['msg'=>'success','code'=>200,'data'=>Auth::user()]); 
           }else{  
                return  json_encode(['msg'=>'Invalid email or password','code'=>500,'data'=>$request->all()]); 
+               //return Redirect::to(url()->previous());
               } 
       }); 
              

@@ -21,10 +21,10 @@
                                         <ul class="children">                                                      
                                               @if(count($value['child'])>0)
                                                 @foreach($value['child'] as $subCat)
-                                                  <li class="cat-item"><a href="{{ url('product-category/'.$value['name'].'/'.$subCat['slug'].'/'.$subCat['id']) }}">{{$subCat['name']}}</a></li>
+                                                  <li class="cat-item"><a href="{{ url($subCat['slug']) }}">{{$subCat['name']}}</a></li>
                                                 @endforeach
                                               @else                                                        
-                                              <li class="cat-item"><a href="{{ url('product-category/'.$value['name'].'/'.$value['slug'].'/'.$value['id']) }}">{{$value['name']}}</a></li> 
+                                              <li class="cat-item"><a href="{{ url($value['slug']) }}">{{$value['name']}}</a></li> 
                                               @endif                                                                                                            
                                        </ul>
                                     </li>
@@ -42,7 +42,7 @@
                                             <span class="amount">{{ $result->price - ($result->price*$result->discount)/100 }}<span class="woocommerce-Price-currencySymbol"> INR</span></span>
                                             <span class="price-before-discount" style="text-decoration: line-through;">INR {{ $result->price }}</span> 
                                         </div>
-                                        <div class="product_img"><a href="{{ url('product-details/'.$result->id) }}">  <img src="{{ asset('storage/uploads/products/'. $result->photo) }}"> </a></div>
+                                        <div class="product_img"><a href="{{ url($result->url) }}">  <img src="{{ asset('storage/uploads/products/'. $result->photo) }}"> </a></div>
                                     </li>
                                 @endforeach    
                             </ul>
@@ -60,7 +60,7 @@
                                             <div class="col-md-3"><img src="{{ asset('storage/uploads/products/'. $product->photo) }}" alt="{{ $product->product_title }}" alt="{{ $product->product_title }}"></div>
                                             <div class="col-md-4"><h2>{{ $product->product_title }}</h2></div>
                                              <div class="col-md-3"><span class="price-product"> RS {{ $product->price-($product->price*$product->discount)/100}}</span></div>
-                                              <div class="col-md-2"><a href="{{ url('product-details/'.$product->id) }}" class="product_link">View Details</a></div>
+                                              <div class="col-md-2"><a href="{{ url($product->url) }}" class="product_link">View Details</a></div>
                                             
                                         </li>
                                     @endforeach                                

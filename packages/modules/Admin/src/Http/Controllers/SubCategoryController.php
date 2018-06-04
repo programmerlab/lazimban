@@ -127,6 +127,12 @@ class SubCategoryController extends Controller {
         $cat->category_name         =   $request->get('sub_category_name');
         $cat->sub_category_name     =   $request->get('sub_category_name');
         $cat->level                 =   $level;
+        if($request->get('meta_key')){
+            $cat->meta_key  = $request->get('meta_key');
+        }
+        if($request->get('meta_description')){
+            $cat->meta_description  = $request->get('meta_description');
+        }
         $cat->save();  
        
         return Redirect::to(route('category'))
@@ -180,7 +186,13 @@ class SubCategoryController extends Controller {
         $cat->parent_id             = $request->get('category_id');
         $cat->category_name         = $request->get('sub_category_name');
         $cat->sub_category_name     = $request->get('sub_category_name');
-         $cat->level                = $level;
+        $cat->level                = $level;
+        if($request->get('meta_key')){
+            $cat->meta_key  = $request->get('meta_key');
+        }
+        if($request->get('meta_description')){
+            $cat->meta_description  = $request->get('meta_description');
+        }
         $cat->save(); 
 
 

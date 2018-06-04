@@ -100,8 +100,41 @@ class ProductController extends Controller {
      * Save Group method
      * */
 
+
+    public function getCategoryUrl($id){
+        $parent_id = $id; 
+        $arr = [];
+        $slash = "/" ;
+            while (1) {
+                $data = Category::where('id',$parent_id)->first();
+               
+                if($data)
+                {
+                   // $level++;
+                    $parent_id = $data->parent_id;
+
+                    $arr[] = $data->slug;
+                }else{
+                    break;
+                }
+            } 
+            $url = implode('/', array_reverse($arr)).$slash;
+       
+        return  $url;
+    }
+
+     public function getCategoryById($id){
+        $url =  Category::with('parent')->where('id',$id)->first();
+        
+        return  $url->slug.'/';
+    }
+
     public function store(ProductRequest $request, Product $product) 
     {
+        $cat_url    = $this->getCategoryById($request->get('product_category')); 
+        $pro_slug   = str_slug($request->get('product_title'));
+        $url        = $cat_url.$pro_slug;
+
         if ($request->file('image')) { 
             $photo = $request->file('image');
             $destinationPath = storage_path('uploads/products');
@@ -110,11 +143,15 @@ class ProductController extends Controller {
             $request->merge(['photo'=>$photo_name]);
            
             $product->product_title      =   $request->get('product_title');
+            $product->slug              =   str_slug($request->get('product_title'));
             $product->product_category   =   $request->get('product_category');
             $product->description        =   $request->get('description');
             $product->price              =   $request->get('price');
-            $product->discount              =   $request->get('discount');
+            $product->discount           =   $request->get('discount');
             $product->photo              =   $photo_name;
+            $product->meta_key           =   $request->get('meta_key');
+            $product->meta_description   =   $request->get('meta_description');
+            $product->url                =   $url;
  
             $product->save(); 
            
@@ -149,6 +186,10 @@ class ProductController extends Controller {
     public function update(ProductRequest $request, Product $product) 
     {
            
+        $cat_url       = $this->getCategoryById($request->get('product_category'));
+        $pro_slug   = str_slug($request->get('product_title'));
+        $url        = $cat_url.$pro_slug;
+        
          if ($request->file('image')) { 
 
             $photo = $request->file('image');
@@ -163,7 +204,11 @@ class ProductController extends Controller {
             $product->description        =   $request->get('description');
             $product->photo              =   $photo_name;
             $product->price              =   $request->get('price');
-            $product->discount              =   $request->get('discount');
+            $product->discount           =   $request->get('discount');
+            $product->meta_key           =   $request->get('meta_key');
+            $product->meta_description   =   $request->get('meta_description');
+            $product->url               =   $url;
+            $product->slug              =   str_slug($request->get('product_title'));
             $product->save(); 
         }else{
             $product->product_title      =   $request->get('product_title');
@@ -172,6 +217,10 @@ class ProductController extends Controller {
             $product->photo              =   $request->get('photo');
             $product->price              =   $request->get('price');
             $product->discount              =   $request->get('discount');
+            $product->meta_key           =   $request->get('meta_key');
+            $product->meta_description   =   $request->get('meta_description');
+            $product->url                =   $url;
+            $product->slug              =   str_slug($request->get('product_title'));
             $product->save(); 
         }
         return Redirect::to(route('product'))

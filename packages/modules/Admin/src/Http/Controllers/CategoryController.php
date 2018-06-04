@@ -164,7 +164,6 @@ class CategoryController extends Controller {
     public function store(CategoryRequest $request, Category $category) 
     {  
  
-
         $name = $request->get('category_name');
         $slug = str_slug($request->get('sub_cat'));
         $parent_id = 0;
@@ -175,6 +174,14 @@ class CategoryController extends Controller {
         $cat->parent_id             = $parent_id;
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');
+
+        if($request->get('meta_key')){
+            $cat->meta_key  = $request->get('meta_key');
+        }
+        if($request->get('meta_description')){
+            $cat->meta_description  = $request->get('meta_description');
+        }
+
         $cat->level                 =  1;
         $cat->save();   
 
@@ -209,6 +216,12 @@ class CategoryController extends Controller {
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');
         $cat->level                 =  1;
+        if($request->get('meta_key')){
+            $cat->meta_key  = $request->get('meta_key');
+        }
+        if($request->get('meta_description')){
+            $cat->meta_description  = $request->get('meta_description');
+        }
         $cat->save();   
 
         return Redirect::to(route('category'))

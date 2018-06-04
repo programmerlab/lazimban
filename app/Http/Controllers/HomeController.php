@@ -26,7 +26,7 @@ use Redirect;
 use Cart;
 use Input;
 use App\Helpers\Helper as Helper;
-use Modules\Admin\Models\Settings;
+use Modules\Admin\Models\Settings; 
 
 class HomeController extends Controller
 {
@@ -39,7 +39,7 @@ class HomeController extends Controller
 
       public function __construct(Request $request,Settings $setting) { 
         
-        View::share('category_name',$request->segment(2));
+        View::share('category_name',$request->segment(1));
         View::share('total_item',Cart::content()->count());
         View::share('sub_total',Cart::subtotal()); 
         View::share('userData',$request->session()->get('current_user'));
@@ -63,10 +63,7 @@ class HomeController extends Controller
          View::share('website_url',$website_url);
          View::share('contact_number',$contact_number);
          View::share('company_address',$company_address);
-         View::share('banner',$banner); 
- 
- 
-      // dd(Route::currentRouteName());
+         View::share('banner',$banner);  
 
     }
 
@@ -77,7 +74,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        
        // $categories = Category::nested()->get();
 
         return view('home'); 
@@ -135,7 +131,7 @@ class HomeController extends Controller
 
 
     public function home()
-    {        
+    {
         $banner_path1   = asset('public/enduser/assets/images/sliders/01.jpg');
         $banner_path2   = asset('public/enduser/assets/images/sliders/02.jpg');
  
@@ -153,6 +149,44 @@ class HomeController extends Controller
     }
 
      /*----------*/
+    public function mainCategory( $category=null)
+    {   
+              $request = new Request;
+        $q = Input::get('q'); 
+         
+         $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
+        if($catID!=null && $catID->count()){ 
+
+            $sub_cat = Category::where('parent_id', $catID->id)->Orwhere('id', $catID->id)->lists('id');
+             
+            $products = Product::with('category')->whereIn('product_category',$sub_cat)->orderBy('id','asc')->get();
+             
+            if($products->count())
+            { 
+                 
+                $products = Product::with('category')->whereIn('product_category',$sub_cat) 
+                                ->orderBy('id','asc')
+                                ->get();
+                 if($q)
+                 {
+                    $products = Product::with('category')->whereIn('product_category',$sub_cat)
+                                ->where('product_title','LIKE','%'.$q.'%')
+                                ->orderBy('id','asc')
+                                ->get();
+                     
+                 } 
+                 
+            } 
+        }else{
+            $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
+
+        }
+       
+        $categories = Category::nested()->get(); 
+        return view('end-user.category',compact('categories','products','category','q','category'));   
+    }
+
+     /*----------*/
     public function productCategory( $category=null)
     {   
         $request = new Request;
@@ -163,7 +197,7 @@ class HomeController extends Controller
         if($catID!=null && $catID->count()){ 
             $products = Product::with('category')->where('product_category',$catID->id)->orderBy('id','asc')->get();
             
-            if($products->count()>=0)
+            if($products->count()==0)
             {
                   
                   $products = Product::with('category')->whereIn('product_category',[$catID->id]) 
@@ -189,17 +223,16 @@ class HomeController extends Controller
         return view('end-user.category',compact('categories','products','category','q','category'));   
     }
     /*----------*/
-    public function productDetail($id=null)
+    public function productDetail($subCategoryName=null,$productName=null)
     {   
         
-        $product = Product::with('category')->where('id',$id)->first();
-        $categories = Category::nested()->get(); 
-
-
+        $product = Product::with('category')->where('slug',$productName)->first();
         
+        $categories = Category::nested()->get();  
+         
         if($product==null)
         {
-             $url =  URL::previous().'?error=InvaliAcess'; 
+             $url =  URL::previous().'?error=InvaliAccess'; 
               return Redirect::to($url);
         }else{
           $product->views=$product->views+1;
