@@ -102,8 +102,8 @@ class ProductController extends Controller {
         $mk = ($setting::where('field_key','meta_key')->first());
           
         if($base_page == 'homePage'){
-            $meta_description =  $md->field_value;
-            $meta_key         =  $mk->field_value;
+            $meta_description =  isset($md->field_value)?$md->field_value:'';
+            $meta_key         =  isset($mk->field_value)?$mk->field_value:'';
         }
         elseif($base_page == 'productName'){
             $data = Product::where('slug',$path_info[2])->first();
@@ -117,8 +117,8 @@ class ProductController extends Controller {
             $meta_key = $data->meta_key;
 
         }else{
-            $meta_description =  $md->field_value;
-            $meta_key         =  $mk->field_value;
+           $meta_description =  isset($md->field_value)?$md->field_value:'';
+            $meta_key         =  isset($mk->field_value)?$mk->field_value:'';
         }
  
         View::share('meta_description',$meta_description);
