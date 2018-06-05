@@ -22,22 +22,12 @@ Route::get('{name}/addToCart/{id}', [
        ]);
 
 
-
-
-Route::get('category',[
-          'as' => 'category',
-          'uses'  => 'HomeController@productCategory'
-        ]); 
-
+ 
 Route::get('myaccount/login',[
           'as' => 'showLoginForm',
           'uses'  => 'ProductController@showLoginForm'
         ])->where(['name'=>'myaccount','name'=>'[A-Za-z]+']); 
 
-Route::get('{category}/{name}',[
-          'as' => 'productcategoryByname', 
-          'uses'  => 'HomeController@productCategory'
-        ]);
 
 
 
@@ -223,7 +213,12 @@ Route::get('{name}',[
           'as' => 'productcategory',
           'uses'  => 'HomeController@mainCategory'
         ]);
-  
+
+Route::get('{category}/{name}',[
+          'as' => 'productcategoryByname', 
+          'uses'  => 'HomeController@productCategory'
+        ]);
+
 
 
 

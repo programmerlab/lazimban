@@ -221,7 +221,7 @@ class HomeController extends Controller
 
      /*----------*/
     public function productCategory( $category=null)
-    {   
+    {  
         $request = new Request;
         $q = Input::get('q'); 
          
