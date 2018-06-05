@@ -260,7 +260,7 @@ class HomeController extends Controller
     {   
        
         $product = Product::with('category')->where('slug',$productName)->first();
-        
+         
         $categories = Category::nested()->get();  
          
         if($product==null)

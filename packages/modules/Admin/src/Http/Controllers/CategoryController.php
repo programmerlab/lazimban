@@ -167,10 +167,10 @@ class CategoryController extends Controller {
         $name = $request->get('category_name');
         $slug = str_slug($request->get('sub_cat'));
         $parent_id = 0;
-
+       
         $cat = new Category;
         $cat->name                  =  $request->get('category_name');
-        $cat->slug                  = strtolower(str_slug($request->get('category_name')));
+        $cat->slug                  = strtolower(str_replace(" ", "-", $request->get('category_name')));
         $cat->parent_id             = $parent_id;
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');
@@ -212,7 +212,7 @@ class CategoryController extends Controller {
 
         $cat = Category::find($category->id);
         $cat->name =  $request->get('category_name');
-        $cat->slug = strtolower(str_slug($request->get('category_name')));
+        $cat->slug = strtolower(str_replace(" ", "-", $request->get('category_name')));
         $cat->parent_id = $parent_id;
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');

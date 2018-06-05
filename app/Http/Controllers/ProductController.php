@@ -122,9 +122,7 @@ class ProductController extends Controller {
         }
  
         View::share('meta_description',$meta_description);
-        View::share('meta_key',$meta_key);
-
-
+        View::share('meta_key',$meta_key); 
  
     }
 
