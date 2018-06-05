@@ -130,10 +130,26 @@ class ProductController extends Controller {
 
     public function showProduct(Request $request, Product $product)
     {    
-        $products       = Product::with('category')->groupBy('product_category')->orderBy('views','desc')->get(); 
+         $category = Input::get('q'); 
+         $q = Input::get('q');
+         $categories     = Category::nested()->get();  
+         if($q)
+         {
+            $products = Product::with('category')
+                        ->where('product_title','LIKE','%'.$q.'%')
+                        ->orderBy('id','asc')
+                        ->get(); 
+            $categories = Category::nested()->get(); 
+            return view('end-user.category',compact('categories','products','category','q','category'));
+             
+         } 
+         else{
+            $products       = Product::with('category')->groupBy('product_category')->orderBy('views','desc')->get(); 
 
-        $product_new    = Product::with('category')->orderBy('id','desc')->groupBy('product_category')->Paginate(12); 
-        $categories     = Category::nested()->get();  
+            $product_new    = Product::with('category')->orderBy('id','desc')->groupBy('product_category')->Paginate(12); 
+         }
+        
+         
 
 
  

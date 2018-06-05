@@ -6,7 +6,7 @@
                 @if(isset($category_name) && !isset($product->category->name))                                
                 <span><a href="#">{!! $category_name !!} </a> </span>
                     @else
-                {{$product->category->name}}
+                {{$product->category->name or ''}}
                 @endif                            
                 <span> {{ isset($category)?$category:''}} </span> 
            </div>

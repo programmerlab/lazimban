@@ -77,15 +77,16 @@ class HomeController extends Controller
             $meta_key         =  isset($mk->field_value)?$mk->field_value:'';
         }
         elseif($base_page == 'productName'){
-            $data = Product::where('slug',$path_info[2])->first();
-            $meta_description = $data->meta_description;
-            $meta_key = $data->meta_key;
+            $data             = Product::where('slug',$path_info[2])->first();
+            $meta_description = isset($data->meta_description)?$data->meta_description:'';
+            $meta_key         = isset($data->meta_key)?$data->meta_key:'';
         }
         elseif($base_page == 'productcategory'){ 
          
             $data = Category::where('slug',$path_info[1])->first();
-            $meta_description = $data->meta_description;
-            $meta_key = $data->meta_key;
+
+            $meta_description = isset($data->meta_description)?$data->meta_description:'';
+            $meta_key         = isset($data->meta_key)?$data->meta_key:'';
 
         }else{
             $meta_description =  isset($md->field_value)?$md->field_value:'';
@@ -170,7 +171,7 @@ class HomeController extends Controller
  /*----------*/
     public function checkout()
     {
-         dd('ds');
+         
          $request = new Request;
 
         
@@ -182,11 +183,11 @@ class HomeController extends Controller
      /*----------*/
     public function mainCategory( $category=null)
     {   
-      // dd($category);
+         
         $request = new Request;
         $q = Input::get('q'); 
          
-         $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
+        $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
         if($catID!=null && $catID->count()){ 
 
             $sub_cat = Category::where('parent_id', $catID->id)->Orwhere('id', $catID->id)->lists('id');
