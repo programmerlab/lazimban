@@ -13,38 +13,11 @@
 
 Route::match(['post','get'],'cat','HomeController@index');
 
-
-
-Route::get('{name}/{id}',[
-          'as' => 'productDetails',
-          'uses'  => 'HomeController@productDetail'
-        ])->where('id', '[0-9]+');
-
-
-
-Route::get('category/{name}',[
-          'as' => 'productcategory',
-          'uses'  => 'HomeController@mainCategory'
-        ]);
-
-
-Route::get('{subCategoryName}/{productName}',[
-          'as' => 'productName',
-          'uses'  => 'HomeController@productDetail'
-        ]);
-
-
-
-
-Route::get('{name}',[
-          'as' => 'productcategory',
-          'uses'  => 'HomeController@mainCategory'
-        ]);
-
+ 
 
 
 Route::get('{name}/addToCart/{id}', [ 
-        'as' => '',
+        'as' => 'addCart',
        'uses' =>   'ProductController@addToCart'
        ]);
 
@@ -52,7 +25,7 @@ Route::get('{name}/addToCart/{id}', [
 
 
 Route::get('category',[
-          'as' => 'productcategory',
+          'as' => 'category',
           'uses'  => 'HomeController@productCategory'
         ]); 
 
@@ -114,7 +87,7 @@ Route::group(['middleware' => ['web']], function(){
 
 
   Route::get('/',[
-          'as' => '/',
+          'as' => 'homePage',
           'uses'  => 'ProductController@showProduct'
         ]); 
    
@@ -241,6 +214,15 @@ Route::post('myaccount/signup',[
         ]); 
         
         
+Route::get('{subCategoryName}/{productName}',[
+          'as' => 'productName',
+          'uses'  => 'HomeController@productDetail'
+        ]); 
+
+Route::get('{name}',[
+          'as' => 'productcategory',
+          'uses'  => 'HomeController@mainCategory'
+        ]);
   
 
 

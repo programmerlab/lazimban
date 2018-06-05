@@ -133,6 +133,9 @@ class SubCategoryController extends Controller {
         if($request->get('meta_description')){
             $cat->meta_description  = $request->get('meta_description');
         }
+         if($request->get('description')){
+            $cat->description  = $request->get('description');
+        }
         $cat->save();  
        
         return Redirect::to(route('category'))
@@ -192,6 +195,9 @@ class SubCategoryController extends Controller {
         }
         if($request->get('meta_description')){
             $cat->meta_description  = $request->get('meta_description');
+        }
+        if($request->get('description')){
+            $cat->description  = $request->get('description');
         }
         $cat->save(); 
 

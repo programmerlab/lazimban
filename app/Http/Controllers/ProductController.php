@@ -83,19 +83,48 @@ class ProductController extends Controller {
         $website_url        = $setting::where('field_key','website_url')->first();
         $contact_number     = $setting::where('field_key','contact_number')->first();
         $company_address    = $setting::where('field_key','company_address')->first();
-
+                            
         $banner             = $setting::where('field_key','LIKE','%banner_image%')->get();
 
 
-         View::share('website_title',$website_title);
-         View::share('website_email',$website_email);
-         View::share('website_url',$website_url);
-         View::share('contact_number',$contact_number);
-         View::share('company_address',$company_address);
-         View::share('banner',$banner); 
+        View::share('website_title',$website_title);
+        View::share('website_email',$website_email);
+        View::share('website_url',$website_url);
+        View::share('contact_number',$contact_number);
+        View::share('company_address',$company_address);
+        View::share('banner',$banner); 
 
+        
+        $base_page =  Route::currentRouteName();
+
+        $path_info = explode('/', $request->getpathInfo());
+        $md = ($setting::where('field_key','meta_description')->first());
+        $mk = ($setting::where('field_key','meta_key')->first());
           
-      //  dd(Route::currentRouteName());
+        if($base_page == 'homePage'){
+            $meta_description =  $md->field_value;
+            $meta_key         =  $mk->field_value;
+        }
+        elseif($base_page == 'productName'){
+            $data = Product::where('slug',$path_info[2])->first();
+            $meta_description = $data->meta_description;
+            $meta_key = $data->meta_key;
+        }
+        elseif($base_page == 'productcategory'){ 
+         
+            $data = Category::where('slug',$path_info[1])->first();
+            $meta_description = $data->meta_description;
+            $meta_key = $data->meta_key;
+
+        }else{
+            $meta_description =  $md->field_value;
+            $meta_key         =  $mk->field_value;
+        }
+ 
+        View::share('meta_description',$meta_description);
+        View::share('meta_key',$meta_key);
+
+
  
     }
 
@@ -401,8 +430,7 @@ class ProductController extends Controller {
             $transaction->save();
              
         } 
-        $cart = Cart::content(); 
-       // dd(Cart::subtotal());
+        $cart = Cart::content();  
         if($cart){
 
             $email_content['receipent_email'] = $billing->email;

@@ -174,6 +174,7 @@ class CategoryController extends Controller {
         $cat->parent_id             = $parent_id;
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');
+        $cat->description           =  $request->get('description');
 
         if($request->get('meta_key')){
             $cat->meta_key  = $request->get('meta_key');
@@ -216,8 +217,12 @@ class CategoryController extends Controller {
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');
         $cat->level                 =  1;
+        
         if($request->get('meta_key')){
             $cat->meta_key  = $request->get('meta_key');
+        }
+        if($request->get('description')){
+            $cat->description  = $request->get('description');
         }
         if($request->get('meta_description')){
             $cat->meta_description  = $request->get('meta_description');

@@ -65,6 +65,36 @@ class HomeController extends Controller
          View::share('company_address',$company_address);
          View::share('banner',$banner);  
 
+        $base_page =  Route::currentRouteName();
+
+        $path_info = explode('/', $request->getpathInfo());
+        $md = ($setting::where('field_key','meta_description')->first());
+        $mk = ($setting::where('field_key','meta_key')->first());
+       
+
+        if($base_page == 'homePage'){
+            $meta_description =  $md->field_value;
+            $meta_key         =  $mk->field_value;
+        }
+        elseif($base_page == 'productName'){
+            $data = Product::where('slug',$path_info[2])->first();
+            $meta_description = $data->meta_description;
+            $meta_key = $data->meta_key;
+        }
+        elseif($base_page == 'productcategory'){ 
+         
+            $data = Category::where('slug',$path_info[1])->first();
+            $meta_description = $data->meta_description;
+            $meta_key = $data->meta_key;
+
+        }else{
+            $meta_description =  $md->field_value;
+            $meta_key         =  $mk->field_value;
+        }
+ 
+        View::share('meta_description',$meta_description);
+        View::share('meta_key',$meta_key);
+
     }
 
     /**
@@ -140,6 +170,7 @@ class HomeController extends Controller
  /*----------*/
     public function checkout()
     {
+         dd('ds');
          $request = new Request;
 
         
@@ -226,7 +257,7 @@ class HomeController extends Controller
     /*----------*/
     public function productDetail($subCategoryName=null,$productName=null)
     {   
-        
+       
         $product = Product::with('category')->where('slug',$productName)->first();
         
         $categories = Category::nested()->get();  
@@ -239,7 +270,7 @@ class HomeController extends Controller
           $product->views=$product->views+1;
           $product->save(); 
         }
-         
+        
         return view('end-user.product-details',compact('categories','product')); 
     }
      /*----------*/

@@ -69,6 +69,12 @@ class SettingsController extends Controller {
         $company_address    = $setting::where('field_key','company_address')->first();
 
         $banner             = $setting::where('field_key','LIKE','%banner_image%')->get();
+
+
+        $meta_key    = $setting::where('field_key','meta_key')->first();
+
+        $meta_description    = $setting::where('field_key','meta_description')->first();
+
  
 
         $setting = Settings::first();
@@ -81,7 +87,7 @@ class SettingsController extends Controller {
         }
       
 
-        return view('packages::setting.edit', compact('setting','website_title','website_email','website_url','contact_number','company_address','banner', 'page_title', 'page_action','helper'));
+        return view('packages::setting.edit', compact('setting','website_title','website_email','website_url','contact_number','company_address','banner', 'page_title', 'page_action','helper','meta_key','meta_description'));
    
     }
 

@@ -5,12 +5,17 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	    <meta name="description" content="">
-	    <meta name="author" content="">
+      <meta name="author" content=""> 
+
+      <meta name="description" content="{{$meta_description or '' }}"/>
+
+      <meta name="keywords" content="{{$meta_key or ''}}"/>
+
+
 	    <link rel="icon" href="../../favicon.ico">
 
 	    <title>
-            {{ isset($website_title->field_value)?$website_title->field_value:"ShoperSquare: India largest ecommerce company" }} 
+            {{ isset($website_title->field_value)?$website_title->field_value:"ecommerce company" }} 
         </title>
 
 	    <link href="{{ asset('public/new/css/font-awesome.min.css') }}" rel="stylesheet">
@@ -63,18 +68,7 @@
                                   <div class="sf_search">
                                   
                                   <form>
-                                        <ul class="categories-filter animate-dropdown">
-                                                     <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                                     {{ $category or 'Categories' }} <b class="caret"></b></a>
-                                                           <ul class="dropdown-menu" role="menu">
-                                                           @foreach($categories as $key => $value)
-                                                               <li role="presentation">
-                                                                    <a role="menuitem" tabindex="-1" href="{{ url($value['slug']) }}">- {{$value['name']}}</a>
-                                                               </li>
-                                                           @endforeach                                                            
-                                                           </ul>
-                                                       </li>
-                                                   </ul>
+                                        
                                     <input class="sf_input" autocomplete="off" value="{{ $q or ''}}" name="q" type="text">
                                     <button class="sf_button searchsubmit" type="submit"><span>Search</span></button>
                                   </form>
