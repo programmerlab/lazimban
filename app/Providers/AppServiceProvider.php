@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use View;
+use Modules\Admin\Models\CategoryDashboard;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $category_list = \App\Category::where('parent_id',0)->get();
         View::share('category_list',$category_list);
+
+
+        $category_menu = CategoryDashboard::with('category')->get();
+        View::share('category_menu',$category_menu);
 
     }
 

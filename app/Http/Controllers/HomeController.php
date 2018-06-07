@@ -95,7 +95,8 @@ class HomeController extends Controller
  
         View::share('meta_description',$meta_description);
         View::share('meta_key',$meta_key);
-
+        View::share('getpathInfo',$request->getpathInfo());
+        
     }
 
     /**
@@ -183,7 +184,7 @@ class HomeController extends Controller
      /*----------*/
     public function mainCategory( $category=null)
     {   
-         
+        
         $request = new Request;
         $q = Input::get('q'); 
          
@@ -215,8 +216,8 @@ class HomeController extends Controller
 
         }
        
-        $categories = Category::nested()->get(); 
-        return view('end-user.category',compact('categories','products','category','q','category'));   
+        $categories = Category::nested()->get();  
+        return view('end-user.category',compact('categories','products','category','q','category','catID'));   
     }
 
      /*----------*/

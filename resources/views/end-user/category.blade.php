@@ -52,7 +52,7 @@
                     
                     <div class="col-md-9">                    	                                                
                         <div class="product_list_outer">
-                        	<h3><span>Search </span> Products</h3>                                                    
+                        	<h3><span>Search </span> Products </h3>                                                    
                             <ul>
                                 @if($products->count()==0) Record not found @endif 
                                     @foreach($products as $key => $product)
@@ -117,7 +117,41 @@
                         </div>-->
                         
                     </div>
-                </div>
+ 
+
+                 <div class="col-md-12">
+                        <div class="product_info">
+                            <div id="horizontalTab">
+                                <ul class="resp-tabs-list">
+                                    <li>Description </li>
+                                    
+                                    <li>More Category </li> 
+                                </ul>
+                                <div class="resp-tabs-container">
+                                        <div>
+                                           <h2>  Description : {{ $category }}</h2>
+                                             <p> {!! $catID->description !!}</p>
+                                        </div>
+                                         
+                                        <div>    
+                                            <div class="owl-carousel owl-theme">
+                                            @foreach($categories as $result)
+                                                    <div class="item" style="padding: 10px; border: 1px solid; margin: 10px; height: 100px">
+                                                         <a href="{{url($result['slug'])}}">                            
+                                                            <h2>{{ $result['name'] }} </h2>
+                                                        </a>
+                                                    </div>
+                                            @endforeach
+                                                                     
+                                                
+                                            </div>      
+                                        </div>
+                                         
+                                </div>
+                            </div>  
+                        </div>
+                    </div>      
+
               </div>  
          
     @stop

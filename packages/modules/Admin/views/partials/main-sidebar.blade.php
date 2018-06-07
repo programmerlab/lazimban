@@ -47,6 +47,20 @@
         </ul>
       </li>
 
+      <li class="treeview {{ (isset($page_action) && $page_title=='Default Category')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Set Default Menu</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+        
+           <li class="{{ (isset($page_action) && $page_action=='Default Category List')?"active":'' }}" ><a href="{{ route('category-dashboard')}}"><i class="fa fa-user-plus"></i> Set default menu</a></li>
+           
+        </ul>
+      </li>
+
+
       <li class="treeview {{ (isset($page_action) && $page_title=='Product')?"active":'' }} ">
         <a href="#">
           <i class="fa fa-user"></i>

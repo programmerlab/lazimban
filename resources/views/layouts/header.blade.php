@@ -106,13 +106,26 @@
                                       <button data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                                   </div>
                                   <div class="navbar-inverse side-collapse in">
+
                                       <nav role="navigation" class="navbar-collapse">
+                                      @if(isset($category_menu) && $category_menu->count()==0) 
+                                        <ul class="nav navbar-nav">
+                                       
+                                             
+                                            @foreach($categories as $key => $value)
+                                            <li><a href="{{ url($value['slug']) }}">{{ $value['name'] }}</a></li>
+                                            @endforeach
+                                        
+                                        </ul>
+                                     @else 
+
                                       <ul class="nav navbar-nav">
-                                      @foreach($categories as $key => $value)
-                                      <li><a href="{{ url($value['slug']) }}">{{ $value['name'] }}</a></li>
+                                      @foreach($category_menu as $key => $menu)
+                                      <li><a href="{{ url($menu->category->slug) }}">{{ ucfirst($menu->category->name) }}</a></li>
                                       @endforeach
                                       
                                       </ul>
+                                      @endif
                                       </nav>
                                  </div>
                               </div>

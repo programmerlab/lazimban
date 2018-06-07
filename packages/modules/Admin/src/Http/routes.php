@@ -154,6 +154,23 @@
         ); 
 
 
+         Route::bind('category-dashboard', function($value, $route) {
+                return Modules\Admin\Models\CategoryDashboard::find($value);
+            });
+     
+            Route::resource('admin/category-dashboard', 'Modules\Admin\Http\Controllers\CategoryDashboardController', [
+                'names' => [
+                    'edit' => 'category-dashboard.edit',
+                    'show' => 'category-dashboard.show',
+                    'destroy' => 'category-dashboard.destroy',
+                    'update' => 'category-dashboard.update',
+                    'store' => 'category-dashboard.store',
+                    'index' => 'category-dashboard',
+                    'create' => 'category-dashboard.create',
+                ]
+                    ]
+            );
+
  
         Route::match(['get','post'],'admin/profile', 'Modules\Admin\Http\Controllers\AdminController@profile'); 
             

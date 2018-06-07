@@ -4,7 +4,7 @@
         <div class="col-md-6 text-right">
                 <span><a href="#">Home</a> </span>
                 @if(isset($category_name) && !isset($product->category->name))                                
-                <span><a href="#">{!! $category_name !!} </a> </span>
+                    
                     @else
                 {{$product->category->name or ''}}
                 @endif                            

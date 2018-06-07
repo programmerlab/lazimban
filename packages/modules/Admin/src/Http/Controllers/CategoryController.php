@@ -170,11 +170,16 @@ class CategoryController extends Controller {
        
         $cat = new Category;
         $cat->name                  =  $request->get('category_name');
-        $cat->slug                  = strtolower(str_replace(" ", "-", $request->get('category_name')));
+        if($request->get('slug') && !empty($request->get('slug'))){
+             $cat->slug = strtolower(str_replace(" ", "-", $request->get('slug')));     
+        }else{
+             $cat->slug = strtolower(str_replace(" ", "-", $request->get('category_name')));     
+        }
         $cat->parent_id             = $parent_id;
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');
         $cat->description           =  $request->get('description');
+        
 
         if($request->get('meta_key')){
             $cat->meta_key  = $request->get('meta_key');
@@ -212,11 +217,18 @@ class CategoryController extends Controller {
 
         $cat = Category::find($category->id);
         $cat->name =  $request->get('category_name');
-        $cat->slug = strtolower(str_replace(" ", "-", $request->get('category_name')));
+        if($request->get('slug') && !empty($request->get('slug'))){
+             $cat->slug = strtolower(str_replace(" ", "-", $request->get('slug')));     
+        }else{
+             $cat->slug = strtolower(str_replace(" ", "-", $request->get('category_name')));     
+        }
+       
+        
         $cat->parent_id = $parent_id;
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');
         $cat->level                 =  1;
+
         
         if($request->get('meta_key')){
             $cat->meta_key  = $request->get('meta_key');
