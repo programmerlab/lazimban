@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\SubCategoryRequest;
 use Modules\Admin\Models\User;
 use Modules\Admin\Models\Category;
-use Modules\Admin\Models\SubCategory;
+use Modules\Admin\Models\SubCategory; 
+use Modules\Admin\Models\CategoryDashboard; 
 //use App\Category;
 use Input;
 use Validator;
@@ -222,9 +223,9 @@ class SubCategoryController extends Controller {
     public function destroy(SubCategory $category) {
         
         Category::where('id',$category->id)->delete();
-
+        CategoryDashboard::where('category_id',$category->id)->delete();
         return Redirect::to(route('category'))
-                        ->with('flash_alert_notice', 'Sub Category was successfully deleted!');
+                        ->with('flash_alert_notice', 'Category was successfully deleted!');
     }
 
     public function show(Category $category) {

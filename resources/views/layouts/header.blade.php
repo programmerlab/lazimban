@@ -110,7 +110,7 @@
                                       <nav role="navigation" class="navbar-collapse">
                                       @if(isset($category_menu) && $category_menu->count()==0) 
                                         <ul class="nav navbar-nav">
-                                        
+                                       
                                              
                                             @foreach($categories as $key => $value)
                                             <li><a href="{{ url($value['slug']) }}">{{ $value['name'] }}</a></li>
@@ -121,7 +121,9 @@
 
                                       <ul class="nav navbar-nav">
                                       @foreach($category_menu as $key => $menu)
+                                       @if(isset($menu->category->slug))
                                       <li><a href="{{ url($menu->category->slug) }}">{{ ucfirst($menu->category->name) }}</a></li>
+                                      @endif
                                       @endforeach
                                       
                                       </ul>

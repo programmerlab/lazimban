@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\CategoryRequest;
 use Modules\Admin\Models\User;
 use Modules\Admin\Models\Category;
+use Modules\Admin\Models\CategoryDashboard;
 //use App\Category;
 use Input;
 use Validator;
@@ -251,7 +252,10 @@ class CategoryController extends Controller {
      */
     public function destroy(Category $category) {
         
-        $d = Category::where('id',$category->id)->delete(); 
+      //  $d = Category::where('id',$category->id)->delete(); 
+        dd($category->id);
+            CategoryDashboard::where('category_id',$category->id)->delete();
+
         return Redirect::to(route('category'))
                         ->with('flash_alert_notice', 'Category was successfully deleted!');
     }
