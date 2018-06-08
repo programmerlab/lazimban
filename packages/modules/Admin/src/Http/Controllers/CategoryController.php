@@ -252,9 +252,9 @@ class CategoryController extends Controller {
      */
     public function destroy(Category $category) {
         
-      //  $d = Category::where('id',$category->id)->delete(); 
-        dd($category->id);
-            CategoryDashboard::where('category_id',$category->id)->delete();
+        Category::where('id',$category->id)->delete(); 
+
+        CategoryDashboard::where('category_id',$category->id)->delete();
 
         return Redirect::to(route('category'))
                         ->with('flash_alert_notice', 'Category was successfully deleted!');
