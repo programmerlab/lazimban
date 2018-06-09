@@ -110,23 +110,24 @@
                                       <nav role="navigation" class="navbar-collapse">
                                       @if(isset($category_menu) && $category_menu->count()==0) 
                                         <ul class="nav navbar-nav">
-                                                @foreach ($category_list as $key => $value)  
-                                                    @if(isset($mega_menu[$value->id]))
-                                                    <li><a href="{{ url($value->slug) }}">{!! ucfirst($value->name) !!}</a>
-                                                        <ul>
-                                                         @foreach ($mega_menu[$value->id] as $key => $result)
-                                                            @foreach ($result as $url => $menu)
-                                                            <li class="col-md-3">
-                                                                <ul>
-                                                                     <li><a href="{{url($url)}}">{{ucfirst($menu) }}</a></li>
-                                                                </ul>
-                                                            </li> 
-                                                            @endforeach 
-                                                         @endforeach         
-                                                        </ul>
-                                                    </li>
-                                                    @endif
-                                                @endforeach    
+                                            @foreach ($category_list as $key => $value) 
+                                                <li><a href="{{ url($value->slug) }}">{!! ucfirst($value->name) !!}</a> 
+                                                @if(isset($mega_menu[$value->id]))
+                                                
+                                                    <ul>
+                                                     @foreach ($mega_menu[$value->id] as $key => $result)
+                                                        @foreach ($result as $url => $menu)
+                                                        <li class="col-md-3">
+                                                            <ul>
+                                                                 <li><a href="{{url($url)}}">{{ucfirst($menu) }}</a></li>
+                                                            </ul>
+                                                        </li> 
+                                                        @endforeach 
+                                                     @endforeach         
+                                                    </ul>
+                                                </li>
+                                                @endif
+                                            @endforeach    
                                         </ul>
                                       @endif
                                       </nav>
@@ -136,8 +137,9 @@
                                     <nav role="navigation" class="navbar-collapse">
                                         <ul class="nav navbar-nav">
                                         @foreach ($category_menu as $key => $value)  
-                                            @if(isset($mega_menu[$value->category_id]))
                                             <li><a href="{{ url($value->category->slug) }}">{!! ucfirst($value->category->name) !!}</a>
+                                            @if(isset($mega_menu[$value->category_id]))
+                                           
                                                 <ul>
                                                  @foreach ($mega_menu[$value->category_id] as $key => $result)
                                                     @foreach ($result as $url => $menu)

@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $category_list = \App\Category::where('parent_id',0)->get();
         View::share('category_list',$category_list);
-
+        
 
 
         $cat = $categories = \App\Category::nested()->get(); 
@@ -27,8 +27,10 @@ class AppServiceProvider extends ServiceProvider
             $id = $result['id'];
             while (1) {  
                 $rs = $this->recursive($result); 
-                $mega_menu[$id][] = [$rs['slug']=>$rs['name']]; 
-                  
+                if($rs['name']!=null){
+                    $mega_menu[$id][] = [$rs['slug']=>$rs['name']]; 
+                }
+                
                 $result = $rs;
                 $c = count($result['child']);  
                 if($c==0){
@@ -37,8 +39,7 @@ class AppServiceProvider extends ServiceProvider
             }  
          } 
         View::share('mega_menu',$mega_menu);  
-
-
+ 
 
         $category_menu = CategoryDashboard::with('category')->get();
         
