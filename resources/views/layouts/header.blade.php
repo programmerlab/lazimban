@@ -110,26 +110,52 @@
                                       <nav role="navigation" class="navbar-collapse">
                                       @if(isset($category_menu) && $category_menu->count()==0) 
                                         <ul class="nav navbar-nav">
-                                       
-                                             
-                                            @foreach($categories as $key => $value)
-                                            <li><a href="{{ url($value['slug']) }}">{{ $value['name'] }}</a></li>
-                                            @endforeach
-                                        
+                                                @foreach ($category_list as $key => $value)  
+                                                    @if(isset($mega_menu[$value->id]))
+                                                    <li><a href="{{ url($value->slug) }}">{!! ucfirst($value->name) !!}</a>
+                                                        <ul>
+                                                         @foreach ($mega_menu[$value->id] as $key => $result)
+                                                            @foreach ($result as $url => $menu)
+                                                            <li class="col-md-3">
+                                                                <ul>
+                                                                     <li><a href="{{url($url)}}">{{ucfirst($menu) }}</a></li>
+                                                                </ul>
+                                                            </li> 
+                                                            @endforeach 
+                                                         @endforeach         
+                                                        </ul>
+                                                    </li>
+                                                    @endif
+                                                @endforeach    
                                         </ul>
-                                     @else 
-
-                                      <ul class="nav navbar-nav">
-                                      @foreach($category_menu as $key => $menu)
-                                       @if(isset($menu->category->slug))
-                                      <li><a href="{{ url($menu->category->slug) }}">{{ ucfirst($menu->category->name) }}</a></li>
-                                      @endif
-                                      @endforeach
-                                      
-                                      </ul>
                                       @endif
                                       </nav>
                                  </div>
+
+                                <div class="navbar-inverse side-collapse in">
+                                    <nav role="navigation" class="navbar-collapse">
+                                        <ul class="nav navbar-nav">
+                                        @foreach ($category_menu as $key => $value)  
+                                            @if(isset($mega_menu[$value->category_id]))
+                                            <li><a href="{{ url($value->category->slug) }}">{!! ucfirst($value->category->name) !!}</a>
+                                                <ul>
+                                                 @foreach ($mega_menu[$value->category_id] as $key => $result)
+                                                    @foreach ($result as $url => $menu)
+                                                    <li class="col-md-3">
+                                                        <ul>
+                                                            <li><a href="{{url($url)}}">{{ucfirst($menu) }}</a></li>
+                                                        </ul>
+                                                    </li> 
+                                                    @endforeach 
+                                                 @endforeach         
+                                                </ul>
+                                            </li>
+                                            @endif
+                                        @endforeach    
+                                        </ul>
+                                    </nav>
+                                </div>
+
                               </div>
                           </div>
                       </header>

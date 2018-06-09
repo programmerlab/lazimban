@@ -80,9 +80,9 @@ class CategoryController extends Controller {
                                     ->OrWhere('sub_category_name', 'LIKE', "%$search%");
                         }
                         
-                    })->Paginate($this->record_per_page);
+                    })->Paginate(20);
         } else {
-            $categories = Category::with('subcategory')->Paginate($this->record_per_page);
+            $categories = Category::with('subcategory')->Paginate(20);
         }
         // Category sub category list-----
         $html = "";
