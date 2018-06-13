@@ -177,6 +177,9 @@ class ProductController extends Controller {
     public function checkout(Request $request) 
     {  
         $cart = Cart::content();  
+        if(count($cart)==0){
+            return Redirect::to('/');
+        }
         $pid = [];
         foreach ($cart as $key => $value) {
             $pid[] = $value->id;
@@ -430,6 +433,7 @@ class ProductController extends Controller {
         $billing    = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',1)->first();
         $shipping   = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first(); 
 
+
         foreach ($cart as $key => $result) {
 
             $transaction                = new Transaction;
@@ -446,15 +450,23 @@ class ProductController extends Controller {
         } 
         $cart = Cart::content();  
         if($cart){
-
-            $email_content['receipent_email'] = $billing->email;
+            
             $email_content['subject'] = "Invoice";
             $template = "invoice";
-            $template_content = ['cart'=>$cart ,'billing' => $billing , 'shipping' => $shipping,'transaction'=>$transaction];
-
+            if($billing){
+                $email_content['receipent_email'] = ($billing->email)?$billing->email:(Auth::user()->email);
+                $template_content = ['cart'=>$cart ,'billing' => $billing , 'shipping' => $shipping,'transaction'=>$transaction];
+                
+            }else{
+                $email_content['receipent_email'] = ($shipping->email)?$shipping->email:(Auth::user()->email);
+           
+                $template_content = ['cart'=>$cart ,'billing' => $shipping , 'shipping' => $shipping,'transaction'=>$transaction];
+                
+            }
             $data = $template_content; 
          	
-          Helper::sendMail($email_content, $template, $template_content);
+          $helper =  new   Helper;
+          $helper->sendInvoiceMail($email_content, $template, $template_content);
         } 
 
 
@@ -635,16 +647,7 @@ class ProductController extends Controller {
         
         $email = $request->get('email');
         $user =   User::where('email',$email)->first();
-
-        if($user==null){
-            return Response::json(array(
-                'status' => 0,
-                'code' => 500,
-                'message' => "Oh no! The address you provided isn't in our system",
-                'data'  =>  $request->all()
-                )
-            );
-        }
+ 
         $user_data = User::find($user->id);
         $temp_password = Hash::make($email);
         
@@ -666,23 +669,11 @@ class ProductController extends Controller {
                                 'forgot_password_link'
                             ); 
        
-       return   response()->json(
-                    [ 
-                        "status"=>1,
-                        "code"=> 200,
-                        "message"=>"Reset password link has sent. Please check your email.",
-                        'data' => $request->all()
-                    ]
-                );
-       
-       
-     
-
         return redirect()
                         ->back()
                         ->withInput()  
-                        ->withErrors(['message'=>'Invalid reset password link!']);
-
+                        ->withErrors(['message'=>"Reset password link has sent. Please check your email."]);
     }
 }   
+
 

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title> ShoperSquare.com </title>
+    <title>  {{url('/')}}  </title>
     
     <style>
     .invoice-box{
@@ -93,7 +93,7 @@
                     <table>
                         <tr>
                             <td class="title">
-                                <img src="http://www.guruhomeshops.com/invoice.png">
+                                <img src="https://www.lazimbana.com/laravel/public/new/images/logo-lazimbana.png">
                             </td>
                              
                              <td align="right">
@@ -111,10 +111,10 @@
                     <table>
                         <tr>
                             <td>
-                          {!! isset($company_address->field_value)?$company_address->field_value:"Indore MP 452001" !!} <br>
-                           {{ isset($website_email->field_value)?$website_email->field_value:"info@guruhomeshops.com" }}
+                          {!! isset($company_address->field_value)?$company_address->field_value:"India" !!} <br>
+                           {{ isset($website_email->field_value)?$website_email->field_value:"info@example.com" }}
                            <br>
-                           {{ isset($contact_number->field_value)?$contact_number->field_value:"+91-7067777832" }} 
+                           {{ isset($contact_number->field_value)?$contact_number->field_value:"+91-9827562891" }} 
 
                             </td>
                              
