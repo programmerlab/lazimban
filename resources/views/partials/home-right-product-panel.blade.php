@@ -1,4 +1,4 @@
-<div class="col-md-9">
+<div class="col-md-9 col-sm-8">
                                   <div class="add_panel row">
                                       <div class="col-md-6"><img src="{{ asset('public/new/images/indirim-kazan.jpg') }}"></div>
                                       <div class="col-md-6"><img src="{{ asset('public/new/images/sepette-indirim.jpg') }}"></div>
@@ -60,6 +60,6 @@
                                                 </div>
                                             @endforeach 
                                         @endforeach                                                                   
-                                      </div>	
+                                      </div>  
                                   </div>                        
                               </div>

@@ -32,6 +32,7 @@ use Response;
 use Cart; 
 use PDF;
 use Modules\Admin\Models\Settings;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 /**
  * Class AdminController
@@ -414,8 +415,6 @@ class ProductController extends Controller {
         $user_id    = $this->user_id;
         $cart       = Cart::content();
 
-       
-
         if($cart->count()==0)
         {
            return  Redirect::to('checkout');
@@ -462,12 +461,7 @@ class ProductController extends Controller {
         foreach ($cart as $key => $value) {
              Cart::remove($key);
         }
-
-      //   $request->session()->flush();
-       // $request->session()->keep(['current_user']); 
-
         return view('end-user.thanku',compact('categories','products','category','cart','billing','shipping'));
-
     }
     public function showLoginForm(Request $request)
     {
@@ -509,5 +503,186 @@ class ProductController extends Controller {
 
     }
     
+    public function sendResetPasswordLink(Request $request)
+    {
+
+        $cart       = Cart::content(); 
+        $products   = Product::with('category')->orderBy('id','asc')->get();
+        $categories = Category::nested()->get(); 
+
+        return view('end-user.forgetPasswordForm',compact('categories','products','category','cart'));
+    }
+
+
+    public function resetPassword(Request $request)
+    { 
+        
+        $cart       = Cart::content(); 
+        $products   = Product::with('category')->orderBy('id','asc')->get();
+        $categories = Category::nested()->get(); 
+ 
+        $encryptedValue = ($request->get('key'))?$request->get('key'):''; 
+        $method_name = $request->method();
+        $token = $request->get('token');
+        $email = ($request->get('email'))?$request->get('email'):'';
+        $key = ($request->get('key'))?$request->get('key'):''; 
+        
+
+        if($method_name=='GET')
+        {    
+            try { 
+                $email = Crypt::decrypt($encryptedValue);
+                if (Hash::check($email, $token)) {
+                   return view('end-user.resetPasswordForm',compact('categories','products','category','cart','token','email','key'));
+
+                }else{
+                    return redirect()
+                        ->back()
+                        ->withInput()  
+                        ->withErrors(['message'=>'Invalid reset password link!']);
+                } 
+                
+            } catch (DecryptException $e) {
+
+                return view('end-user.resetPasswordForm',compact('categories','products','category','cart','token','email','key'))
+                            ->withErrors(['message'=>'Invalid reset password link!']);
+
+               }
+            
+        }else
+        {    
+
+           try { 
+
+                $validator = Validator::make($request->all(), [
+                    'password' => 'required',
+                    'confirm_password' => 'required|same:password'
+
+                                    ]);
+
+                if ($validator->fails()) {
+
+                    return redirect()
+                                ->back()
+                                ->withInput()
+                                ->withErrors($validator);
+                    }
+
+                $email = Crypt::decrypt($encryptedValue);
+                $token = $request->get('token');
+                
+                if (Hash::check($email, $token)) {
+                     
+                    $password =  Hash::make($request->get('password'));
+                    $user = User::where('email',$request->get('email'))->update(['password'=>$password]);
+                    
+                    return redirect()
+                            ->back()
+                            ->withInput()  
+                            ->withErrors(['message'=>'Password reset successfully!','class'=>' ']);
+
+                }else{
+                     
+                     //return Redirect::to(URL::previous())->with('message','Invalid token');
+                     return redirect()
+                            ->back()
+                            ->withInput()  
+                            ->withErrors(['message'=>'Invalid reset password link!']);
+                }
+            }catch (DecryptException $e) {
+
+                 return redirect()
+                            ->back()
+                            ->withInput()  
+                            ->withErrors(['message'=>'Invalid reset password link!']);
+
+               }
+            
+        }
+        
+    }
+
+    public function forgetPasswordLink(Request $request)
+    {  
+        $email = $request->input('email');
+        //Server side valiation
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
+
+        $helper = new Helper;
+       
+        if ($validator->fails()) {
+            
+
+        return redirect()
+                        ->back()
+                        ->withInput()  
+                        ->withErrors(['message'=>'Email id is required!']);
+        }
+
+        $user =   User::where('email',$email)->first();
+
+        if($user==null){
+
+        return redirect()
+                        ->back()
+                        ->withInput()  
+                        ->withErrors(['message'=>"Oh no! The address you provided isn't in our system!"]);
+
+
+        }
+        
+        $email = $request->get('email');
+        $user =   User::where('email',$email)->first();
+
+        if($user==null){
+            return Response::json(array(
+                'status' => 0,
+                'code' => 500,
+                'message' => "Oh no! The address you provided isn't in our system",
+                'data'  =>  $request->all()
+                )
+            );
+        }
+        $user_data = User::find($user->id);
+        $temp_password = Hash::make($email);
+        
+      // Send Mail after forget password
+        $temp_password =  Hash::make($email);
+       
+        $email_content = array(
+                        'receipent_email'   => $request->input('email'),
+                        'subject'           => 'Your Account Password',
+                        'name'              => $user->first_name,
+                        'temp_password'     => $temp_password,
+                        'encrypt_key'       => Crypt::encrypt($email),
+                        'greeting'          => 'Admin'
+
+                    );
+        $helper = new Helper;
+        $email_response = $helper->sendMail(
+                                $email_content,
+                                'forgot_password_link'
+                            ); 
+       
+       return   response()->json(
+                    [ 
+                        "status"=>1,
+                        "code"=> 200,
+                        "message"=>"Reset password link has sent. Please check your email.",
+                        'data' => $request->all()
+                    ]
+                );
+       
+       
+     
+
+        return redirect()
+                        ->back()
+                        ->withInput()  
+                        ->withErrors(['message'=>'Invalid reset password link!']);
+
+    }
 }   
 

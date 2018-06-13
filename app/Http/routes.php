@@ -29,6 +29,20 @@ Route::get('myaccount/login',[
         ])->where(['name'=>'myaccount','name'=>'[A-Za-z]+']); 
 
 
+Route::get('myaccount/forgetPassword',[
+          'as' => 'showLoginForm',
+          'uses'  => 'ProductController@sendResetPasswordLink'
+        ])->where(['name'=>'myaccount','name'=>'[A-Za-z]+']); 
+
+
+Route::post('password/email','ProductController@forgetPasswordLink');
+
+
+Route::match(['get','post'],'myaccount/resetPassword','ProductController@resetPassword');
+
+Route::get('password/reset','ProductController@sendResetPasswordLink');  
+
+
 
 
 Route::get('checkout',[
@@ -142,10 +156,17 @@ Route::get('checkout',[
           'uses'  => 'UserController@signup'
         ]); 
 
+
+
   Route::get('login',[
-          'as' => 'login',
-          'uses'  => 'UserController@showLoginForm'
-        ]); 
+          'as' => 'showLoginForm',
+          'uses'  => 'ProductController@showLoginForm'
+        ])->where(['name'=>'myaccount','name'=>'[A-Za-z]+']); 
+
+
+
+
+
 
 Route::post('billing',[
           'as' => 'billing',
@@ -244,8 +265,7 @@ Route::post('login',function(App\User $user , Illuminate\Http\Request $request){
 Route::post('Ajaxlogin',function(App\User $user , Illuminate\Http\Request $request){ 
        
       $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')];  
-       
-          if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
              $request->session()->put('current_user',Auth::user());
              $request->session()->put('tab',1);
            
@@ -259,8 +279,3 @@ Route::post('Ajaxlogin',function(App\User $user , Illuminate\Http\Request $reque
              
 
  });
-
-
-
-
-      

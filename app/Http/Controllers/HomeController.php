@@ -316,4 +316,6 @@ class HomeController extends Controller
         return view('end-user.terms-conditions',compact('categories','products','category')); 
         return view('end-user.terms-conditions');   
     }
+
+  
 }
