@@ -14,8 +14,9 @@
 
 	    <link rel="icon" href="../../favicon.ico">
 
-	    <title>
+	    <title>  
             {{ isset($website_title->field_value)?$website_title->field_value:"ecommerce company" }} 
+         
         </title>
 
 	    <link href="{{ asset('public/new/css/font-awesome.min.css') }}" rel="stylesheet">
