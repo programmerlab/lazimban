@@ -268,9 +268,12 @@ Route::post('Ajaxlogin',function(App\User $user , Illuminate\Http\Request $reque
         if (Auth::attempt($credentials)) {
              $request->session()->put('current_user',Auth::user());
              $request->session()->put('tab',1);
-           
-              return Redirect::to(url()->previous());
-               // return  json_encode(['msg'=>'success','code'=>200,'data'=>Auth::user()]); 
+             
+             if($request->ajax()){
+                return  json_encode(['msg'=>'success','code'=>200,'data'=>Auth::user()]); 
+            }
+              return Redirect::to(URL::previous());
+               // 
           }else{  
                return  json_encode(['msg'=>'Invalid email or password','code'=>500,'data'=>$request->all()]); 
                //return Redirect::to(url()->previous());

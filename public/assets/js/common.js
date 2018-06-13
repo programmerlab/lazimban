@@ -83,11 +83,11 @@ function loginBtn()
         },
          dataType: "json",
         success: function(response) {
-            
             if(response.code==200)
             { 
                 var msg = response.msg;
                // bootbox.alert(msg); 
+               location.reload();
                 $('#register').remove();
             }else
             {   var msg = response.msg;
