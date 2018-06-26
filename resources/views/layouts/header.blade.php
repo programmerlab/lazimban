@@ -18,7 +18,7 @@
             @if(isset($category_name) && !isset($product->category->name))    
             {{ isset($category)?$category:''}}                             
                     @else
-                {{$product->category->name }} | {{$main_title}} 
+                {{$product->category->name or '' }} | {{$main_title or ''}} 
                 @endif                      
                 
         </title>
