@@ -215,7 +215,7 @@ class HomeController extends Controller
             $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
 
         }
-       
+        $category = isset($catID->name)?$catID->name:null;
         $categories = Category::nested()->get();  
         return view('end-user.category',compact('categories','products','category','q','category','catID'));   
     }
@@ -227,7 +227,7 @@ class HomeController extends Controller
         $q = Input::get('q'); 
          
         $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
-           
+         
         if($catID!=null && $catID->count()){ 
             $products = Product::with('category')->where('product_category',$catID->id)->orderBy('id','asc')->get();
             
@@ -252,7 +252,7 @@ class HomeController extends Controller
             $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
 
         }
-       
+         $category = isset($catID->name)?$catID->name:null;
         $categories = Category::nested()->get(); 
         return view('end-user.category',compact('categories','products','category','q','category'));   
     }
