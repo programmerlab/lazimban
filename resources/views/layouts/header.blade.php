@@ -15,10 +15,11 @@
       <link rel="icon" href="../../favicon.ico">
 
       <title> Lazımbana:
-            @if(isset($category_name) && !isset($product->category->name))    
+            @if(isset($category))    
             {{ isset($category)?$category:''}}                             
                     @else
-                {{$product->category->name or '' }} | {{$main_title or ''}} 
+                {{  $main_title  or $product->category->name }}
+
                 @endif                      
                 
         </title>
