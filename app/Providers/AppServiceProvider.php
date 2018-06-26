@@ -55,6 +55,8 @@ class AppServiceProvider extends ServiceProvider
 
         View::share('category_menu',$category_menu);
 
+        $title = last(request()->segments());
+        View::share('main_title',$title);
     }
 
     /**

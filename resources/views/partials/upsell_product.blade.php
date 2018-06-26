@@ -8,7 +8,7 @@
      <div class="product">         
           <div class="product-image">
                <div class="image">
-                    <a href="detail.html"><img  src="assets/images/products/p1.jpg" alt=""></a>
+                    <a href="#"><img  src="assets/images/products/p1.jpg" alt=""></a>
                </div><!-- /.image -->             
 
                            <div class="tag sale"><span>sale</span></div>                     
@@ -16,7 +16,7 @@
                
           
           <div class="product-info text-left">
-               <h3 class="name"><a href="detail.html">Floral Print Buttoned</a></h3>
+               <h3 class="name"><a href="#">Floral Print Buttoned</a></h3>
                <div class="rating rateit-small"></div>
                <div class="description"></div>
 
@@ -40,13 +40,13 @@
                               </li>
                         
                           <li class="lnk wishlist">
-                                   <a class="add-to-cart" href="detail.html" title="Wishlist">
+                                   <a class="add-to-cart" href="#" title="Wishlist">
                                          <i class="icon fa fa-heart"></i>
                                    </a>
                               </li>
 
                               <li class="lnk">
-                                   <a class="add-to-cart" href="detail.html" title="Compare">
+                                   <a class="add-to-cart" href="#" title="Compare">
                                        <i class="fa fa-signal"></i>
                                    </a>
                               </li>
@@ -64,7 +64,7 @@
      <div class="product">         
           <div class="product-image">
                <div class="image">
-                    <a href="detail.html"><img  src="assets/images/products/p2.jpg" alt=""></a>
+                    <a href="#"><img  src="assets/images/products/p2.jpg" alt=""></a>
                </div><!-- /.image -->             
 
                            <div class="tag sale"><span>sale</span></div>                     

@@ -245,8 +245,7 @@ class HomeController extends Controller
                                 ->get();
            
                  }
-
-                 
+ 
             } 
         }else{
             $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
@@ -259,7 +258,6 @@ class HomeController extends Controller
     /*----------*/
     public function productDetail($subCategoryName=null,$productName=null)
     {   
-       
         $product = Product::with('category')->where('slug',$productName)->first();
          
         $categories = Category::nested()->get();  
@@ -272,8 +270,8 @@ class HomeController extends Controller
           $product->views=$product->views+1;
           $product->save(); 
         }
-        
-        return view('end-user.product-details',compact('categories','product')); 
+        $main_title=  $product->product_title;
+        return view('end-user.product-details',compact('categories','product','main_title')); 
     }
      /*----------*/
     public function order(Request $request)
