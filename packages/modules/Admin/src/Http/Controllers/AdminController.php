@@ -70,6 +70,7 @@ class AdminController extends Controller {
    public function profile(Request $request,Admin $users)
    {
         $users = Admin::find(Auth::guard('admin')->user()->id);
+
         $page_title = "Profile";
         $page_action = "My Profile";
         $viewPage = "Admin";
@@ -88,12 +89,12 @@ class AdminController extends Controller {
 
             $error_msg  =   $validator->messages()->all(); 
         }
-            $users->name= $request->get('name');
-            $users->email= $request->get('email');
-            $users->password=  Hash::make($request->get('password'));
+            $users->full_name = $request->get('name'); 
+            $users->name = $request->get('name'); 
+            $users->password  =  Hash::make($request->get('password'));
             $users->save();
             $method = $request->method();
-            $msg = "Information successfully updated!";
+            $msg    = "Information successfully updated!";
         } 
        
         return view('packages::users.admin.index',compact('error_msg','method','users','page_title','page_action','viewPage'))->with('flash_alert_notice', $msg)->withInput($request->all());
