@@ -14,7 +14,7 @@ use View;
 class Controller extends BaseController
 {
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
-
+ 
 
     public function __construct(){
     	
@@ -42,5 +42,5 @@ class Controller extends BaseController
         }else{
             View::share('mega_menu',[]);
         }
-    }    
+    }
 }

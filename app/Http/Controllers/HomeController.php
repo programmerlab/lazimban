@@ -206,16 +206,14 @@ class HomeController extends Controller
                     $products = Product::with('category')->whereIn('product_category',$sub_cat)
                                 ->where('product_title','LIKE','%'.$q.'%')
                                 ->orderBy('id','asc')
-                                ->get();
-                     
-                 } 
-                 
+                                ->get(); 
+                 }  
             } 
         }else{
             $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
 
-        }
-       
+        } 
+        $category = isset($catID->name)?$catID->name:null; 
         $categories = Category::nested()->get();  
         return view('end-user.category',compact('categories','products','category','q','category','catID'));   
     }
@@ -226,8 +224,7 @@ class HomeController extends Controller
         $request = new Request;
         $q = Input::get('q'); 
          
-        $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
-           
+        $catID = Category::where('slug',$category)->orWhere('name',$category)->first(); 
         if($catID!=null && $catID->count()){ 
             $products = Product::with('category')->where('product_category',$catID->id)->orderBy('id','asc')->get();
             
@@ -244,22 +241,19 @@ class HomeController extends Controller
                                 ->orderBy('id','asc')
                                 ->get();
            
-                 }
-
-                 
+                 } 
             } 
         }else{
             $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
 
-        }
-       
+        } 
+         $category = isset($catID->name)?$catID->name:null; 
         $categories = Category::nested()->get(); 
         return view('end-user.category',compact('categories','products','category','q','category'));   
     }
     /*----------*/
     public function productDetail($subCategoryName=null,$productName=null)
-    {   
-       
+    {    
         $product = Product::with('category')->where('slug',$productName)->first();
          
         $categories = Category::nested()->get();  
@@ -271,9 +265,9 @@ class HomeController extends Controller
         }else{
           $product->views=$product->views+1;
           $product->save(); 
-        }
-        
-        return view('end-user.product-details',compact('categories','product')); 
+        } 
+        $main_title=  $product->product_title;
+        return view('end-user.product-details',compact('categories','product','main_title'));  
     }
      /*----------*/
     public function order(Request $request)

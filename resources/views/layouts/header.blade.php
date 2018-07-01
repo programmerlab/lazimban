@@ -13,9 +13,13 @@
 
 
       <link rel="icon" href="../../favicon.ico">
-
-      <title>
-            {{ isset($website_title->field_value)?$website_title->field_value:"ecommerce company" }} 
+ 
+      <title> {{ isset($website_title->field_value)?$website_title->field_value:"/" }} : 
+            @if(isset($category))    
+            {{ isset($category)?$category:''}}                             
+                    @else
+                {{  $main_title  or $product->category->name }}
+                @endif
         </title>
 
       <link href="{{ asset('public/new/css/font-awesome.min.css') }}" rel="stylesheet">

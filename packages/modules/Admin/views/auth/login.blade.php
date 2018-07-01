@@ -22,9 +22,9 @@
   <body class="hold-transition login-page">
     <div class="login-box">
       <div class="login-logo">
-        <h2 style="color: #006B63"><b>Admin Panel</b></h2>
+        <a href="#"><b>Admin Panel</b></a>
       </div><!-- /.login-logo -->
-      <div class="login-box-body" style="width: 400px; border-radius: 10px;padding: 50px;"> 
+      <div class="login-box-body"> 
         <p class="login-box-msg"> 
           @if (count($errors) > 0)
             <div class="alert alert-danger">
@@ -38,7 +38,12 @@
 
           {!! Form::model($user, ['url' => ['admin/login'],'class'=>'form-horizontal','files' => true]) !!}
             @include('packages::auth.form')
-          {!! Form::close() !!} 
+          {!! Form::close() !!}
+
+        
+        <a href="{{ url('admin/signUp') }}">Create an account!</a>
+ 
+        <br> 
 
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
