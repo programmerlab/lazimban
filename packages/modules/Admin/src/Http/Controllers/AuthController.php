@@ -44,15 +44,31 @@ class AuthController extends Controller
  	*/
  	public function registration(Request $request)
 	{	 
-		$input['first_name'] 	= $request->input('name');
-    	$input['email'] 		= $request->input('email'); 
-    	$input['password'] 	    = Hash::make($request->input('password'));
-    	
+		  
+        $user = new Admin;    
+
+        $table_cname = \Schema::getColumnListing('admin');
+        $except = ['id','created_at','updated_at','password_confirmation'];
+        $user->user_type=2;
+        foreach ($table_cname as $key => $value) {
+           
+           if(in_array($value, $except )){
+                continue;
+           } 
+            if($request->get($value) ){
+                if($value=='password'){
+                  $user->$value = Hash::make($request->get($value));  
+              }else{
+                $user->$value = $request->get($value);
+              }
+                
+           }
+        } 
 
         //Server side valiation
         $validator = Validator::make($request->all(), [
-           	'name'		=> 	'required',
-            'email'     =>  'required|email|unique:users',
+           	'full_name'		=> 	'required',
+            'email'     =>  'required|email|unique:admin',
 	        'password' => 'required|min:6',
 	        'password_confirmation' => 'required|same:password'
         ]);
@@ -63,19 +79,25 @@ class AuthController extends Controller
 	        foreach ( $validator->messages()->messages() as $key => $value) {
 	        			  	$errors->$key= $value[0]	;
     		} 
+
          	return redirect()
                             ->back()
                             ->withInput()  
                             ->withErrors(['errors'=>$errors]); 
         }   
         /** --Create admin-- **/
-        $user = Admin::create($input); 
-
+        $user->save(); 
 		return view::make('packages::auth.signup-success');
 	} 
 
-	public function signUp	()
+	public function signUp( Request $request)
 	{	 
+        if($request->method()=='POST'){
+            return redirect()
+                            ->back()
+                            ->withInput()  
+                            ->withErrors(['errors'=>$errors]); 
+        }
 		return view::make('packages::auth.register');
 	} 
 	

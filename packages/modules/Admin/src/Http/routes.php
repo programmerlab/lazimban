@@ -3,15 +3,23 @@
       Route::get('admin/login','Modules\Admin\Http\Controllers\AuthController@index');
       Route::get('logout','Modules\Admin\Http\Controllers\AuthController@logout');  
       Route::get('admin/signUp','Modules\Admin\Http\Controllers\AuthController@signUp'); 
+
+       
       Route::post('admin/registration','Modules\Admin\Http\Controllers\AuthController@registration'); 
       
       Route::post('admin/login',function(App\Admin $user){
-        $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')]; 
+        $credentials = ['email' => Input::get('email'), 'password' => Input::get('password'),'user_type'=>1]; 
+            $auth = auth()->guard('admin');
+
+        $credentials2 = ['email' => Input::get('email'), 'password' => Input::get('password'),'user_type'=>2]; 
             $auth = auth()->guard('admin');
         
             if ($auth->attempt($credentials)) {
                 return Redirect::to('admin');
-            }else{ 
+            }if ($auth->attempt($credentials2)) {
+                return Redirect::to('admin');
+            }
+            else{ 
                 return redirect()
                             ->back()
                             ->withInput()  
