@@ -16,10 +16,10 @@ class Controller extends BaseController
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
  
 
-    public function __construct(){
-    	
+    public function __construct(\Request $request){
+    	 
     	$cat  = Category::nested()->get(); 
-        
+       
         if(isset($cat)){
             $mega_menu = [];
             foreach ($cat as $key => $result) {
@@ -41,6 +41,13 @@ class Controller extends BaseController
          View::share('mega_menu',$mega_menu);  
         }else{
             View::share('mega_menu',[]);
+        }
+    }
+
+    public function recursive($result){
+        
+        foreach ($result['child'] as $key => $value) {
+            return $value;
         }
     }
 }
