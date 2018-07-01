@@ -22,7 +22,7 @@
   <body class="hold-transition login-page">
     <div class="login-box">
       <div class="login-logo">
-        <a href="#"><b>Admin Panel</b></a>
+        <a href="#"><b>Login Panel</b></a>
       </div><!-- /.login-logo -->
       <div class="login-box-body"> 
         <p class="login-box-msg"> 
