@@ -42,6 +42,7 @@
     </head>
 
         <body>
+        
             <div class="container">
                 <div class="container_bg row">
                       <div class="top_bar">
@@ -116,7 +117,7 @@
                                   </div>
                                   
                                   <div class="navbar-inverse side-collapse in">
-
+                                    
                                       <nav role="navigation" class="navbar-collapse">
                                       @if(isset($category_menu) && $category_menu->count()==0) 
                                         <ul class="nav navbar-nav">
@@ -143,16 +144,19 @@
                                       </nav>
                                  </div>
 
-                                <div class="navbar-inverse side-collapse in">
+                                <!--<div class="navbar-inverse side-collapse in">
                                     <nav role="navigation" class="navbar-collapse">
                                         <ul class="nav navbar-nav">
+                                        
                                         @foreach ($category_menu as $key => $value)  
                                             <li><a href="{{ url($value->category->slug) }}">{!! ucfirst($value->category->name) !!}</a>
                                             @if(isset($mega_menu[$value->category_id]))
                                            
                                                 <ul>
                                                  @foreach ($mega_menu[$value->category_id] as $key => $result)
+                                                    
                                                     @foreach ($result as $url => $menu)
+                                                    
                                                     <li class="col-md-3">
                                                         <ul>
                                                             <li><a href="{{url($url)}}">{{ucfirst($menu) }}</a></li>
@@ -161,8 +165,54 @@
                                                     @endforeach 
                                                  @endforeach         
                                                 </ul>
-                                            </li>
                                             @endif
+                                            </li>
+                                            
+                                        @endforeach    
+                                        </ul>
+                                    </nav>
+                                </div>-->
+                                <div class="navbar-inverse side-collapse in">
+                                    <nav role="navigation" class="navbar-collapse">
+                                        <ul class="nav navbar-nav">
+                                        
+                                        @foreach ($cats as $key => $value)
+                                            @if($value['name'] != NULL)
+                                                <li><a href="{{ url($value['slug']) }}">{!! ucfirst($value['name']) !!}</a>
+                                            @endif
+                                            @if(isset($value['child']) && count($value['child'] > 0) && $value['name'] != NULL )
+                                                <ul onmouseenter="func();">
+                                                    @foreach ($value['child'] as $key => $result)
+                                                        @if($result['name'] != NULL)
+                                                        <li>
+                                                            <a href="{{ url($result['slug']) }}">{!! ucfirst($result['name']) !!}</a>
+                                                               @if(isset($result['child']) && count($result['child'] > 0) && $result['name'] != NULL )
+                                                                   <ul>
+                                                                        @foreach ($result['child'] as $key => $menu)
+                                                                            @if($menu['name'] != NULL)
+                                                                                <li>
+                                                                                    <a href="{{ url($menu['slug']) }}">{!! ucfirst($menu['name']) !!}</a>
+                                                                                        @if(isset($menu['child']) && count($menu['child'] > 0) && $menu['name'] != NULL )
+                                                                                            <ul>
+                                                                                                @foreach ($menu['child'] as $key => $submenu)
+                                                                                                    @if($submenu['name'] != NULL)
+                                                                                                        <li><a href="{{ url($submenu['slug']) }}">{!! ucfirst($submenu['name']) !!}</a></li>
+                                                                                                    @endif
+                                                                                                @endforeach
+                                                                                            </ul>
+                                                                                        @endif
+                                                                                </li>
+                                                                            @endif       
+                                                                        @endforeach    
+                                                                   </ul>
+                                                               @endif
+                                                        </li>
+                                                        @endif
+                                                    @endforeach   
+                                                </ul>
+                                            @endif
+                                            </li>
+                                            
                                         @endforeach    
                                         </ul>
                                     </nav>
@@ -171,3 +221,8 @@
                               </div>
                           </div>
                       </header>
+                      <script>
+                        function func(){
+                           // $(this).parent('li').css( "background-color", "red" );
+                        }
+                      </script>  

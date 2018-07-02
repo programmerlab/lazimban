@@ -26,7 +26,8 @@ class AppServiceProvider extends ServiceProvider
             $category = $result['name'];
             $id = $result['id'];
             while (1) {  
-                $rs = $this->recursive($result); 
+                $rs = $this->recursive($result);
+                //echo "<pre>"; print_r($rs); 
                 if($rs['name']!=null){
                     $mega_menu[$id][] = [$rs['slug']=>$rs['name']]; 
                 }
@@ -37,12 +38,15 @@ class AppServiceProvider extends ServiceProvider
                     break;
                 }
             }  
-         } 
+         }
+         
+        
+         
         View::share('mega_menu',$mega_menu);  
- 
+        View::share('cats',$cat); 
 
         $category_menu = CategoryDashboard::with('category')->get();
-        
+        //echo "<pre>";  print_r($cat); die;
         foreach ($category_list as $key => $value) {   
              if(isset($mega_menu[$value->id])){
                 foreach ($mega_menu[$value->id] as $key => $result) {  
@@ -73,7 +77,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     public function recursive($result){
-        
+        //echo "<pre>"; print_r($result); die;
         foreach ($result['child'] as $key => $value) {
             return $value;
         }

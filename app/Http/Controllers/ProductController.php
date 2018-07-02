@@ -52,7 +52,7 @@ class ProductController extends Controller {
     private $user_id;
 
     public function __construct(Request $request, Settings $setting) {
-
+    
         View::share('category_name', $request->segment(1));
         View::share('total_item',Cart::content()->count());
         View::share('sub_total',Cart::subtotal());  
@@ -132,7 +132,8 @@ class ProductController extends Controller {
     {    
          $category = Input::get('q'); 
          $q = Input::get('q');
-         $categories     = Category::nested()->get();  
+         $categories     = Category::nested()->get();
+         
          if($q)
          {
             $products = Product::with('category')
@@ -150,9 +151,9 @@ class ProductController extends Controller {
          }
         
          
+        //echo "<pre>"; print_r($categories); die;
 
-
- 
+        
         return view('end-user.home', compact('special_deals','hot_products','banner_path1', 'banner_path2','categories','products','product_new')); 
     }
 

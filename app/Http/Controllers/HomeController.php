@@ -107,7 +107,7 @@ class HomeController extends Controller
     public function index()
     {
        // $categories = Category::nested()->get();
-
+        
         return view('home'); 
 
 
@@ -122,11 +122,11 @@ class HomeController extends Controller
 
     public function category(Request $request)
     {
-
+        
         $btn = $request->get('submit_btn');
 
         if($btn=="Add Category")
-        {
+        {            
             $name = $request->get('sub_cat');
             $slug = str_slug($request->get('sub_cat'));
             $parent_id = 0;
@@ -153,7 +153,8 @@ class HomeController extends Controller
         $categories =  Category::attr(['name' => 'categories'])
                         ->selected([3])
                         ->renderAsDropdown();
-
+        
+        
        $html =  Category::renderAsHtml(); 
 
        return view('category',compact('categories','html'));

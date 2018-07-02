@@ -84,22 +84,26 @@ class CategoryController extends Controller {
         } else {
             $categories = Category::with('subcategory')->Paginate(20);
         }
+        
+        //echo "<pre>"; print_r($categories); die;
         // Category sub category list-----
         $html = "";
         $categories2 = Category::with('children')->where('parent_id',0)->get();
+        //echo "<pre>"; print_r($categories2); die;
         $cname = [];
         $level = 1;
         foreach ($categories2 as $key => $value) {
               //  $cname[$value->name][$value->id][] = ['id'=>$value->id, 'cname'=>$value->name,'level'=>$value->level];
             $cname[$value->name][] = ['id'=>$value->id, 'cname'=>$value->name,'level'=>$value->level];
-
+            
             $arr[] = ['id'=>$value->id, 'parent_id'=>$value->parent_id, 'cname'=>$value->name,'level'=>$value->level];
 
 
             $html .= str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $value->level).$value->name;
             $r = route('category.edit',$value->id);
             $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i> &nbsp;&nbsp;</a>'.'<br>';
-
+            
+            //echo "<pre>"; print_r($value->id); die;
             $cat = Category::where('parent_id',$value->id)->get();
             foreach ($cat as $key => $result) {
                 $parent_id = $result->id; 
@@ -111,9 +115,10 @@ class CategoryController extends Controller {
                 $arr[] = ['id'=>$result->id, 'parent_id'=>$result->parent_id, 'cname'=>$result->name,'level'=>$result->level];
                 while (1) {
                     $data = Category::where('parent_id',$parent_id)->first();
-                   
+                    //echo "<pre>"; print_r($data);
                     if($data)
                     {
+                        
                         $level++;
                         $parent_id = $data->id;
 
@@ -123,16 +128,19 @@ class CategoryController extends Controller {
                          $r         = route('sub-category.edit',$data->id);
                          $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i> &nbsp;&nbsp;</a> '.'<br>';
                          $arr[]  = ['id'=>$data->id, 'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level];
+                    
                     }else{
                         break;
                     }
                 }
                 
             }
+           
             $result_set[$value->id]  = $arr; 
             $arr    = []; 
         }  
         
+        //echo "<pre>"; print_r($result_set); die;
         return view('packages::category.index', compact('result_set','categories','data', 'page_title', 'page_action','html'));
     }
 
