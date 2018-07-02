@@ -599,6 +599,12 @@ transition-property: opacity, margin-top, visibility;
     text-align: center;
 }
 
+
+.nav >li >ul >li{ float: left; width: 25%;}
+.nav >li >ul >li >a{ font-weight: 600; font-size: 16px; color: #dd3333;}
+.nav >li >ul >li li a{ border: none; padding: 2px 10px;}
+.nav >li >ul >li li ul{ padding-left: 15px;}
+
 .product_range,.product_range_inner{ float:left; width:100%;}
 .product_range{ margin-bottom:20px;}
 .page_title {

@@ -17,31 +17,39 @@ class Controller extends BaseController
  
 
     public function __construct(\Request $request){
-    	 
-    	$cat  = Category::nested()->get(); 
-       
-        if(isset($cat)){
-            $mega_menu = [];
-            foreach ($cat as $key => $result) {
-                $category = $result['name'];
-                $id = $result['id'];
-                while (1) {  
-                    $rs = $this->recursive($result); 
-                    if($rs['name']!=null){
-                        $mega_menu[$id][] = [$rs['slug']=>$rs['name']]; 
-                    }
-                    
-                    $result = $rs;
-                    $c = count($result['child']);  
-                    if($c==0){
-                        break;
-                    }
-                }  
-             } 
-         View::share('mega_menu',$mega_menu);  
-        }else{
-            View::share('mega_menu',[]);
-        }
+        
+        $category_list = Category::where('parent_id',0)->get();
+        View::share('category_list',$category_list);
+        $cat = Category::nested()->get();
+        $mega_menu = [];
+        foreach ($cat as $key => $result) {
+            $category = $result['name'];
+            $id = $result['id'];
+            while (1) {  
+                $rs = $this->recursive($result);
+                //echo "<pre>"; print_r($rs); 
+                if($rs['name']!=null){
+                    $mega_menu[$id][] = [$rs['slug']=>$rs['name']]; 
+                }
+                
+                $result = $rs;
+                $c = count($result['child']);  
+                if($c==0){
+                    break;
+                }
+            }  
+         } 
+         
+        View::share('mega_menu',$mega_menu);  
+       // View::share('cats',$cat); 
+
+        $category_menu = CategoryDashboard::with('category')->get();
+        
+
+        View::share('category_menu',$category_menu);
+
+        $title = last(request()->segments());
+        View::share('main_title',$title);
     }
 
     public function recursive($result){
