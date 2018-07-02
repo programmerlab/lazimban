@@ -69,6 +69,18 @@
            
         </ul>
       </li> 
+
+      <li class="treeview {{ (isset($page_action) && $page_title=='Product')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Manage Product</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a> 
+        <ul class="treeview-menu">
+          <li class="{{ (isset($page_action) && $page_action=='Create Product')?"active":'' }}" ><a href="{{ route('product.create')}}"><i class="fa fa-user-plus"></i> Create Product</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='View Product')?"active":'' }}"><a href="{{ route('product')}}"><i class="fa  fa-list"></i> View Product</a></li>
+        </ul>
+      </li>  
         
       <li class="treeview {{ (isset($page_action) && $page_title=='Transaction')?"active":'' }} ">
         <a href="#">
