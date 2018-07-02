@@ -162,6 +162,10 @@ class ProductController extends Controller {
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->url                =   $url;
+
+            if($request->get('title')){
+                $product->title  = $request->get('title');
+            }
  
             $product->save(); 
            
@@ -226,6 +230,10 @@ class ProductController extends Controller {
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->url               =   $url;
+
+            if($request->get('title')){
+                $product->title  = $request->get('title');
+            }
             
             $product->save(); 
         }else{
@@ -247,6 +255,10 @@ class ProductController extends Controller {
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->url                =   $url;
+
+            if($request->get('title')){
+                $product->title  = $request->get('title');
+            }
             
             $product->save(); 
         }
