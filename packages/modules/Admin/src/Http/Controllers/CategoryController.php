@@ -67,6 +67,7 @@ class CategoryController extends Controller {
             echo $s;
             exit();
         }
+
         // Search by name ,email and group
         $search = Input::get('search');
         $status = Input::get('status');
@@ -80,17 +81,19 @@ class CategoryController extends Controller {
                                     ->OrWhere('sub_category_name', 'LIKE', "%$search%");
                         }
                         
-                    })->Paginate(20);
+                    })->get();
         } else {
-            $categories = Category::with('subcategory')->Paginate(20);
+            $categories = Category::with('subcategory')->get();
         }
+
         // Category sub category list-----
         $html = "";
         $categories2 = Category::with('children')->where('parent_id',0)->get();
         $cname = [];
-        $level = 1;
+        $level = 1; 
+
         foreach ($categories2 as $key => $value) {
-              //  $cname[$value->name][$value->id][] = ['id'=>$value->id, 'cname'=>$value->name,'level'=>$value->level];
+             
             $cname[$value->name][] = ['id'=>$value->id, 'cname'=>$value->name,'level'=>$value->level];
 
             $arr[] = ['id'=>$value->id, 'parent_id'=>$value->parent_id, 'cname'=>$value->name,'level'=>$value->level];
@@ -101,6 +104,8 @@ class CategoryController extends Controller {
             $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i> &nbsp;&nbsp;</a>'.'<br>';
 
             $cat = Category::where('parent_id',$value->id)->get();
+ 
+
             foreach ($cat as $key => $result) {
                 $parent_id = $result->id; 
 
@@ -109,9 +114,33 @@ class CategoryController extends Controller {
                 $r = route('sub-category.edit',$result->id);
                 $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i>&nbsp;&nbsp;</a>'.'<br>';
                 $arr[] = ['id'=>$result->id, 'parent_id'=>$result->parent_id, 'cname'=>$result->name,'level'=>$result->level];
+
                 while (1) {
-                    $data = Category::where('parent_id',$parent_id)->first();
-                   
+
+                    $data = Category::where('parent_id',$parent_id)->get();
+                    
+                    if(count($data)>1){
+
+                        foreach ($data  as $key => $data) {
+                             if($data)
+                            {
+                                $level++;
+                                $parent_id = $data->id;
+
+                                $cname[$value->name][$result->id][$parent_id][] = ['id'=>$data->id,'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level];
+
+                                 $html  .= str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $data->level).$data->name;
+                                 $r         = route('sub-category.edit',$data->id);
+                                 $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i> &nbsp;&nbsp;</a> '.'<br>';
+                                 $arr[]  = ['id'=>$data->id, 'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level];
+                            }else{
+                                break;
+                        }
+                        }
+
+                    }else{
+                        $data = Category::where('parent_id',$parent_id)->first(); 
+
                     if($data)
                     {
                         $level++;
@@ -126,14 +155,18 @@ class CategoryController extends Controller {
                     }else{
                         break;
                     }
-                }
-                
+                    }
+                } 
             }
             $result_set[$value->id]  = $arr; 
             $arr    = []; 
-        }  
-        
-        return view('packages::category.index', compact('result_set','categories','data', 'page_title', 'page_action','html'));
+        }   
+       // category/106/edit
+
+        $category_listing = Category::route(['category' => 'id'])->renderAsHtml();
+
+
+        return view('packages::category.index', compact('result_set','categories','data', 'page_title', 'page_action','html','category_listing'));
     }
 
     /*

@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use View;
 use Modules\Admin\Models\CategoryDashboard; 
+use Modules\Admin\Models\Category;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,17 +17,18 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $category_list = \App\Category::where('parent_id',0)->get();
-        View::share('category_list',$category_list);
-        
-
+        View::share('category_list',$category_list); 
+    
 
         $cat = $categories = \App\Category::nested()->get(); 
         $mega_menu = [];
         foreach ($cat as $key => $result) {
             $category = $result['name'];
             $id = $result['id'];
-            while (1) {  
+            while (1) { 
                 $rs = $this->recursive($result);
+
+
                 //echo "<pre>"; print_r($rs); 
                 if($rs['name']!=null){
                     $mega_menu[$id][] = [$rs['slug']=>$rs['name']]; 
@@ -39,6 +41,8 @@ class AppServiceProvider extends ServiceProvider
                 }
             }  
          }
+         
+        
          
         View::share('mega_menu',$mega_menu);  
         View::share('cats',$cat); 
@@ -65,7 +69,8 @@ class AppServiceProvider extends ServiceProvider
     }
 
     public function recursive($result){
-        //echo "<pre>"; print_r($result); die;
+       // echo "<pre>"; print_r($result); die;
+       // dd($result);
         foreach ($result['child'] as $key => $value) {
             return $value;
         }

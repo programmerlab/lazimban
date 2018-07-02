@@ -40,7 +40,7 @@
                                            </div>
                                       @endif 
                                       <div class="box-body table-responsive no-padding" >
-                            
+                                      {!!  $category_listing !!}
                                         <table class="table table-hover table-condensed">
                                           <thead>
                                             <tr>
