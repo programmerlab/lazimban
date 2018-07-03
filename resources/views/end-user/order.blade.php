@@ -8,7 +8,7 @@
 
         @section('content') 
 
-            @include('partials.menu')
+            @include('partials.breadcrumb')
             <!-- Left side column. contains the logo and sidebar -->
             <div class="body-content">
     <div class="container">
@@ -25,7 +25,7 @@
         <div class="panel-heading">
         <h4 class="unicase-checkout-title"> 
             <a  data-toggle="collapse" class="{{ ($tab==0)?'':'collapse'}}"  data-parent="#accordion" href="index.htm#collapseOne">
-              <span>1</span>Checkout Method
+              <span># </span>Checkout Method
             </a>
          </h4>
     </div>
@@ -70,7 +70,7 @@
                 <div class="col-md-6 col-sm-6 already-registered-login">
                     <h4 class="checkout-subtitle">Already registered?</h4> 
 
-                       <form method="POST" action="{{ url('Ajaxlogin') }}"  class="form-horizontal" role="form">
+                       <form method="POST" action="{{ url('Ajaxlogin') }}"  class="form-horizontal" role="form" id="loginForm">
                         {!! csrf_field() !!}
                         <div class="form-group">
                         <label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
@@ -81,8 +81,8 @@
                         <input class="form-control unicase-form-control text-input" name="password" id="exampleInputPassword1" placeholder="" type="password">
                         <a href="index.htm#" class="forgot-password">Forgot your Password?</a>
                       </div>
-                      <button type="button"  onclick="loginBtn()" class="btn-upper btn btn-primary checkout-page-button" >Login</button>
-                      <span id="loginError" style="color: red"></span>
+                      <button type="button"  class="btn-upper btn btn-primary checkout-page-button"  onclick="loginBtn()">Login</button>
+                      <span id="loginError" style="padding: 5px; color: red"></span>
                     </form>
                 </div>  
                 <!-- already-registered-login -->       
@@ -153,7 +153,7 @@
                         <div class="panel-heading">
                             <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="{{($tab==1)?'':'collapsed'}}"  id="" data-parent="#accordion" href="#collapseTwo" id="collapsed_biling">
-                                    <span>2</span>Billing Information  
+                                    <span>#</span>Billing Information  
                                 </a>
                             </h4> 
                         </div>
@@ -197,7 +197,7 @@
                             <div class="panel-heading">
                               <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="{{($tab==2)?'':'collapsed'}}" id="collapse_three" data-parent="#accordion" href="index.htm#collapseThree">
-                                    <span>3</span>Shipping Information
+                                    <span>#</span>Shipping Information
                                 </a>
                               </h4>
                             </div>
@@ -267,7 +267,7 @@
                             <div class="panel-heading">
                               <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="{{($tab==3)?'':'collapsed'}}" data-parent="#accordion" href="index.htm#collapseFour">
-                                    <span>4</span>Shipping Method
+                                    <span>#</span>Shipping Method
                                 </a>
                               </h4> 
                             </div>
@@ -293,7 +293,7 @@
                             <div class="panel-heading">
                               <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="index.htm#collapseSix">
-                                    <span>6</span>Order Review
+                                    <span>#</span>Order Review
                                 </a>
                               </h4>
                             </div>
@@ -381,10 +381,14 @@
                     <div class="panel-group">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h4 class="unicase-checkout-title">Your Checkout Progress</h4>
-                            </div> 
+                                <h4 class="unicase-checkout-title"> 
+                                    <a data-toggle="collapse" class="" data-parent="#accordion" aria-expanded="true">
+                                      <span># </span>Checkout Method
+                                    </a>
+                                 </h4>
+                            </div>
                             <div class="">
-                                <ul class="nav nav-checkout-progress list-unstyled">
+                                <ul class="nav nav-checkout-progress list-unstyled" style="padding: 5px;"> 
                                  <li> Total Amount  :  {{ $sub_total }} <li><br>
                                   <li> Total Item  :  {{ $total_item }} </li> <br>
                                
@@ -406,3 +410,10 @@
 
             
     @stop
+
+    <style type="text/css">
+        .unicase-checkout-title{
+            background: #ccc;
+        }
+    </style>
+

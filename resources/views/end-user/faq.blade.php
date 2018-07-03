@@ -8,7 +8,7 @@
 
         @section('content') 
 
-            @include('partials.menu')
+            
             <div class="breadcrumb">
                 <div class="container">
                     <div class="breadcrumb-inner">

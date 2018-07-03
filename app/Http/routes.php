@@ -13,58 +13,35 @@
 
 Route::match(['post','get'],'cat','HomeController@index');
 
-
-
-Route::get('{name}/{id}',[
-          'as' => 'productDetails',
-          'uses'  => 'HomeController@productDetail'
-        ])->where('id', '[0-9]+');
-
-
-
-Route::get('category/{name}',[
-          'as' => 'productcategory',
-          'uses'  => 'HomeController@mainCategory'
-        ]);
-
-
-Route::get('{subCategoryName}/{productName}',[
-          'as' => 'productName',
-          'uses'  => 'HomeController@productDetail'
-        ]);
-
-
-
-
-Route::get('{name}',[
-          'as' => 'productcategory',
-          'uses'  => 'HomeController@mainCategory'
-        ]);
-
+ 
 
 
 Route::get('{name}/addToCart/{id}', [ 
-        'as' => '',
+        'as' => 'addCart',
        'uses' =>   'ProductController@addToCart'
        ]);
 
 
-
-
-Route::get('category',[
-          'as' => 'productcategory',
-          'uses'  => 'HomeController@productCategory'
-        ]); 
-
+ 
 Route::get('myaccount/login',[
           'as' => 'showLoginForm',
           'uses'  => 'ProductController@showLoginForm'
         ])->where(['name'=>'myaccount','name'=>'[A-Za-z]+']); 
 
-Route::get('{category}/{name}',[
-          'as' => 'productcategoryByname', 
-          'uses'  => 'HomeController@productCategory'
-        ]);
+
+Route::get('myaccount/forgetPassword',[
+          'as' => 'showLoginForm',
+          'uses'  => 'ProductController@sendResetPasswordLink'
+        ])->where(['name'=>'myaccount','name'=>'[A-Za-z]+']); 
+
+
+Route::post('password/email','ProductController@forgetPasswordLink');
+
+
+Route::match(['get','post'],'myaccount/resetPassword','ProductController@resetPassword');
+
+Route::get('password/reset','ProductController@sendResetPasswordLink');  
+
 
 
 
@@ -114,7 +91,7 @@ Route::group(['middleware' => ['web']], function(){
 
 
   Route::get('/',[
-          'as' => '/',
+          'as' => 'homePage',
           'uses'  => 'ProductController@showProduct'
         ]); 
    
@@ -179,10 +156,17 @@ Route::get('checkout',[
           'uses'  => 'UserController@signup'
         ]); 
 
+
+
   Route::get('login',[
-          'as' => 'login',
-          'uses'  => 'UserController@showLoginForm'
-        ]); 
+          'as' => 'showLoginForm',
+          'uses'  => 'ProductController@showLoginForm'
+        ])->where(['name'=>'myaccount','name'=>'[A-Za-z]+']); 
+
+
+
+
+
 
 Route::post('billing',[
           'as' => 'billing',
@@ -241,7 +225,21 @@ Route::post('myaccount/signup',[
         ]); 
         
         
-  
+Route::get('{subCategoryName}/{productName}',[
+          'as' => 'productName',
+          'uses'  => 'HomeController@productDetail'
+        ]); 
+
+Route::get('{name}',[
+          'as' => 'productcategory',
+          'uses'  => 'HomeController@mainCategory'
+        ]);
+
+Route::get('{category}/{name}',[
+          'as' => 'productcategoryByname', 
+          'uses'  => 'HomeController@productCategory'
+        ]);
+
 
 
 
@@ -267,13 +265,15 @@ Route::post('login',function(App\User $user , Illuminate\Http\Request $request){
 Route::post('Ajaxlogin',function(App\User $user , Illuminate\Http\Request $request){ 
        
       $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')];  
-       
-          if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
              $request->session()->put('current_user',Auth::user());
              $request->session()->put('tab',1);
-           
-              return Redirect::to(url()->previous());
-               // return  json_encode(['msg'=>'success','code'=>200,'data'=>Auth::user()]); 
+             
+             if($request->ajax()){
+                return  json_encode(['msg'=>'success','code'=>200,'data'=>Auth::user()]); 
+            }
+              return Redirect::to(URL::previous());
+               // 
           }else{  
                return  json_encode(['msg'=>'Invalid email or password','code'=>500,'data'=>$request->all()]); 
                //return Redirect::to(url()->previous());
@@ -282,8 +282,3 @@ Route::post('Ajaxlogin',function(App\User $user , Illuminate\Http\Request $reque
              
 
  });
-
-
-
-
-      

@@ -132,8 +132,7 @@ class ProductController extends Controller {
     public function store(ProductRequest $request, Product $product) 
     {
         $cat_url    = $this->getCategoryById($request->get('product_category')); 
-        $pro_slug   = str_slug($request->get('product_title'));
-        $url        = $cat_url.$pro_slug;
+        
 
         if ($request->file('image')) { 
             $photo = $request->file('image');
@@ -143,7 +142,18 @@ class ProductController extends Controller {
             $request->merge(['photo'=>$photo_name]);
            
             $product->product_title      =   $request->get('product_title');
-            $product->slug              =   str_slug($request->get('product_title'));
+            if($request->get('slug') && !empty($request->get('slug'))){
+                $product->slug              =   strtolower(str_replace(" ", "-", $request->get('slug')));  
+                $pro_slug   = strtolower(str_replace(" ", "-", $request->get('slug')));
+                $url        = $cat_url.$pro_slug;  
+            }else{
+                $product->slug              =   strtolower(str_replace(" ", "-", $request->get('product_title')));
+                $pro_slug   = strtolower(str_replace(" ", "-", $request->get('product_title')));
+                $url        = $cat_url.$pro_slug;
+            }
+           
+
+
             $product->product_category   =   $request->get('product_category');
             $product->description        =   $request->get('description');
             $product->price              =   $request->get('price');
@@ -152,6 +162,10 @@ class ProductController extends Controller {
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->url                =   $url;
+
+            if($request->get('title')){
+                $product->title  = $request->get('title');
+            }
  
             $product->save(); 
            
@@ -187,9 +201,8 @@ class ProductController extends Controller {
     {
            
         $cat_url       = $this->getCategoryById($request->get('product_category'));
-        $pro_slug   = str_slug($request->get('product_title'));
-        $url        = $cat_url.$pro_slug;
         
+       
          if ($request->file('image')) { 
 
             $photo = $request->file('image');
@@ -200,6 +213,15 @@ class ProductController extends Controller {
             $request->merge(['photo'=>$photo_name]);
            
             $product->product_title      =   $request->get('product_title');
+            if($request->get('slug') && !empty($request->get('slug'))){
+                $product->slug              =   strtolower(str_replace(" ", "-", $request->get('slug')));  
+                $pro_slug   = strtolower(str_replace(" ", "-", $request->get('slug')));
+                $url        = $cat_url.$pro_slug;  
+            }else{
+                $product->slug              =   strtolower(str_replace(" ", "-", $request->get('product_title')));
+                $pro_slug   = strtolower(str_replace(" ", "-", $request->get('product_title')));
+                $url        = $cat_url.$pro_slug;
+            }
             $product->product_category   =   $request->get('product_category');
             $product->description        =   $request->get('description');
             $product->photo              =   $photo_name;
@@ -208,10 +230,23 @@ class ProductController extends Controller {
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->url               =   $url;
-            $product->slug              =   str_slug($request->get('product_title'));
+
+            if($request->get('title')){
+                $product->title  = $request->get('title');
+            }
+            
             $product->save(); 
         }else{
             $product->product_title      =   $request->get('product_title');
+            if($request->get('slug') && !empty($request->get('slug'))){
+                $product->slug              =   strtolower(str_replace(" ", "-", $request->get('slug')));  
+                $pro_slug   = strtolower(str_replace(" ", "-", $request->get('slug')));
+                $url        = $cat_url.$pro_slug;  
+            }else{
+                $product->slug              =   strtolower(str_replace(" ", "-", $request->get('product_title')));
+                $pro_slug   = strtolower(str_replace(" ", "-", $request->get('product_title')));
+                $url        = $cat_url.$pro_slug;
+            }
             $product->product_category   =   $request->get('product_category');
             $product->description        =   $request->get('description');
             $product->photo              =   $request->get('photo');
@@ -220,7 +255,11 @@ class ProductController extends Controller {
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->url                =   $url;
-            $product->slug              =   str_slug($request->get('product_title'));
+
+            if($request->get('title')){
+                $product->title  = $request->get('title');
+            }
+            
             $product->save(); 
         }
         return Redirect::to(route('product'))

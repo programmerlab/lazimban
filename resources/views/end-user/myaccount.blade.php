@@ -1,14 +1,11 @@
-
 @extends('layouts.master')
     @section('title', 'HOME')
-        
         @section('header')
         <h1>Home</h1>
         @stop
-
         @section('content') 
-
-            @include('partials.menu')
+            
+              @include('partials.breadcrumb')
             <!-- Left side column. contains the logo and sidebar -->
             <div class="body-content">
     <div class="container">
@@ -24,7 +21,7 @@
         <div class="panel-heading">
         <h4 class="unicase-checkout-title"> 
             <a  data-toggle="collapse" class="{{ ($tab==0)?'':'collapse'}}"  data-parent="#accordion" href="index.htm#collapseOne">
-              <span>1</span>My Profile
+              <span>1.</span>My Profile
             </a>
          </h4>
     </div>
@@ -72,7 +69,7 @@
                         <div class="panel-heading">
                             <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="{{($tab==1)?'':'collapsed'}}"  id="" data-parent="#accordion" href="#collapseTwo" id="collapsed_biling">
-                                    <span>2</span>Billing Information  
+                                    <span>2.</span>Billing Information  
                                 </a>
                             </h4> 
                         </div>
@@ -115,7 +112,7 @@
                             <div class="panel-heading">
                               <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="{{($tab==2)?'':'collapsed'}}" id="collapse_three" data-parent="#accordion" href="index.htm#collapseThree">
-                                    <span>3</span>Shipping Information
+                                    <span>3.</span>Shipping Information
                                 </a>
                               </h4>
                             </div>
@@ -184,7 +181,7 @@
                             <div class="panel-heading">
                               <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="{{($tab==3)?'':'collapsed'}}" data-parent="#accordion" href="index.htm#collapseFour">
-                                    <span>4</span>Shipping Method
+                                    <span>4.</span>Shipping Method
                                 </a>
                               </h4> 
                             </div>
@@ -209,7 +206,7 @@
                             <div class="panel-heading">
                               <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="index.htm#collapseSix">
-                                    <span>6</span>My Order 
+                                    <span>5.</span>My Order 
                                 </a>
                               </h4>
                             </div>

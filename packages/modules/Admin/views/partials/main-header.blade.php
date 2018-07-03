@@ -20,14 +20,22 @@
               <li class="dropdown user user-menu">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                   <img alt="User Image" class="user-image" src="{{ URL::asset('public/assets/dist/img/user2-160x160.jpg') }} ">
-                  <span class="hidden-xs">Welcome Admin</span>
+                   @if(Auth::guard('admin')->user()->user_type==1)
+                    <span class="hidden-xs"> Admin</span>
+                    @else
+                    <span class="hidden-xs"> {{ Auth::guard('admin')->user()->full_name}}</span>
+                    @endif
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
                     <img alt="User Image" class="img-circle" src="{{ URL::asset('public/assets/dist/img/user2-160x160.jpg') }}">
                     <p>
-                     Admin
+                     @if(Auth::guard('admin')->user()->user_type==1)
+                    <span class="hidden-xs">Welcome Admin</span>
+                    @else
+                    <span class="hidden-xs">Welcome {{ Auth::guard('admin')->user()->full_name}}</span>
+                    @endif
                       
                     </p>
                   </li>

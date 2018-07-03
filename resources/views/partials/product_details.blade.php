@@ -63,7 +63,7 @@
 
 						<div class="col-sm-6">
 							<div class="favorite-button m-t-10">
-								<a data-original-title="Wishlist" class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="" href="#">
+								<a data-original-title="Wishlist" class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="" href="index.htm#">
 								    <i class="fa fa-heart"></i>
 								</a>
 								 
@@ -93,12 +93,12 @@
 						</div>
 
 						<div class="col-sm-2" style="margin-right: 70px;">
-							<a href="{{ url(str_slug($product->product_title,'-').'/addToCart/'.$product->id) }}" id="addToCart" class="btn btn-primary">
+							<a href="{{ url('addToCart/'.$product->id) }}" id="addToCart" class="btn btn-primary">
                             <i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
 						</div>
                         | 
                         <div class="col-sm-2">
-                            <a href="{{ url(str_slug($product->product_title,'-').'/buyNow/'.$product->id) }}" class="btn btn-success">
+                            <a href="{{ url('buyNow/'.$product->id) }}" class="btn btn-success">
                             <i class="fa fa-shopping-cart inner-right-vs"></i> BUY </a>
                         </div>
 

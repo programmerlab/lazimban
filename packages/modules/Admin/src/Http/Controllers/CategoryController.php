@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\CategoryRequest;
 use Modules\Admin\Models\User;
 use Modules\Admin\Models\Category;
+use Modules\Admin\Models\CategoryDashboard;
 //use App\Category;
 use Input;
 use Validator;
@@ -66,6 +67,7 @@ class CategoryController extends Controller {
             echo $s;
             exit();
         }
+
         // Search by name ,email and group
         $search = Input::get('search');
         $status = Input::get('status');
@@ -79,17 +81,19 @@ class CategoryController extends Controller {
                                     ->OrWhere('sub_category_name', 'LIKE', "%$search%");
                         }
                         
-                    })->Paginate($this->record_per_page);
+                    })->get();
         } else {
-            $categories = Category::with('subcategory')->Paginate($this->record_per_page);
+            $categories = Category::with('subcategory')->get();
         }
+
         // Category sub category list-----
         $html = "";
         $categories2 = Category::with('children')->where('parent_id',0)->get();
         $cname = [];
-        $level = 1;
+        $level = 1; 
+
         foreach ($categories2 as $key => $value) {
-              //  $cname[$value->name][$value->id][] = ['id'=>$value->id, 'cname'=>$value->name,'level'=>$value->level];
+             
             $cname[$value->name][] = ['id'=>$value->id, 'cname'=>$value->name,'level'=>$value->level];
 
             $arr[] = ['id'=>$value->id, 'parent_id'=>$value->parent_id, 'cname'=>$value->name,'level'=>$value->level];
@@ -100,6 +104,8 @@ class CategoryController extends Controller {
             $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i> &nbsp;&nbsp;</a>'.'<br>';
 
             $cat = Category::where('parent_id',$value->id)->get();
+ 
+
             foreach ($cat as $key => $result) {
                 $parent_id = $result->id; 
 
@@ -108,9 +114,33 @@ class CategoryController extends Controller {
                 $r = route('sub-category.edit',$result->id);
                 $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i>&nbsp;&nbsp;</a>'.'<br>';
                 $arr[] = ['id'=>$result->id, 'parent_id'=>$result->parent_id, 'cname'=>$result->name,'level'=>$result->level];
+
                 while (1) {
-                    $data = Category::where('parent_id',$parent_id)->first();
-                   
+
+                    $data = Category::where('parent_id',$parent_id)->get();
+                    
+                    if(count($data)>1){
+
+                        foreach ($data  as $key => $data) {
+                             if($data)
+                            {
+                                $level++;
+                                $parent_id = $data->id;
+
+                                $cname[$value->name][$result->id][$parent_id][] = ['id'=>$data->id,'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level];
+
+                                 $html  .= str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $data->level).$data->name;
+                                 $r         = route('sub-category.edit',$data->id);
+                                 $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i> &nbsp;&nbsp;</a> '.'<br>';
+                                 $arr[]  = ['id'=>$data->id, 'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level];
+                            }else{
+                                break;
+                        }
+                        }
+
+                    }else{
+                        $data = Category::where('parent_id',$parent_id)->first(); 
+
                     if($data)
                     {
                         $level++;
@@ -125,14 +155,18 @@ class CategoryController extends Controller {
                     }else{
                         break;
                     }
-                }
-                
+                    }
+                } 
             }
             $result_set[$value->id]  = $arr; 
             $arr    = []; 
-        }  
-        
-        return view('packages::category.index', compact('result_set','categories','data', 'page_title', 'page_action','html'));
+        }   
+       // category/106/edit
+
+        $category_listing = Category::route(['category' => 'id'])->renderAsHtml();
+
+
+        return view('packages::category.index', compact('result_set','categories','data', 'page_title', 'page_action','html','category_listing'));
     }
 
     /*
@@ -167,13 +201,20 @@ class CategoryController extends Controller {
         $name = $request->get('category_name');
         $slug = str_slug($request->get('sub_cat'));
         $parent_id = 0;
-
+       
         $cat = new Category;
         $cat->name                  =  $request->get('category_name');
-        $cat->slug                  = strtolower(str_slug($request->get('category_name')));
+        if($request->get('slug') && !empty($request->get('slug'))){
+             $cat->slug = strtolower(str_replace(" ", "-", $request->get('slug')));     
+        }else{
+             $cat->slug = strtolower(str_replace(" ", "-", $request->get('category_name')));     
+        }
         $cat->parent_id             = $parent_id;
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');
+        $cat->description           =  $request->get('description');
+        $cat->title                 =  $request->get('title');
+        
 
         if($request->get('meta_key')){
             $cat->meta_key  = $request->get('meta_key');
@@ -211,13 +252,27 @@ class CategoryController extends Controller {
 
         $cat = Category::find($category->id);
         $cat->name =  $request->get('category_name');
-        $cat->slug = strtolower(str_slug($request->get('category_name')));
+        if($request->get('slug') && !empty($request->get('slug'))){
+             $cat->slug = strtolower(str_replace(" ", "-", $request->get('slug')));     
+        }else{
+             $cat->slug = strtolower(str_replace(" ", "-", $request->get('category_name')));     
+        }
+       
+        
         $cat->parent_id = $parent_id;
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');
         $cat->level                 =  1;
+         
+        if($request->get('title')){
+            $cat->title  = $request->get('title');
+        }
+
         if($request->get('meta_key')){
             $cat->meta_key  = $request->get('meta_key');
+        }
+        if($request->get('description')){
+            $cat->description  = $request->get('description');
         }
         if($request->get('meta_description')){
             $cat->meta_description  = $request->get('meta_description');
@@ -234,7 +289,10 @@ class CategoryController extends Controller {
      */
     public function destroy(Category $category) {
         
-        $d = Category::where('id',$category->id)->delete(); 
+        Category::where('id',$category->id)->delete(); 
+
+        CategoryDashboard::where('category_id',$category->id)->delete();
+
         return Redirect::to(route('category'))
                         ->with('flash_alert_notice', 'Category was successfully deleted!');
     }

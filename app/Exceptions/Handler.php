@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {    
-       $path_info_url = $request->getpathInfo();
+      $path_info_url = $request->getpathInfo();
        $api_url='';
        $web_url ='';
         if (strpos($path_info_url, 'api/v1') !== false) {
@@ -105,6 +105,11 @@ class Handler extends ExceptionHandler
             } 
             exit();
         }
+        if($e instanceof ErrorException){
+
+              $url =  URL::previous(); 
+              return Redirect::to($url);
+        } 
         if($e instanceof QueryException)
         {    
             if($api_url)

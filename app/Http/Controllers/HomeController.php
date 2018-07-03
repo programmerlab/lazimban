@@ -65,6 +65,38 @@ class HomeController extends Controller
          View::share('company_address',$company_address);
          View::share('banner',$banner);  
 
+        $base_page =  Route::currentRouteName();
+
+        $path_info = explode('/', $request->getpathInfo());
+        $md = ($setting::where('field_key','meta_description')->first());
+        $mk = ($setting::where('field_key','meta_key')->first());
+       
+
+        if($base_page == 'homePage'){
+            $meta_description =  isset($md->field_value)?$md->field_value:'';
+            $meta_key         =  isset($mk->field_value)?$mk->field_value:'';
+        }
+        elseif($base_page == 'productName'){
+            $data             = Product::where('slug',$path_info[2])->first();
+            $meta_description = isset($data->meta_description)?$data->meta_description:'';
+            $meta_key         = isset($data->meta_key)?$data->meta_key:'';
+        }
+        elseif($base_page == 'productcategory'){ 
+         
+            $data = Category::where('slug',$path_info[1])->first();
+
+            $meta_description = isset($data->meta_description)?$data->meta_description:'';
+            $meta_key         = isset($data->meta_key)?$data->meta_key:'';
+
+        }else{
+            $meta_description =  isset($md->field_value)?$md->field_value:'';
+            $meta_key         =  isset($mk->field_value)?$mk->field_value:'';
+        }
+ 
+        View::share('meta_description',$meta_description);
+        View::share('meta_key',$meta_key);
+        View::share('getpathInfo',$request->getpathInfo());
+        
     }
 
     /**
@@ -140,6 +172,7 @@ class HomeController extends Controller
  /*----------*/
     public function checkout()
     {
+         
          $request = new Request;
 
         
@@ -151,11 +184,11 @@ class HomeController extends Controller
      /*----------*/
     public function mainCategory( $category=null)
     {   
-      // dd($category);
+        
         $request = new Request;
         $q = Input::get('q'); 
          
-         $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
+        $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
         if($catID!=null && $catID->count()){ 
 
             $sub_cat = Category::where('parent_id', $catID->id)->Orwhere('id', $catID->id)->lists('id');
@@ -173,28 +206,25 @@ class HomeController extends Controller
                     $products = Product::with('category')->whereIn('product_category',$sub_cat)
                                 ->where('product_title','LIKE','%'.$q.'%')
                                 ->orderBy('id','asc')
-                                ->get();
-                     
-                 } 
-                 
+                                ->get(); 
+                 }  
             } 
         }else{
             $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
 
-        }
-       
-        $categories = Category::nested()->get(); 
-        return view('end-user.category',compact('categories','products','category','q','category'));   
+        } 
+        $category = isset($catID->name)?$catID->name:null; 
+        $categories = Category::nested()->get();  
+        return view('end-user.category',compact('categories','products','category','q','category','catID'));   
     }
 
      /*----------*/
     public function productCategory( $category=null)
-    {   
+    {  
         $request = new Request;
         $q = Input::get('q'); 
          
-        $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
-           
+        $catID = Category::where('slug',$category)->orWhere('name',$category)->first(); 
         if($catID!=null && $catID->count()){ 
             $products = Product::with('category')->where('product_category',$catID->id)->orderBy('id','asc')->get();
             
@@ -211,24 +241,21 @@ class HomeController extends Controller
                                 ->orderBy('id','asc')
                                 ->get();
            
-                 }
-
-                 
+                 } 
             } 
         }else{
             $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
 
-        }
-       
+        } 
+         $category = isset($catID->name)?$catID->name:null; 
         $categories = Category::nested()->get(); 
         return view('end-user.category',compact('categories','products','category','q','category'));   
     }
     /*----------*/
     public function productDetail($subCategoryName=null,$productName=null)
-    {   
-        
+    {    
         $product = Product::with('category')->where('slug',$productName)->first();
-        
+         
         $categories = Category::nested()->get();  
          
         if($product==null)
@@ -238,9 +265,9 @@ class HomeController extends Controller
         }else{
           $product->views=$product->views+1;
           $product->save(); 
-        }
-         
-        return view('end-user.product-details',compact('categories','product')); 
+        } 
+        $main_title=  $product->product_title;
+        return view('end-user.product-details',compact('categories','product','main_title'));  
     }
      /*----------*/
     public function order(Request $request)
@@ -283,4 +310,6 @@ class HomeController extends Controller
         return view('end-user.terms-conditions',compact('categories','products','category')); 
         return view('end-user.terms-conditions');   
     }
+
+  
 }

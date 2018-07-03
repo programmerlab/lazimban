@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\SubCategoryRequest;
 use Modules\Admin\Models\User;
 use Modules\Admin\Models\Category;
-use Modules\Admin\Models\SubCategory;
+use Modules\Admin\Models\SubCategory; 
+use Modules\Admin\Models\CategoryDashboard; 
 //use App\Category;
 use Input;
 use Validator;
@@ -122,7 +123,12 @@ class SubCategoryController extends Controller {
 
         $cat = new Category;
         $cat->name                  =   $request->get('sub_category_name');
-        $cat->slug                  =   strtolower(str_slug($request->get('sub_category_name')));
+        
+        if($request->get('slug') && !empty($request->get('slug'))){
+            $cat->slug = strtolower(str_replace(" ", "-", $request->get('slug')));     
+        }else{
+           $cat->slug                  =   strtolower(str_replace(" ", "-", $request->get('sub_category_name')));
+        }
         $cat->parent_id             =   $request->get('category_id'); 
         $cat->category_name         =   $request->get('sub_category_name');
         $cat->sub_category_name     =   $request->get('sub_category_name');
@@ -132,6 +138,9 @@ class SubCategoryController extends Controller {
         }
         if($request->get('meta_description')){
             $cat->meta_description  = $request->get('meta_description');
+        }
+         if($request->get('description')){
+            $cat->description  = $request->get('description');
         }
         $cat->save();  
        
@@ -182,7 +191,11 @@ class SubCategoryController extends Controller {
 
         $cat                        = Category::find($category->id);
         $cat->name                  = $request->get('sub_category_name');
-        $cat->slug                  = strtolower(str_slug($request->get('sub_category_name')));
+       if($request->get('slug') && !empty($request->get('slug'))){
+            $cat->slug = strtolower(str_replace(" ", "-", $request->get('slug')));     
+        }else{
+           $cat->slug                  =   strtolower(str_replace(" ", "-", $request->get('sub_category_name')));
+        }
         $cat->parent_id             = $request->get('category_id');
         $cat->category_name         = $request->get('sub_category_name');
         $cat->sub_category_name     = $request->get('sub_category_name');
@@ -192,6 +205,9 @@ class SubCategoryController extends Controller {
         }
         if($request->get('meta_description')){
             $cat->meta_description  = $request->get('meta_description');
+        }
+        if($request->get('description')){
+            $cat->description  = $request->get('description');
         }
         $cat->save(); 
 
@@ -207,9 +223,9 @@ class SubCategoryController extends Controller {
     public function destroy(SubCategory $category) {
         
         Category::where('id',$category->id)->delete();
-
+        CategoryDashboard::where('category_id',$category->id)->delete();
         return Redirect::to(route('category'))
-                        ->with('flash_alert_notice', 'Sub Category was successfully deleted!');
+                        ->with('flash_alert_notice', 'Category was successfully deleted!');
     }
 
     public function show(Category $category) {

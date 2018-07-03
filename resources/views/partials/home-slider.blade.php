@@ -1,99 +1,115 @@
-   <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-        <div id="hero">
-          <div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm">
-           
-            <!-- /.item -->
-          @if($banner->count())
-           @foreach($banner as $key => $value) 
-            <div class="item" style="background-image: url({!! asset('storage/files/banner/'.$value->field_value) !!});">
-              <div class="container-fluid">
-                <div class="caption bg-color vertical-center text-left">
-                 
-                </div>
-                <!-- /.caption --> 
-              </div>
-              <!-- /.container-fluid --> 
-            </div>
-             @endforeach  
-
-             @else 
-            <div class="item" style="background-image: url({{ asset('public/enduser/assets/images/sliders/02.jpg')}});">
-              <div class="container-fluid">
-                <div class="caption bg-color vertical-center text-left">
-                 
-                </div>
-                <!-- /.caption --> 
-              </div>
-              <!-- /.container-fluid --> 
-            </div>
-
-             <div class="item" style="background-image: url({{ asset('public/enduser/assets/images/sliders/01.jpg') }});">
-              <div class="container-fluid">
-              
-              </div>
-              <!-- /.container-fluid --> 
-            </div>
-            
-              <div class="item" style="background-image: url({{ asset('public/enduser/assets/images/sliders/03.jpg')}});">
-              <div class="container-fluid">
-                <div class="caption bg-color vertical-center text-left">
-                 
-                </div>
-                <!-- /.caption --> 
-              </div>
-              <!-- /.container-fluid --> 
-            </div>
-            <!-- /.item --> 
-            @endif
-
-
-            
-          </div>
-          <!-- /.owl-carousel --> 
-        </div>
-        <div class="info-boxes wow fadeInUp">
-          <div class="info-boxes-inner">
-            <div class="row">
-              <div class="col-md-6 col-sm-4 col-lg-4">
-                <div class="info-box">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <h4 class="info-box-heading green">money back</h4>
-                    </div>
-                  </div>
-                  <h6 class="text">30 Days Money Back Guarantee</h6>
-                </div>
-              </div>
-              <!-- .col -->
-              
-              <div class="hidden-md col-sm-4 col-lg-4">
-                <div class="info-box">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <h4 class="info-box-heading green">free shipping</h4>
-                    </div>
-                  </div>
-                  <h6 class="text">Shipping on ordeRS over RS99</h6>
-                </div>
-              </div>
-              <!-- .col -->
-              
-              <div class="col-md-6 col-sm-4 col-lg-4">
-                <div class="info-box">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <h4 class="info-box-heading green">Special Sale</h4>
-                    </div>
-                  </div>
-                  <h6 class="text">Extra RS5 off on all items </h6>
-                </div>
-              </div>
-              <!-- .col --> 
-            </div>
-            <!-- /.row --> 
-          </div>
-          <!-- /.info-boxes-inner --> 
-          
-        </div>
-   </div>
-  
+<div class="slider_outer">
+                          <div class="fullwidthbanner" >
+                              <ul>
+                                  <!-- SLIDE  -->
+                                  <li data-transition="curtain-1" data-slotamount="5" data-masterspeed="700" >
+                                      <!-- MAIN IMAGE -->
+                                      <img src="{{ asset('public/new/images/shop-slide-1.png') }}"   alt="slidebg1"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                  
+                  
+                  
+                                      <!-- LAYER NR. 4 -->
+                                      <div class="tp-caption medium_bg_asbestos sft heading1"
+                                          data-x="50"
+                                          data-y="190"
+                                          data-speed="800"
+                                          data-start="1500"
+                                          data-easing="Power4.easeOut"
+                                          data-endspeed="300"
+                                          data-endeasing="Power1.easeIn"
+                                          data-captionhidden="off"
+                                          style="z-index: 6">Your <span>New</span> Sunday <span>Location</span>
+                                      </div>
+                  
+                                          <!-- LAYER NR. 5 -->
+                                      
+                  
+                  
+                                      <!-- LAYER NR. 7 -->
+                                      <div class="tp-caption medium_bg_asbestos sft headeing2"
+                                          data-x="50"
+                                          data-y="250"
+                                          data-speed="800"
+                                          data-start="2000"
+                                          data-easing="Power4.easeOut"
+                                          data-endspeed="300"
+                                          data-endeasing="Power1.easeIn"
+                                          data-captionhidden="off"
+                                          style="z-index: 6">Start selling immediately in your low-commission market place.	
+                                      </div>
+                  
+                  
+                                      <!-- LAYER NR. 11 -->
+                                      <div class="tp-caption slider_link"
+                                          data-x="50"
+                                          data-y="310"
+                                          data-speed="1000"
+                                          data-start="2200"
+                                          data-easing="Power4.easeOut"
+                                          data-endspeed="300"
+                                          data-endeasing="Power1.easeIn"
+                                          data-captionhidden="off"
+                                          style="z-index: 6"><a href="#">Start Sale ...</a>
+                                      </div>
+                  
+                                      
+                                  </li>
+                  
+                                  <!-- SLIDE  -->
+                                  <li data-transition="curtain-1" data-slotamount="5" data-masterspeed="700" >
+                                      <!-- MAIN IMAGE -->
+                                      <img src="{{ asset('public/new/images/shop-slide-2.png') }}"   alt="slidebg1"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                                      <div class="tp-caption medium_bg_asbestos sft heading1"
+                                          data-x="right"
+                                          data-y="190"
+                                          data-speed="800"
+                                          data-start="1500"
+                                          data-easing="Power4.easeOut"
+                                          data-endspeed="300"
+                                          data-endeasing="Power1.easeIn"
+                                          data-captionhidden="off"
+                                          style="z-index: 6">Your <span>New</span> Sunday <span>Location</span>
+                                      </div>
+                  
+                                          <!-- LAYER NR. 5 -->
+                                      
+                  
+                  
+                                      <!-- LAYER NR. 7 -->
+                                      <div class="tp-caption medium_bg_asbestos sft headeing2"
+                                          data-x="right"
+                                          data-y="250"
+                                          data-speed="800"
+                                          data-start="2000"
+                                          data-easing="Power4.easeOut"
+                                          data-endspeed="300"
+                                          data-endeasing="Power1.easeIn"
+                                          data-captionhidden="off"
+                                          style="z-index: 6">Start selling immediately in your low-commission market place.	
+                                      </div>
+                  
+                  
+                                      <!-- LAYER NR. 11 -->
+                                      <div class="tp-caption slider_link"
+                                          data-x="right"
+                                          data-y="310"
+                                          data-speed="1000"
+                                          data-start="2200"
+                                          data-easing="Power4.easeOut"
+                                          data-endspeed="300"
+                                          data-endeasing="Power1.easeIn"
+                                          data-captionhidden="off"
+                                          style="z-index: 6"><a href="#">Start Sale ...</a>
+                                      </div>
+                                  </li>
+                  
+                                  <!-- SLIDE  -->
+                                  
+                  
+                                  <!-- SLIDE  -->
+                                  
+                  
+                  
+                              </ul>			
+                          </div>
+                      </div>

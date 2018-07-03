@@ -5,13 +5,14 @@
         <h1>Home</h1>
         @stop
         @section('content') 
-            @include('partials.menu')
+            
               @include('partials.breadcrumb')
             <!-- Left side column. contains the logo and sidebar -->
-            <div class="">
+            <div class="">&nbsp;
                 <div class="shopping-cart">
                     <div class="shopping-cart-table ">
                         <div class="table-responsive">
+                         
                          @if(count($cart))
                             <table class="table">
                                 <thead>
@@ -157,6 +158,6 @@
                 </div><!-- /.shopping-cart -->
             </div> <!-- /.row -->
                     <!--  BRANDS CAROUSEL -->
-         </div><!-- /.logo-slider -->
+         <!-- /.logo-slider -->
 <!--BRANDS CAROUSEL : END  -->     
 @stop

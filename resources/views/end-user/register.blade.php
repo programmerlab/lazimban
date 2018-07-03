@@ -1,3 +1,4 @@
+
 @extends('layouts.master')
     @section('title', 'HOME')
         
@@ -7,22 +8,21 @@
 
         @section('content') 
 
-            @include('partials.menu')
+            @include('partials.breadcrumb')
+            
           <div class="container" ng-app="postApp" ng-controller="postController">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
-                 @if($errors->has())
+                
+                <div class="panel-body reg" >
+                     @if($errors->has())
                         <div class="alert alert-danger">
                             @foreach ($errors->all() as $error)
                               <p> {{ $error }} </p>
                             @endforeach
                             </div>
                             @endif 
-                <div class="panel-body" >
-
-                    <form class="form-horizontal" action="{{url('myaccount/signup')}}"   name="userForm"  method="post">
+                    <form class="form-horizontal Register" action="{{url('myaccount/signup')}}"   name="userForm"  method="post">
                         {{ csrf_field() }}
                          
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -95,4 +95,10 @@
 </div>
  
 @stop
+
+<style type="text/css">
+    .Register  .form-control{
+        margin: 5px;
+    }
+</style>
  

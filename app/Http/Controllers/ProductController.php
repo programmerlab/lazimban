@@ -32,6 +32,7 @@ use Response;
 use Cart; 
 use PDF;
 use Modules\Admin\Models\Settings;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 /**
  * Class AdminController
@@ -83,28 +84,72 @@ class ProductController extends Controller {
         $website_url        = $setting::where('field_key','website_url')->first();
         $contact_number     = $setting::where('field_key','contact_number')->first();
         $company_address    = $setting::where('field_key','company_address')->first();
-
+                            
         $banner             = $setting::where('field_key','LIKE','%banner_image%')->get();
 
 
-         View::share('website_title',$website_title);
-         View::share('website_email',$website_email);
-         View::share('website_url',$website_url);
-         View::share('contact_number',$contact_number);
-         View::share('company_address',$company_address);
-         View::share('banner',$banner); 
+        View::share('website_title',$website_title);
+        View::share('website_email',$website_email);
+        View::share('website_url',$website_url);
+        View::share('contact_number',$contact_number);
+        View::share('company_address',$company_address);
+        View::share('banner',$banner); 
 
+        
+        $base_page =  Route::currentRouteName();
+
+        $path_info = explode('/', $request->getpathInfo());
+        $md = ($setting::where('field_key','meta_description')->first());
+        $mk = ($setting::where('field_key','meta_key')->first());
           
-      //  dd(Route::currentRouteName());
+        if($base_page == 'homePage'){
+            $meta_description =  isset($md->field_value)?$md->field_value:'';
+            $meta_key         =  isset($mk->field_value)?$mk->field_value:'';
+        }
+        elseif($base_page == 'productName'){
+            $data = Product::where('slug',$path_info[2])->first();
+            $meta_description = $data->meta_description;
+            $meta_key = $data->meta_key;
+        }
+        elseif($base_page == 'productcategory'){ 
+         
+            $data = Category::where('slug',$path_info[1])->first();
+            $meta_description = $data->meta_description;
+            $meta_key = $data->meta_key;
+
+        }else{
+           $meta_description =  isset($md->field_value)?$md->field_value:'';
+            $meta_key         =  isset($mk->field_value)?$mk->field_value:'';
+        }
+ 
+        View::share('meta_description',$meta_description);
+        View::share('meta_key',$meta_key); 
+        View::share('getpathInfo',$request->getpathInfo());
  
     }
 
     public function showProduct(Request $request, Product $product)
     {    
-        $products       = Product::with('category')->groupBy('product_category')->orderBy('views','desc')->get(); 
+         $category = Input::get('q'); 
+         $q = Input::get('q');
+         $categories     = Category::nested()->get();  
+         if($q)
+         {
+            $products = Product::with('category')
+                        ->where('product_title','LIKE','%'.$q.'%')
+                        ->orderBy('id','asc')
+                        ->get(); 
+            $categories = Category::nested()->get(); 
+            return view('end-user.category',compact('categories','products','category','q','category'));
+             
+         } 
+         else{
+            $products       = Product::with('category')->groupBy('product_category')->orderBy('views','desc')->get(); 
 
-        $product_new    = Product::with('category')->orderBy('id','desc')->groupBy('product_category')->Paginate(12); 
-        $categories     = Category::nested()->get();  
+            $product_new    = Product::with('category')->orderBy('id','desc')->groupBy('product_category')->Paginate(12); 
+         }
+        
+         
 
 
  
@@ -132,6 +177,9 @@ class ProductController extends Controller {
     public function checkout(Request $request) 
     {  
         $cart = Cart::content();  
+        if(count($cart)==0){
+            return Redirect::to('/');
+        }
         $pid = [];
         foreach ($cart as $key => $value) {
             $pid[] = $value->id;
@@ -370,8 +418,6 @@ class ProductController extends Controller {
         $user_id    = $this->user_id;
         $cart       = Cart::content();
 
-       
-
         if($cart->count()==0)
         {
            return  Redirect::to('checkout');
@@ -387,6 +433,7 @@ class ProductController extends Controller {
         $billing    = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',1)->first();
         $shipping   = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first(); 
 
+
         foreach ($cart as $key => $result) {
 
             $transaction                = new Transaction;
@@ -401,30 +448,32 @@ class ProductController extends Controller {
             $transaction->save();
              
         } 
-        $cart = Cart::content(); 
-       // dd(Cart::subtotal());
+        $cart = Cart::content();  
         if($cart){
-
-            $email_content['receipent_email'] = $billing->email;
+            
             $email_content['subject'] = "Invoice";
             $template = "invoice";
-            $template_content = ['cart'=>$cart ,'billing' => $billing , 'shipping' => $shipping,'transaction'=>$transaction];
-
+            if($billing){
+                $email_content['receipent_email'] = ($billing->email)?$billing->email:(Auth::user()->email);
+                $template_content = ['cart'=>$cart ,'billing' => $billing , 'shipping' => $shipping,'transaction'=>$transaction];
+                
+            }else{
+                $email_content['receipent_email'] = ($shipping->email)?$shipping->email:(Auth::user()->email);
+           
+                $template_content = ['cart'=>$cart ,'billing' => $shipping , 'shipping' => $shipping,'transaction'=>$transaction];
+                
+            }
             $data = $template_content; 
          	
-          Helper::sendMail($email_content, $template, $template_content);
+          $helper =  new   Helper;
+          $helper->sendInvoiceMail($email_content, $template, $template_content);
         } 
 
 
         foreach ($cart as $key => $value) {
              Cart::remove($key);
         }
-
-      //   $request->session()->flush();
-       // $request->session()->keep(['current_user']); 
-
         return view('end-user.thanku',compact('categories','products','category','cart','billing','shipping'));
-
     }
     public function showLoginForm(Request $request)
     {
@@ -466,5 +515,165 @@ class ProductController extends Controller {
 
     }
     
+    public function sendResetPasswordLink(Request $request)
+    {
+
+        $cart       = Cart::content(); 
+        $products   = Product::with('category')->orderBy('id','asc')->get();
+        $categories = Category::nested()->get(); 
+
+        return view('end-user.forgetPasswordForm',compact('categories','products','category','cart'));
+    }
+
+
+    public function resetPassword(Request $request)
+    { 
+        
+        $cart       = Cart::content(); 
+        $products   = Product::with('category')->orderBy('id','asc')->get();
+        $categories = Category::nested()->get(); 
+ 
+        $encryptedValue = ($request->get('key'))?$request->get('key'):''; 
+        $method_name = $request->method();
+        $token = $request->get('token');
+        $email = ($request->get('email'))?$request->get('email'):'';
+        $key = ($request->get('key'))?$request->get('key'):''; 
+        
+
+        if($method_name=='GET')
+        {    
+            try { 
+                $email = Crypt::decrypt($encryptedValue);
+                if (Hash::check($email, $token)) {
+                   return view('end-user.resetPasswordForm',compact('categories','products','category','cart','token','email','key'));
+
+                }else{
+                    return redirect()
+                        ->back()
+                        ->withInput()  
+                        ->withErrors(['message'=>'Invalid reset password link!']);
+                } 
+                
+            } catch (DecryptException $e) {
+
+                return view('end-user.resetPasswordForm',compact('categories','products','category','cart','token','email','key'))
+                            ->withErrors(['message'=>'Invalid reset password link!']);
+
+               }
+            
+        }else
+        {    
+
+           try { 
+
+                $validator = Validator::make($request->all(), [
+                    'password' => 'required',
+                    'confirm_password' => 'required|same:password'
+
+                                    ]);
+
+                if ($validator->fails()) {
+
+                    return redirect()
+                                ->back()
+                                ->withInput()
+                                ->withErrors($validator);
+                    }
+
+                $email = Crypt::decrypt($encryptedValue);
+                $token = $request->get('token');
+                
+                if (Hash::check($email, $token)) {
+                     
+                    $password =  Hash::make($request->get('password'));
+                    $user = User::where('email',$request->get('email'))->update(['password'=>$password]);
+                    
+                    return redirect()
+                            ->back()
+                            ->withInput()  
+                            ->withErrors(['message'=>'Password reset successfully!','class'=>' ']);
+
+                }else{
+                     
+                     //return Redirect::to(URL::previous())->with('message','Invalid token');
+                     return redirect()
+                            ->back()
+                            ->withInput()  
+                            ->withErrors(['message'=>'Invalid reset password link!']);
+                }
+            }catch (DecryptException $e) {
+
+                 return redirect()
+                            ->back()
+                            ->withInput()  
+                            ->withErrors(['message'=>'Invalid reset password link!']);
+
+               }
+            
+        }
+        
+    }
+
+    public function forgetPasswordLink(Request $request)
+    {  
+        $email = $request->input('email');
+        //Server side valiation
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
+
+        $helper = new Helper;
+       
+        if ($validator->fails()) {
+            
+
+        return redirect()
+                        ->back()
+                        ->withInput()  
+                        ->withErrors(['message'=>'Email id is required!']);
+        }
+
+        $user =   User::where('email',$email)->first();
+
+        if($user==null){
+
+        return redirect()
+                        ->back()
+                        ->withInput()  
+                        ->withErrors(['message'=>"Oh no! The address you provided isn't in our system!"]);
+
+
+        }
+        
+        $email = $request->get('email');
+        $user =   User::where('email',$email)->first();
+ 
+        $user_data = User::find($user->id);
+        $temp_password = Hash::make($email);
+        
+      // Send Mail after forget password
+        $temp_password =  Hash::make($email);
+       
+        $email_content = array(
+                        'receipent_email'   => $request->input('email'),
+                        'subject'           => 'Your Account Password',
+                        'name'              => $user->first_name,
+                        'temp_password'     => $temp_password,
+                        'encrypt_key'       => Crypt::encrypt($email),
+                        'greeting'          => 'Admin'
+
+                    );
+        $helper = new Helper;
+        $email_response = $helper->sendMail(
+                                $email_content,
+                                'forgot_password_link'
+                            ); 
+       
+        return redirect()
+                        ->back()
+                        ->withInput()  
+                        ->withErrors(['message'=>"Reset password link has sent. Please check your email."]);
+    }
 }   
+
 

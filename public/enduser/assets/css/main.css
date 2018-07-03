@@ -1291,7 +1291,7 @@ header{background:#fdd922}
     border: 1px solid #eee;
 }
 .main-header .top-search-holder .search-area .search-button:after {
-  color: #085a9a;
+  color: #333;
   content: "\f002";
   font-family: fontawesome;
   font-size: 16px;
@@ -1312,7 +1312,7 @@ header{background:#fdd922}
 .top-cart-row .top-cart:before{
 content:"\f290";
 font-family:FontAwesome;
-background:#085a9a;
+background:#fdd922;
 color:#fff;
 display:inline-block;
 padding:0px;
@@ -1753,7 +1753,8 @@ font-size:18px}
   top: 0 !important;
   left: 100%;
   margin: 0;
-  min-width: 250px; 
+  min-width: 330%;
+  /*338%;*/
   position: absolute;
   top: 0px;
   -webkit-border-radius: 0px;

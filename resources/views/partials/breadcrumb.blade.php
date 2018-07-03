@@ -1,19 +1,14 @@
- <div class="breadcrumb">
-   <div class="container">
-    <div class="breadcrumb-inner">
-      <ul class="list-inline list-unstyled">
-        <li><a href="#">Home</a></li> 
-
-        @if(isset($category_name) && !isset($product->category->name))
-        <li>{!! $category_name !!}</li>
-        
-        @else
-        {{$product->category->name}}
-        @endif
-         <li class="active">{{ isset($category)?$category:''}}</li>
-      </ul>
+<div class="page_title">
+    <div class="page-wrapper">
+        <div class="col-md-6"><h1>{{ isset($category)?$category:''}}</h1>   </div>
+        <div class="col-md-6 text-right">
+                <span><a href="#">Home</a> </span>
+                @if(isset($category_name) && !isset($product->category->name))                                
+ 
+                    @else
+                {{$product->category->name or ''}}
+                @endif                      
+                <span> {{ isset($category)?$category:''}} </span>  
+           </div>
     </div>
-    <!-- /.breadcrumb-inner --> 
-  </div>
-  <!-- /.container --> 
 </div>
