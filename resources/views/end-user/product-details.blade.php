@@ -90,7 +90,7 @@
     color: brown;
     background-color: beige;
     padding: 5px; margin: 3px; border-radius: 5px; 
-"> <b> {{ucfirst($rs->name)}}: </b> {{$rs->comments}}  <span style="float: right;"> {{$rs->created_at}}</span></p>
+"> <b> By {{ucfirst($rs->name)}} on {{$rs->created_at}}: </b> <br>{{$rs->comments}} </p>
                                             @endforeach
                                             @endif
                                         </div>
