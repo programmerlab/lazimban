@@ -16,11 +16,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $category_list = \App\Category::where('parent_id',0)->get();
+        $category_list = \App\Category::where('parent_id',0)->orderBy('order_id','asc')->get();
         View::share('category_list',$category_list); 
     
 
-        $cat = $categories = \App\Category::nested()->get(); 
+        $cat = $categories = \App\Category::nested()->orderBy('order_id','asc')->get(); 
         $mega_menu = [];
         foreach ($cat as $key => $result) {
             $category = $result['name'];
