@@ -65,7 +65,7 @@
                                               @endforeach                                              
                                              @endforeach
                                           </ul>
-                                          <button type="submit"  class="btn btn-primary"> Save menu</button>
+                                          <button type="submit"  class="btn btn-primary">Save menu</button>
                                         </form>
                                         <table class="table table-hover table-condensed">
                                           <thead>
