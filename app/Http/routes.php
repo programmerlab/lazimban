@@ -48,7 +48,19 @@ Route::get('password/reset','ProductController@sendResetPasswordLink');
 Route::get('checkout',[
           'as' => 'checkout',
           'uses'  => 'HomeController@checkout'
+        ]);
+
+Route::post('submitComment',[
+          'as' => 'submitComment',
+          'uses'  => 'HomeController@submitComment'
         ]); 
+
+Route::get('addReview',[
+          'as' => 'addReview',
+          'uses'  => 'HomeController@addReview'
+        ]); 
+
+
 
 Route::get('home',[
           'as' => 'home',

@@ -56,7 +56,7 @@
                                     <!--<li>Yorumlar (0) </li>-->
                                     <!--<li>Satıcı Bilgisi </li>-->
                                     <li>More Product </li>
-                                    <!--<li>Product Enquiry </li>-->
+                                     <li>Comments</li> 
                                 </ul>
                                 <div class="resp-tabs-container">
                                         <div>
@@ -74,10 +74,25 @@
                                                             <h6>Seller -  {{ ($helper->getVendorName($result->id)) ? $helper->getVendorName($result->id) : 'Admin' }}</h6>
                                                         </a>
                                                     </div>
+                                            @endforeach 
+                                            </div>  
+                                        </div>
+
+                                        <div>
+                                               
+                                        <?php 
+                                            $comment= $helper->getComments($product->id);  
+                                            ?>
+                                            @if($comment)
+
+                                            @foreach($comment as $rs)
+                                            <p style="
+    color: brown;
+    background-color: beige;
+    padding: 5px; margin: 3px; border-radius: 5px; 
+"> {{$rs->comments}}  <span style="float: right;">{{$rs->created_at}}</span></p>
                                             @endforeach
-                                                                     
-                                                
-                                            </div>	    
+                                            @endif
                                         </div>
                                          
                                 </div>
@@ -87,22 +102,42 @@
                     <hr>    
                     <div class="col-md-12">
                      <div class="product-review">
-                         <h2>Reviews</h2>
-                            <div class="rating_outer"><span class="fa fa-star" id="star1" onclick="add(this,1)"></span>
-                                <span class="fa fa-star" id="star2" onclick="add(this,2)"></span>
-                                <span class="fa fa-star" id="star3" onclick="add(this,3)"></span>
-                                <span class="fa fa-star" id="star4" onclick="add(this,4)"></span>
-                                <span class="fa fa-star" id="star5" onclick="add(this,5)"></span></div>
-                                
+                         <h2  id="displayRating" data="{{$product->rating or 0}}">Reviews </h2>
+
+                            <div class="rating_outer"><span class="fa fa-star" id="star1" onclick="rating(1,{{$product->id}})"></span>
+                                <span class="fa fa-star" id="star2" onclick="rating(2,{{$product->id}})"></span>
+                                <span class="fa fa-star" id="star3" onclick="rating(3,{{$product->id}})"></span>
+                                <span class="fa fa-star" id="star4" onclick="rating(4,{{$product->id}})"></span>
+                                <span class="fa fa-star" id="star5" onclick="rating(5,{{$product->id}})"></span>
+                               <br> <span id="rating"></span>
+                            </div>
+                                    
                                 
                                  <h2>Comment</h2>
-                                <div class="comment_form row">
-                                
-                                 <div class="col-md-6"><input class="input-text" type="text" placeholder="Name"></div>
-                                    <div class="col-md-6"><input class="input-text" type="text" placeholder="Email"></div>
-                                    <div class="col-md-12"><textarea class="input-text" placeholder="Comment">                       </textarea></div>
+                                 @if ($errors->has('successMsg'))
+                                    <span class="btn btn-success">{{ $errors->first('successMsg') }}</span>
+                                     
+                                @endif
+
+                                <div class="comment_form row" id="comments">
+                                 <form class="contact-form" action="{{url('submitComment')}}" method="post">
+                                    <input type="hidden" name="product_id" id="product_id" value="{{$product->id}}">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}"> 
+                                 <div class="col-md-6">
+                                    <span class="label label-danger" style="color:#ffffff">{{ $errors->first('name', ':message') }}</span> <br>
+                                    <input class="input-text" type="text" placeholder="Name" name="name" value="{{old('name')}}">
+                                </div>
+                                    <div class="col-md-6">
+                                        <span class="label label-danger" style="color:#ffffff">{{ $errors->first('email', ':message') }}</span> <br>
+                                        <input class="input-text" type="email" placeholder="Email" name="email" value="{{old('email')}}">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span class="label label-danger" style="color:#ffffff">{{ $errors->first('comments', ':message') }}</span> <br>
+                                        <textarea class="input-text" placeholder="Comment" name="comments">{{old('comments')}}</textarea>  
+                                    </div>
                                     <div class="col-md-12"><input value="submit" class="submit-btn" type="submit"></div>
                                 </div>
+                            </form>
                                
                         </div>
                     </div>
@@ -118,3 +153,5 @@
     .comment_form .input-text{ height:50px; margin-bottom:15px;}
     .comment_form textarea.input-text{ height:200px; resize:none;}
 </style>
+
+

@@ -1,6 +1,35 @@
 
 
 //=============Checkout====================
+ 
+ window.onload = function() {
+    var v = $('#displayRating').attr('data');
+    displayRating(v);
+};
+
+function displayRating(count){
+    for (var i = count; i >= 0; i--) {
+         $('#star'+i).css('color','#dd3333');
+    }   
+} 
+
+function rating(count,product_id){ 
+    
+    for (var i = count; i >= 0; i--) {
+         $('#star'+i).css('color','#dd3333');
+    } 
+    $('#rating').html('Thank you!').fadeOut(5000);
+    var rating =  count; 
+    $.ajax({
+        type: "GET",
+        data: {rating: count,product_id:product_id},
+        url: url+'/addReview',
+         
+        success: function(response) {
+            $('#rating').html('Thank you').fadeOut(15000); 
+        }
+    });
+}
 
 function changeStatus(id,method)
 {
@@ -12,6 +41,7 @@ function changeStatus(id,method)
         beforeSend: function() {
            $('#'+id).html('Processing');
         },
+        dataType: "json",
         success: function(response) {
             
       //bootbox.alert('Activated');            

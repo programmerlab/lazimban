@@ -294,7 +294,7 @@ class HomeController extends Controller
         return view('end-user.contact');   
     }
      /*----------*/
-     public function trackOrder()
+    public function trackOrder()
     {
          $products = Product::with('category')->orderBy('id','asc')->get();
         $categories = Category::nested()->get(); 
@@ -302,13 +302,51 @@ class HomeController extends Controller
         return view('end-user.track-orders');   
     }
      /*----------*/
-     public function tNc()
+    public function tNc()
     {
          $products = Product::with('category')->orderBy('id','asc')->get();
         $categories = Category::nested()->get(); 
         return view('end-user.terms-conditions',compact('categories','products','category')); 
         return view('end-user.terms-conditions');   
     }
+    // Comments
+    public function submitComment(Request $request){
 
-  
+        $url = url()->previous().'#comments';
+
+        if($request->method()=='POST'){
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|min:3',
+                'email' => 'required|email',
+                'comments' => 'required'
+            ]); 
+
+            if ($validator->fails()) {
+                 return Redirect::to($url)
+                        ->withErrors($validator)
+                        ->withInput();
+            }else{
+                $input = $request->only('name','email','comments','product_id');
+
+               $data =  \DB::table('comments')->insert($input);
+                
+                return Redirect::to($url)->withErrors(['successMsg'=>'Your comments is successfully posted.Thank you!']);
+                
+            }
+        }
+    }
+    public function addReview(Request $request)
+    {      
+        $input = $request->only('rating','product_id');
+        $data =  \DB::table('reviews')->insert($input);
+
+        $rating = \DB::table('reviews')->avg('rating');
+        
+        \DB::table('products')
+            ->where('id',$request->get('product_id'))
+                ->update(['rating'=>$rating]);
+
+        $total_review = round($rating);
+        return json_encode($total_review);
+    }
 }

@@ -284,15 +284,22 @@ class Helper {
     
     public static function  getVendorName($productid=null)
     {
-        $product = DB::table('products')->where('id', $productid)->first();                
+        $product = DB::table('products')->where('id', $productid)->first();
         
-        //print_r($product); die;
-        if($product!=null){
-            $vendor = DB::table('admin')->where('id', $product->created_by)->first(); 
+        if($product!=null && $product->created_by){
+            $vendor = DB::table('admin')->where('id', $product->created_by)->first();
             return $vendor->company_name; 
         }else{
             return null;
         }
     }
      
+    public static function getComments($productid=null)
+    {
+
+        $data =  \DB::table('comments')->where('product_id',$productid)->get();
+
+         return $data;
+                
+    } 
 }
