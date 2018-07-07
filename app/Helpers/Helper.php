@@ -297,7 +297,7 @@ class Helper {
     public static function getComments($productid=null)
     {
 
-        $data =  \DB::table('comments')->where('product_id',$productid)->get();
+        $data =  \DB::table('comments')->where('product_id',$productid)->orderBy('id','desc')->get();
 
          return $data;
                 

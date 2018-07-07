@@ -327,8 +327,18 @@ class HomeController extends Controller
                         ->withInput();
             }else{
                 $input = $request->only('name','email','comments','product_id');
-
-               $data =  \DB::table('comments')->insert($input);
+                $duplicate = \DB::table('comments')
+                                ->where('email',$request->get('email'))
+                                ->where('product_id',$request->get('product_id'))
+                                ->first();
+                if($duplicate){
+                    $data =  \DB::table('comments')
+                        ->where('email',$request->get('email'))
+                        ->where('product_id',$request->get('product_id'))
+                        ->update($input);
+                } else{
+                    $data =  \DB::table('comments')->insert($input);
+                }
                 
                 return Redirect::to($url)->withErrors(['successMsg'=>'Your comments is successfully posted.Thank you!']);
                 
