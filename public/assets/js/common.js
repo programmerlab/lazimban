@@ -3,11 +3,13 @@
 //=============Checkout====================
  
  window.onload = function() {
+
     var v = $('#displayRating').attr('data');
     displayRating(v);
 };
 
 function displayRating(count){
+    
     for (var i = count; i >= 0; i--) {
          $('#star'+i).css('color','#dd3333');
     }   
@@ -15,6 +17,9 @@ function displayRating(count){
 
 function rating(count,product_id){ 
     
+    for (var i = 5; i >= 0; i--) {
+        $('#star'+i).css('color','#777777');
+    }
     for (var i = count; i >= 0; i--) {
          $('#star'+i).css('color','#dd3333');
     } 
