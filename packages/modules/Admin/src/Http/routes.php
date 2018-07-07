@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\DB;
       Route::get('admin/signUp','Modules\Admin\Http\Controllers\AuthController@signUp'); 
 
        
-      Route::post('admin/registration','Modules\Admin\Http\Controllers\AuthController@registration'); 
+      Route::post('admin/registration','Modules\Admin\Http\Controllers\AuthController@registration');
+      
+      Route::post('admin/category/save_menu','Modules\Admin\Http\Controllers\CategoryController@save_menu');
       
       Route::post('admin/login',function(App\Admin $user , Illuminate\Http\Request $request){
         //echo "<pre>"; print_r($user); die;
@@ -89,7 +91,7 @@ use Illuminate\Support\Facades\DB;
                     'update' => 'category.update',
                     'store' => 'category.store',
                     'index' => 'category',
-                    'create' => 'category.create',
+                    'create' => 'category.create',                    
                 ]
                     ]
             );

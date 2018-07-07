@@ -83,12 +83,12 @@ class CategoryController extends Controller {
                         
                     })->get();
         } else {
-            $categories = Category::with('subcategory')->get();
+            $categories = Category::with('subcategory')->orderBy('order_id','asc')->get();
         }
 
         // Category sub category list-----
         $html = "";
-        $categories2 = Category::with('children')->where('parent_id',0)->get();
+        $categories2 = Category::with('children')->where('parent_id',0)->orderBy('order_id','asc')->get();
         $cname = [];
         $level = 1; 
 
@@ -96,28 +96,28 @@ class CategoryController extends Controller {
              
             $cname[$value->name][] = ['id'=>$value->id, 'cname'=>$value->name,'level'=>$value->level];
 
-            $arr[] = ['id'=>$value->id, 'parent_id'=>$value->parent_id, 'cname'=>$value->name,'level'=>$value->level];
+            $arr[] = ['id'=>$value->id, 'parent_id'=>$value->parent_id, 'cname'=>$value->name,'level'=>$value->level,'order_id'=>$value->order_id];
 
 
             $html .= str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $value->level).$value->name;
             $r = route('category.edit',$value->id);
             $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i> &nbsp;&nbsp;</a>'.'<br>';
 
-            $cat = Category::where('parent_id',$value->id)->get();
+            $cat = Category::where('parent_id',$value->id)->orderBy('order_id','asc')->get();
  
 
             foreach ($cat as $key => $result) {
                 $parent_id = $result->id; 
 
-                $cname[$value->name][$result->id][] = ['id'=>$result->id, 'parent_id'=>$result->parent_id,'cname'=>$result->name,'level'=>$result->level];
+                $cname[$value->name][$result->id][] = ['id'=>$result->id, 'parent_id'=>$result->parent_id,'cname'=>$result->name,'level'=>$result->level,'order_id'=>$result->order_id];
                 $html  .= str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $result->level).$result->name;
                 $r = route('sub-category.edit',$result->id);
                 $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i>&nbsp;&nbsp;</a>'.'<br>';
-                $arr[] = ['id'=>$result->id, 'parent_id'=>$result->parent_id, 'cname'=>$result->name,'level'=>$result->level];
+                $arr[] = ['id'=>$result->id, 'parent_id'=>$result->parent_id, 'cname'=>$result->name,'level'=>$result->level,'order_id'=>$result->order_id];
 
                 while (1) {
 
-                    $data = Category::where('parent_id',$parent_id)->get();
+                    $data = Category::where('parent_id',$parent_id)->orderBy('order_id','asc')->get();
                     
                     if(count($data)>1){
 
@@ -127,12 +127,12 @@ class CategoryController extends Controller {
                                 $level++;
                                 $parent_id = $data->id;
 
-                                $cname[$value->name][$result->id][$parent_id][] = ['id'=>$data->id,'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level];
+                                $cname[$value->name][$result->id][$parent_id][] = ['id'=>$data->id,'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level,'order_id'=>$data->order_id];
 
                                  $html  .= str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $data->level).$data->name;
                                  $r         = route('sub-category.edit',$data->id);
                                  $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i> &nbsp;&nbsp;</a> '.'<br>';
-                                 $arr[]  = ['id'=>$data->id, 'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level];
+                                 $arr[]  = ['id'=>$data->id, 'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level,'order_id'=>$data->order_id];
                             }else{
                                 break;
                         }
@@ -143,15 +143,16 @@ class CategoryController extends Controller {
 
                     if($data)
                     {
+                        
                         $level++;
                         $parent_id = $data->id;
 
-                        $cname[$value->name][$result->id][$parent_id][] = ['id'=>$data->id,'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level];
+                        $cname[$value->name][$result->id][$parent_id][] = ['id'=>$data->id,'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level,'order_id'=>$data->order_id];
 
                          $html  .= str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $data->level).$data->name;
                          $r         = route('sub-category.edit',$data->id);
                          $html  .= '<a href="'.$r.'"><i class="fa fa-fw fa-pencil-square-o" title="edit"></i> &nbsp;&nbsp;</a> '.'<br>';
-                         $arr[]  = ['id'=>$data->id, 'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level];
+                         $arr[]  = ['id'=>$data->id, 'parent_id'=>$data->parent_id,'cname'=>$data->name,'level'=>$data->level,'order_id'=>$data->order_id];
                     }else{
                         break;
                     }
@@ -299,6 +300,32 @@ class CategoryController extends Controller {
 
     public function show(Category $category) {
         
+    }
+    
+    public function save_menu(Request $request) 
+    {            
+        $tmp = [];
+        foreach($_REQUEST['order'] as $row)
+        {
+            $a = explode('-',$row);
+            $tmp[$a[0]][] = $a[1].';'.$a[2];            
+        }
+        //print_r($tmp); die;
+        foreach($tmp as $key=>$value){
+            
+                $cat = DB::table('categories')->select('id')->where('parent_id',$key)->get();
+                
+                foreach($cat as $key1 => $c){
+                    $catid = explode(';',$value[$key1])[0];
+                    DB::table('categories')
+                    ->where('id', $catid)                    
+                    ->update(['order_id' => $key1]);   
+                }                
+            
+        }
+        //print_r($tmp); die;
+        return Redirect::to(route('category'))
+                        ->with('flash_alert_notice', 'Category was successfully saved!');
     }
 
 }

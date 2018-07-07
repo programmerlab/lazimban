@@ -40,7 +40,33 @@
                                            </div>
                                       @endif 
                                       <div class="box-body table-responsive no-padding" >
-                                      {!!  $category_listing !!}
+                                      <!--{!!  $category_listing !!}-->
+                                        <form method="post" action="{{ url('admin/category/save_menu') }}">
+                                        <ul id="sortable">
+                                        @foreach ($result_set as $key => $childs)
+                                            
+                                              @foreach ($childs as $key => $child) 
+                                                  
+                                                        @if($child['parent_id']==0) 
+                                                        <?php  $pid = $child['id']; ?>
+                                                        @endif  
+                                                          
+                                                          @if($child['parent_id']== $pid)
+                                                            
+                                                           <li class="ui-state-default">{!! str_repeat('---', $child['level']) !!} {{ ucfirst($child['cname']) }} <input type="hidden" name="parent[]" value="{{ ucfirst($child['parent_id']) }}"> <input type="hidden" name="order[]" value="{{ ($child['parent_id']).'-'.($child['id']).'-'.($child['order_id']) }}"> </li>
+                                                          @else 
+                                                         <?php $pid = $child['id']; ?>
+                                                         
+                                                         <li class="ui-state-default">{!! str_repeat('---', $child['level']) !!} {{ ucfirst($child['cname']) }} <input type="hidden" name="parent[]" value="{{ ucfirst($child['parent_id']) }}"> <input type="hidden" name="order[]" value="{{ ($child['parent_id']).'-'.($child['id']).'-'.($child['order_id']) }}"> </li>
+                                                       
+                                                        @endif
+                                                        
+                                                                                                               
+                                              @endforeach                                              
+                                             @endforeach
+                                          </ul>
+                                          <button type="submit"  class="btn btn-primary"> Save menu</button>
+                                        </form>
                                         <table class="table table-hover table-condensed">
                                           <thead>
                                             <tr>
@@ -98,8 +124,10 @@
                                               @endforeach
                                              @endforeach   
                                           </table>
-                                        </div>       
-                                       
+                                        </div>
+                                        
+                                        
+                                           
                                  </div>
                             </div>
                         </div>

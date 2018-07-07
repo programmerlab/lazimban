@@ -46,6 +46,7 @@
                         </div>                        
                     </div>
                     
+                        
                     <div class="col-md-12">
                     	<div class="product_info">
                         	<div id="horizontalTab">
@@ -82,8 +83,38 @@
                                 </div>
                             </div>	
                         </div>
-                    </div>                                                        
+                    </div>
+                    <hr>    
+                    <div class="col-md-12">
+                     <div class="product-review">
+                         <h2>Reviews</h2>
+                            <div class="rating_outer"><span class="fa fa-star" id="star1" onclick="add(this,1)"></span>
+                                <span class="fa fa-star" id="star2" onclick="add(this,2)"></span>
+                                <span class="fa fa-star" id="star3" onclick="add(this,3)"></span>
+                                <span class="fa fa-star" id="star4" onclick="add(this,4)"></span>
+                                <span class="fa fa-star" id="star5" onclick="add(this,5)"></span></div>
+                                
+                                
+                                 <h2>Comment</h2>
+                                <div class="comment_form row">
+                                
+                                 <div class="col-md-6"><input class="input-text" type="text" placeholder="Name"></div>
+                                    <div class="col-md-6"><input class="input-text" type="text" placeholder="Email"></div>
+                                    <div class="col-md-12"><textarea class="input-text" placeholder="Comment">                       </textarea></div>
+                                    <div class="col-md-12"><input value="submit" class="submit-btn" type="submit"></div>
+                                </div>
+                               
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         @stop
         
+<style>
+    .checked {
+        color: orange;
+    }
+    .comment_form .input-text{ height:50px; margin-bottom:15px;}
+    .comment_form textarea.input-text{ height:200px; resize:none;}
+</style>

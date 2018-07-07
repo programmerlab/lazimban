@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="{{ URL::asset('public/assets/css/jquery-ui.css') }}" id="theme">
     <link rel="stylesheet" href="{{ URL::asset('public/assets/css/blueimp-gallery.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('public/assets/css/select2.min.css') }}">
+    
+    
   </head>
    <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
