@@ -19,12 +19,11 @@
                             <div class="row">
                                 <div class="box">
                                     <div class="box-header">
-                                        
                                          
                                         <div class="col-md-2 pull-right">
                                             <div style="width: 150px;" class="input-group"> 
-                                                <a href="{{ route('product.create')}}">
-                                                    <button class="btn  btn-primary"><i class="fa fa-user-plus"></i> Create Product</button> 
+                                                <a href="{{ route('vendor.create')}}">
+                                                    <button class="btn  btn-primary"><i class="fa fa-user-plus"></i> Add Vendor</button> 
                                                 </a>
                                             </div>
                                         </div> 
@@ -43,18 +42,14 @@
                                         <table class="table table-hover table-condensed">
                                             <thead><tr>
                                                     <th>Sno</th> 
-                                                    <th>Product Title</th>
-                                                    <th>Category</th>
-                                                    <th>Sub Category </th>
-                                                    <th>Photo </th> 
-                                                    <th>Price </th> 
-                                                    <th>Created Date</th>
-                                                    @if(Session::get('current_vendor_type') == 1)
-                                                    <th>Created By</th>
-                                                    @endif
+                                                    <th>Full Name</th>
+                                                    <th>Company Name</th>
+                                                    <th>Email</th>
+                                                    <th>Signup Date</th>
+                                                    <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
-                                                @if(count($products )==0)
+                                                @if(count($users)==0)
                                                     <tr>
                                                       <td colspan="7">
                                                         <div class="alert alert-danger alert-dismissable">
@@ -65,39 +60,30 @@
                                                       </td>
                                                     </tr>
                                                   @endif
-                                                @foreach ($products  as $key => $result)  
+                                                @foreach ($users as $key => $user)  
                                              <thead>
                                               <tbody>    
                                                 <tr>
-                                                    <td>{{ ++$key }}</td>
-                                                    <td>{!! ucfirst($result->product_title)     !!}
-
+                                                    <td>{{ ++$key }}</td> 
+                                                    <td>{{ $user->full_name }}</td>
+                                                    <td>{{ $user->company_name }}</td>
+                                                    <td>{{ $user->email }} </td>
+                                                   
+                                                    <td>
+                                                        {!! Carbon\Carbon::parse($user->created_at)->format('m-d-Y H:i:s A'); !!}
                                                     </td>
                                                     <td>
-                                                    {{ ($helper->getCategoryName($result->category->parent_id)==null)?$result->category->name:$helper->getCategoryName($result->category->parent_id) }}
-
+                                                        <span class="label label-{{ ($user->status==1)?'success':'warning'}} status" id="{{$user->id}}"  data="{{$user->status}}"  onclick="changeStatus({{$user->id}},'user')" >
+                                                            {{ ($user->status==1)?'Active':'Inactive'}}
+                                                        </span>
                                                     </td>
-                                                    <td>    {{ $result->category->name }}</td>
-                                                     <td> 
-                                                      <!--   {!!  substr(html_entity_decode($result->description, ENT_QUOTES, 'UTF-8'),0,50)  !!}.. -->
-                                                        <img src="{!! Url::to('storage/uploads/products/'.$result->photo) !!}" width="100px">
-                                                     </td>
-                                                    <td>    {{ number_format($result->price, 2, '.', ',') }}</td>
-                                                    <td>
-                                                        {!! Carbon\Carbon::parse($result->created_at)->format('d-M-Y'); !!}
-                                                    </td>
-                                                    @if(Session::get('current_vendor_type') == 1)
-                                                    <td>
-                                                        {{ $result->company_name }} 
-                                                    </td>
-                                                    @endif    
                                                     <td> 
-                                                        <a href="{{ route('product.edit',$result->id)}}">
+                                                        <a href="{{ route('vendor.edit',$user->id)}}">
                                                             <i class="fa fa-fw fa-pencil-square-o" title="edit"></i> 
                                                         </a>
 
-                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$result->id, 'route' => array('product.destroy', $result->id))) !!}
-                                                        <button class='delbtn btn btn-danger btn-xs' type="submit" name="remove_levels" value="delete" id="{{$result->id}}"><i class="fa fa-fw fa-trash" title="Delete"></i></button>
+                                                        {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$user->id, 'route' => array('vendor.destroy', $user->id))) !!}
+                                                        <button class='delbtn btn btn-danger btn-xs' type="submit" name="remove_levels" value="delete" id="{{$user->id}}"><i class="fa fa-fw fa-trash" title="Delete"></i></button>
                                                         
                                                          {!! Form::close() !!}
 
@@ -106,7 +92,7 @@
                                                 @endforeach 
                                             </tbody></table>
                                     </div><!-- /.box-body --> 
-                                    <div class="center" align="center">  {!! $products->render() !!}</div>
+                                    <div class="center" align="center">  {!! $users->appends(['search' => isset($_GET['search'])?$_GET['search']:''])->render() !!}</div>
                                 </div>
                             </div>
                         </div>

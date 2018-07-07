@@ -53,6 +53,12 @@
                         <input class="form-control placeholder-no-fix" type="text" placeholder="Full Name" name="full_name" value="{{old('full_name')}}"> </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">Company Name</label>
+                    <div class="input-icon">
+                         
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="Company Name" name="company_name" value="{{old('company_name')}}"> </div>
+                </div>
+                <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                     <label class="control-label visible-ie8 visible-ie9">Phone</label>
                     <div class="input-icon">

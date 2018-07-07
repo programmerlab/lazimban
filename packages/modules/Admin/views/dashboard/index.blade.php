@@ -1,3 +1,4 @@
+
 @extends('packages::layouts.master')
   @section('title', 'Dashboard')
     @section('header')
@@ -47,7 +48,7 @@
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
                   </div>
-                  <a href="{{route('user')}}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="{{ (Session::get('current_vendor_type') == 1) ? route('user') : '#' }}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!-- ./col -->
 
@@ -75,7 +76,7 @@
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
                   </div>
-                  <a href="{{route('category')}}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="{{ (Session::get('current_vendor_type') == 1) ? route('category') : '#' }}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!-- ./col -->
 
@@ -105,7 +106,7 @@
                   <a href="{{route('transaction')}}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!-- ./col --> 
-
+               @if(Session::get('current_vendor_type') == 1)
                <div class="col-lg-3 col-xs-3">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -119,7 +120,7 @@
                   <a href="{{route('setting')}}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!-- ./col --> 
-
+              @endif
               
             
  

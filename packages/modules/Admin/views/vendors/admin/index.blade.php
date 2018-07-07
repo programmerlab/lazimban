@@ -40,7 +40,7 @@
                                 <div class="row"> 
                                 <div class="col-md-2"></div>   
                                   <div class="col-md-8"> 
-                                    <form method="post" style="margin-top:30px;" enctype="multipart/form-data">
+                                    <form method="post" style="margin-top:30px;">
                                       @include('packages::users.admin.form', compact('users'))
                                     </form>
                                     

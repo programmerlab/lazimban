@@ -19,7 +19,7 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                  <img alt="User Image" class="user-image" src="{{ URL::asset('public/assets/dist/img/user2-160x160.jpg') }} ">
+                  <img alt="User Image" class="user-image" src="{{ URL::asset('public/new/images/profile/'.Session::get('current_vendor_image')) }}">
                    @if(Auth::guard('admin')->user()->user_type==1)
                     <span class="hidden-xs"> Admin</span>
                     @else
@@ -29,7 +29,7 @@
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img alt="User Image" class="img-circle" src="{{ URL::asset('public/assets/dist/img/user2-160x160.jpg') }}">
+                    <img alt="User Image" class="img-circle" src="{{ URL::asset('public/new/images/profile/'.Session::get('current_vendor_image')) }}">
                     <p>
                      @if(Auth::guard('admin')->user()->user_type==1)
                     <span class="hidden-xs">Welcome Admin</span>

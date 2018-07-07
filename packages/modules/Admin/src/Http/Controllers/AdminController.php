@@ -45,7 +45,8 @@ class AdminController extends Controller {
     protected $guard = 'admin';
     public function __construct()
     {  
-        $this->middleware('admin');  
+        $this->middleware('admin');
+        View::share('helper',new Helper);
     }
     /*
     * Dashboard
@@ -55,20 +56,26 @@ class AdminController extends Controller {
         $page_title     = "Dashboard";
         $page_action    = "Veiw";
         $user           = User::count();
-        $product        = Product::count();
+        $vendor_id = $request->session()->get('current_vendor_id');
+        $product        = Product::where('created_by',$vendor_id)->count();
         $category       = Category::where('parent_id',0)->count();
-        $order          =  Transaction::all()->count();  
-
-        $today_order    =  Transaction::whereDate('created_at', '=', date('Y-m-d'))->get()->count(); 
-
         
+        $order          =  Transaction::all()->count();
+        $today_order    =  Transaction::whereDate('created_at', '=', date('Y-m-d'))->get()->count();
+        if($request->session()->get('current_vendor_type') != 1){
+            $order = Transaction::join('products', 'transactions.product_id', '=', 'products.id')->where('products.created_by',$vendor_id)->count();
+            
+            $today_order = Transaction::join('products', 'transactions.product_id', '=', 'products.id')->where('products.created_by',$vendor_id)->where('transactions.created_at', '=', date('Y-m-d'))->count();
+        }
 
         $viewPage       = "Admin";
-        return view('packages::dashboard.index',compact('today_order','order','category','product','user','page_title','page_action','viewPage'));
+        
+        return view('packages::dashboard.index',compact('today_order','order','category','product','user','page_title','page_action','viewPage','user_image'));
     }
 
    public function profile(Request $request,Admin $users)
    {
+      
         $users = Admin::find(Auth::guard('admin')->user()->id);
 
         $page_title = "Profile";
@@ -81,6 +88,9 @@ class AdminController extends Controller {
             $messages = ['password.regex' => "Your password must contain 1 lower case character 1 upper case character one number"];
 
             $validator = Validator::make($request->all(), [
+                'full_name' => 'required',
+                'company_name' => 'required',
+                'phone' => 'required',
                 'email' => 'required|email',
                 'password' => 'min:6' 
         ]);
@@ -89,9 +99,27 @@ class AdminController extends Controller {
 
             $error_msg  =   $validator->messages()->all(); 
         }
-            $users->full_name = $request->get('name'); 
-            $users->name = $request->get('name'); 
+            
+            if(!empty($request->file('image'))){
+                $image = $request->file('image');
+                $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+                $destinationPath = public_path('/new/images/profile');
+                $image->move($destinationPath, $input['imagename']);
+                $users->image = $input['imagename'];
+                $request->session()->put('current_vendor_image',$users->image);
+            }
+            
+            $users->full_name = $request->get('full_name'); 
+            $users->company_name = $request->get('company_name');
+            $users->phone = $request->get('phone');
+            $users->address = $request->get('address');
+            $users->city = $request->get('city');
+            $users->country = $request->get('country');
+            if($request->get('password') != ''){
             $users->password  =  Hash::make($request->get('password'));
+            }                        
+            
+        
             $users->save();
             $method = $request->method();
             $msg    = "Information successfully updated!";

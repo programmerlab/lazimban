@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\DB;
       Route::get('admin/login','Modules\Admin\Http\Controllers\AuthController@index');
       Route::get('logout','Modules\Admin\Http\Controllers\AuthController@logout');  
       Route::get('admin/signUp','Modules\Admin\Http\Controllers\AuthController@signUp'); 
@@ -7,16 +7,27 @@
        
       Route::post('admin/registration','Modules\Admin\Http\Controllers\AuthController@registration'); 
       
-      Route::post('admin/login',function(App\Admin $user){
+      Route::post('admin/login',function(App\Admin $user , Illuminate\Http\Request $request){
+        //echo "<pre>"; print_r($user); die;
         $credentials = ['email' => Input::get('email'), 'password' => Input::get('password'),'user_type'=>1]; 
             $auth = auth()->guard('admin');
 
         $credentials2 = ['email' => Input::get('email'), 'password' => Input::get('password'),'user_type'=>2]; 
             $auth = auth()->guard('admin');
-        
+            
             if ($auth->attempt($credentials)) {
+                    $vendor = DB::table('admin')->where('email', Input::get('email'))->first();                
+                    $request->session()->put('current_vendor_id',$vendor->id);
+                    $request->session()->put('current_vendor_name',$vendor->full_name);
+                    $request->session()->put('current_vendor_image',$vendor->image);
+                    $request->session()->put('current_vendor_type',1);
                 return Redirect::to('admin');
             }if ($auth->attempt($credentials2)) {
+                    $vendor = DB::table('admin')->where('email', Input::get('email'))->first();                
+                    $request->session()->put('current_vendor_id',$vendor->id);
+                    $request->session()->put('current_vendor_name',$vendor->full_name);
+                    $request->session()->put('current_vendor_image',$vendor->image);
+                    $request->session()->put('current_vendor_type',2);
                 return Redirect::to('admin');
             }
             else{ 
@@ -46,6 +57,19 @@
                 'store' => 'user.store',
                 'index' => 'user',
                 'create' => 'user.create',
+            ]
+                ]
+        );
+        
+        Route::resource('admin/vendor', 'Modules\Admin\Http\Controllers\VendorsController', [
+            'names' => [
+                'edit' => 'vendor.edit',
+                'show' => 'vendor.show',
+                'destroy' => 'vendor.destroy',
+                'update' => 'vendor.update',
+                'store' => 'vendor.store',
+                'index' => 'vendor',
+                'create' => 'vendor.create',
             ]
                 ]
         );

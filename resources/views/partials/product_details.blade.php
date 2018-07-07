@@ -48,6 +48,7 @@
 
 				<div class="description-container m-t-20">
 					 {!! str_limit($product->description,100) !!}
+                     
 				</div><!-- /.description-container -->
 
 				<div class="price-container info-container m-t-20">
@@ -58,6 +59,7 @@
 							<div class="price-box">
 								<span class="price">RS{{$product->price-($product->price*$product->discount/100)}}</span>
 								<span class="price-strike">RS{{$product->price}}</span>
+                                
 							</div>
 						</div>
 

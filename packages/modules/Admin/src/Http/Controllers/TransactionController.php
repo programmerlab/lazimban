@@ -28,6 +28,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Dispatcher; 
 use Modules\Admin\Helpers\Helper as Helper;
 use Response;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class AdminController
@@ -68,9 +69,14 @@ class TransactionController extends Controller {
             echo $s;
             exit();
         }
-         
-        $transaction = $transaction->with('user','product','coupan')->orderBy('id','desc')->Paginate($this->record_per_page);
         
+        $vendor_id = $request->session()->get('current_vendor_id');
+        
+        if($request->session()->get('current_vendor_type') != 1){
+            $transaction = $transaction->with('user','product','coupan')->join('products', 'transactions.product_id', '=', 'products.id')->where('products.created_by',$vendor_id)->orderBy('transactions.id','desc')->Paginate($this->record_per_page);
+        }else{
+            $transaction = $transaction->with('user','product','coupan')->orderBy('id','desc')->Paginate($this->record_per_page);
+        }
         
         return view('packages::transaction.index', compact('transaction', 'page_title', 'page_action','helper'));
    

@@ -38,8 +38,11 @@
                                 <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">Buy</button></a>                                    
                             </div>
                             <div class="category_list">
-                            	<span><strong>Description:</strong></span> <span>{!! str_limit($product->description,100) !!}</span>
+                            	<span><strong>Description:</strong></span> <span>{!! str_limit($product->description,100) !!}</span>                                
                             </div>
+                            <div>
+                                <h6>Seller -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                            </div>    
                         </div>                        
                     </div>
                     
@@ -58,6 +61,7 @@
                                         <div>
                                             <h2>Description</h2>
                                             <p>{!! $product->description !!}.</p>
+                                            <h6>Seller -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
                                         </div>
                                          
                                         <div>    
@@ -66,6 +70,7 @@
                                                     <div class="item">
                                                          <a href="{{url($result->url)}}"><img src="{{ asset('storage/uploads/products/'. $result->photo) }}" alt="Gıda Ürünleri">								
                                                             <h2>{{ $result->product_title }} </h2>
+                                                            <h6>Seller -  {{ ($helper->getVendorName($result->id)) ? $helper->getVendorName($result->id) : 'Admin' }}</h6>
                                                         </a>
                                                     </div>
                                             @endforeach

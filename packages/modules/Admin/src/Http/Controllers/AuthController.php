@@ -31,10 +31,15 @@ class AuthController extends Controller
 
     protected $redirectTo = 'admin';
 	protected $guard = 'admin';
+    
+    public function __construct()
+    {          
+        View::share('helper',new Helper);
+    }
 	 
 	public function index(User $user, Request $request)
 	{  
-		
+		//echo "<pre>";  print_r($request); die;
         if(Auth::guard('admin')->check()){  
     		return Redirect::to('admin');
     	}
@@ -68,6 +73,7 @@ class AuthController extends Controller
         //Server side valiation
         $validator = Validator::make($request->all(), [
            	'full_name'		=> 	'required',
+            'company_name'		=> 	'required',
             'email'     =>  'required|email|unique:admin',
             'phone'   => 'required|numeric',
 	        'password' => 'required|min:6',
@@ -109,6 +115,7 @@ class AuthController extends Controller
 	}
 	public function login(Request $request)
 	{
+        
 		$credentials = array('email' => Input::get('email'), 'password' => Input::get('password')); 
         if (Auth::attempt($credentials, true)) {
             return Redirect::to('admin');

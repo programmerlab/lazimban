@@ -164,7 +164,7 @@ class CategoryController extends Controller {
        // category/106/edit
 
         $category_listing = Category::route(['category' => 'id'])->renderAsHtml();
-
+        //echo "<pre>"; print_r($category_listing); die;
 
         return view('packages::category.index', compact('result_set','categories','data', 'page_title', 'page_action','html','category_listing'));
     }

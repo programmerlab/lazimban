@@ -4,14 +4,14 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img alt="User Image" class="img-circle" src="{{ URL::asset('public/assets/dist/img/user2-160x160.jpg') }}">
+        <img alt="User Image" class="img-circle" src="{{ URL::asset('public/new/images/profile/'.Session::get('current_vendor_image')) }}">
       </div>
       <div class="pull-left info">
         <p>
            @if(Auth::guard('admin')->user()->user_type==1)
            Admin
            @else
-           Vendor
+           Vendor 
            @endif
 
         </p>
@@ -103,11 +103,22 @@
         <ul class="treeview-menu">
           <li class="{{ (isset($page_action) && $page_action=='View setting')?"active":'' }}"><a href="{{ route('setting')}}"><i class="fa  fa-list"></i> Website Setting</a></li>
         </ul>
-      </li>  
+      </li>
+      <li class="treeview {{ (isset($page_action) && $page_title=='Vendor')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Manage Vendors</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li class="{{ (isset($page_action) && $page_action=='Create Vendor')?"active":'' }}" ><a href="{{ route('vendor.create')}}"><i class="fa fa-user-plus"></i> Create Vendor</a></li>
+           <li class="{{ (isset($page_action) && $page_action=='View Vendor')?"active":'' }}"><a href="{{ route('vendor')}}"><i class="fa  fa-list"></i> View Vendor</a></li>
+        </ul>
+      </li>
       @else
 
 
-      <li class="treeview {{ (isset($page_action) && $page_title=='User')?"active":'' }} ">
+      <!--<li class="treeview {{ (isset($page_action) && $page_title=='User')?"active":'' }} ">
         <a href="#">
           <i class="fa fa-user"></i>
           <span>Manage Users</span>
@@ -117,7 +128,7 @@
           <li class="{{ (isset($page_action) && $page_action=='Create User')?"active":'' }}" ><a href="{{ route('user.create')}}"><i class="fa fa-user-plus"></i> Create User</a></li>
            <li class="{{ (isset($page_action) && $page_action=='View User')?"active":'' }}"><a href="{{ route('user')}}"><i class="fa  fa-list"></i> View User</a></li>
         </ul>
-      </li>
+      </li>-->
 
       <li class="treeview {{ (isset($page_action) && $page_title=='Product')?"active":'' }} ">
         <a href="#">

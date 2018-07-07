@@ -38,7 +38,7 @@ class HomeController extends Controller
      
 
       public function __construct(Request $request,Settings $setting) { 
-        
+        View::share('helper',new Helper);
         View::share('category_name',$request->segment(1));
         View::share('total_item',Cart::content()->count());
         View::share('sub_total',Cart::subtotal()); 
@@ -184,7 +184,6 @@ class HomeController extends Controller
      /*----------*/
     public function mainCategory( $category=null)
     {   
-        
         $request = new Request;
         $q = Input::get('q'); 
          
@@ -215,7 +214,7 @@ class HomeController extends Controller
         } 
         $category = isset($catID->name)?$catID->name:null; 
         $categories = Category::nested()->get();  
-        return view('end-user.category',compact('categories','products','category','q','category','catID'));   
+        return view('end-user.category',compact('categories','products','category','q','category','catID','helper'));   
     }
 
      /*----------*/
@@ -253,7 +252,7 @@ class HomeController extends Controller
     }
     /*----------*/
     public function productDetail($subCategoryName=null,$productName=null)
-    {    
+    {   
         $product = Product::with('category')->where('slug',$productName)->first();
          
         $categories = Category::nested()->get();  
@@ -267,7 +266,7 @@ class HomeController extends Controller
           $product->save(); 
         } 
         $main_title=  $product->product_title;
-        return view('end-user.product-details',compact('categories','product','main_title'));  
+        return view('end-user.product-details',compact('categories','product','main_title','helper'));  
     }
      /*----------*/
     public function order(Request $request)

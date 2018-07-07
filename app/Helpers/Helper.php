@@ -27,7 +27,8 @@ use App\Criteria;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\RatingFeedback;
 use PHPMailerAutoload;
-use PHPMailer; 
+use PHPMailer;
+use Illuminate\Support\Facades\DB;
 
 class Helper {
 
@@ -279,6 +280,19 @@ class Helper {
             }
          
        
+    }
+    
+    public static function  getVendorName($productid=null)
+    {
+        $product = DB::table('products')->where('id', $productid)->first();                
+        
+        //print_r($product); die;
+        if($product!=null){
+            $vendor = DB::table('admin')->where('id', $product->created_by)->first(); 
+            return $vendor->company_name; 
+        }else{
+            return null;
+        }
     }
      
 }

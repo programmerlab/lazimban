@@ -52,10 +52,11 @@ class ProductController extends Controller {
     private $user_id;
 
     public function __construct(Request $request, Settings $setting) {
-
+        
         View::share('category_name', $request->segment(1));
         View::share('total_item',Cart::content()->count());
-        View::share('sub_total',Cart::subtotal());  
+        View::share('sub_total',Cart::subtotal());
+        View::share('helper',new Helper);
 
         View::share('userData',$request->session()->get('current_user'));
          if ($request->session()->has('current_user')) { 
@@ -153,7 +154,7 @@ class ProductController extends Controller {
 
 
  
-        return view('end-user.home', compact('special_deals','hot_products','banner_path1', 'banner_path2','categories','products','product_new')); 
+        return view('end-user.home', compact('special_deals','hot_products','banner_path1', 'banner_path2','categories','products','product_new','helper')); 
     }
 
     /*
@@ -496,7 +497,8 @@ class ProductController extends Controller {
     }
 
     public function myaccount(Request $request)
-    {    
+    {
+        
         if($this->user_id=="")
         {      
             return Redirect::to('myaccount/login');

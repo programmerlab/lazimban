@@ -68,8 +68,15 @@ class ProductController extends Controller {
             exit();
         }
          
-        $products = $product->with('category')->orderBy('id','desc')->Paginate($this->record_per_page);
- 
+        $vendor_id = $request->session()->get('current_vendor_id');
+        
+        if($request->session()->get('current_vendor_type') != 1){
+            $products = $product->with('category')->where('created_by',$vendor_id)->orderBy('id','desc')->Paginate($this->record_per_page);
+        }else{
+            $products = $product->with('category')->select('products.*', 'admin.company_name')->join('admin','products.created_by','=','admin.id')->orderBy('products.id','desc')->Paginate($this->record_per_page);
+        }
+        
+        //echo "<pre>"; print_r($products); die;
 
         return view('packages::product.index', compact('products', 'page_title', 'page_action','helper'));
    
@@ -79,8 +86,8 @@ class ProductController extends Controller {
      * create  method
      * */
 
-    public function create(Product $product) 
-    {
+    public function create(Product $product, Request $request) 
+    {        
         $page_title = 'Product';
         $page_action = 'Create Product';
         $sub_category_name  = Product::all();
@@ -132,7 +139,8 @@ class ProductController extends Controller {
     public function store(ProductRequest $request, Product $product) 
     {
         $cat_url    = $this->getCategoryById($request->get('product_category')); 
-        
+        $vendor_id = $request->session()->get('current_vendor_id');
+        //echo "<pre>"; print_r($vendor_id); die;
 
         if ($request->file('image')) { 
             $photo = $request->file('image');
@@ -162,6 +170,7 @@ class ProductController extends Controller {
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->url                =   $url;
+            $product->created_by                =   $vendor_id;
 
             if($request->get('title')){
                 $product->title  = $request->get('title');
@@ -184,7 +193,8 @@ class ProductController extends Controller {
 
         $page_title = 'Product';
         $page_action = 'Show Product'; 
-        $category   = Category::all();  
+        $category   = Category::all();
+        
         $cat = [];
         foreach ($category as $key => $value) {
              $cat[$value->category_name][$value->id] =  $value->sub_category_name;
