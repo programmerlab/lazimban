@@ -6,7 +6,7 @@
                                   
                                   
                                   <div class="product_list_outer">
-                                      <h3><span>New</span> Products</h3>
+                                      <h3><span>Yeni</span> Ürünler</h3>
                                       
                                       
                                       <ul>
@@ -19,8 +19,8 @@
                                                         <div class="col-md-4"><h2>{{$product->product_title}}</h2>({{ $product->views+100 }} views)</div>
                                                          <div class="col-md-3"><span class="price-product"> RS {{$product->price-($product->price*$product->discount)/100}}</span></div>
                                                           <div class="col-md-2">
-                                                            <a href="{{ url($product->url) }}" class="product_link">View Details</a>
-                                                                <h6>Seller -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                                            <a href="{{ url($product->url) }}" class="product_link">Detayları göster</a>
+                                                                <h6>satıcı -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
                                                           </div>
                                                             
                                                         
@@ -53,7 +53,7 @@
                                   
                                   
                                   <div class="product_list_outer">
-                                  <h3><span>New </span> Arrivals</h3>
+                                  <h3><span>Yeni </span> Gelenler</h3>
                                       <div class="owl-carousel owl-theme">
                                         @foreach($categories as $key => $value)  
                                             @foreach($product_new as $key2 => $product) 

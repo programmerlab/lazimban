@@ -11,8 +11,8 @@
                 <div class="shopping-cart">
                     <div class="shopping-cart-table ">
                         <div class="table-responsive" style="padding-bottom:50px">
-                            <h2 class="heading-title">Thank you for placed order!</h2>
-                            <span class="title-tag">Your order will shipped soon..!</span>
+                            <h2 class="heading-title">Verilen sipariş için teşekkür ederim!</h2>
+                            <span class="title-tag">Siparişiniz yakında gönderilecek..!</span>
                         </div>
                     </div>
                 </div>

@@ -42,6 +42,8 @@ class AppServiceProvider extends ServiceProvider
             }  
          }
          
+         
+         //echo "<pre>"; print_r($cat); die;
         
          
         View::share('mega_menu',$mega_menu);  

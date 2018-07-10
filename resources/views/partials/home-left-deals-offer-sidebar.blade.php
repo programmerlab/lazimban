@@ -1,6 +1,7 @@
+
 <div class="col-md-3 col-sm-4">
     <div class="product_categories">
-        <h3>Categories </h3>
+        <h3>Kategoriler </h3>
             <ul class="product-categories">
               @foreach($categories as $key => $value)
                 <li class="cat-item cat-parent"><a href="#">{{$value['name']}}</a>
@@ -21,7 +22,7 @@
     </div>
      
     <div class="top_rated_products">
-        <h3>High-rated products</h3>
+        <h3>Yüksek puanlı ürünler</h3>
         <ul class="product_list">
           @foreach($hot_products as $result)
               <li>                                             

@@ -37,7 +37,7 @@ class HomeController extends Controller
      */
      
 
-      public function __construct(Request $request,Settings $setting) { 
+      public function __construct(Request $request,Settings $setting) {  
         View::share('helper',new Helper);
         View::share('category_name',$request->segment(1));
         View::share('total_item',Cart::content()->count());

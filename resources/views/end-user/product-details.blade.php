@@ -18,7 +18,7 @@
                     <div class="col-md-6">
                     	<div class="product_discription">
                         	<h2 class="product_name">{{$product->product_title}}</h2>
-                            <h3 class="product_price">RS {{$product->price-($product->price*$product->discount/100)}}  </h3> <h5><p style="text-decoration: line-through">RS {{$product->price}}</p></h5>
+                            <h3 class="product_price">$ {{$product->price-($product->price*$product->discount/100)}}  </h3> <h5><p style="text-decoration: line-through">$ {{$product->price}}</p></h5>
                             <table class="variations" cellspacing="0">
                                 <tbody>
                                         <!--<tr>
@@ -32,16 +32,16 @@
                             	<input type="number" value="1" onchange="updateCart(this.value)" min=1>
                                  <a href="{{ url(str_slug($product->product_title,'-').'/addToCart/'.$product->id) }}" id="addToCart" >
 
-                                <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">Add to Cart</button></a>
+                                <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">Sepete ekle</button></a>
                                 
                                 <a href="{{ url(str_slug($product->product_title,'-').'/buyNow/'.$product->id) }}" >
-                                <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">Buy</button></a>                                    
+                                <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">satın almak</button></a>                                    
                             </div>
                             <div class="category_list">
-                            	<span><strong>Description:</strong></span> <span>{!! str_limit($product->description,100) !!}</span>                                
+                            	<span><strong>Açıklama:</strong></span> <span>{!! str_limit($product->description,100) !!}</span>                                
                             </div>
                             <div>
-                                <h6>Seller -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                <h6>satıcı -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
                             </div>    
                         </div>                        
                     </div>
@@ -51,18 +51,18 @@
                     	<div class="product_info">
                         	<div id="horizontalTab">
                                 <ul class="resp-tabs-list">
-                                    <li>Description </li>
+                                    <li>Açıklama </li>
                                     <!--<li>Ek bilgi </li>-->
                                     <!--<li>Yorumlar (0) </li>-->
                                     <!--<li>Satıcı Bilgisi </li>-->
-                                    <li>More Product </li>
-                                     <li>Comments</li> 
+                                    <li>Daha fazla ürün </li>
+                                     <li>Yorumlar</li> 
                                 </ul>
                                 <div class="resp-tabs-container">
                                         <div>
-                                            <h2>Description</h2>
+                                            <h2>Açıklama</h2>
                                             <p>{!! $product->description !!}.</p>
-                                            <h6>Seller -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                            <h6>satıcı -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
                                         </div>
                                          
                                         <div>    
@@ -71,7 +71,7 @@
                                                     <div class="item">
                                                          <a href="{{url($result->url)}}"><img src="{{ asset('storage/uploads/products/'. $result->photo) }}" alt="Gıda Ürünleri">								
                                                             <h2>{{ $result->product_title }} </h2>
-                                                            <h6>Seller -  {{ ($helper->getVendorName($result->id)) ? $helper->getVendorName($result->id) : 'Admin' }}</h6>
+                                                            <h6>satıcı -  {{ ($helper->getVendorName($result->id)) ? $helper->getVendorName($result->id) : 'Admin' }}</h6>
                                                         </a>
                                                     </div>
                                             @endforeach 
@@ -102,7 +102,7 @@
                     <hr>    
                     <div class="col-md-12">
                      <div class="product-review">
-                         <h2  id="displayRating" data="{{$product->rating or 0}}">Reviews </h2>
+                         <h2  id="displayRating" data="{{$product->rating or 0}}">yorumlar </h2>
 
                             <div class="rating_outer"><span class="fa fa-star" id="star1" onclick="rating(1,{{$product->id}})"></span>
                                 <span class="fa fa-star" id="star2" onclick="rating(2,{{$product->id}})"></span>
@@ -113,7 +113,7 @@
                             </div>
                                     
                                 
-                                 <h2>Comment</h2>
+                                 <h2>Yorumlar</h2>
                                  @if ($errors->has('successMsg'))
                                     <span class="btn btn-success">{{ $errors->first('successMsg') }}</span>
                                      
@@ -125,17 +125,17 @@
                             <input type="hidden" name="_token" value="{{csrf_token()}}"> 
                                  <div class="col-md-6">
                                     <span class="label label-danger" style="color:#ffffff">{{ $errors->first('name', ':message') }}</span> <br>
-                                    <input class="input-text" type="text" placeholder="Name" name="name" value="{{old('name')}}">
+                                    <input class="input-text" type="text" placeholder="isim" name="name" value="{{old('name')}}">
                                 </div>
                                     <div class="col-md-6">
                                         <span class="label label-danger" style="color:#ffffff">{{ $errors->first('email', ':message') }}</span> <br>
-                                        <input class="input-text" type="email" placeholder="Email" name="email" value="{{old('email')}}">
+                                        <input class="input-text" type="email" placeholder="E-posta" name="email" value="{{old('email')}}">
                                     </div>
                                     <div class="col-md-12">
                                         <span class="label label-danger" style="color:#ffffff">{{ $errors->first('comments', ':message') }}</span> <br>
-                                        <textarea class="input-text" placeholder="Comment" name="comments">{{old('comments')}}</textarea>  
+                                        <textarea class="input-text" placeholder="Yorum Yap" name="comments">{{old('comments')}}</textarea>  
                                     </div>
-                                    <div class="col-md-12"><input value="submit" class="submit-btn" type="submit"></div>
+                                    <div class="col-md-12"><input value="Gönder" class="submit-btn" type="submit"></div>
                                 </div>
                             </form>
                                

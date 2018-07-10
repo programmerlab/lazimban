@@ -40,8 +40,16 @@
             {!! Form::text('meta_description',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
             <span class="label label-danger">{{ $errors->first('meta_description', ':message') }}</span>
         </div>
-    </div> 
-
+    </div>
+        
+    <div class="form-group{{ $errors->first('image', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Category Image<span class="error"> </span></label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::file('image',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('image', ':message') }}</span>
+        </div>
+    </div>
+        
      <div class="form-group{{ $errors->first('description', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label">Description</label>
         <div class="col-lg-8 col-md-8"> 

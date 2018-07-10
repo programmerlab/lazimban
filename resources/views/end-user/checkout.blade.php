@@ -17,12 +17,12 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th class="cart-romove item">Remove</th>
-                                        <th class="cart-description item">Image</th>
-                                        <th class="cart-product-name item">Product Name</th>
-                                        <th class="cart-edit item">Price</th>
-                                        <th class="cart-qty item">Quantity</th>
-                                        <th class="cart-sub-total item">Subtotal</th> 
+                                        <th class="cart-romove item">Kaldır</th>
+                                        <th class="cart-description item">görüntü</th>
+                                        <th class="cart-product-name item">Ürün adı</th>
+                                        <th class="cart-edit item">Fiyat</th>
+                                        <th class="cart-qty item">miktar</th>
+                                        <th class="cart-sub-total item">ara toplam</th> 
                                     </tr>
                                 </thead><!-- /thead -->
                                <!--  <tfoot>
@@ -59,7 +59,7 @@
                                         <p>Web ID: {{$item->id}}</p>
                                     </td>
                                     <td class="cart_price">
-                                        <p>Rs {{$item->price}}</p>
+                                        <p>$ {{$item->price}}</p>
                                     </td>
                                     <td class="cart_quantity">
                                         <div class="cart_quantity_button">
@@ -74,7 +74,7 @@
                                 </tr> 
                                 @endforeach
                                 @else
-                            <p>You have no items in the shopping cart</p>
+                            <p>Alışveriş sepetinizde ürün yok</p>
                             @endif
                             </tbody>
                             </table><!-- /table -->
@@ -86,12 +86,12 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        <span class="estimate-title">Continue Shopping </span>
-                                        <p>Do you want to buy more...</p>
+                                        <span class="estimate-title">Alışverişe devam </span>
+                                        <p>Daha fazla almak istermisiniz ...</p>
                                     </th>
                                        <tr>
                                     <td>
-                                        <a href="{{url('/')}}" class="btn btn-upper btn-primary outer-left-xs">Continue Shopping</a>
+                                        <a href="{{url('/')}}" class="btn btn-upper btn-primary outer-left-xs">Alışverişe devam</a>
                                     </td>
                                 </tr>
                                 </tr>
@@ -106,8 +106,8 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        <span class="estimate-title">Discount Code</span>
-                                        <p>Enter your coupon code if you have one..</p>
+                                        <span class="estimate-title">İndirim kodu</span>
+                                        <p>Varsa kupon kodunuzu girin..</p>
                                     </th>
                                 </tr>
                              
@@ -116,10 +116,10 @@
                                     <tr>
                                         <td>
                                             <div class="form-group">
-                                                <input class="form-control unicase-form-control text-input" placeholder="You Coupon.." type="text">
+                                                <input class="form-control unicase-form-control text-input" placeholder="Kuponunuz.." type="text">
                                             </div>
                                             <div class="clearfix pull-right">
-                                                <button type="submit" class="btn-upper btn btn-primary">APPLY COUPON</button>
+                                                <button type="submit" class="btn-upper btn btn-primary">KUPONU ONAYLA</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -133,10 +133,10 @@
                                 <tr>
                                     <th>
                                         <div class="cart-sub-total">
-                                            <span class="inner-left-md">Subtotal RS {{$sub_total}} </span>
+                                            <span class="inner-left-md">ara toplam $ {{$sub_total}} </span>
                                         </div>
                                         <div class="cart-grand-total">
-                                            <span class="inner-left-md">Total RS {{$sub_total}} </span>
+                                            <span class="inner-left-md">Genel Toplam $ {{$sub_total}} </span>
                                         </div>
                                     </th>
                                 </tr>
@@ -146,7 +146,7 @@
                                         <td>
                                             <div class="cart-checkout-btn pull-right">
                                                 <a href="{{route('order')}}">
-                                                <button type="submit" class="btn btn-primary checkout-btn">PLACE ORDER</button>
+                                                <button type="submit" class="btn btn-primary checkout-btn">SİPARİŞ VERMEK</button>
                                                 </a>
                                                
                                             </div>

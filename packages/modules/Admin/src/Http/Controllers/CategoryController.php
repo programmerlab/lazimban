@@ -206,10 +206,19 @@ class CategoryController extends Controller {
         $cat = new Category;
         $cat->name                  =  $request->get('category_name');
         if($request->get('slug') && !empty($request->get('slug'))){
-             $cat->slug = strtolower(str_replace(" ", "-", $request->get('slug')));     
+             $cat->slug = strtolower(str_replace(" ", "-", $request->get('slug')));            
         }else{
              $cat->slug = strtolower(str_replace(" ", "-", $request->get('category_name')));     
         }
+        
+        if(!empty($request->file('image'))){
+                $image = $request->file('image');
+                $input['imagename'] = $cat->slug.'.png';
+                $destinationPath = public_path('/new/images/category');
+                $image->move($destinationPath, $input['imagename']);
+                $cat->image = $input['imagename'];                
+            }
+        
         $cat->parent_id             = $parent_id;
         $cat->category_name         =  $request->get('category_name');
         $cat->sub_category_name     =  $request->get('category_name');
@@ -258,7 +267,22 @@ class CategoryController extends Controller {
         }else{
              $cat->slug = strtolower(str_replace(" ", "-", $request->get('category_name')));     
         }
-       
+        
+                
+        
+        if(!empty($request->file('image'))){
+                if($cat->slug != 'default.png'){
+                    if (file_exists(public_path('/new/images/category/'.$cat->slug.'.png'))) {
+                        unlink(public_path('/new/images/category/'.$cat->slug.'.png'));
+                    }                    
+                }
+                
+                $image = $request->file('image');
+                $input['imagename'] = $cat->slug.'.png';
+                $destinationPath = public_path('/new/images/category');
+                $image->move($destinationPath, $input['imagename']);
+                $cat->image = $input['imagename'];                
+            }
         
         $cat->parent_id = $parent_id;
         $cat->category_name         =  $request->get('category_name');

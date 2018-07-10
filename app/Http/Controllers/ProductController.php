@@ -51,7 +51,7 @@ class ProductController extends Controller {
 
     private $user_id;
 
-    public function __construct(Request $request, Settings $setting) {
+    public function __construct(Request $request, Settings $setting) {  
         
         View::share('category_name', $request->segment(1));
         View::share('total_item',Cart::content()->count());

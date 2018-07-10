@@ -1,42 +1,42 @@
 <footer>
       <div class="page-wrapper">
           <div class="col-md-3">
-              <h3>Corporation</h3>
+              <h3>şirket</h3>
               <ul>
-                  <li class="fiRSt"><a title="Your Account" href="##">About us</a></li>
-                    <li><a title="Information" href="{{ url('contact') }}">Customer Service</a></li>
-                    <li><a title="Addresses" href="{{ url('contact') }}">Company</a></li>
-                    <li><a title="Addresses" href="{{ url('contact') }}">Investor Relations</a></li>
+                  <li class="fiRSt"><a title="Your Account" href="##">Hakkımızda</a></li>
+                    <li><a title="Information" href="{{ url('contact') }}">Müşteri servisi</a></li>
+                    <li><a title="Addresses" href="{{ url('contact') }}">şirket</a></li>
+                    <li><a title="Addresses" href="{{ url('contact') }}">yatırımcı ilişkileri</a></li>
               </ul>
           </div>
           <div class="col-md-3">
-              <h3>Customer Services</h3>
+              <h3>Müşteri Hizmetleri</h3>
               <ul>
-                 <li class="fiRSt"><a href="{{ url('myaccount') }}" title="Contact us">My Account</a></li>
-                 <li><a href="{{ url('myaccount') }}" title="About us">Order History</a></li>
-                 <li><a href="{{url('faq')}}" title="faq">FAQ</a></li> 
-                 <li class="last"><a href="{{ url('contact') }}" title="Where is my order?">Help Center</a></li>
+                 <li class="fiRSt"><a href="{{ url('myaccount') }}" title="Contact us">Hesabım</a></li>
+                 <li><a href="{{ url('myaccount') }}" title="About us">Sipariş Geçmişi</a></li>
+                 <li><a href="{{url('faq')}}" title="faq">SSS</a></li> 
+                 <li class="last"><a href="{{ url('contact') }}" title="Where is my order?">Yardım Merkezi</a></li>
               </ul>
           </div>
           <div class="col-md-3">
-              <h3>Vendor Application Form</h3>
+              <h3>Satıcı Başvuru Formu</h3>
               <ul>
-                  <li><input type="text" class="footer_input" placeholder="Your Name (required)"></li>
-                  <li><input type="text" class="footer_input" placeholder="Your Email (required)"></li>
-                  <li><textarea placeholder="Enter Your Message Here" class="footer_textarea"></textarea></li>
-                  <li><input type="submit" value="submit" class="submit-btn"></li>
+                  <li><input type="text" class="footer_input" placeholder="Adınız (gerekli)"></li>
+                  <li><input type="text" class="footer_input" placeholder="Eposta Adresiniz (gerekli)"></li>
+                  <li><textarea placeholder="Mesajınızı buraya girin" class="footer_textarea"></textarea></li>
+                  <li><input type="submit" value="Gönder" class="submit-btn"></li>
               </ul>
           </div>                            
       </div>  
 </footer>      
       <div class="bottom_footer">
         <div class="page-wrapper">
-            <div class="col-md-5"><p>Lazimbana.com All rights reserved..</p></div>
+            <div class="col-md-5"><p>Lazimbana.com Her hakkı saklıdır..</p></div>
             <div class="col-md-7">
                 <div class="footer_link pull-right">
-                    <a href="#">About us</a>
-                    <a href="#">Help</a>
-                    <a href="#">Contact</a>
+                    <a href="#">Hakkımızda</a>
+                    <a href="#">yardım et</a>
+                    <a href="#">Temas</a>
                 </div>
             </div>
         </div>

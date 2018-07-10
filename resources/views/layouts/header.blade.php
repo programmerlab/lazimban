@@ -51,26 +51,26 @@
                                   <ul class="woocom">
                                       @if($userData==null)                                        
                                         
-                                      <li class="top-login"><a href="#" onclick="return false">Login / Register</a>
+                                      <li class="top-login"><a href="#" onclick="return false">Giriş / Kayıt</a>
                                       <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                                       {{ csrf_field() }}
                                       <ul>
-                                      <li><label for="username">Email <span class="required">*</span></label></li>
+                                      <li><label for="username">E-posta <span class="required">*</span></label></li>
                                       <li><input class="input-text" name="email" id="email" value="" type="email"></li>
-                                      <li><label for="password">Password <span class="required">*</span></label></li>
+                                      <li><label for="password">Parola <span class="required">*</span></label></li>
                                       <li><input class="input-text" name="password" id="password" type="password"></li>
-                                      <li><input class="button" name="login" value="Login" type="submit"></li>
-                                      <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">Register</a><a href="{{ url('password/reset') }}" class="forgot">Reset password</a></li>
+                                      <li><input class="button" name="login" value="oturum aç" type="submit"></li>
+                                      <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">Kayıt olmak</a><a href="{{ url('password/reset') }}" class="forgot">Reset password</a></li>
                                       </ul>                                      
                                       </form>
                                       </li>
                                       @else
-                                      <li class="topcart"> <a href="{{url('myaccount')}}">My Account</a> 
+                                      <li class="topcart"> <a href="{{url('myaccount')}}">Hesabım</a> 
 
                                       </li>
-                                       <li class="topcart"> <a href="{{url('signout')}}">Logout</a> </li>
+                                       <li class="topcart"> <a href="{{url('signout')}}">Çıkış Yap</a> </li>
                                       @endif
-                                      <li class="topcart"><a href="{{ url('/checkout') }}">Cart<span class="cart-counts">{{$total_item}}</span></a><div class="cartdrop widget_shopping_cart nx-animate animated" style="visibility: visible;"><div class="widget_shopping_cart_content"><ul class="cart_list product_list_widget">Total : {{$sub_total}}</ul></div></div></li>
+                                      <li class="topcart"><a href="{{ url('/checkout') }}">Araba<span class="cart-counts">{{$total_item}}</span></a><div class="cartdrop widget_shopping_cart nx-animate animated" style="visibility: visible;"><div class="widget_shopping_cart_content"><ul class="cart_list product_list_widget">Genel Toplam : {{$sub_total}}</ul></div></div></li>
                                   </ul>
                               </div>
                               
@@ -80,7 +80,7 @@
                                   <form>
                                         
                                     <input class="sf_input" autocomplete="off" value="{{ $q or ''}}" name="q" type="text">
-                                    <button class="sf_button searchsubmit" type="submit"><span>Search</span></button>
+                                    <button class="sf_button searchsubmit" type="submit"><span>Arama</span></button>
                                   </form>
                                         
                                   </div>
@@ -181,34 +181,41 @@
                                                 <li><a href="{{ url($value['slug']) }}">{!! ucfirst($value['name']) !!}</a>
                                             @endif
                                             @if(isset($value['child']) && count($value['child'] > 0) && $value['name'] != NULL )
-                                                <ul onmouseenter="func();">
-                                                    @foreach ($value['child'] as $key => $result)
-                                                        @if($result['name'] != NULL)
-                                                        <li>
-                                                            <a href="{{ url($result['slug']) }}">{!! ucfirst($result['name']) !!}</a>
-                                                               @if(isset($result['child']) && count($result['child'] > 0) && $result['name'] != NULL )
-                                                                   <ul>
-                                                                        @foreach ($result['child'] as $key => $menu)
-                                                                            @if($menu['name'] != NULL)
-                                                                                <li>
-                                                                                    <a href="{{ url($menu['slug']) }}">{!! ucfirst($menu['name']) !!}</a>
-                                                                                        @if(isset($menu['child']) && count($menu['child'] > 0) && $menu['name'] != NULL )
-                                                                                            <ul>
-                                                                                                @foreach ($menu['child'] as $key => $submenu)
-                                                                                                    @if($submenu['name'] != NULL)
-                                                                                                        <li><a href="{{ url($submenu['slug']) }}">{!! ucfirst($submenu['name']) !!}</a></li>
-                                                                                                    @endif
-                                                                                                @endforeach
-                                                                                            </ul>
-                                                                                        @endif
-                                                                                </li>
-                                                                            @endif       
-                                                                        @endforeach    
-                                                                   </ul>
-                                                               @endif
-                                                        </li>
-                                                        @endif
-                                                    @endforeach   
+                                                <ul class="dropdown">
+                                                    <li class="category_menu_list">
+                                                    
+                                                        @foreach ($value['child'] as $key => $result)
+                                                            @if($result['name'] != NULL)
+                                                            <ul onmouseenter="func();">
+                                                                <li class="category_title">
+                                                                    <a href="{{ url($result['slug']) }}">{!! ucfirst($result['name']) !!}</a></li>
+                                                                       @if(isset($result['child']) && count($result['child'] > 0) && $result['name'] != NULL )
+                                                                           
+                                                                                @foreach ($result['child'] as $key => $menu)
+                                                                                    @if($menu['name'] != NULL)
+                                                                                        <li>
+                                                                                            <a href="{{ url($menu['slug']) }}">{!! ucfirst($menu['name']) !!}</a>
+                                                                                                @if(isset($menu['child']) && count($menu['child'] > 0) && $menu['name'] != NULL )
+                                                                                                    <ul>
+                                                                                                       @foreach ($menu['child'] as $key => $submenu)
+                                                                                                            @if($submenu['name'] != NULL)
+                                                                                                                <li><a href="{{ url($submenu['slug']) }}">{!! ucfirst($submenu['name']) !!}</a></li>
+                                                                                                            @endif
+                                                                                                        @endforeach
+                                                                                                    </ul>
+                                                                                                @endif
+                                                                                        </li>
+                                                                                    @endif       
+                                                                                @endforeach    
+                                                                           
+                                                                       @endif
+                                                                </li>
+                                                            </ul>
+                                                            @endif
+                                                        @endforeach                                                   
+                                                    </li>                                                        
+                                                    <li class="category_img_menu"><a href="#"><img src="{{ file_exists(public_path('/new/images/category/'.$value['slug'].'.png')) ? asset('public/new/images/category/'.$value['slug'].'.png') : asset('public/new/images/category/default.png') }}"></a></li>
+                                                      
                                                 </ul>
                                             @endif
                                             </li>
@@ -217,7 +224,41 @@
                                         </ul>
                                     </nav>
                                 </div>
-
+                                <!--<div class="navbar-inverse side-collapse in">
+                                    <nav role="navigation" class="navbar-collapse">
+                                    <ul class="nav navbar-nav">
+                                    <li><a href="#">Otomotiv & Motosiklet</a>
+                                     <ul class="dropdown">
+                                         <li class="category_menu_list">
+                                             
+                                                <ul>
+                                                   <li class="category_title"><a href="#">category 1</a></li>
+                                                            <li><a href="#">Otomotiv & Motosiklet</a></li>
+                                                            <li><a href="#">Otomotiv & Motosiklet</a></li>
+                                                            <li><a href="#">Otomotiv & Motosiklet</a></li>
+                                                </ul>
+        
+                                                <ul>
+                                                           <li class="category_title"><a href="#">category 1</a></li>
+                                                            <li><a href="#">Otomotiv & Motosiklet</a></li>
+                                                            <li><a href="#">Otomotiv & Motosiklet</a></li>
+                                                            <li><a href="#">Otomotiv & Motosiklet</a></li>
+                                                </ul>                                                                                                    
+                                            </li>
+                                            <li class="category_img_menu"><a href="#"><img src="images/shop-slide-2.png"></a></li>
+                                          
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Süpermarket</a>
+                                     <ul>
+                                         <li><a href="#">Otomotiv & Motosiklet</a></li>
+                                            <li><a href="#">Otomotiv & Motosiklet</a></li>
+                                            <li><a href="#">Otomotiv & Motosiklet</a></li>
+                                        </ul>
+                                    </li>
+                                    </ul>
+                                    </nav>
+                               </div>-->
                               </div>
                           </div>
                       </header>

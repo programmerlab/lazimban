@@ -895,6 +895,21 @@ transition-delay: 0s; text-transform:uppercase;
 .form-horizontal .form-group{ margin:0}
 #accordion{float:left; width:100%;}
 
+
+
+
+
+
+
+.navbar-nav > li > ul > li { float: left; }
+.navbar-nav > li > ul > li.category_menu_list { width:60%;}
+.navbar-nav > li > ul > li.category_img_menu { width:40%;}
+.navbar-nav > li > ul.dropdown li.category_menu_list ul { width: auto; float: left; }
+.category_menu_list .category_title a { font-weight: 600; text-transform: capitalize; color: #d90022; font-size: 15px; }
+
+
+
+
 @media screen and (max-width: 990px) {
 .top_bar .col-md-5.col-sm-5{ width:40%; float:left;}
 .top_bar .col-md-7.col-sm-7{ width:60%; float:right;}
