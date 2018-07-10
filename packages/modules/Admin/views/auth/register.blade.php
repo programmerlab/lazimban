@@ -24,7 +24,8 @@
          
         <!-- END LOGO -->
         <!-- BEGIN LOGIN -->
-        <div class="content" style=" width:20%; background:#fff">
+        
+        <div class="content" style=" width:50%; background:#fff">
             <!-- BEGIN LOGIN FORM -->
              
             <!-- END LOGIN FORM -->
