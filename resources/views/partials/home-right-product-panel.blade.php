@@ -21,6 +21,14 @@
                                                           <div class="col-md-2">
                                                             <a href="{{ url($product->url) }}" class="product_link">Detayları göster</a>
                                                                 <h6>satıcı -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                                                <h6  id="displayRating" data="{{$product->rating or 0}}"> </h6>
+                                                                <div class="rating_outer"><span class="fa fa-star" id="star1" onclick="rating(1,{{$product->id}})"></span>
+                                                                    <span class="fa fa-star" id="star2"></span>
+                                                                    <span class="fa fa-star" id="star3""></span>
+                                                                    <span class="fa fa-star" id="star4"></span>
+                                                                    <span class="fa fa-star" id="star5"></span>
+                                                                   <br> <span id="rating"></span>
+                                                                </div>
                                                           </div>
                                                             
                                                         

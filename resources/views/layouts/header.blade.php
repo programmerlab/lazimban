@@ -61,7 +61,7 @@
                                       <li><input class="input-text" name="password" id="password" type="password"></li>
                                       <li><input class="button" name="login" value="oturum aç" type="submit"></li>
                                       <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">Kayıt olmak</a><a href="{{ url('password/reset') }}" class="forgot">Reset password</a></li>
-                                      <li class="reg-link"><a href="{{ url('admin/signUp') }}" class="resig">Register as Vendor</a></li>
+                                      <li class="reg-link"><a href="{{ url('admin/signUp') }}" class="resig">Satıcı olarak kayıt ol</a></li>
                                       </ul>                                      
                                       </form>
                                       </li>

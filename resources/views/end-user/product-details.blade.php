@@ -42,6 +42,7 @@
                             </div>
                             <div>
                                 <h6>satıcı -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                
                             </div>    
                         </div>                        
                     </div>

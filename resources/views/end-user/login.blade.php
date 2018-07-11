@@ -30,7 +30,7 @@
                                 {{ csrf_field() }}
 
                                 <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                                    <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                                    <label for="email" class="col-md-4 control-label">E-Mail Addres</label>
 
                                     <div class="col-md-8">
                                         <input id="email" type="email" class="form-control unicase-form-control text-input" name="email" value="{{ old('email') }}">
@@ -44,7 +44,7 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}" style="margin: 10px 0px;">
-                                    <label for="password" class="col-md-4 control-label">Password</label>
+                                    <label for="password" class="col-md-4 control-label">Parola</label>
 
                                     <div class="col-md-8">
                                         <input id="password" type="password" class="form-control unicase-form-control text-input" name="password">
@@ -62,10 +62,11 @@
                                 <div class="form-group">
                                     <div class="col-md-8 col-md-offset-4">
                                         <button type="submit" class="btn btn-primary">
-                                            <i class="fa fa-btn fa-sign-in"></i> Login
+                                            <i class="fa fa-btn fa-sign-in"></i> Oturum aç
+
                                         </button>
-                                        <a class="" href="{{ url('myaccount/signup') }}" style="margin-left: 20px">  Signup?</a> Or 
-                                        <a class="" href="{{ url('/password/reset') }}" > Forgot Password?</a>  
+                                        <a class="" href="{{ url('myaccount/signup') }}" style="margin-left: 20px">  Kaydol?</a> Or 
+                                        <a class="" href="{{ url('/password/reset') }}" > Parolanızı mı unuttunuz?</a>  
                                          
                                        
                                     </div>
