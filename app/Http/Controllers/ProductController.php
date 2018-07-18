@@ -448,7 +448,7 @@ class ProductController extends Controller {
                 $request = new \Iyzipay\Request\CreateCheckoutFormInitializeRequest();
                 $request->setLocale(\Iyzipay\Model\Locale::TR);
                 $request->setConversationId($conversation_id);
-                $request->setPrice(((100-$commission)/100)*$total);
+                //$request->setPrice(((100-$commission)/100)*$total);
                 $request->setPaidPrice($total);
                 $request->setCurrency(\Iyzipay\Model\Currency::TL);
                 $request->setBasketId("B67832");
@@ -492,7 +492,7 @@ class ProductController extends Controller {
                 $basketItems = array();
                 
                 $i=0;
-                
+                $carttotal = 0;
                 foreach($cart as $key => $result){
                     $BasketItem = new \Iyzipay\Model\BasketItem();
                     $BasketItem->setId($result->id);
@@ -501,17 +501,22 @@ class ProductController extends Controller {
                     $BasketItem->setItemType(\Iyzipay\Model\BasketItemType::PHYSICAL);
                     $vendor_key = $helper->getVendorKey($result->id);
                     if($vendor_key){
+                        $commission = $helper->getCommission($result->id);
+                        
                         $BasketItem->setSubMerchantKey($vendor_key);
-                        $BasketItem->setSubMerchantPrice(((100 - $commission)/100)*($result->price * $result->qty));    
+                        $BasketItem->setSubMerchantPrice(((100 - $commission)/100)*($result->price * $result->qty));
+                        $carttotal += ((100 - $commission)/100)*($result->price * $result->qty);
                     }                    
                     $BasketItem->setPrice(((100-$commission)/100)*($result->price * $result->qty));
                     $basketItems[$i] = $BasketItem;
                     $i++;
                 }
                 
-                //echo "<pre>"; print_r($BasketItem); die;
-                
                 $request->setBasketItems($basketItems);
+                
+                $request->setPrice($carttotal);                            
+                
+                //echo "<pre>"; print_r($request); die;
                 
         $checkoutFormInitialize = \Iyzipay\Model\CheckoutFormInitialize::create($request, $options);
         //echo "<pre>"; print_r($checkoutFormInitialize); die;

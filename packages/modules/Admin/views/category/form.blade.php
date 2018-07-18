@@ -63,7 +63,14 @@
             </span>@endif
         </div>
     </div> 
-
+    
+    <div class="form-group{{ $errors->first('commission', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Commission<span class="error"> </span></label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('commission',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('commission', ':message') }}</span>
+        </div>
+    </div>
     
     <div class="form-group">
         <label class="col-lg-4 col-md-4 control-label"></label>

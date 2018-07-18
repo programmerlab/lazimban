@@ -74,7 +74,13 @@
             </span>@endif
         </div>
     </div> 
-
+    <div class="form-group{{ $errors->first('video', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Product Video URL (Youtube)</label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('video',0, ['class' => 'form-control form-cascade-control input-small','min'=>0])  !!} 
+            <span class="label label-danger">{{ $errors->first('video', ':message') }}</span>
+        </div>
+    </div>
     <div class="form-group{{ $errors->first('slug', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label"> Custom Url <span class="error"> </span></label>
         <div class="col-lg-8 col-md-8"> 

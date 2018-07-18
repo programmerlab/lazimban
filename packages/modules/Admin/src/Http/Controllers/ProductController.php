@@ -169,6 +169,7 @@ class ProductController extends Controller {
             $product->photo              =   $photo_name;
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
+            $product->video              =   $request->get('video');
             $product->url                =   $url;
             $product->created_by                =   $vendor_id;
 
@@ -208,8 +209,7 @@ class ProductController extends Controller {
     }
 
     public function update(ProductRequest $request, Product $product) 
-    {
-           
+    {        
         $cat_url       = $this->getCategoryById($request->get('product_category'));
         
        
@@ -240,7 +240,8 @@ class ProductController extends Controller {
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->url               =   $url;
-
+            $product->video              =   $request->get('video');
+            
             if($request->get('title')){
                 $product->title  = $request->get('title');
             }
@@ -265,7 +266,7 @@ class ProductController extends Controller {
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->url                =   $url;
-
+            $product->video              =   $request->get('video');
             if($request->get('title')){
                 $product->title  = $request->get('title');
             }

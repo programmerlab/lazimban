@@ -25,7 +25,7 @@ use Crypt;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Dispatcher; 
 use App\Helpers\Helper;
-
+use App\iyzipay\configIyzipay;
 /**
  * Class AdminController
  */
@@ -108,6 +108,7 @@ class VendorsController extends Controller {
         $page_title = 'Vendor';
         $page_action = 'Show Vendors'; 
         //echo $page_title; die;
+                        
         return view('packages::vendors.user.edit', compact('vendor', 'page_title', 'page_action'));
     }
 
@@ -118,6 +119,26 @@ class VendorsController extends Controller {
             $vendor->password = Hash::make($request->get('password'));
         }
         $vendor->save();
+
+        // update vendor on market place
+        $options = configIyzipay::options();
+        //echo $vendor->vendor_key; die;
+        $req = new \Iyzipay\Request\UpdateSubMerchantRequest();
+        $req->setLocale(\Iyzipay\Model\Locale::TR);
+        $req->setConversationId(time().uniqid());
+        $req->setSubMerchantKey($vendor->vendor_key);
+        $req->setIban($request->iban);
+        $req->setAddress($request->address);
+        $req->setContactName($request->full_name);
+        $req->setContactSurname($request->full_name);
+        $req->setEmail($request->email);
+        $req->setGsmNumber($request->phone);
+        $req->setName($request->full_name);
+        $req->setIdentityNumber("ID_".$vendor->id);
+        $req->setCurrency(\Iyzipay\Model\Currency::TL);
+        
+        //echo "<pre>"; print_r($req); die;
+        $subMerchant = \Iyzipay\Model\SubMerchant::update($req, $options);
         return Redirect::to(route('vendor'))
                         ->with('flash_alert_notice', 'Vendor was  successfully updated !');
     }

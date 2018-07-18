@@ -133,6 +133,7 @@ class SubCategoryController extends Controller {
         $cat->category_name         =   $request->get('sub_category_name');
         $cat->sub_category_name     =   $request->get('sub_category_name');
         $cat->level                 =   $level;
+        $cat->commission            =   $request->get('commission');
         if($request->get('meta_key')){
             $cat->meta_key  = $request->get('meta_key');
         }
@@ -200,6 +201,7 @@ class SubCategoryController extends Controller {
         $cat->category_name         = $request->get('sub_category_name');
         $cat->sub_category_name     = $request->get('sub_category_name');
         $cat->level                = $level;
+        $cat->commission            =  $request->get('commission');
         if($request->get('meta_key')){
             $cat->meta_key  = $request->get('meta_key');
         }

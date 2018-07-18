@@ -306,12 +306,13 @@ class Helper {
         }
     }
     
-    public static function  getCommission()
+    public static function  getCommission($productid=null)
     {
-        $admin = DB::table('admin')->where('id', 1)->first();
+        $product = DB::table('products')->where('id', $productid)->first();
         
-        if($admin!=null){            
-            return $admin->commission; 
+        if($product!=null){
+            $cat = DB::table('categories')->where('id', $product->product_category)->first();
+            return $cat->commission; 
         }else{
             return null;
         }

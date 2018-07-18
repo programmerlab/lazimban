@@ -47,7 +47,7 @@
                         </div>                        
                     </div>
                     
-                        
+                    
                     <div class="col-md-12">
                     	<div class="product_info">
                         	<div id="horizontalTab">
@@ -102,44 +102,58 @@
                     </div>
                     <hr>    
                     <div class="col-md-12">
-                     <div class="product-review">
-                         <h2  id="displayRating" data="{{$product->rating or 0}}">yorumlar </h2>
-
-                            <div class="rating_outer"><span class="fa fa-star" id="star1" onclick="rating(1,{{$product->id}})"></span>
-                                <span class="fa fa-star" id="star2" onclick="rating(2,{{$product->id}})"></span>
-                                <span class="fa fa-star" id="star3" onclick="rating(3,{{$product->id}})"></span>
-                                <span class="fa fa-star" id="star4" onclick="rating(4,{{$product->id}})"></span>
-                                <span class="fa fa-star" id="star5" onclick="rating(5,{{$product->id}})"></span>
-                               <br> <span id="rating"></span>
-                            </div>
-                                    
+                        <div class="col-md-6">
+                            <div class="product-review">
                                 
-                                 <h2>Yorumlar</h2>
-                                 @if ($errors->has('successMsg'))
-                                    <span class="btn btn-success">{{ $errors->first('successMsg') }}</span>
-                                     
-                                @endif
-
-                                <div class="comment_form row" id="comments">
-                                 <form class="contact-form" action="{{url('submitComment')}}" method="post">
-                                    <input type="hidden" name="product_id" id="product_id" value="{{$product->id}}">
-                            <input type="hidden" name="_token" value="{{csrf_token()}}"> 
-                                 <div class="col-md-6">
-                                    <span class="label label-danger" style="color:#ffffff">{{ $errors->first('name', ':message') }}</span> <br>
-                                    <input class="input-text" type="text" placeholder="isim" name="name" value="{{old('name')}}">
-                                </div>
-                                    <div class="col-md-6">
-                                        <span class="label label-danger" style="color:#ffffff">{{ $errors->first('email', ':message') }}</span> <br>
-                                        <input class="input-text" type="email" placeholder="E-posta" name="email" value="{{old('email')}}">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <span class="label label-danger" style="color:#ffffff">{{ $errors->first('comments', ':message') }}</span> <br>
-                                        <textarea class="input-text" placeholder="Yorum Yap" name="comments">{{old('comments')}}</textarea>  
-                                    </div>
-                                    <div class="col-md-12"><input value="Gönder" class="submit-btn" type="submit"></div>
-                                </div>
-                            </form>
-                               
+                                           
+                                       
+                                        <h2>Yorumlar</h2>
+                                        @if ($errors->has('successMsg'))
+                                           <span class="btn btn-success">{{ $errors->first('successMsg') }}</span>
+                                            
+                                       @endif
+       
+                                       <div class="comment_form row" id="comments">
+                                        <form class="contact-form" action="{{url('submitComment')}}" method="post">
+                                           <input type="hidden" name="product_id" id="product_id" value="{{$product->id}}">
+                                   <input type="hidden" name="_token" value="{{csrf_token()}}"> 
+                                        <div class="col-md-6">
+                                           <span class="label label-danger" style="color:#ffffff">{{ $errors->first('name', ':message') }}</span> <br>
+                                           <input class="input-text" type="text" placeholder="isim" name="name" value="{{old('name')}}">
+                                       </div>
+                                           <div class="col-md-6">
+                                               <span class="label label-danger" style="color:#ffffff">{{ $errors->first('email', ':message') }}</span> <br>
+                                               <input class="input-text" type="email" placeholder="E-posta" name="email" value="{{old('email')}}">
+                                           </div>
+                                           <div class="col-md-12">
+                                               <span class="label label-danger" style="color:#ffffff">{{ $errors->first('comments', ':message') }}</span> <br>
+                                               <textarea class="input-text" placeholder="Yorum Yap" name="comments">{{old('comments')}}</textarea>  
+                                           </div>
+                                           <div class="col-md-12"><input value="Gönder" class="submit-btn" type="submit"></div>
+                                       </div>
+                                   </form>
+                                      <h2  id="displayRating" data="{{$product->rating or 0}}">yorumlar </h2>
+       
+                                   <div class="rating_outer"><span class="fa fa-star" id="star1" onclick="rating(1,{{$product->id}})"></span>
+                                       <span class="fa fa-star" id="star2" onclick="rating(2,{{$product->id}})"></span>
+                                       <span class="fa fa-star" id="star3" onclick="rating(3,{{$product->id}})"></span>
+                                       <span class="fa fa-star" id="star4" onclick="rating(4,{{$product->id}})"></span>
+                                       <span class="fa fa-star" id="star5" onclick="rating(5,{{$product->id}})"></span>
+                                      <br> <span id="rating"></span>
+                                   </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <?php
+                            if($product->video){
+                                $v1 = explode('=',$product->video);
+                                $v2 = explode('/',$product->video);                                
+                            }
+                            ?>
+                            
+                            <iframe width="420" height="315"
+                                src="https://www.youtube.com/embed/{{ isset($v1[1]) ? $v1[1] : (isset($v2[3]) ? $v2[3] : '') }}">
+                            </iframe>
                         </div>
                     </div>
                     

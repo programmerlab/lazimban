@@ -294,6 +294,14 @@
             <span class="label label-danger">{{ $errors->first('country', ':message') }}</span>
         </div>
     </div>
+    <div class="form-group{{ $errors->first('iban', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">IBAN</label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('iban',null, ['class' => 'form-control form-cascade-control input-small'])  !!}
+            <span class="label label-danger">{{ $errors->first('iban', ':message') }}</span>
+            
+        </div>
+    </div>
     <div class="form-group{{ $errors->first('password', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label">Password</label>
         <div class="col-lg-8 col-md-8">   
