@@ -24,6 +24,7 @@ use App\Helpers\Helper as Helper;
 use Modules\Admin\Models\User;
 use Modules\Admin\Http\Requests\LoginRequest;
 use App\Admin;
+use App\iyzipay\configIyzipay;
  
 class AuthController extends Controller
 {
@@ -48,8 +49,7 @@ class AuthController extends Controller
  	/* Create Admin user
  	*/
  	public function registration(Request $request)
-	{	 
-		  
+	{	                
         $user = new Admin;    
 
         $table_cname = \Schema::getColumnListing('admin');
@@ -75,7 +75,8 @@ class AuthController extends Controller
            	'full_name'		=> 	'required',
             'company_name'		=> 	'required',
             'email'     =>  'required|email|unique:admin',
-            'phone'   => 'required|numeric',
+            'phone'   => 'required|min:10|numeric',
+            'iban'   => 'required|min:26',
 	        'password' => 'required|min:6',
 	        'password_confirmation' => 'required|same:password'
         ]);
@@ -93,7 +94,37 @@ class AuthController extends Controller
                             ->withErrors(['errors'=>$errors]); 
         }   
         /** --Create admin-- **/
-        $user->save(); 
+        $user->save();
+        
+        //****** register vendor for market place ********
+        if($user->user_type == 2){
+            $options = configIyzipay::options();
+                        
+            $req = new \Iyzipay\Request\CreateSubMerchantRequest();
+            $req->setLocale(\Iyzipay\Model\Locale::TR);
+            $req->setConversationId(time().uniqid());
+            $req->setSubMerchantExternalId("Vendor_".$user->id);
+            $req->setSubMerchantType(\Iyzipay\Model\SubMerchantType::PERSONAL);
+            $req->setAddress(($request->address) ? $request->address : 'Not Available');
+            $req->setContactName($request->full_name);
+            $req->setContactSurname($request->full_name);
+            $req->setEmail($request->email);
+            $req->setGsmNumber(($request->phone) ? $request->phone : '9999999999');
+            $req->setName($request->full_name);
+            $req->setIban($request->iban); //TR330006100519786457841326
+            $req->setIdentityNumber("ID_".$user->id);
+            $req->setCurrency(\Iyzipay\Model\Currency::TL);
+            
+            $subMerchant = \Iyzipay\Model\SubMerchant::create($req, $options);
+            
+            if($subMerchant->getStatus() == 'success'){
+                $user->vendor_key = $subMerchant->getSubMerchantKey();
+                $user->save();
+            }
+            
+            //echo "<pre>"; print_r($subMerchant); die;
+        }
+        //************************************************
 		return view::make('packages::auth.signup-success');
 	} 
 

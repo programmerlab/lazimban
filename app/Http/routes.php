@@ -204,7 +204,23 @@ Route::post('placeOrder',[
 Route::get('orderSuccess',[
           'as' => 'orderSuccess',
           'uses'  => 'ProductController@thankYou'
-        ]); 
+        ]);
+
+
+Route::get('card',[
+          'as' => 'card',
+          'uses'  => 'ProductController@card'
+        ]);
+
+Route::post('card_callback',[
+          'as' => 'card_callback',
+          'uses'  => 'ProductController@card_callback'
+        ]);
+
+Route::get('success',[
+          'as' => 'success',
+          'uses'  => 'ProductController@thankYou1'
+        ]);
 
 
 Route::get('signout', function(App\User $user , Illuminate\Http\Request $request) { 

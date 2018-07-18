@@ -29,7 +29,7 @@ use Illuminate\Http\Dispatcher;
 use Modules\Admin\Helpers\Helper as Helper;
 use Response;
 use Illuminate\Support\Facades\DB;
-
+use App\iyzipay\configIyzipay;
 /**
  * Class AdminController
  */
@@ -73,11 +73,11 @@ class TransactionController extends Controller {
         $vendor_id = $request->session()->get('current_vendor_id');
         
         if($request->session()->get('current_vendor_type') != 1){
-            $transaction = $transaction->with('user','product','coupan')->join('products', 'transactions.product_id', '=', 'products.id')->where('products.created_by',$vendor_id)->orderBy('transactions.id','desc')->Paginate($this->record_per_page);
+            $transaction = $transaction->with('user','product','coupan')->select('transactions.*')->join('products', 'transactions.product_id', '=', 'products.id')->where('products.created_by',$vendor_id)->orderBy('transactions.id','desc')->Paginate($this->record_per_page);
         }else{
             $transaction = $transaction->with('user','product','coupan')->orderBy('id','desc')->Paginate($this->record_per_page);
         }
-        
+        //echo "<pre>"; print_r($transaction); die;
         return view('packages::transaction.index', compact('transaction', 'page_title', 'page_action','helper'));
    
     }
@@ -150,6 +150,47 @@ class TransactionController extends Controller {
     }
 
     public function show(Product $product) {
+        
+    }
+    
+    public function approve(Transaction $transaction,$id) {
+        
+        $transaction = $transaction->where('id',$id)->first();
+        
+        $options = configIyzipay::options();
+        
+        $request = new \Iyzipay\Request\CreateApprovalRequest();
+        $request->setLocale(\Iyzipay\Model\Locale::TR);
+        $request->setConversationId('Item'.uniqid().time());
+        $request->setPaymentTransactionId($transaction->ItemTransactionId);
+        
+        $approval = \Iyzipay\Model\Approval::create($request, $options);
+        //echo "<pre>";  print_r($approval->getStatus()); die;
+        if($approval->getStatus() != 'failure'){
+            $transaction->status = 3;
+            $transaction->save();
+            return Redirect::to(route('transaction'))
+                            ->with('flash_alert_notice', 'Order Approved successfully !');
+        }else{
+            return Redirect::to(route('transaction'))
+                            ->with('flash_alert_warning', 'Order Not Approved !');
+        }
+        
+        
+    }
+    
+    public function decline(Transaction $transaction,$id) {
+        $transaction = $transaction->where('id',$id)->first();
+        
+        $options = configIyzipay::options();
+        
+        $request = new \Iyzipay\Request\CreateApprovalRequest();
+        $request->setLocale(\Iyzipay\Model\Locale::TR);
+        $request->setConversationId('Item'.uniqid().time());
+        $request->setPaymentTransactionId($transaction->ItemTransactionId);
+                
+        $disapproval = \Iyzipay\Model\Disapproval::create($request, $options);
+        echo "<pre>"; print_r($disapproval);
         
     }
 

@@ -241,7 +241,7 @@
                                              <th class="cart_total">
                                                 <p class=""> {{ $item->created_at }}</p>
                                             </th> 
-                                            <th> COD </th>
+                                            <th>  {{ strtoupper($item->payment_mode) }}</th>
                                         </tr> 
                                         @endforeach
                                     @else

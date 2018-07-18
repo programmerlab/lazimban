@@ -67,6 +67,13 @@
                         <input class="form-control placeholder-no-fix" type="text" placeholder="Phone" name="phone"  value="{{old('phone')}}"> </div>
                 </div>
                 <div class="form-group">
+                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                    <label class="control-label visible-ie8 visible-ie9">IBAN No.</label>
+                    <div class="input-icon">
+                        
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="IBAN No." name="iban"  value="{{old('iban')}}"> </div>
+                </div>
+                <div class="form-group">
                     <label class="control-label visible-ie8 visible-ie9">Address</label>
                     <div class="input-icon">
                         <input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address"  value="{{old('address')}}"> </div>

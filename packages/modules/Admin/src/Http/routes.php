@@ -2,7 +2,11 @@
 use Illuminate\Support\Facades\DB;
       Route::get('admin/login','Modules\Admin\Http\Controllers\AuthController@index');
       Route::get('logout','Modules\Admin\Http\Controllers\AuthController@logout');  
-      Route::get('admin/signUp','Modules\Admin\Http\Controllers\AuthController@signUp'); 
+      Route::get('admin/signUp','Modules\Admin\Http\Controllers\AuthController@signUp');
+      
+      Route::get('admin/transaction/approve/{id}','Modules\Admin\Http\Controllers\TransactionController@approve');
+      Route::get('admin/transaction/decline/{id}','Modules\Admin\Http\Controllers\TransactionController@decline');
+      
 
        
       Route::post('admin/registration','Modules\Admin\Http\Controllers\AuthController@registration');
@@ -147,7 +151,7 @@ use Illuminate\Support\Facades\DB;
                 'update' 	=> 'transaction.update',
                 'store' 	=> 'transaction.store',
                 'index' 	=> 'transaction',
-                'create' 	=> 'transaction.create',
+                'create' 	=> 'transaction.create',                
             ]
                 ]
         ); 

@@ -30,6 +30,14 @@
                                          {{ Session::get('flash_alert_notice') }} 
                                          </div>
                                     @endif
+                                    
+                                    @if(Session::has('flash_alert_warning'))
+                                         <div class="alert alert-danger alert-dismissable" style="margin:10px">
+                                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                          <i class="icon fa fa-check"></i>  
+                                         {{ Session::get('flash_alert_warning') }} 
+                                         </div>
+                                    @endif
                                       
                                    <div class="box-body table-responsive no-padding" >
                                         <table class="table table-hover table-condensed">
@@ -41,8 +49,9 @@
                                                     <th>Price</th> 
                                                     <th>Payment Mode</th>
                                                     <th>Vendor</th>
-                                                     <th>Order Date</th>
-                                                     <th>Status</th>
+                                                    <th>Order Date</th>
+                                                    <th>Status</th>
+                                                    
                                                    <!--  <th>Action</th> -->
                                                 </tr>
                                                 @if(count($transaction)==0)
@@ -86,10 +95,22 @@
                                                              @elseif($result->status==4)
                                                              Cancel
                                                              @else
-                                                             COD
+                                                             Pending
                                                              @endif
                                                         </span>
                                                     </td>
+                                                    @if($result->payment_mode == 'card')
+                                                        @if($result->status != '3')
+                                                        <td>
+                                                            <a href="{{ 'transaction/approve/'.$result->id }}"><button class="btn-xs btn-success">Approve</button></a>
+                                                            <!--<a href="{{ 'transaction/decline/'.$result->id }}"><button class="btn-xs btn-danger">Decline</button></a>-->
+                                                        </td>
+                                                        @else
+                                                            <td>
+                                                                <button class="btn-xs btn-success">Approved</button>                                                                
+                                                            </td>
+                                                        @endif
+                                                    @endif        
                                                  <!--    <td>  
 
                                                         {!! Form::open(array('class' => 'form-inline pull-left deletion-form', 'method' => 'DELETE',  'id'=>'deleteForm_'.$result->id, 'route' => array('transaction.destroy', $result->id))) !!}

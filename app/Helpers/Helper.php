@@ -293,6 +293,29 @@ class Helper {
             return null;
         }
     }
+    
+    public static function  getVendorKey($productid=null)
+    {
+        $product = DB::table('products')->where('id', $productid)->first();
+        
+        if($product!=null && $product->created_by){
+            $vendor = DB::table('admin')->where('id', $product->created_by)->first();
+            return $vendor->vendor_key; 
+        }else{
+            return null;
+        }
+    }
+    
+    public static function  getCommission()
+    {
+        $admin = DB::table('admin')->where('id', 1)->first();
+        
+        if($admin!=null){            
+            return $admin->commission; 
+        }else{
+            return null;
+        }
+    }
      
     public static function getComments($productid=null)
     {

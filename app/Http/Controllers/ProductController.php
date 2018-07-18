@@ -33,6 +33,7 @@ use Cart;
 use PDF;
 use Modules\Admin\Models\Settings;
 use Illuminate\Contracts\Encryption\DecryptException;
+use App\iyzipay\configIyzipay;
 
 /**
  * Class AdminController
@@ -207,7 +208,7 @@ class ProductController extends Controller {
         if ($request->isMethod('get')) {
             $product_id = $request->get('id');
             $product = Product::find($id);   
-            Cart::add(array('id' => $product->id, 'name' => $product->product_title, 'qty' => $qty, 'price' => $product->price,'photo'=>$product->photo));
+            Cart::add(array('id' => $product->id, 'name' => $product->product_title, 'qty' => $qty, 'price' => ((100 - $product->discount)/100)*$product->price,'photo'=>$product->photo));
         }
         $cart = Cart::content();  
        // $request->session()->put('key', 'value');
@@ -389,21 +390,23 @@ class ProductController extends Controller {
         
     }
 
-    public function shippingMethod(hippingBillingAddress $shipBill, Request $request)
+    public function shippingMethod(shippingBillingAddress $shipBill, Request $request)
     {
-        
+        //echo "<pre>"; print_r($_REQUEST['paymentMethod']); die;
 
         $shipping = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first();
-
+        
         if($shipping) 
         {
             $shipBill = ShippingBillingAddress::find($shipping->id);
         }
-
-        $shipping->payment_mode = "COD";
+        
+        $shipping->payment_mode = $_REQUEST['paymentMethod'];
+        $shipBill->payment_mode = $_REQUEST['paymentMethod'];
         $shipBill->user_id  = $this->user_id;
         $shipBill->address_type = 2;
         $shipBill->save();
+         $request->session()->put('paymentMethod',$_REQUEST['paymentMethod']);
          $request->session()->put('tab',4);
         return Redirect::to('order');
         
@@ -413,7 +416,176 @@ class ProductController extends Controller {
     {
         
     }
-
+    
+    public function card(Request $request)
+    {            
+            $options = configIyzipay::options();
+            
+            $helper =  new   Helper;
+            $commission = $helper->getCommission();
+            
+            $user_id    = $this->user_id;
+            $cart       = Cart::content();
+            $users    =   User::where('id',$this->user_id)->first();            
+            $billing    = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',1)->first();
+            $shipping   = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first();
+            
+            if($cart->count()==0)
+            {
+               return  Redirect::to('checkout');
+            }
+            if($user_id=="")
+            {
+               return  Redirect::to('order');
+            }
+            
+            $conversation_id = uniqid().rand(100,999);
+            $total = 0;
+            foreach($cart as $row){
+                $total += $row->price * $row->qty;
+            }
+            //echo "<pre>"; print_r($total); die;
+                $request = new \Iyzipay\Request\CreateCheckoutFormInitializeRequest();
+                $request->setLocale(\Iyzipay\Model\Locale::TR);
+                $request->setConversationId($conversation_id);
+                $request->setPrice(((100-$commission)/100)*$total);
+                $request->setPaidPrice($total);
+                $request->setCurrency(\Iyzipay\Model\Currency::TL);
+                $request->setBasketId("B67832");
+                $request->setPaymentGroup(\Iyzipay\Model\PaymentGroup::PRODUCT);
+                $request->setCallbackUrl(url('/card_callback'));
+                $request->setEnabledInstallments(array(1));
+                
+                $buyer = new \Iyzipay\Model\Buyer();
+                $buyer->setId($user_id);
+                $buyer->setName($users->first_name);
+                $buyer->setSurname($users->last_name);
+                //$buyer->setGsmNumber("+905350000000");
+                $buyer->setEmail($users->email);
+                $buyer->setIdentityNumber("USER_".$user_id);
+                //$buyer->setLastLoginDate("2015-10-05 12:43:35");
+                //$buyer->setRegistrationDate("2013-04-21 15:12:09");
+                $buyer->setRegistrationAddress("Not Available");
+                $buyer->setIp("85.34.78.112");
+                $buyer->setCity("N/A");
+                $buyer->setCountry("Turkey");
+                $buyer->setZipCode("N/A");
+                
+                $request->setBuyer($buyer);
+                $shippingAddress = new \Iyzipay\Model\Address();
+                $shippingAddress->setContactName($shipping->name);
+                $shippingAddress->setCity(($shipping->city)? $shipping->city:'N/A');
+                $shippingAddress->setCountry(($shipping->country)? $shipping->country:'N/A');
+                $shippingAddress->setAddress($shipping->address1.', '.$shipping->address2);
+                $shippingAddress->setZipCode(($shipping->zip_code)? $shipping->zip_code:'N/A');
+                $request->setShippingAddress($shippingAddress);
+                
+                
+                $billingAddress = new \Iyzipay\Model\Address();
+                $billingAddress->setContactName($billing->name);
+                $billingAddress->setCity(($billing->city)? $billing->city:'N/A');
+                $billingAddress->setCountry(($billing->country)? $billing->country:'N/A');
+                $billingAddress->setAddress($billing->address1.', '.$billing->address2);
+                $billingAddress->setZipCode(($billing->zip_code)? $billing->zip_code:'N/A');
+                $request->setBillingAddress($billingAddress);
+                
+                $basketItems = array();
+                
+                $i=0;
+                
+                foreach($cart as $key => $result){
+                    $BasketItem = new \Iyzipay\Model\BasketItem();
+                    $BasketItem->setId($result->id);
+                    $BasketItem->setName($result->name);
+                    $BasketItem->setCategory1("Main");                    
+                    $BasketItem->setItemType(\Iyzipay\Model\BasketItemType::PHYSICAL);
+                    $vendor_key = $helper->getVendorKey($result->id);
+                    if($vendor_key){
+                        $BasketItem->setSubMerchantKey($vendor_key);
+                        $BasketItem->setSubMerchantPrice(((100 - $commission)/100)*($result->price * $result->qty));    
+                    }                    
+                    $BasketItem->setPrice(((100-$commission)/100)*($result->price * $result->qty));
+                    $basketItems[$i] = $BasketItem;
+                    $i++;
+                }
+                
+                //echo "<pre>"; print_r($BasketItem); die;
+                
+                $request->setBasketItems($basketItems);
+                
+        $checkoutFormInitialize = \Iyzipay\Model\CheckoutFormInitialize::create($request, $options);
+        //echo "<pre>"; print_r($checkoutFormInitialize); die;
+        print_r($checkoutFormInitialize->getCheckoutFormContent());
+        ?>
+            <div id="iyzipay-checkout-form" class="responsive"></div>
+        <?php        
+    }
+    
+    public function card_callback(){
+        $options = configIyzipay::options();
+        
+        $request = new \Iyzipay\Request\RetrieveCheckoutFormRequest();
+        $request->setLocale(\Iyzipay\Model\Locale::TR);
+        $request->setConversationId("123456789");
+        $request->setToken($_REQUEST['token']);
+        
+        $checkoutForm = \Iyzipay\Model\CheckoutForm::retrieve($request, $options);
+        
+        $user_id    = $this->user_id;
+        $cart       = Cart::content();
+        
+            
+        //echo "<pre>"; print_r($transaction); die;
+        if($checkoutForm->getPaymentStatus() == 'SUCCESS'){
+             $i = 0;       
+            foreach ($cart as $key => $result) {    
+                $transaction                = new Transaction;
+                $transaction->user_id       = $user_id;
+                $transaction->product_name  = $result->name;
+                $transaction->product_id    = $result->id;
+                $transaction->total_price   = $result->price * $result->qty;
+                $transaction->discount_price= $result->price * $result->qty;
+                $transaction->payment_mode  = "card";
+                $transaction->transaction_id = $checkoutForm->getPaymentId();
+                $transaction->ItemTransactionId = $checkoutForm->getPaymentItems()[$i]->getPaymentTransactionId();
+                $transaction->product_details = json_encode(Product::where('id',$result->id)->get()->toArray());
+                //echo "<pre>"; print_r($transaction); die;
+                $transaction->save();
+                $i++;
+            }
+            
+            $products   = Product::with('category')->orderBy('id','asc')->get();
+            $categories = Category::nested()->get(); 
+    
+            $billing    = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',1)->first();
+            $shipping   = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first();
+            if($cart){
+            
+                $email_content['subject'] = "Invoice";
+                $template = "invoice";
+                if($billing){
+                    $email_content['receipent_email'] = ($billing->email)?$billing->email:(Auth::user()->email);
+                    $template_content = ['cart'=>$cart ,'billing' => $billing , 'shipping' => $shipping,'transaction'=>$transaction];
+                    
+                }else{
+                    $email_content['receipent_email'] = ($shipping->email)?$shipping->email:(Auth::user()->email);
+               
+                    $template_content = ['cart'=>$cart ,'billing' => $shipping , 'shipping' => $shipping,'transaction'=>$transaction];
+                    
+                }
+                $data = $template_content; 
+                
+              $helper =  new   Helper;
+              $helper->sendInvoiceMail($email_content, $template, $template_content);
+            }
+            return  Redirect::to('success');            
+        }else{
+            return Redirect::to('order');
+        }
+        die;
+        
+    }
+    
     public function thankYou(Request $request)
     {
         $user_id    = $this->user_id;
@@ -433,7 +605,11 @@ class ProductController extends Controller {
 
         $billing    = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',1)->first();
         $shipping   = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first(); 
-
+        
+        if($shipping->payment_mode == 'card'){
+            return  Redirect::to('card');
+            
+        }
 
         foreach ($cart as $key => $result) {
 
@@ -476,6 +652,19 @@ class ProductController extends Controller {
         }
         return view('end-user.thanku',compact('categories','products','category','cart','billing','shipping'));
     }
+    
+    public function thankYou1(Request $request)
+    {
+        $user_id    = $this->user_id;
+        $cart       = Cart::content();
+
+        foreach ($cart as $key => $value) {
+             Cart::remove($key);
+        }
+        
+        return view('end-user.thanku',compact('categories','products','category','cart','billing','shipping'));
+    }
+    
     public function showLoginForm(Request $request)
     {
   

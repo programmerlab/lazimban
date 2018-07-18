@@ -280,9 +280,11 @@
                                             {!! csrf_field() !!}
                                             
                                             <div class="form-group"> 
-                                                <input class="form-control  " id="cod" placeholder="" type="hidden" value="cod">Kapıda ödeme
+                                                <!--<input class="form-control  " id="cod" placeholder="" type="hidden" value="cod">Kapıda ödeme-->
+                                                <input class="" id="cod" placeholder="" {{ (Session::get('paymentMethod') == 'COD') ? 'checked': '' }} name="paymentMethod" type="radio" value="COD">Kapıda ödeme<br>
+                                                <input class="" id="cod" placeholder="" {{ (Session::get('paymentMethod') == 'card') ? 'checked': '' }} name="paymentMethod" type="radio" value="card">Debit/Credit Card
                                             </div> 
-                                         <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="index.htm#collapseSix">
+                                         <!--<a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="index.htm#collapseSix">-->
                                           <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Devam et</button></a>
                                         </form>
                                     </div>  
@@ -295,11 +297,11 @@
                             <div class="panel-heading">
                               <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="index.htm#collapseSix">
-                                    <span>#</span>Sipariş İnceleme
+                                    <span>#</span>Sipariş İnceleme 
                                 </a>
                               </h4>
                             </div>
-                            <div id="collapseSix" class="panel-collapse collapse">
+                            <div id="collapseSix" class="panel-collapse collapse {{($tab==4)?'in':''}}">
                                 <div class="panel-body">
                                             <div class="">
                         <div class="shopping-cart">
