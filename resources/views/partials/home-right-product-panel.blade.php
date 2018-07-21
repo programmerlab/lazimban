@@ -16,11 +16,11 @@
                                                 @if($value['id']!=$product->category->parent_id && $key < 1) 
                                                     <li>
                                                         <div class="col-md-3"><a href="{{ url($product->url) }}"><img src="{{ asset('storage/uploads/products/'. $product->photo) }}"></a></div>
-                                                        <div class="col-md-4"><h2>{{$product->product_title}}</h2>({{ $product->views+100 }} views)</div>
-                                                         <div class="col-md-3"><span class="price-product"> RS {{$product->price-($product->price*$product->discount)/100}}</span></div>
+                                                        <div class="col-md-4"><h2>{{$product->product_title}}</h2>({{ $product->Görüntüleme+100 }} Görüntüleme)</div>
+                                                         <div class="col-md-3"><span class="price-product"> ?{{$product->price-($product->price*$product->discount)/100}}</span></div>
                                                           <div class="col-md-2">
-                                                            <a href="{{ url($product->url) }}" class="product_link">Detayları göster</a>
-                                                                <h6>satıcı -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                                            <a href="{{ url($product->url) }}" class="product_link">Ürünü Ýncele</a>
+                                                                <h6>Satýcý -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
                                                                 <h6  id="displayRating" data="{{$product->rating or 0}}"> </h6>
                                                                 <div class="rating_outer"><span class="fa fa-star" id="star1" onclick="rating(1,{{$product->id}})"></span>
                                                                     <span class="fa fa-star" id="star2"></span>
@@ -49,7 +49,7 @@
                                             @foreach($product_new as $key2 => $product) 
                                                 <li>
                                                     <div class="col-md-3"><a href="{{ url('product-details/'.$product->id) }}"><img src="{{ asset('storage/uploads/products/'. $product->photo) }}"></a></div>
-                                                    <div class="col-md-4"><h2>{{$product->product_title}}</h2>({{ $product->views+100 }} views)</div>
+                                                    <div class="col-md-4"><h2>{{$product->product_title}}</h2>({{ $product->Görüntüleme+100 }} Görüntüleme)</div>
                                                      <div class="col-md-3"><span class="price-product"> RS {{$product->price-($product->price*$product->discount)/100}} </span> <span class="price-before-discount">RS {{$product->price}}</span></div>
                                                       <div class="col-md-2"><a href="{{ url('product-details/'.$product->id) }}" class="product_link">View Details</a></div>
                                                     

@@ -11,7 +11,14 @@
 
       <meta name="keywords" content="{{$meta_key or ''}}"/>
 
-
+        <meta property="og:title" content="{{$meta_key or ''}}" />
+        <meta property="og:site_name" content="Lazimbana.com" />
+        <meta property="og:url" content="{{url()->current()}}" />
+        <meta property="og:description" content="{{$meta_description or '' }}" />
+        <meta property="og:image" content="http://localhost/lazimbananew/public/new/images/logo-lazimbana.png" />
+        <meta property="fb:app_id" content="136910713811254" />
+    
+    
       <link rel="icon" href="../../favicon.ico">
 
       <title> Lazımbana:
@@ -30,6 +37,8 @@
         <link href="{{ asset('public/new/css/jquery-ui.css') }}" rel="stylesheet" >
         <link href="{{ asset('public/new/css/settings.css') }}" rel="stylesheet" type="text/css"  media="screen" />
       <link href="{{ asset('public/new/css/easy-responsive-tabs.css') }}" rel="stylesheet">
+      
+      <link href="{{ asset('public/new/css/ubislider.min612e.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('public/new/css/style.css') }}" rel="stylesheet">
         
 
@@ -59,9 +68,9 @@
                                       <li><input class="input-text" name="email" id="email" value="" type="email"></li>
                                       <li><label for="password">Parola <span class="required">*</span></label></li>
                                       <li><input class="input-text" name="password" id="password" type="password"></li>
-                                      <li><input class="button" name="login" value="oturum aç" type="submit"></li>
-                                      <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">Kayıt olmak</a><a href="{{ url('password/reset') }}" class="forgot">Reset password</a></li>
-                                      <li class="reg-link"><a href="{{ url('admin/signUp') }}" class="resig">Satıcı olarak kayıt ol</a></li>
+                                      <li><input class="button" name="login" value="Oturum Aç" type="submit"></li>
+                                      <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">KAYIT OL</a><a href="{{ url('password/reset') }}" class="forgot">ÞÝFRENÝ SIFIRLA</a></li>
+                                      <li class="reg-link"><a href="{{ url('admin/signUp') }}" class="resig">SATICI OL</a></li>
                                       </ul>                                      
                                       </form>
                                       </li>
@@ -71,7 +80,7 @@
                                       </li>
                                        <li class="topcart"> <a href="{{url('signout')}}">Çıkış Yap</a> </li>
                                       @endif
-                                      <li class="topcart"><a href="{{ url('/checkout') }}">Araba<span class="cart-counts">{{$total_item}}</span></a><div class="cartdrop widget_shopping_cart nx-animate animated" style="visibility: visible;"><div class="widget_shopping_cart_content"><ul class="cart_list product_list_widget">Genel Toplam : {{$sub_total}}</ul></div></div></li>
+                                      <li class="topcart"><a href="{{ url('/checkout') }}">Sepet<span class="cart-counts">{{$total_item}}</span></a><div class="cartdrop widget_shopping_cart nx-animate animated" style="visibility: visible;"><div class="widget_shopping_cart_content"><ul class="cart_list product_list_widget">Genel Toplam : {{$sub_total}}</ul></div></div></li>
                                   </ul>
                               </div>
                               
@@ -81,7 +90,7 @@
                                   <form>
                                         
                                     <input class="sf_input" autocomplete="off" value="{{ $q or ''}}" name="q" type="text">
-                                    <button class="sf_button searchsubmit" type="submit"><span>Arama</span></button>
+                                    <button class="sf_button searchsubmit" type="submit"><span>Ara</span></button>
                                   </form>
                                         
                                   </div>

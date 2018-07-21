@@ -14,7 +14,7 @@
                 	<div class="col-md-3">
                     	
                     	<div class="product_categories">
-                        	<h3>Categories</h3>
+                        	<h3>Kategoriler</h3>
                             <ul class="product-categories">
                                 @foreach($categories as $key => $value)
                                     <li class="cat-item cat-parent"><a href="#">{{$value['name']}}</a>
@@ -33,7 +33,7 @@
                         </div>
                          
                          <div class="top_rated_products">
-                         	<h3>High-rated products</h3>
+                         	<h3>Yüksek Puanlý Ürünler</h3>
                             <ul class="product_list">
                                 @foreach($hot_products as $result)
                                     <li>                                        
@@ -52,7 +52,7 @@
                     
                     <div class="col-md-9">                    	                                                
                         <div class="product_list_outer">
-                        	<h3><span>Search </span> Products </h3>                                                    
+                        	<h3><span>{!! $products->count() !!} </span> Ürünler bulundu</h3>                                                    
                             <ul>
                                 @if($products->count()==0) Record not found @endif 
                                     @foreach($products as $key => $product)
@@ -60,8 +60,8 @@
                                             <div class="col-md-3"><img src="{{ asset('storage/uploads/products/'. $product->photo) }}" alt="{{ $product->product_title }}" alt="{{ $product->product_title }}"></div>
                                             <div class="col-md-4"><h2>{{ $product->product_title }}</h2></div>
                                              <div class="col-md-3"><span class="price-product"> RS {{ $product->price-($product->price*$product->discount)/100}}</span></div>
-                                              <div class="col-md-2"><a href="{{ url($product->url) }}" class="product_link">View Details</a>
-                                              <h6>Seller -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                              <div class="col-md-2"><a href="{{ url($product->url) }}" class="product_link">Ürünü Ýncele</a>
+                                              <h6>Satýcý -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
                                               <h6  id="displayRating" data="{{$product->rating or 0}}"> </h6>
                                                                 <div class="rating_outer"><span class="fa fa-star" id="star1" onclick="rating(1,{{$product->id}})"></span>
                                                                     <span class="fa fa-star" id="star2"></span>
@@ -133,13 +133,13 @@
                         <div class="product_info">
                             <div id="horizontalTab">
                                 <ul class="resp-tabs-list">
-                                    <li>Description </li>
+                                    <li>Açýklama </li>
                                     
-                                    <li>More Category </li> 
+                                    <li>Diðer Kategoriler </li> 
                                 </ul>
                                 <div class="resp-tabs-container">
                                         <div>
-                                           <h2>  Description : {{ $category }}</h2>
+                                           <h2>  Açýklama : {{ $category }}</h2>
                                              <p> {!! $catID->description !!}</p>
                                         </div>
                                          

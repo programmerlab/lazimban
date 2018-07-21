@@ -11,9 +11,31 @@
               	<div class="page-wrapper">
                 	
                     <div class="col-md-6">
-                    	<div class='zoom ex1' id='ex1'>
+                    	<!--<div class='zoom ex1' id='ex1'>
                             <img src="{{ asset('storage/uploads/products/'. $product->photo) }}"/>
-                        </div>
+                        </div>-->
+                        <div class="ubislider-image-container" data-ubislider="#slider4" id="imageSlider4"></div>
+		                <div id="slider4" class="ubislider">
+		                    <a class="arrow prev"></a>
+		                    <a class="arrow next"></a>
+		                    <ul id="gal1" class="ubislider-inner">
+		                    	<li> 
+		                    		<a> 
+		                    			<img class="product-v-img" src="{{ asset('storage/uploads/products/'. $product->photo) }}"> 
+		                    		</a> 
+		                    	</li>
+                                @if(!empty($product->additional_images))
+                                    @foreach(json_decode($product->additional_images) as $rows)                                        
+                                        <li> 
+                                            <a> 
+                                                <img class="product-v-img" src="{{ asset('storage/uploads/products/'. $rows) }}"> 
+                                            </a> 
+                                        </li>
+                                    @endforeach                                        
+                                 @endif    
+		                    			                    	
+		                    </ul>
+		                </div>
                     </div>
                     <div class="col-md-6">
                     	<div class="product_discription">
@@ -32,16 +54,23 @@
                             	<input type="number" value="1" onchange="updateCart(this.value)" min=1>
                                  <a href="{{ url(str_slug($product->product_title,'-').'/addToCart/'.$product->id) }}" id="addToCart" >
 
-                                <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">Sepete ekle</button></a>
+                                <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">Sepete Ekle</button></a>
                                 
                                 <a href="{{ url(str_slug($product->product_title,'-').'/buyNow/'.$product->id) }}" >
-                                <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">satın almak</button></a>                                    
+                                <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">HEMEN AL</button></a>                                    
                             </div>
                             <div class="category_list">
                             	<span><strong>Açıklama:</strong></span> <span>{!! str_limit($product->description,100) !!}</span>                                
                             </div>
                             <div>
-                                <h6>satıcı -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                <h6>Satýcý -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                
+                            </div>
+                            <div><b>Pay:</b>
+                                <a class="color1" title="Share it on Facebook" href="http://www.facebook.com/sharer.php?s=100&p[url]={{url()->current()}}&p[images][0]={{ asset('storage/uploads/products/'. $product->photo) }}&p[title]={{$product->product_title}}&p[summary]={!! str_limit($product->description,100) !!}" target="_blank"><i class="fa fa-facebook"></i></a>
+                                <a href="http://twitter.com/share?text=Check out {{$product->product_title}} at Lazimbana.com!&url={{url()->current()}}&hashtags=Lazimbana" class="color2" target="_blank"><i class="fa fa-twitter"></i></a>
+                                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{url()->current()}}&title={{$product->product_title}}&summary=Check out {{$product->product_title}} at Lazimbana.com!&source=LinkedIn" target="_blank" class="color4"><i class="fa fa-linkedin"></i></a>
+                                <a href="https://pinterest.com/pin/create/button/?url={{url()->current()}}&media={{ asset('storage/uploads/products/'. $product->photo) }}&description={!! str_limit($product->description,100) !!}" target="_blank" class="color5"><i class="fa fa-pinterest"></i></a>
                                 
                             </div>    
                         </div>                        
@@ -56,14 +85,14 @@
                                     <!--<li>Ek bilgi </li>-->
                                     <!--<li>Yorumlar (0) </li>-->
                                     <!--<li>Satıcı Bilgisi </li>-->
-                                    <li>Daha fazla ürün </li>
+                                    <li>Ýlginizi Çekebilir </li>
                                      <li>Yorumlar</li> 
                                 </ul>
                                 <div class="resp-tabs-container">
                                         <div>
                                             <h2>Açıklama</h2>
                                             <p>{!! $product->description !!}.</p>
-                                            <h6>satıcı -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                            <h6>Satýcý -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
                                         </div>
                                          
                                         <div>    
@@ -91,7 +120,7 @@
     color: brown;
     background-color: beige;
     padding: 5px; margin: 3px; border-radius: 5px; 
-"> <b> By {{ucfirst($rs->name)}} </b> on {!! Carbon\Carbon::parse($rs->created_at)->format('d-M-Y'); !!}: <br>{{$rs->comments}} </p>
+"> <b> By  {{ucfirst($rs->name)}} de </b> on {!! Carbon\Carbon::parse($rs->created_at)->format('d-M-Y'); !!}: <br>{{$rs->comments}} </p>
                                             @endforeach
                                             @endif
                                         </div>
@@ -119,7 +148,7 @@
                                    <input type="hidden" name="_token" value="{{csrf_token()}}"> 
                                         <div class="col-md-6">
                                            <span class="label label-danger" style="color:#ffffff">{{ $errors->first('name', ':message') }}</span> <br>
-                                           <input class="input-text" type="text" placeholder="isim" name="name" value="{{old('name')}}">
+                                           <input class="input-text" type="text" placeholder="Ýsminiz" name="name" value="{{old('name')}}">
                                        </div>
                                            <div class="col-md-6">
                                                <span class="label label-danger" style="color:#ffffff">{{ $errors->first('email', ':message') }}</span> <br>
@@ -127,12 +156,12 @@
                                            </div>
                                            <div class="col-md-12">
                                                <span class="label label-danger" style="color:#ffffff">{{ $errors->first('comments', ':message') }}</span> <br>
-                                               <textarea class="input-text" placeholder="Yorum Yap" name="comments">{{old('comments')}}</textarea>  
+                                               <textarea class="input-text" placeholder="Yorumunuz" name="comments">{{old('comments')}}</textarea>  
                                            </div>
                                            <div class="col-md-12"><input value="Gönder" class="submit-btn" type="submit"></div>
                                        </div>
                                    </form>
-                                      <h2  id="displayRating" data="{{$product->rating or 0}}">yorumlar </h2>
+                                      <h2  id="displayRating" data="{{$product->rating or 0}}">Yorumlar </h2>
        
                                    <div class="rating_outer"><span class="fa fa-star" id="star1" onclick="rating(1,{{$product->id}})"></span>
                                        <span class="fa fa-star" id="star2" onclick="rating(2,{{$product->id}})"></span>

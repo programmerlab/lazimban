@@ -140,5 +140,18 @@ class Helper {
         }
     }
     
+    public static function  getVendor($userid=null)
+    {        
+        $vendor = DB::table('admin')->where('id', $userid)->first();                
+        
+        //print_r($vendor); die;
+        if($vendor!=null){
+           // $vendor = DB::table('admin')->where('id', $userid)->first(); 
+            return $vendor->full_name; 
+        }else{
+            return null;
+        }
+    }
+    
     
 }

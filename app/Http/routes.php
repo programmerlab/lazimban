@@ -21,7 +21,14 @@ Route::get('{name}/addToCart/{id}', [
        'uses' =>   'ProductController@addToCart'
        ]);
 
-
+Route::get('blogs', [ 
+        'as' => 'blogs',
+       'uses' =>   'BlogController@index'
+       ]);
+Route::get('blog-detail/{id}', [ 
+        'as' => 'blog-detail',
+       'uses' =>   'BlogController@detail'
+       ]);
  
 Route::get('myaccount/login',[
           'as' => 'showLoginForm',

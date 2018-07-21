@@ -4,9 +4,10 @@
               <h3>şirket</h3>
               <ul>
                   <li class="fiRSt"><a title="Your Account" href="##">Hakkımızda</a></li>
-                    <li><a title="Information" href="{{ url('contact') }}">Müşteri servisi</a></li>
-                    <li><a title="Addresses" href="{{ url('contact') }}">şirket</a></li>
+                    <li><a title="Information" href="{{ url('contact') }}">Ýletiþim</a></li>
+                    <li><a title="Addresses" href="{{ url('contact') }}">Kurumsal</a></li>
                     <li><a title="Addresses" href="{{ url('contact') }}">yatırımcı ilişkileri</a></li>
+                    <li><a title="Blog" href="{{ url('blogs') }}">Blog</a></li>
               </ul>
           </div>
           <div class="col-md-3">
@@ -35,8 +36,8 @@
             <div class="col-md-7">
                 <div class="footer_link pull-right">
                     <a href="#">Hakkımızda</a>
-                    <a href="#">yardım et</a>
-                    <a href="#">Temas</a>
+                    <a href="#">Yardým</a>
+                    <a href="#">Ýletiþim</a>
                 </div>
             </div>
         </div>
@@ -251,4 +252,23 @@
     });
     });
     </script>
+        
+    <!-------------Image zoom and additional images  ------------>
+    <script type="text/javascript" src="{{ asset('public/new/js/jqueryElevateZoom.js') }}"></script>
+    <script src="{{ asset('public/new/js/ubislider.min612e.js') }}"></script>
+
+        <script type="text/javascript">
+    	    
+		    $('#slider4').ubislider({
+		        arrowsToggle: true,
+		        type: 'ecommerce',
+		        hideArrows: true,
+		        autoSlideOnLastClick: true,
+		        modalOnClick: true,
+		        onTopImageChange: function(){
+		        	$('#imageSlider4 img').elevateZoom();
+		        }
+		    }); 
+		    
+        </script>
     </html>

@@ -34,8 +34,8 @@
             <!-- END FORGOT PASSWORD FORM -->
             <!-- BEGIN REGISTRATION FORM -->
             <form class="register-form" action="{{url('admin/registration')}}" method="post" novalidate="novalidate">
-                <h3>Sign Up</h3>
-                <p> Enter your personal details below: </p>
+                <h3>Kayýt Formu</h3>
+                <p> Kiþisel bilgilerinizi giriniz: </p>
 
                  @if (count($errors) > 0)
                     <div class="alert alert-danger">
@@ -48,23 +48,23 @@
                 @endif
 
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Full Name</label>
+                    <label class="control-label visible-ie8 visible-ie9">Ad-Soyad</label>
                     <div class="input-icon">
                          
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Full Name" name="full_name" value="{{old('full_name')}}"> </div>
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="Ad-Soyad" name="full_name" value="{{old('full_name')}}"> </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Company Name</label>
+                    <label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>
                     <div class="input-icon">
                          
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Company Name" name="company_name" value="{{old('company_name')}}"> </div>
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="Þirket Ýsmi" name="company_name" value="{{old('company_name')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                    <label class="control-label visible-ie8 visible-ie9">Phone</label>
+                    <label class="control-label visible-ie8 visible-ie9">Telefon</label>
                     <div class="input-icon">
                         
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Phone" name="phone"  value="{{old('phone')}}"> </div>
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="Telefon" name="phone"  value="{{old('phone')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -79,15 +79,15 @@
                         <input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address"  value="{{old('address')}}"> </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">City/Town</label>
+                    <label class="control-label visible-ie8 visible-ie9">Þehir</label>
                     <div class="input-icon">
                          
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="City/Town" name="city"  value="{{old('city')}}"> </div>
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="Þehir" name="city"  value="{{old('city')}}"> </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Country</label>
+                    <label class="control-label visible-ie8 visible-ie9">Ülke</label>
                     <select name="country" id="country_list" class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                        <option value="">Select Country</option>
+                        <option value="">Select Ülke</option>
                         <option value="AF">Afghanistan</option>
                         <option value="AL">Albania</option>
                         <option value="DZ">Algeria</option>
@@ -324,27 +324,27 @@
                         <option value="ZW">Zimbabwe</option>
                     </select>
                 </div>
-                <p> <b> Enter your account details below: </b> </p>
+                <p> <b> Hesap ayrýntýlarýnýzý giriniz: </b> </p>
                  <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                    <label class="control-label visible-ie8 visible-ie9">Email</label>
+                    <label class="control-label visible-ie8 visible-ie9">E-posta</label>
                     <div class="input-icon">
                         
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email"  value="{{old('email')}}"> </div>
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="E-posta" name="email"  value="{{old('email')}}"> </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Password</label>
+                    <label class="control-label visible-ie8 visible-ie9">Þifre</label>
                     <div class="input-icon">
                          
-                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Password" name="password"  value="{{old('password')}}"> </div>
+                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Þifre" name="password"  value="{{old('password')}}"> </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Re-type Your Password</label>
+                    <label class="control-label visible-ie8 visible-ie9">Re-type Your Þifre</label>
                     <div class="controls">
                         <div class="input-icon">
                              
-                            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Re-type Your Password" name="password_confirmation"  value="{{old('password_confirmation')}}"> </div>
+                            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Re-type Your Þifre" name="password_confirmation"  value="{{old('password_confirmation')}}"> </div>
                     </div>
                 </div>
                 <!-- <div class="form-group">
@@ -357,8 +357,8 @@
                     <div id="register_tnc_error"> </div>
                 </div> -->
                 <div class="form-actions">
-                    <button id="register-back-btn" type="button" class="btn grey-salsa btn-outline"><a href="{{url('admin')}}"> Login </a></button>
-                    <button type="submit" id="register-submit-btn" class="btn green pull-right"> Sign Up </button>
+                    <button id="register-back-btn" type="button" class="btn grey-salsa btn-outline"><a href="{{url('admin')}}"> Giriþ </a></button>
+                    <button type="submit" id="register-submit-btn" class="btn green pull-right"> KAYDOL </button>
                 </div>
             </form>
             <!-- END REGISTRATION FORM -->

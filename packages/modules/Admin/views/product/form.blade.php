@@ -73,7 +73,28 @@
 
             </span>@endif
         </div>
-    </div> 
+    </div>
+    <div class="form-group{{ $errors->first('additional_image', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Product Additional Images</label>
+        <div class="col-lg-8 col-md-8">  
+             
+             <input type="file" name="additional_image[]" class="form-control form-cascade-control input-small" multiple>
+             <br>
+             @if(!empty($product->additional_images))
+                @foreach(json_decode($product->additional_images) as $rows)
+                    <img src="{!! Url::to('storage/uploads/products/'.$rows) !!}" width="100px">
+                @endforeach
+                    <input type="hidden" name="additional_images[]" value="">                    
+             @endif                                       
+            <span class="label label-danger">{{ $errors->first('additional_image', ':message') }}</span>
+            @if(Session::has('flash_alert_notice')) 
+            <span class="label label-danger">
+
+                {{ Session::get('flash_alert_notice') }} 
+
+            </span>@endif
+        </div>
+    </div>
     <div class="form-group{{ $errors->first('video', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label"> Product Video URL (Youtube)</label>
         <div class="col-lg-8 col-md-8"> 

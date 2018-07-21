@@ -92,7 +92,17 @@
           <li class="{{ (isset($page_action) && $page_action=='View Transaction')?"active":'' }}"><a href="{{ route('transaction')}}"><i class="fa  fa-list"></i> Transactions</a></li>
         </ul>
       </li>  
-
+       <li class="treeview {{ (isset($page_action) && $page_title=='Blog')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Manage Blog</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a> 
+        <ul class="treeview-menu">
+          <li class="{{ (isset($page_action) && $page_action=='Create Blog')?"active":'' }}" ><a href="{{ route('blog.create')}}"><i class="fa fa-user-plus"></i> Create Blog</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='View Blog')?"active":'' }}"><a href="{{ route('blog')}}"><i class="fa  fa-list"></i> View Blog</a></li>
+        </ul>
+      </li> 
 
       <li class="treeview {{ (isset($page_action) && $page_title=='setting')?"active":'' }} ">
         <a href="#">

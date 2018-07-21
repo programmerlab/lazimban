@@ -137,7 +137,7 @@ class ProductController extends Controller {
     }
 
     public function store(ProductRequest $request, Product $product) 
-    {
+    {              
         $cat_url    = $this->getCategoryById($request->get('product_category')); 
         $vendor_id = $request->session()->get('current_vendor_id');
         //echo "<pre>"; print_r($vendor_id); die;
@@ -159,7 +159,20 @@ class ProductController extends Controller {
                 $pro_slug   = strtolower(str_replace(" ", "-", $request->get('product_title')));
                 $url        = $cat_url.$pro_slug;
             }
-           
+            
+            
+            if($request->file('additional_image')){
+                $images = $request->file('additional_image');
+                
+                foreach($images as $imgs){
+                    $destinationPath = storage_path('uploads/products');                    
+                    $imgs->move($destinationPath, time().$imgs->getClientOriginalName());
+                    $additionalphotoname[] = time().$imgs->getClientOriginalName();                    
+                }
+                
+                $request->merge(['additional_image'=>json_encode($additionalphotoname)]);
+                //echo "<pre>"; print_r($photoname); die;
+            }
 
 
             $product->product_category   =   $request->get('product_category');
@@ -167,6 +180,7 @@ class ProductController extends Controller {
             $product->price              =   $request->get('price');
             $product->discount           =   $request->get('discount');
             $product->photo              =   $photo_name;
+            $product->additional_images  =   json_encode($additionalphotoname);
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->video              =   $request->get('video');
@@ -212,6 +226,22 @@ class ProductController extends Controller {
     {        
         $cat_url       = $this->getCategoryById($request->get('product_category'));
         
+        
+        if(($request->file('additional_image')[0])){
+                $images = $request->file('additional_image');
+                
+                foreach($images as $imgs){
+                    $destinationPath = storage_path('uploads/products');                    
+                    $imgs->move($destinationPath, time().$imgs->getClientOriginalName());
+                    $additionalphotoname[] = time().$imgs->getClientOriginalName();                    
+                }
+                
+                $request->merge(['additional_image'=>json_encode($additionalphotoname)]);                
+                $additional_image = json_encode($additionalphotoname);
+            }else{
+               $additional_image = $product->additional_images; 
+            }
+            
        
          if ($request->file('image')) { 
 
@@ -235,6 +265,7 @@ class ProductController extends Controller {
             $product->product_category   =   $request->get('product_category');
             $product->description        =   $request->get('description');
             $product->photo              =   $photo_name;
+            $product->additional_images  =   $additional_image;
             $product->price              =   $request->get('price');
             $product->discount           =   $request->get('discount');
             $product->meta_key           =   $request->get('meta_key');
@@ -247,7 +278,7 @@ class ProductController extends Controller {
             }
             
             $product->save(); 
-        }else{
+        }else{            
             $product->product_title      =   $request->get('product_title');
             if($request->get('slug') && !empty($request->get('slug'))){
                 $product->slug              =   strtolower(str_replace(" ", "-", $request->get('slug')));  
@@ -261,12 +292,14 @@ class ProductController extends Controller {
             $product->product_category   =   $request->get('product_category');
             $product->description        =   $request->get('description');
             $product->photo              =   $request->get('photo');
+            $product->additional_images  =   $additional_image;
             $product->price              =   $request->get('price');
-            $product->discount              =   $request->get('discount');
+            $product->discount           =   $request->get('discount');
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->url                =   $url;
             $product->video              =   $request->get('video');
+            //echo "<pre>"; print_r($product); die;
             if($request->get('title')){
                 $product->title  = $request->get('title');
             }
