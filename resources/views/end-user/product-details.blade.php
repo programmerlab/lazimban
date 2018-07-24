@@ -10,7 +10,7 @@
             <div id="main" class="site-main">
               	<div class="page-wrapper">
                 	
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-6">
                     	<!--<div class='zoom ex1' id='ex1'>
                             <img src="{{ asset('storage/uploads/products/'. $product->photo) }}"/>
                         </div>-->
@@ -37,7 +37,7 @@
 		                    </ul>
 		                </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-sm-6">
                     	<div class="product_discription">
                         	<h2 class="product_name">{{$product->product_title}}</h2>
                             <h3 class="product_price">$ {{$product->price-($product->price*$product->discount/100)}}  </h3> <h5><p style="text-decoration: line-through">$ {{$product->price}}</p></h5>
@@ -77,7 +77,6 @@
                     </div>
                     
                     
-                    <div class="col-md-12">
                     	<div class="product_info">
                         	<div id="horizontalTab">
                                 <ul class="resp-tabs-list">
@@ -128,9 +127,8 @@
                                 </div>
                             </div>	
                         </div>
-                    </div>
                     <hr>    
-                    <div class="col-md-12">
+                    <div class="product-review-outer">
                         <div class="col-md-6">
                             <div class="product-review">
                                 
