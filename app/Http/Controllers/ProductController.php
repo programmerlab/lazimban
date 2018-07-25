@@ -444,7 +444,7 @@ class ProductController extends Controller {
             foreach($cart as $row){
                 $total += $row->price * $row->qty;
             }
-            //echo "<pre>"; print_r($total); die;
+            //echo "<pre>"; print_r($cart); die;
                 $request = new \Iyzipay\Request\CreateCheckoutFormInitializeRequest();
                 $request->setLocale(\Iyzipay\Model\Locale::TR);
                 $request->setConversationId($conversation_id);
@@ -476,7 +476,7 @@ class ProductController extends Controller {
                 $shippingAddress->setContactName($shipping->name);
                 $shippingAddress->setCity(($shipping->city)? $shipping->city:'N/A');
                 $shippingAddress->setCountry(($shipping->country)? $shipping->country:'N/A');
-                $shippingAddress->setAddress($shipping->address1.', '.$shipping->address2);
+                $shippingAddress->setAddress(($shipping->address1)? $shipping->address1:'N/A');
                 $shippingAddress->setZipCode(($shipping->zip_code)? $shipping->zip_code:'N/A');
                 $request->setShippingAddress($shippingAddress);
                 
@@ -485,7 +485,7 @@ class ProductController extends Controller {
                 $billingAddress->setContactName($billing->name);
                 $billingAddress->setCity(($billing->city)? $billing->city:'N/A');
                 $billingAddress->setCountry(($billing->country)? $billing->country:'N/A');
-                $billingAddress->setAddress($billing->address1.', '.$billing->address2);
+                $billingAddress->setAddress(($billing->address1)? $billing->address1:'N/A');                
                 $billingAddress->setZipCode(($billing->zip_code)? $billing->zip_code:'N/A');
                 $request->setBillingAddress($billingAddress);
                 

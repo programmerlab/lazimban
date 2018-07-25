@@ -1,6 +1,6 @@
 
 <div class="col-md-3 col-sm-4">
-    <div class="product_categories">
+    <!--<div class="product_categories">
         <h3>Kategoriler </h3>
             <ul class="product-categories">
               @foreach($categories as $key => $value)
@@ -19,7 +19,7 @@
                 </li>
               @endforeach                                                                                                        
             </ul>            
-    </div>
+    </div>-->
      
     <div class="top_rated_products">
         <h3>Yüksek Puanlý Ürünler</h3>

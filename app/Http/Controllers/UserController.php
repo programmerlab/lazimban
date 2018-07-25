@@ -50,6 +50,7 @@ class UserController extends Controller
     public function signup(Request $request,User $user)
     {   
 		$input['first_name'] 	= $request->input('first_name');
+        $input['last_name'] 	= $request->input('last_name');
     	$input['email'] 		= $request->input('email'); 
     	$input['password'] 	    = Hash::make($request->input('password'));
     	
@@ -57,6 +58,7 @@ class UserController extends Controller
         //Server side valiation
         $validator = Validator::make($request->all(), [
            	'first_name'		=> 	'required',
+            'last_name'		=> 	'required',
             'email'     =>  'required|email|unique:users',
 	        'password' => 'required|min:6',
 	        'confirm_password' => 'required|same:password'
@@ -100,6 +102,7 @@ class UserController extends Controller
     public function userSignup(Request $request,User $user)
     {   
         $input['first_name']    = $request->input('first_name');
+        $input['last_name']    = $request->input('last_name');  
         $input['email']         = $request->input('email'); 
         $input['password']      = Hash::make($request->input('password'));
         
@@ -107,6 +110,7 @@ class UserController extends Controller
         //Server side valiation
         $validator = Validator::make($request->all(), [
             'first_name'        =>  'required',
+            'last_name'		=> 	'required',
             'email'     =>  'required|email|unique:users',
             'password' => 'required|min:6',
             'confirm_password' => 'required|same:password'

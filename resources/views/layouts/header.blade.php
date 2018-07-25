@@ -21,7 +21,7 @@
     
       <link rel="icon" href="../../favicon.ico">
 
-      <title> Lazımbana:
+      <title> 
             @if(isset($meta_key))    
             {{ isset($meta_key)?$meta_key:''}}                             
                     @else
@@ -70,7 +70,9 @@
                                       <li><input class="input-text" name="password" id="password" type="password"></li>
                                       <li><input class="button" name="login" value="Oturum Aç" type="submit"></li>
                                       <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">KAYIT OL</a><a href="{{ url('password/reset') }}" class="forgot">ÞÝFRENÝ SIFIRLA</a></li>
-                                      <li class="reg-link"><a href="{{ url('admin/signUp') }}" class="resig">SATICI OL</a></li>
+                                      <li class="reg-link"><a href="{{ url('admin/signUp') }}" class="resig">SATICI OL</a> <a href="{{ url('admin/login') }}" class="resig pull-right">SATICI GİRİŞİ</a></li>
+                                      
+                                        
                                       </ul>                                      
                                       </form>
                                       </li>

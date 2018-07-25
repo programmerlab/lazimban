@@ -156,6 +156,10 @@ function signUp()
                 {
                     html += response.message.first_name+'<br>';
                 }
+                if(response.message.last_name)
+                {
+                    html += response.message.last_name+'<br>';
+                }
                 if(response.message.email)
                 {
                     html += response.message.email+'<br>';
