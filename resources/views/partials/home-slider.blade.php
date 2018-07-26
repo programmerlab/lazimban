@@ -19,7 +19,7 @@
                                           data-endspeed="300"
                                           data-endeasing="Power1.easeIn"
                                           data-captionhidden="off"
-                                          style="z-index: 6">Your <span>New</span> Sunday <span>Location</span>
+                                          style="z-index: 6">{{ $banner[3]->field_value }} 
                                       </div>
                   
                                           <!-- LAYER NR. 5 -->
@@ -36,12 +36,12 @@
                                           data-endspeed="300"
                                           data-endeasing="Power1.easeIn"
                                           data-captionhidden="off"
-                                          style="z-index: 6">Start selling immediately in your low-commission market place.	
+                                          style="z-index: 6">{{ $banner[4]->field_value }} 	
                                       </div>
                   
                   
                                       <!-- LAYER NR. 11 -->
-                                      <div class="tp-caption slider_link"
+                                      <!--<div class="tp-caption slider_link"
                                           data-x="50"
                                           data-y="310"
                                           data-speed="1000"
@@ -50,8 +50,8 @@
                                           data-endspeed="300"
                                           data-endeasing="Power1.easeIn"
                                           data-captionhidden="off"
-                                          style="z-index: 6"><a href="#">Start Sale ...</a>
-                                      </div>
+                                          style="z-index: 6"><a href="#">Start Sale</a>
+                                      </div>-->
                   
                                       
                                   </li>
@@ -69,7 +69,7 @@
                                           data-endspeed="300"
                                           data-endeasing="Power1.easeIn"
                                           data-captionhidden="off"
-                                          style="z-index: 6">Your <span>New</span> Sunday <span>Location</span>
+                                          style="z-index: 6">{{ $banner[5]->field_value }}
                                       </div>
                   
                                           <!-- LAYER NR. 5 -->
@@ -86,12 +86,12 @@
                                           data-endspeed="300"
                                           data-endeasing="Power1.easeIn"
                                           data-captionhidden="off"
-                                          style="z-index: 6">Start selling immediately in your low-commission market place.	
+                                          style="z-index: 6">{{ $banner[6]->field_value }}
                                       </div>
                   
                   
                                       <!-- LAYER NR. 11 -->
-                                      <div class="tp-caption slider_link"
+                                      <!--<div class="tp-caption slider_link"
                                           data-x="right"
                                           data-y="310"
                                           data-speed="1000"
@@ -100,8 +100,8 @@
                                           data-endspeed="300"
                                           data-endeasing="Power1.easeIn"
                                           data-captionhidden="off"
-                                          style="z-index: 6"><a href="#">Start Sale ...</a>
-                                      </div>
+                                          style="z-index: 6"><a href="#">Start Sale</a>
+                                      </div>-->
                                   </li>
                   
                                   <!-- SLIDE  -->
@@ -120,7 +120,7 @@
                                           data-endspeed="300"
                                           data-endeasing="Power1.easeIn"
                                           data-captionhidden="off"
-                                          style="z-index: 6">Your <span>New</span> Sunday <span>Location</span>
+                                          style="z-index: 6">{{ $banner[7]->field_value }}
                                       </div>
                   
                                           <!-- LAYER NR. 5 -->
@@ -137,12 +137,12 @@
                                           data-endspeed="300"
                                           data-endeasing="Power1.easeIn"
                                           data-captionhidden="off"
-                                          style="z-index: 6">Start selling immediately in your low-commission market place.	
+                                          style="z-index: 6">{{ $banner[8]->field_value }}	
                                       </div>
                   
                   
                                       <!-- LAYER NR. 11 -->
-                                      <div class="tp-caption slider_link"
+                                      <!--<div class="tp-caption slider_link"
                                           data-x="right"
                                           data-y="310"
                                           data-speed="1000"
@@ -151,8 +151,8 @@
                                           data-endspeed="300"
                                           data-endeasing="Power1.easeIn"
                                           data-captionhidden="off"
-                                          style="z-index: 6"><a href="#">Start Sale ...</a>
-                                      </div>
+                                          style="z-index: 6"><a href="#">Start Sale</a>
+                                      </div>-->
                                   </li>
                   
                   

@@ -73,7 +73,7 @@
                                                         {!! Carbon\Carbon::parse($user->created_at)->format('m-d-Y H:i:s A'); !!}
                                                     </td>
                                                     <td>
-                                                        <span class="label label-{{ ($user->status==1)?'success':'warning'}} status" id="{{$user->id}}"  data="{{$user->status}}"  onclick="changeStatus({{$user->id}},'user')" >
+                                                        <span class="label label-{{ ($user->status==1)?'success':'warning'}} status" id="{{$user->id}}"  data="{{$user->status}}"  onclick="changeStatus({{$user->id}},'vendor')" >
                                                             {{ ($user->status==1)?'Active':'Inactive'}}
                                                         </span>
                                                     </td>

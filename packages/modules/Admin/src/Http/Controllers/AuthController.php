@@ -139,11 +139,18 @@ class AuthController extends Controller
 		return view::make('packages::auth.register');
 	} 
 	
-	public function logout(){
+	public function logout(Request $request){
+        $vendor_type = ($request->session()->get('current_vendor_type'));
 		Auth::logout();
-		auth()->guard('admin')->logout(); 
-		return redirect('admin/login');
+		auth()->guard('admin')->logout();
+        if($vendor_type == 1){
+            return redirect('admin/login');    
+        }else{
+            return redirect('vendor/login');
+        }		
 	}
+    
+    
 	public function login(Request $request)
 	{
         

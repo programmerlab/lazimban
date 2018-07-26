@@ -192,24 +192,24 @@ class HomeController extends Controller
 
             $sub_cat = Category::where('parent_id', $catID->id)->Orwhere('id', $catID->id)->lists('id');
              
-            $products = Product::with('category')->whereIn('product_category',$sub_cat)->orderBy('id','asc')->get();
+            $products = Product::with('category')->where('status',1)->whereIn('product_category',$sub_cat)->orderBy('id','asc')->get();
              
             if($products->count())
             { 
                  
-                $products = Product::with('category')->whereIn('product_category',$sub_cat) 
+                $products = Product::with('category')->where('status',1)->whereIn('product_category',$sub_cat) 
                                 ->orderBy('id','asc')
                                 ->get();
                  if($q)
                  {
-                    $products = Product::with('category')->whereIn('product_category',$sub_cat)
+                    $products = Product::with('category')->where('status',1)->whereIn('product_category',$sub_cat)
                                 ->where('product_title','LIKE','%'.$q.'%')
                                 ->orderBy('id','asc')
                                 ->get(); 
                  }  
             } 
         }else{
-            $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
+            $products = Product::with('category')->where('status',1)->where('product_category',0)->orderBy('id','asc')->get();
 
         } 
         $category = isset($catID->name)?$catID->name:null; 
@@ -225,17 +225,17 @@ class HomeController extends Controller
          
         $catID = Category::where('slug',$category)->orWhere('name',$category)->first(); 
         if($catID!=null && $catID->count()){ 
-            $products = Product::with('category')->where('product_category',$catID->id)->orderBy('id','asc')->get();
+            $products = Product::with('category')->where('status',1)->where('product_category',$catID->id)->orderBy('id','asc')->get();
             
             if($products->count()==0)
             {
                   
-                  $products = Product::with('category')->whereIn('product_category',[$catID->id]) 
+                  $products = Product::with('category')->where('status',1)->whereIn('product_category',[$catID->id]) 
                                 ->orderBy('id','asc')
                                 ->get();
                  if($q)
                  {
-                    $products = Product::with('category')->whereIn('product_category',[$catID->id])
+                    $products = Product::with('category')->where('status',1)->whereIn('product_category',[$catID->id])
                                 ->where('product_title','LIKE','%'.$q.'%')
                                 ->orderBy('id','asc')
                                 ->get();
@@ -243,7 +243,7 @@ class HomeController extends Controller
                  } 
             } 
         }else{
-            $products = Product::with('category')->where('product_category',0)->orderBy('id','asc')->get();
+            $products = Product::with('category')->where('status',1)->where('product_category',0)->orderBy('id','asc')->get();
 
         } 
          $category = isset($catID->name)?$catID->name:null; 

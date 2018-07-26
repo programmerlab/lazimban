@@ -70,7 +70,7 @@ class SettingsController extends Controller {
 
         $banner             = $setting::where('field_key','LIKE','%banner_image%')->get();
 
-
+        //echo "<pre>"; print_r($banner[3]->field_value); die;
         $meta_key    = $setting::where('field_key','meta_key')->first();
 
         $meta_description    = $setting::where('field_key','meta_description')->first();
@@ -204,7 +204,7 @@ class SettingsController extends Controller {
         }
 
         return Redirect::to(route('setting'))
-                        ->with('flash_alert_notice2', 'Site settigs was successfully updated!');
+                        ->with('flash_alert_notice2', 'Site settings was successfully updated!');
     }
     /*
      *Delete User

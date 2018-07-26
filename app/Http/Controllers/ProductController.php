@@ -88,7 +88,7 @@ class ProductController extends Controller {
         $company_address    = $setting::where('field_key','company_address')->first();
                             
         $banner             = $setting::where('field_key','LIKE','%banner_image%')->get();
-
+        //echo "<pre>"; print_r($banner[3]->field_value);die;
 
         View::share('website_title',$website_title);
         View::share('website_email',$website_email);
@@ -138,6 +138,7 @@ class ProductController extends Controller {
          if($q)
          {
             $products = Product::with('category')
+                        ->where('status',1)
                         ->where('product_title','LIKE','%'.$q.'%')
                         ->orderBy('id','asc')
                         ->get(); 
@@ -146,9 +147,9 @@ class ProductController extends Controller {
              
          } 
          else{
-            $products       = Product::with('category')->groupBy('product_category')->orderBy('views','desc')->get(); 
+            $products       = Product::with('category')->where('status',1)->groupBy('product_category')->orderBy('views','desc')->get(); 
 
-            $product_new    = Product::with('category')->orderBy('id','desc')->groupBy('product_category')->Paginate(12); 
+            $product_new    = Product::with('category')->where('status',1)->orderBy('id','desc')->groupBy('product_category')->Paginate(12); 
          }
         
          

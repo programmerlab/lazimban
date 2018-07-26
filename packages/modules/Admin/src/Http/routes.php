@@ -1,8 +1,10 @@
 <?php
 use Illuminate\Support\Facades\DB;
+      Route::get('vendor/login','Modules\Admin\Http\Controllers\AuthController@index');
       Route::get('admin/login','Modules\Admin\Http\Controllers\AuthController@index');
       Route::get('logout','Modules\Admin\Http\Controllers\AuthController@logout');  
       Route::get('admin/signUp','Modules\Admin\Http\Controllers\AuthController@signUp');
+      Route::get('vendor/signUp','Modules\Admin\Http\Controllers\AuthController@signUp');
       
       Route::get('admin/transaction/approve/{id}','Modules\Admin\Http\Controllers\TransactionController@approve');
       Route::get('admin/transaction/decline/{id}','Modules\Admin\Http\Controllers\TransactionController@decline');
@@ -18,7 +20,7 @@ use Illuminate\Support\Facades\DB;
         $credentials = ['email' => Input::get('email'), 'password' => Input::get('password'),'user_type'=>1]; 
             $auth = auth()->guard('admin');
 
-        $credentials2 = ['email' => Input::get('email'), 'password' => Input::get('password'),'user_type'=>2]; 
+        $credentials2 = ['email' => Input::get('email'), 'password' => Input::get('password'),'user_type'=>2,'status'=>1]; 
             $auth = auth()->guard('admin');
             
             if ($auth->attempt($credentials)) {
@@ -48,11 +50,13 @@ use Illuminate\Support\Facades\DB;
 
         Route::get('admin', 'Modules\Admin\Http\Controllers\AdminController@index');
         
+        
         /*------------User Model and controller---------*/
 
         Route::bind('user', function($value, $route) {
             return Modules\Admin\Models\User::find($value);
         });
+        
 
         Route::resource('admin/user', 'Modules\Admin\Http\Controllers\UsersController', [
             'names' => [
@@ -66,6 +70,8 @@ use Illuminate\Support\Facades\DB;
             ]
                 ]
         );
+        
+        
         
         Route::resource('admin/vendor', 'Modules\Admin\Http\Controllers\VendorsController', [
             'names' => [

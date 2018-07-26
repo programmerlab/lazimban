@@ -60,8 +60,11 @@ class ProductController extends Controller {
        $page_title = 'Product';
         $page_action = 'View Product'; 
         if ($request->ajax()) {
-            $id = $request->get('id'); 
-            $category = Product::find($id); 
+            $id = $request->get('id');
+            $status = $request->get('status');
+            $category = $product->where('id',$id)->first();//Product::find($id);
+            //print_r($category); die;
+            $s = ($status == 1) ? $status = 0 : $status = 1;
             $category->status = $s;
             $category->save();
             echo $s;

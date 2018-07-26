@@ -55,9 +55,10 @@ class VendorsController extends Controller {
     public function index(Vendor $vendor, Request $request) 
     { 
         if ($request->ajax()) {
-            $id = $request->get('id');
+            $id = $request->get('id'); 
             $status = $request->get('status');
-            $vendor = admin::find($id);
+            $vendor = $vendor->where('id',$id)->first(); //admin::find($id);
+            //print_r($vendor); die;
             $s = ($status == 1) ? $status = 0 : $status = 1;
             $vendor->status = $s;
             $vendor->save();

@@ -38,7 +38,8 @@ function rating(count,product_id){
 
 function changeStatus(id,method)
 {
-    var status =  $('#'+id).attr('data'); 
+    var status =  $('#'+id).attr('data');
+    console.log(url);
     $.ajax({
         type: "GET",
         data: {id: id,status:status},

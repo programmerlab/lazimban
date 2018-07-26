@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin</title>
+    <title>{{ ucwords(Request::segment(1)) }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -34,7 +34,7 @@
             <!-- END FORGOT PASSWORD FORM -->
             <!-- BEGIN REGISTRATION FORM -->
             <form class="register-form" action="{{url('admin/registration')}}" method="post" novalidate="novalidate">
-                <h3>Kayýt Formu</h3>
+                <h3>{{ ucwords(Request::segment(1)) }} Kayýt Formu</h3>
                 <p> Kiþisel bilgilerinizi giriniz: </p>
 
                  @if (count($errors) > 0)
@@ -357,7 +357,7 @@
                     <div id="register_tnc_error"> </div>
                 </div> -->
                 <div class="form-actions">
-                    <button id="register-back-btn" type="button" class="btn grey-salsa btn-outline"><a href="{{url('admin')}}"> Giriþ </a></button>
+                    <button id="register-back-btn" type="button" class="btn grey-salsa btn-outline"><a href="{{url('vendor/login')}}"> Giriþ </a></button>
                     <button type="submit" id="register-submit-btn" class="btn green pull-right"> KAYDOL </button>
                 </div>
             </form>

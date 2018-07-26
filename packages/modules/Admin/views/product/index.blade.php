@@ -52,6 +52,7 @@
                                                     @if(Session::get('current_vendor_type') == 1)
                                                     <th>Created By</th>
                                                     @endif
+                                                    <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                                 @if(count($products )==0)
@@ -90,7 +91,12 @@
                                                     <td>
                                                         {{ $result->company_name }} 
                                                     </td>
-                                                    @endif    
+                                                    @endif
+                                                    <td>
+                                                        <span class="label label-{{ ($result->status==1)?'success':'warning'}} status" id="{{$result->id}}"  data="{{$result->status}}"  onclick="changeStatus({{$result->id}},'product')" >
+                                                            {{ ($result->status==1)?'Active':'Inactive'}}
+                                                        </span>
+                                                    </td>
                                                     <td> 
                                                         <a href="{{ route('product.edit',$result->id)}}">
                                                             <i class="fa fa-fw fa-pencil-square-o" title="edit"></i> 

@@ -90,8 +90,21 @@
             </span>@endif
         </div>
     </div> 
-
-
+    <div class="form-group{{ $errors->first('banner_image1_heading', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Banner Image1 Heading <span class="error">*</span></label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('banner_image1_heading',isset($banner[3]->field_value)?$banner[3]->field_value:null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('banner_image1_heading', ':message') }}</span>
+        </div>
+    </div>
+    <div class="form-group{{ $errors->first('banner_image1_subheading', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Banner Image1 Sub Heading <span class="error">*</span></label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('banner_image1_subheading',isset($banner[4]->field_value)?$banner[4]->field_value:null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('banner_image1_subheading', ':message') }}</span>
+        </div>
+    </div>
+    <hr>
      <div class="form-group{{ $errors->first('image', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label">Banner Image2 </label>
         <div class="col-lg-8 col-md-8">  
@@ -113,7 +126,21 @@
             </span>@endif
         </div>
     </div> 
-
+    <div class="form-group{{ $errors->first('banner_image2_heading', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Banner Image2 Heading <span class="error">*</span></label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('banner_image2_heading',isset($banner[5]->field_value)?$banner[5]->field_value:null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('banner_image2_heading', ':message') }}</span>
+        </div>
+    </div>
+    <div class="form-group{{ $errors->first('banner_image2_subheading', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Banner Image2 Sub Heading <span class="error">*</span></label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('banner_image2_subheading',isset($banner[6]->field_value)?$banner[6]->field_value:null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('banner_image2_subheading', ':message') }}</span>
+        </div>
+    </div>
+    <hr>
 
      <div class="form-group{{ $errors->first('image', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label">Banner Image3</label>
@@ -136,9 +163,65 @@
             </span>@endif
         </div>
     </div> 
-
+    <div class="form-group{{ $errors->first('banner_image3_heading', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Banner Image3 Heading <span class="error">*</span></label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('banner_image3_heading',isset($banner[7]->field_value)?$banner[7]->field_value:null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('banner_image3_heading', ':message') }}</span>
+        </div>
+    </div>
+    <div class="form-group{{ $errors->first('banner_image3_subheading', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Banner Image3 Sub Heading <span class="error">*</span></label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('banner_image3_subheading',isset($banner[8]->field_value)?$banner[8]->field_value:null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('banner_image3_subheading', ':message') }}</span>
+        </div>
+    </div>
+    <hr>
       
-    
+    <hr> <center> <b> Small Banner  (minimum size : 600x300) </b> </a><hr>
+     <div class="form-group{{ $errors->first('banner_image1_small', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Small Banner Image 1 </label>
+        <div class="col-lg-8 col-md-8">  
+
+             {!! Form::file('banner_image1_small',null,['class' => 'form-control form-cascade-control input-small'])  !!}
+             <br>
+             @foreach($banner as $key => $value)
+             @if($value->field_key=='banner_image1_small')
+                 <img src="{!! Url::to('storage/files/banner/'.$value->field_value) !!}" width="100px" height="100px">
+              @endif    
+             @endforeach                                 
+            <span class="label label-danger">{{ $errors->first('banner_image1_small', ':message') }}</span>
+            @if(Session::has('flash_alert_notice')) 
+            <span class="label label-danger">
+
+                {{ Session::get('flash_alert_notice') }} 
+
+            </span>@endif
+        </div>
+    </div>
+    <div class="form-group{{ $errors->first('banner_image2_small', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Small Banner Image 2 </label>
+        <div class="col-lg-8 col-md-8">  
+
+             {!! Form::file('banner_image2_small',null,['class' => 'form-control form-cascade-control input-small'])  !!}
+             <br>
+             @foreach($banner as $key => $value)
+             @if($value->field_key=='banner_image2_small')
+                 <img src="{!! Url::to('storage/files/banner/'.$value->field_value) !!}" width="100px" height="100px">
+              @endif    
+             @endforeach                                 
+            <span class="label label-danger">{{ $errors->first('banner_image2_small', ':message') }}</span>
+            @if(Session::has('flash_alert_notice')) 
+            <span class="label label-danger">
+
+                {{ Session::get('flash_alert_notice') }} 
+
+            </span>@endif
+        </div>
+    </div>
+        
+        
     <div class="form-group">
         <label class="col-lg-4 col-md-4 control-label"></label>
         <div class="col-lg-8 col-md-8">
