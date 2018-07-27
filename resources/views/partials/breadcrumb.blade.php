@@ -6,9 +6,9 @@
                 @if(isset($category_name) && !isset($product->category->name))                                
  
                     @else
-                {{$product->category->name or ''}}
-                @endif                      
-                <span> {{ isset($category)?$category:''}} </span>  
+                <span> {{ $helper->getBreadcrumbs($product->category->id) }} {{$product->category->name or ''}} > {{ $product->product_title or ''}}</span>
+                @endif                    
+                <span> {{ isset($category)? $helper->getBreadcrumbs($category) : '' }} {{ isset($category)?$category:''}} </span>  
            </div>
     </div>
 </div>

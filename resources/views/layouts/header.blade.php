@@ -70,7 +70,7 @@
                                       <li><input class="input-text" name="password" id="password" type="password"></li>
                                       <li><input class="button" name="login" value="Oturum Aç" type="submit"></li>
                                       <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">KAYIT OL</a><a href="{{ url('password/reset') }}" class="forgot">ÞÝFRENÝ SIFIRLA</a></li>
-                                      <li class="reg-link"><a href="{{ url('vendor/signUp') }}" class="resig">SATICI OL</a> <a href="{{ url('vendor/login') }}" class="resig pull-right">SATICI GİRİŞİ</a></li>
+                                      <li class="reg-link"><a href="{{ url('vendor/signUp') }}" class="resig">SATICI OL</a> <a href="{{ url('vendor/signUp') }}" class="resig pull-right">SATICI GİRİŞİ</a></li>
                                       
                                         
                                       </ul>                                      

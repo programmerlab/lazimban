@@ -3,10 +3,12 @@ namespace Modules\Admin\Http\Controllers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\ProductRequest;
 use Modules\Admin\Models\User;
+use Modules\Admin\Models\Vendor;
 use Modules\Admin\Models\Category;
 use Modules\Admin\Models\Product;
 use Input;
@@ -72,16 +74,29 @@ class ProductController extends Controller {
         }
          
         $vendor_id = $request->session()->get('current_vendor_id');
-        
-        if($request->session()->get('current_vendor_type') != 1){
-            $products = $product->with('category')->where('created_by',$vendor_id)->orderBy('id','desc')->Paginate($this->record_per_page);
+        $vendorlist = DB::table('admin')->select('id','company_name','full_name')->where('user_type',2)->orderBy('id','desc')->get();
+        //echo "<pre>"; print_r($vendorlist);die;
+        if($_POST){
+            //print_r($_POST);die;
+                if($_POST['vendor'] != ''){
+                    $products = $product->with('category')->where('created_by',$_POST['vendor'])->orderBy('id','desc')->Paginate($this->record_per_page);
+                }else{
+                    $products = $product->with('category')->select('products.*', 'admin.company_name')->join('admin','products.created_by','=','admin.id')->orderBy('products.id','desc')->Paginate($this->record_per_page);
+                }
+                
         }else{
-            $products = $product->with('category')->select('products.*', 'admin.company_name')->join('admin','products.created_by','=','admin.id')->orderBy('products.id','desc')->Paginate($this->record_per_page);
+                if($request->session()->get('current_vendor_type') != 1){
+                    $products = $product->with('category')->where('created_by',$vendor_id)->orderBy('id','desc')->Paginate($this->record_per_page);
+                }else{
+                    $products = $product->with('category')->select('products.*', 'admin.company_name')->join('admin','products.created_by','=','admin.id')->orderBy('products.id','desc')->Paginate($this->record_per_page);
+                }    
         }
+        
+        
         
         //echo "<pre>"; print_r($products); die;
 
-        return view('packages::product.index', compact('products', 'page_title', 'page_action','helper'));
+        return view('packages::product.index', compact('products', 'page_title', 'page_action','helper','vendorlist'));
    
     }
 

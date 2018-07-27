@@ -11,21 +11,20 @@
           <span class="glyphicon glyphicon-lock form-control-feedback input-img"></span>
            
       </div>
-
+      
+      <div class="form-group">
+      {!! Form::submit(Lang::get('admin-lang.sign_in'), ['class'=>'btn btn-primary btn-block btn-flat', 'id'=>'login', 'value'=>  Lang::get('admin-lang.sign_in') ]) !!}  
+      
+      <!--<a href="{{ url('admin/signUp') }}" class="link">Create an account!</a>-->
+</div>
       <div class="form-group alert alert-danger error-loc " style="display:none"></div>
-        <p>
+        <div>
               @if(Session::has('flash_alert_notice'))
               <div class="alert alert-danger danger">
                    {{ Session::get('flash_alert_notice') }} 
               </div>
             @endif
-          </p>
+          </div>
 
-      <div class="row">
-      <div class="col-xs-8"></div><!-- /.col -->
-      <div class="col-xs-4">
-      <!--   <button type="submit" class="btn btn-primary btn-block btn-flat">{{ Lang::get('admin-lang.sign_in') }}</button> -->
-          {!! Form::submit(Lang::get('admin-lang.sign_in'), ['class'=>'btn btn-primary btn-block btn-flat', 'id'=>'login', 'value'=>  Lang::get('admin-lang.sign_in') ]) !!}
-      </div><!-- /.col -->
-      </div>
+      
 </form> 

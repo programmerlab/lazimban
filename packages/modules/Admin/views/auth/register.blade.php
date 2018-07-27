@@ -15,29 +15,73 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ URL::asset('public/assets/dist/css/AdminLTE.min.css') }}">
     <!-- iCheck -->
-     
+    <link rel="stylesheet" href="{{ URL::asset('public/assets/plugins/iCheck/square/blue.css') }}"> 
     <link rel="stylesheet" href="{{ URL::asset('public/assets/css/custom.css') }}"> 
-    
-  </head>
-      <body class=" login" data-gr-c-s-loaded="true" style="background-color: #d2d6de; margin-top: 50px">
-        <!-- BEGIN LOGO -->
-         
-        <!-- END LOGO -->
-        <!-- BEGIN LOGIN -->
-        
-        <div class="content" style=" width:50%; background:#fff">
-            <!-- BEGIN LOGIN FORM -->
-             
-            <!-- END LOGIN FORM -->
-            <!-- BEGIN FORGOT PASSWORD FORM -->
-            
-            <!-- END FORGOT PASSWORD FORM -->
-            <!-- BEGIN REGISTRATION FORM -->
-            <form class="register-form" action="{{url('admin/registration')}}" method="post" novalidate="novalidate">
-                <h3>{{ ucwords(Request::segment(1)) }} Kayýt Formu</h3>
-                <p> Kiþisel bilgilerinizi giriniz: </p>
+    <style>
+	.account_login {
+    float: left;
+    width: 100%;
+    background: #fff; padding:50px 0;
+}
+.account_login h2 {
+    margin: 0 0 15px;
+}
+.login-box-body {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 0px 0px rgba(204,204,204,1); float:left; width:100%;
+}
+.form-control{ border-color:#eee; height:40px; border-radius:3px; color: #868686;}
+.btn-primary {
 
-                 @if (count($errors) > 0)
+    float: left;
+    width: auto !important;
+    background: #DD3333;
+    border-color: #DD3333;
+    text-transform: uppercase;
+    border-radius: 20px !important;
+    padding: 10px 35px;
+
+}
+.btn-primary:hover{ background:#000 !important}
+.link {
+
+    float: left;
+    margin: 10px;
+    color: #666;
+    font-size: 16px;
+    text-transform: capitalize;
+
+}
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+ text-transform: capitalize;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  text-transform: capitalize;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  text-transform: capitalize;
+}
+:-moz-placeholder { /* Firefox 18- */
+  text-transform: capitalize;
+}
+
+
+	</style>
+  </head>
+  <body class="hold-transition login-page">
+  
+  
+  <div class="account_login">
+  	<div class="container">
+  		<div class="col-md-6">
+        	<h2>{{ ucwords(Request::segment(1)) }} Login</h2>
+             
+              <div class="login-box-body"> 
+                <div class="login-box-msg"> 
+                  @if (count($errors) > 0)
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -45,47 +89,72 @@
                             @endforeach
                         </ul>
                     </div>
+                    
+                @endif
+        
+                  {!! Form::model($user, ['url' => ['admin/login'],'class'=>'form-horizontal','files' => true]) !!}
+                    @include('packages::auth.form')
+                  {!! Form::close() !!}
+        
+              </div>
+		</div>
+        </div>
+        <div class="col-md-6">
+        	<h2> {{ ucwords(Request::segment(1)) }} Kayýt Formu </h2>
+             
+              <div class="login-box-body"> 
+                 <form class="register-form" action="{{url('admin/registration')}}" method="post" novalidate>
+                
+                <!--<p> Kiþisel bilgilerinizi giriniz: </p>-->               
+                @if(session()->has('message'))                    
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach (session()->get('message') as $error1)
+                                <li>{{ $error1 }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
 
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Ad-Soyad</label>
+                    <!--<label class="control-label visible-ie8 visible-ie9">Ad-Soyad</label>-->
                     <div class="input-icon">
                          
                         <input class="form-control placeholder-no-fix" type="text" placeholder="Ad-Soyad" name="full_name" value="{{old('full_name')}}"> </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>
+                    <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
                     <div class="input-icon">
                          
                         <input class="form-control placeholder-no-fix" type="text" placeholder="Þirket Ýsmi" name="company_name" value="{{old('company_name')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                    <label class="control-label visible-ie8 visible-ie9">Telefon</label>
+                   <!-- <label class="control-label visible-ie8 visible-ie9">Telefon</label>-->
                     <div class="input-icon">
                         
                         <input class="form-control placeholder-no-fix" type="text" placeholder="Telefon" name="phone"  value="{{old('phone')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                    <label class="control-label visible-ie8 visible-ie9">IBAN No.</label>
+                    <!--<label class="control-label visible-ie8 visible-ie9">IBAN No.</label>-->
                     <div class="input-icon">
                         
                         <input class="form-control placeholder-no-fix" type="text" placeholder="IBAN No." name="iban"  value="{{old('iban')}}"> </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Address</label>
+                    <!--<label class="control-label visible-ie8 visible-ie9">Address</label>-->
                     <div class="input-icon">
                         <input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address"  value="{{old('address')}}"> </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Þehir</label>
+                    <!--<label class="control-label visible-ie8 visible-ie9">Þehir</label>-->
                     <div class="input-icon">
                          
                         <input class="form-control placeholder-no-fix" type="text" placeholder="Þehir" name="city"  value="{{old('city')}}"> </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Ülke</label>
+                    <!--<label class="control-label visible-ie8 visible-ie9">Ülke</label>-->
                     <select name="country" id="country_list" class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                         <option value="">Select Ülke</option>
                         <option value="AF">Afghanistan</option>
@@ -324,68 +393,64 @@
                         <option value="ZW">Zimbabwe</option>
                     </select>
                 </div>
-                <p> <b> Hesap ayrýntýlarýnýzý giriniz: </b> </p>
+                <!--<p> <b> Hesap ayrýntýlarýnýzý giriniz: </b> </p>-->
                  <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                    <label class="control-label visible-ie8 visible-ie9">E-posta</label>
+                  <!--  <label class="control-label visible-ie8 visible-ie9">E-posta</label>-->
                     <div class="input-icon">
                         
                         <input class="form-control placeholder-no-fix" type="text" placeholder="E-posta" name="email"  value="{{old('email')}}"> </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Þifre</label>
+                   <!-- <label class="control-label visible-ie8 visible-ie9">Þifre</label>-->
                     <div class="input-icon">
                          
                         <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Þifre" name="password"  value="{{old('password')}}"> </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Re-type Your Þifre</label>
+                    <!--<label class="control-label visible-ie8 visible-ie9">Re-type Your Þifre</label>-->
                     <div class="controls">
                         <div class="input-icon">
                              
                             <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Re-type Your Þifre" name="password_confirmation"  value="{{old('password_confirmation')}}"> </div>
                     </div>
                 </div>
-                <!-- <div class="form-group">
-                    <label class="mt-checkbox mt-checkbox-outline">
-                        <input type="checkbox" name="tnc"> I agree to the
-                        <a href="javascript:;">Terms of Service </a> &amp;
-                        <a href="javascript:;">Privacy Policy </a>
-                        <span></span>
-                    </label>
-                    <div id="register_tnc_error"> </div>
-                </div> -->
+               
+                
                 <div class="form-actions">
-                    <button id="register-back-btn" type="button" class="btn grey-salsa btn-outline"><a href="{{url('vendor/login')}}"> Giriþ </a></button>
-                    <button type="submit" id="register-submit-btn" class="btn green pull-right"> KAYDOL </button>
+                	<button type="submit" id="register-submit-btn" class="btn btn-primary btn-block btn-flat"> KAYDOL </button>
+                   <!--<a href="{{url('admin')}}" class="link"> Giriþ </a>-->
+                    
                 </div>
             </form>
-            <!-- END REGISTRATION FORM -->
-        </div>
         
-        <!-- BEGIN CORE PLUGINS -->
-        <script src="../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-        <script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="../assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
-        <script src="../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-        <script src="../assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-        <script src="../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-        <!-- END CORE PLUGINS -->
-        <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <script src="../assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-        <script src="../assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
-        <script src="../assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
-        <!-- END PAGE LEVEL PLUGINS -->
-        <!-- BEGIN THEME GLOBAL SCRIPTS -->
-        <script src="../assets/global/scripts/app.min.js" type="text/javascript"></script>
-        <!-- END THEME GLOBAL SCRIPTS -->
-        <!-- BEGIN PAGE LEVEL SCRIPTS -->
-        <script src="../assets/pages/scripts/login.min.js" type="text/javascript"></script>
-        <!-- END PAGE LEVEL SCRIPTS -->
-        <!-- BEGIN THEME LAYOUT SCRIPTS -->
-        <!-- END THEME LAYOUT SCRIPTS -->
-    
-
-</body>
-  </html>
+              </div>
+		</div>
+        
+        </div>
+    </div>
+    <!-- jQuery 2.1.4 -->
+      <script src="{{ URL::asset('public/assets/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
+      <script src="{{ URL::asset('public/assets/js/jquery.validate.js') }}"></script>
+      <!-- Bootstrap 3.3.5 -->
+      <script src="{{ URL::asset('public/assets/bootstrap/js/bootstrap.min.js') }}"></script>
+      <!-- iCheck -->
+      <script src="{{ URL::asset('public/assets/plugins/iCheck/icheck.min.js') }}"></script>
+       <script src="{{ URL::asset('public/assets/plugins/iCheck/datepicker.js') }}"></script>  
+      <script>
+      $(function () {
+        $('input').iCheck({
+          checkboxClass: 'icheckbox_square-blue',
+          radioClass: 'iradio_square-blue',
+          increaseArea: '20%' // optional
+        });
+      });
+    </script>
+     <script src="{{ URL::asset('public/assets/js/common.js') }}"></script>
+     <script type="text/javascript">
+        var email_req = '{{ Lang::get('admin-lang.email_req') }}';
+        var password_req = '{{ Lang::get('admin-lang.password_req') }}';
+     </script>
+  </body>
+</html>

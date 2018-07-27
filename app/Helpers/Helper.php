@@ -325,5 +325,45 @@ class Helper {
 
          return $data;
                 
-    } 
+    }
+    
+    public function  getBreadcrumbs($product_cat_id=null,$crumbs='')
+    {
+        $helper = new Helper;
+        
+        if(!is_numeric($product_cat_id)){            
+            $category = DB::table('categories')->where('name', $product_cat_id)->first();
+            $product_cat_id = $category->id;
+        }
+        
+        
+            if($helper->getParent($product_cat_id)){
+                $parentid =  $helper->getParent($product_cat_id);
+                $crumbs[] =  $parentid;
+                if($parentid) {  return $helper->getBreadcrumbs($parentid,$crumbs); }else { return 0; }
+            }else{
+                //print_r($crumbs); die;
+                krsort($crumbs);
+                $str = '';
+                foreach($crumbs as $c){
+                    $cat = DB::table('categories')->where('id', $c)->first();                
+                    $str .= $cat->name.' > ';
+                }
+                
+                //print_r($str); die;
+                return $str; 
+            }
+        
+    }
+    
+    public static function  getParent($cat_id=null)
+    {        
+        $cat = DB::table('categories')->where('id', $cat_id)->first();
+        
+        if($cat!=null){            
+            return $cat->parent_id; 
+        }else{
+            return 0;
+        }
+    }
 }

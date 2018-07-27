@@ -39,7 +39,7 @@ function rating(count,product_id){
 function changeStatus(id,method)
 {
     var status =  $('#'+id).attr('data');
-    console.log(url);
+    console.log(status);
     $.ajax({
         type: "GET",
         data: {id: id,status:status},
@@ -49,7 +49,7 @@ function changeStatus(id,method)
         },
         dataType: "json",
         success: function(response) {
-            
+            console.log(response);
       //bootbox.alert('Activated');            
         if(response==1)
             {
@@ -66,6 +66,76 @@ function changeStatus(id,method)
                 $('#'+id).removeClass('label label-success status').addClass('label label-warning status');
                 $('#btn'+id).attr('disabled','disabled');
             }
+        }
+    });
+}
+
+function activeStatus(id,method)
+{
+    var status =  '0';
+    console.log(url);
+    $.ajax({
+        type: "GET",
+        data: {id: id,status:status},
+        url: url+'/'+method,
+        beforeSend: function() {
+           $('#'+id).html('Processing');
+        },
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+      //bootbox.alert('Activated');            
+        if(response==1)
+            {
+                $('#'+id).html('Active'); 
+                $('#'+id).attr('data',response);
+                $('#'+id).removeClass('label label-warning status').addClass('label label-success status');
+                
+                 console.log(response);
+                 $('#btn'+id).removeAttr('disabled');
+            }else
+            {
+                $('#'+id).html('Inactive'); 
+                $('#'+id).attr('data',response);
+                $('#'+id).removeClass('label label-success status').addClass('label label-warning status');
+                $('#btn'+id).attr('disabled','disabled');
+            }
+            location.reload();
+        }
+    });
+}
+
+function deactiveStatus(id,method)
+{
+    var status =  '1';
+    console.log(url);
+    $.ajax({
+        type: "GET",
+        data: {id: id,status:status},
+        url: url+'/'+method,
+        beforeSend: function() {
+           $('#'+id).html('Processing');
+        },
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+      //bootbox.alert('Activated');            
+        if(response==1)
+            {
+                $('#'+id).html('Active'); 
+                $('#'+id).attr('data',response);
+                $('#'+id).removeClass('label label-warning status').addClass('label label-success status');
+                
+                 console.log(response);
+                 $('#btn'+id).removeAttr('disabled');
+            }else
+            {
+                $('#'+id).html('Inactive'); 
+                $('#'+id).attr('data',response);
+                $('#'+id).removeClass('label label-success status').addClass('label label-warning status');
+                $('#btn'+id).attr('disabled','disabled');
+            }
+            location.reload();
         }
     });
 }

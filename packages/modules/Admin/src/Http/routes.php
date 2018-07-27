@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\DB;
       Route::get('admin/transaction/approve/{id}','Modules\Admin\Http\Controllers\TransactionController@approve');
       Route::get('admin/transaction/decline/{id}','Modules\Admin\Http\Controllers\TransactionController@decline');
       
-
+      Route::get('admin/products','Modules\Admin\Http\Controllers\ProductController@index');
+      Route::post('admin/products','Modules\Admin\Http\Controllers\ProductController@index');
        
       Route::post('admin/registration','Modules\Admin\Http\Controllers\AuthController@registration');
       

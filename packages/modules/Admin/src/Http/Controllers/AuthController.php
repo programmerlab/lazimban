@@ -49,7 +49,7 @@ class AuthController extends Controller
  	/* Create Admin user
  	*/
  	public function registration(Request $request)
-	{	                
+	{	
         $user = new Admin;    
 
         $table_cname = \Schema::getColumnListing('admin');
@@ -86,12 +86,11 @@ class AuthController extends Controller
                    	$errors = new \StdClass;
 	        foreach ( $validator->messages()->messages() as $key => $value) {
 	        			  	$errors->$key= $value[0]	;
-    		} 
-
-         	return redirect()
-                            ->back()
-                            ->withInput()  
-                            ->withErrors(['errors'=>$errors]); 
+    		}
+            
+            //print_r($errors);die;
+            return redirect()->back()->withInput()->with('message', $errors);
+         	
         }   
         /** --Create admin-- **/
         $user->save();
@@ -128,7 +127,7 @@ class AuthController extends Controller
 		return view::make('packages::auth.signup-success');
 	} 
 
-	public function signUp( Request $request)
+	public function signUp( Request $request,User $user)
 	{	 
         if($request->method()=='POST'){
             return redirect()
@@ -136,7 +135,7 @@ class AuthController extends Controller
                             ->withInput()  
                             ->withErrors(['errors'=>$errors]); 
         }
-		return view::make('packages::auth.register');
+		return view::make('packages::auth.register', compact('user','errors1'));
 	} 
 	
 	public function logout(Request $request){
@@ -146,7 +145,7 @@ class AuthController extends Controller
         if($vendor_type == 1){
             return redirect('admin/login');    
         }else{
-            return redirect('vendor/login');
+            return redirect('vendor/signUp');
         }		
 	}
     

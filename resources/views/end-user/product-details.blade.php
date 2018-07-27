@@ -9,7 +9,11 @@
             @include('partials.breadcrumb')
             <div id="main" class="site-main">
               	<div class="page-wrapper">
-                	
+                	@if(session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
                     <div class="col-md-6 col-sm-6">
                     	<!--<div class='zoom ex1' id='ex1'>
                             <img src="{{ asset('storage/uploads/products/'. $product->photo) }}"/>

@@ -214,7 +214,7 @@ class ProductController extends Controller {
         $cart = Cart::content();  
        // $request->session()->put('key', 'value');
         
-         return Redirect::to(url()->previous());
+         return Redirect::to(url()->previous())->with('message', $product->product_title.' has successfully added to your cart.');
          
     }
 

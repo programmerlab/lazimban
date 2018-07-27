@@ -38,10 +38,41 @@
                                          {{ Session::get('flash_alert_notice') }} 
                                          </div>
                                     @endif
-                                      
+                                    <div class="box-header">
+                                        
+                                         
+                                        <div class="col-md-12">
+                                            <form method="post" action="{{ url('admin/products') }}">
+                                                <div class="col-sm-3">
+                                                    <label class="">Search By Vendor</label>    
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <select name="vendor" class="form-control">
+                                                        <option value="">Select vendor</option>
+                                                        @foreach($vendorlist as $vl)                                                            
+                                                            <option value="{!! $vl->id !!}">{!! ($vl->company_name) ? ($vl->company_name) : ($vl->full_name) !!}</option>                                                            
+                                                        @endforeach    
+                                                    </select>
+                                                </div>
+                                                 <div class="col-sm-2">
+                                                    <button name="search" type="submit" class="btn btn-primary" value="Search">Search</button>
+                                                </div>
+                                            </form>
+                                        </div> 
+                                    </div>
+                                        <br>
+                                        
                                    <div class="box-body table-responsive no-padding" >
-                                        <table class="table table-hover table-condensed">
+                                        <span class="label label-success status" id="activate"  >
+                                             Activate
+                                        </span>
+                                            &nbsp;
+                                        <span class="label label-warning status" id="deactivate"   >
+                                            Deactivate
+                                        </span>
+                                        <table class="table table-hover table-condensed" id="mytable">
                                             <thead><tr>
+                                                    <th><input type="checkbox" id="selectAll"></th>
                                                     <th>Sno</th> 
                                                     <th>Product Title</th>
                                                     <th>Category</th>
@@ -70,6 +101,7 @@
                                              <thead>
                                               <tbody>    
                                                 <tr>
+                                                    <td><input type="checkbox" name="vendor_p_id" id="v{!! ($result->id) !!}" value="{!! ($result->id) !!}"></td>
                                                     <td>{{ ++$key }}</td>
                                                     <td>{!! ucfirst($result->product_title)     !!}
 

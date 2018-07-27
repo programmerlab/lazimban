@@ -11,10 +11,9 @@
            @if(Auth::guard('admin')->user()->user_type==1)
            Admin
            @else
-           Vendor 
+           {{ Auth::guard('admin')->user()->full_name}} 
            @endif
-
-        </p>
+         </p>
         
       </div>
     </div>

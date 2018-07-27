@@ -91,6 +91,25 @@
     $( "#sortable" ).disableSelection();
   } );
   </script>
-     
+  <script>
+    $('#selectAll').click(function (e) {
+        $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+    });
+    
+    $('#activate').click(function (e) {
+        $('#mytable').find('input[type="checkbox"]:checked').each(function () {
+            //this is the current checkbox
+            //alert($(this).val());
+            activeStatus(($(this).val()),'product')
+         });
+    });
+    $('#deactivate').click(function (e) {
+        $('#mytable').find('input[type="checkbox"]:checked').each(function () {
+            //this is the current checkbox
+            //alert($(this).val());
+            deactiveStatus(($(this).val()),'product')
+         });
+    });
+  </script>
   </body>
 </html>
