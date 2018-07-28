@@ -1,6 +1,17 @@
 
 <div class="col-md-6">
-
+    
+    <div class="form-group{{ $errors->first('vendor_type', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Vendor Type <span class="error">*</span></label>
+        <div class="col-lg-8 col-md-8"> 
+            <select name="vendor_type" id="vendor_type" class="form-control" tabindex="-1" aria-hidden="true">
+                            <option value="">Select Vendor Type</option>
+                            <option value="1">Individual</option>
+                            <option value="2">Corporate</option>
+                        </select>
+            <span class="label label-danger">{{ $errors->first('vendor_type', ':message') }}</span>
+        </div>
+    </div> 
     <div class="form-group{{ $errors->first('full_name', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label"> Full Name <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8"> 

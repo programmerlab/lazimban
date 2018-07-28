@@ -47,6 +47,7 @@
                                                     <th>Email</th>
                                                     <th>Signup Date</th>
                                                     <th>Status</th>
+                                                    <th>Vendor Type</th>    
                                                     <th>Action</th>
                                                 </tr>
                                                 @if(count($users)==0)
@@ -72,6 +73,7 @@
                                                     <td>
                                                         {!! Carbon\Carbon::parse($user->created_at)->format('m-d-Y H:i:s A'); !!}
                                                     </td>
+                                                    <td>{{ ($user->vendor_type == 1) ? 'Individual' : 'Corporate' }} </td>
                                                     <td>
                                                         <span class="label label-{{ ($user->status==1)?'success':'warning'}} status" id="{{$user->id}}"  data="{{$user->status}}"  onclick="changeStatus({{$user->id}},'vendor')" >
                                                             {{ ($user->status==1)?'Active':'Inactive'}}

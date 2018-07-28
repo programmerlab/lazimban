@@ -72,6 +72,7 @@ class AuthController extends Controller
 
         //Server side valiation
         $validator = Validator::make($request->all(), [
+            'vendor_type'		=> 	'required',
            	'full_name'		=> 	'required',
             'company_name'		=> 	'required',
             'email'     =>  'required|email|unique:admin',
@@ -103,7 +104,17 @@ class AuthController extends Controller
             $req->setLocale(\Iyzipay\Model\Locale::TR);
             $req->setConversationId(time().uniqid());
             $req->setSubMerchantExternalId("Vendor_".$user->id);
-            $req->setSubMerchantType(\Iyzipay\Model\SubMerchantType::PERSONAL);
+            
+            if($user->vendor_type == 1){
+                $req->setSubMerchantType(\Iyzipay\Model\SubMerchantType::PERSONAL);    
+            }
+            
+            if($user->vendor_type == 2){
+                $req->setSubMerchantType(\Iyzipay\Model\SubMerchantType::PRIVATE_COMPANY);
+                $req->setTaxOffice(($request->company_name) ? $request->company_name.' Tax Office' : 'Tax Office');
+                $req->setLegalCompanyTitle(($request->company_name) ? $request->company_name : 'Not Available');
+            }
+            
             $req->setAddress(($request->address) ? $request->address : 'Not Available');
             $req->setContactName($request->full_name);
             $req->setContactSurname($request->full_name);
@@ -113,7 +124,7 @@ class AuthController extends Controller
             $req->setIban($request->iban); //TR330006100519786457841326
             $req->setIdentityNumber("ID_".$user->id);
             $req->setCurrency(\Iyzipay\Model\Currency::TL);
-            
+            //echo "<pre>"; print_r($req); die;
             $subMerchant = \Iyzipay\Model\SubMerchant::create($req, $options);
             
             if($subMerchant->getStatus() == 'success'){

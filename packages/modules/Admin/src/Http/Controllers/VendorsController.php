@@ -93,7 +93,8 @@ class VendorsController extends Controller {
         $vendor->fill(Input::all()); 
         $vendor->password = Hash::make($request->get('password'));  
         $vendor->save(); 
-       
+        
+        
         return Redirect::to(route('vendor'))
                             ->with('flash_alert_notice', 'New vendor was successfully created !');
         }

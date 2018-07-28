@@ -11,7 +11,7 @@
               	<div class="page-wrapper">
                 	@if(session()->has('message'))
                         <div class="alert alert-success">
-                            {{ session()->get('message') }}
+                            {{ session()->get('message') }} <a href="{{ url('/checkout') }}"><button class="btn btn-success">View Cart</button></a>
                         </div>
                     @endif
                     <div class="col-md-6 col-sm-6">
@@ -140,7 +140,7 @@
                                        
                                         <h2>Yorumlar</h2>
                                         @if ($errors->has('successMsg'))
-                                           <span class="btn btn-success">{{ $errors->first('successMsg') }}</span>
+                                           <span class="btn btn-success">{{ $errors->first('successMsg') }} </span>
                                             
                                        @endif
        

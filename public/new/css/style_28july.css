@@ -611,17 +611,6 @@ transition-property: opacity, margin-top, visibility;
     float: left;
     width: 100%;
     padding: 20px 0; background:url(../images/women-headphones-brunettes-photography-grass-girls-us-229124-1.jpg) fixed;
-	position:relative;
-}
-.page_title span a, .page_title span,.page_title h1{ color:#fff;}
-.page_title::before {
-    position: absolute;
-    background: rgba(0,0,0,0.5);
-    content: "";
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
 }
 h1 {
     color: #373737;
@@ -1129,28 +1118,8 @@ ul.product-categories ul{position: relative; left:0 !important; width:100%;}
 .unicase-checkout-title{background: #DD3333; border: none;}
 .panel-heading h4 a{color: #fff;}
 #accordion .panel-heading{ border:none;}
-#wrapper {
-  padding-left: 0;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-#wrapper.toggled {
-  padding-left: 250px;
-}
 
 @media screen and (max-width: 768px) {
-	.category_img_menu a {
-    display: block;
-    background: #fff;
-    width: 100%;
-}
-
-	.navbar-toggle {
-    display: block;
-}
 	.zoomContainer{ display:none !important;}
 	.page-wrapper iframe{ width:100%;}
 	
@@ -1224,7 +1193,7 @@ header .col-md-8{ width:40%; float:right}
 top: 0;
               bottom:0;
               left:0;
-              width:250px;
+              width:200px;
               position:fixed;
               overflow:scroll;
               transition:width .4s;

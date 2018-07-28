@@ -115,7 +115,16 @@
                         </ul>
                     </div>
                 @endif
-
+                <div class="form-group">
+                    <!--<label class="control-label visible-ie8 visible-ie9">Þehir</label>-->
+                    <div class="input-icon">
+                        <select name="vendor_type" id="vendor_type" class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                            <option value="">Select Vendor Type</option>
+                            <option value="1">Individual</option>
+                            <option value="2">Corporate</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <!--<label class="control-label visible-ie8 visible-ie9">Ad-Soyad</label>-->
                     <div class="input-icon">

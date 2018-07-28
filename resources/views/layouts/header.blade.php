@@ -54,6 +54,7 @@
         
             <div class="container">
                 <div class="container_bg row">
+                    <div id="wrapper">
                       <div class="top_bar">
                           <div class="page-wrapper">
                               <div class="col-md-5 col-sm-5">
@@ -69,7 +70,7 @@
                                       <li><label for="password">Parola <span class="required">*</span></label></li>
                                       <li><input class="input-text" name="password" id="password" type="password"></li>
                                       <li><input class="button" name="login" value="Oturum Aç" type="submit"></li>
-                                      <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">KAYIT OL</a><a href="{{ url('password/reset') }}" class="forgot">ÞÝFRENÝ SIFIRLA</a></li>
+                                      <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">KAYIT OL</a><a href="{{ url('password/reset') }}" class="forgot">SIFRENI SIFIRLA</a></li>
                                       <li class="reg-link"><a href="{{ url('vendor/signUp') }}" class="resig">SATICI OL</a> <a href="{{ url('vendor/signUp') }}" class="resig pull-right">SATICI GİRİŞİ</a></li>
                                       
                                         
@@ -119,7 +120,7 @@
                               <div class="col-md-4"><a href="{{ url('/') }}" class="logo"><img src="{{ asset('public/new/images/logo-lazimbana.png') }}"></a></div>
                               <div class="col-md-8">
                               <div class="navbar-header">
-                                      <button data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                                      <button id="menu-toggle" data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                                   </div>
                                   <div class="header-icons woocart">
                                       <a href="{{ url('/checkout') }}" class="reversed">

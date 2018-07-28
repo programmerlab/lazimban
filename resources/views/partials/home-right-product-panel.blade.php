@@ -16,7 +16,7 @@
                                                 @if($value['id']!=$product->category->parent_id && $key < 1) 
                                                     <li>
                                                         <div class="col-md-3"><a href="{{ url($product->url) }}"><img src="{{ asset('storage/uploads/products/'. $product->photo) }}"></a></div>
-                                                        <div class="col-md-4"><h2>{{$product->product_title}}</h2>({{ $product->Görüntüleme+100 }} Görüntüleme)</div>
+                                                        <div class="col-md-4"><h2><a href="{{ url($product->url) }}">{{$product->product_title}}</a></h2>({{ $product->Görüntüleme+100 }} Görüntüleme)</div>
                                                          <div class="col-md-3"><span class="price-product"> ?{{$product->price-($product->price*$product->discount)/100}}</span></div>
                                                           <div class="col-md-2">
                                                             <a href="{{ url($product->url) }}" class="product_link">Ürünü Ýncele</a>

@@ -23,6 +23,7 @@ class VendorRequest extends Request {
                         return [
                             'email'   => "required|email|unique:admin,email" ,  
                             'full_name' => 'required|min:3',
+                            'vendor_type' => 'required',
                             'company_name' => 'required|min:3',
                             'phone' => 'required', 
                             'password' => 'required|min:6',
@@ -36,6 +37,7 @@ class VendorRequest extends Request {
                         return [
                             'email'   => "required|email|unique:admin,email" ,  
                             'full_name' => 'required|min:3',
+                            'vendor_type' => 'required',
                             'company_name' => 'required|min:3',
                             'phone' => 'required',
                             'last_name' => 'required',
