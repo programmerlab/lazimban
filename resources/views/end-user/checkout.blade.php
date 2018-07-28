@@ -17,12 +17,12 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th class="cart-romove item">Kaldır</th>
-                                        <th class="cart-description item">görüntü</th>
-                                        <th class="cart-product-name item">Ürün adı</th>
+                                        <th class="cart-romove item">Çıkart</th>
+                                        <th class="cart-description item">Ürün Resmi</th>
+                                        <th class="cart-product-name item">Ürün Adı</th>
                                         <th class="cart-edit item">Fiyat</th>
-                                        <th class="cart-qty item">miktar</th>
-                                        <th class="cart-sub-total item">ara toplam</th> 
+                                        <th class="cart-qty item">Miktar</th>
+                                        <th class="cart-sub-total item">Ara Toplam</th> 
                                     </tr>
                                 </thead><!-- /thead -->
                                <!--  <tfoot>

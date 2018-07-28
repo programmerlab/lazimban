@@ -22,9 +22,9 @@
           <div class="col-md-3">
               <h3>Satıcı Başvuru Formu</h3>
               <ul>
-                  <li><input type="text" class="footer_input" placeholder="Adınız (gerekli)"></li>
-                  <li><input type="text" class="footer_input" placeholder="Eposta Adresiniz (gerekli)"></li>
-                  <li><textarea placeholder="Mesajınızı buraya girin" class="footer_textarea"></textarea></li>
+                  <li><input type="text" class="footer_input" placeholder="Adınız (Gerekli)"></li>
+                  <li><input type="text" class="footer_input" placeholder="Eposta Adresiniz (Gerekli)"></li>
+                  <li><textarea placeholder="Mesajınız" class="footer_textarea"></textarea></li>
                   <li><input type="submit" value="Gönder" class="submit-btn"></li>
               </ul>
           </div>                            
@@ -32,7 +32,7 @@
 </footer>      
       <div class="bottom_footer">
         <div class="page-wrapper">
-            <div class="col-md-5"><p>Lazimbana.com Her hakkı saklıdır..</p></div>
+            <div class="col-md-5"><p>Lazimbana.com Tüm hakları saklıdır..</p></div>
             <div class="col-md-7">
                 <div class="footer_link pull-right">
                     <a href="#">Hakkımızda</a>

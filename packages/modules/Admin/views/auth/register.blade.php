@@ -71,13 +71,14 @@
 
 	</style>
   </head>
+
   <body class="hold-transition login-page">
   
   
   <div class="account_login">
   	<div class="container">
   		<div class="col-md-6">
-        	<h2>{{ ucwords(Request::segment(1)) }} Login</h2>
+        	<h2>Satıcı Giriş</h2>
              
               <div class="login-box-body"> 
                 <div class="login-box-msg"> 
@@ -100,7 +101,7 @@
 		</div>
         </div>
         <div class="col-md-6">
-        	<h2> {{ ucwords(Request::segment(1)) }} Kayýt Formu </h2>
+        	<h2>  Satıcı Kayıt Formu </h2>
              
               <div class="login-box-body"> 
                  <form class="register-form" action="{{url('admin/registration')}}" method="post" novalidate>
@@ -120,8 +121,8 @@
                     <div class="input-icon">
                         <select name="vendor_type" id="vendor_type" class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                             <option value="">Select Vendor Type</option>
-                            <option value="1">Individual</option>
-                            <option value="2">Corporate</option>
+                            <option value="1">Bireysel</option>
+                            <option value="2">Kurumsal</option>
                         </select>
                     </div>
                 </div>

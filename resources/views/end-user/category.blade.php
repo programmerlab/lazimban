@@ -33,7 +33,7 @@
                         </div>
                          
                          <div class="top_rated_products">
-                         	<h3>Yüksek Puanlý Ürünler</h3>
+                         	<h3>Yüksek Puanlı Ürünler</h3>
                             <ul class="product_list">
                                 @foreach($hot_products as $result)
                                     <li>                                        
@@ -52,16 +52,16 @@
                     
                     <div class="col-md-9">                    	                                                
                         <div class="product_list_outer">
-                        	<h3><span>{!! $products->count() !!} </span> Ürünler bulundu</h3>                                                    
+                        	<h3><span>{!! $products->count() !!} </span> Ürün Listeleniyor</h3>                                                    
                             <ul>
-                                @if($products->count()==0) Record not found @endif 
+                                @if($products->count()==0) Aramnıza uygun ürün bulunamadı. Lütfen yeni bir arama yapınız. @endif 
                                     @foreach($products as $key => $product)
                                         <li>
                                             <div class="col-md-3"><a href="{{ url($product->url) }}"><img src="{{ asset('storage/uploads/products/'. $product->photo) }}" alt="{{ $product->product_title }}" alt="{{ $product->product_title }}"></a></div>
                                             <div class="col-md-4"><h2><a href="{{ url($product->url) }}">{{ $product->product_title }}</a></h2></div>
                                              <div class="col-md-3"><span class="price-product"> RS {{ $product->price-($product->price*$product->discount)/100}}</span></div>
-                                              <div class="col-md-2"><a href="{{ url($product->url) }}" class="product_link">Ürünü Ýncele</a>
-                                              <h6>Satýcý -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                              <div class="col-md-2"><a href="{{ url($product->url) }}" class="product_link">Ürünü İncele</a>
+                                              <h6>Satıcı -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
                                               <h6  id="displayRating" data="{{$product->rating or 0}}"> </h6>
                                                                 <div class="rating_outer"><span class="fa fa-star" id="star1" onclick="rating(1,{{$product->id}})"></span>
                                                                     <span class="fa fa-star" id="star2"></span>
@@ -133,9 +133,9 @@
                         <div class="product_info">
                             <div id="horizontalTab">
                                 <ul class="resp-tabs-list">
-                                    <li>Açýklama </li>
+                                    <li>Açıklama </li>
                                     
-                                    <li>Diðer Kategoriler </li> 
+                                    <li>Diğer Kategoriler </li> 
                                 </ul>
                                 <div class="resp-tabs-container">
                                         <div>

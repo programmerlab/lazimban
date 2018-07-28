@@ -67,10 +67,10 @@
                             	<span><strong>Açıklama:</strong></span> <span>{!! str_limit($product->description,100) !!}</span>                                
                             </div>
                             <div>
-                                <h6>Satýcý -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                <h6>Satıcı -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
                                 
                             </div>
-                            <div><b>Pay:</b>
+                            <div><b>Paylaş:</b>
                                 <a class="color1" title="Share it on Facebook" href="http://www.facebook.com/sharer.php?s=100&p[url]={{url()->current()}}&p[images][0]={{ asset('storage/uploads/products/'. $product->photo) }}&p[title]={{$product->product_title}}&p[summary]={!! str_limit($product->description,100) !!}" target="_blank"><i class="fa fa-facebook"></i></a>
                                 <a href="http://twitter.com/share?text=Check out {{$product->product_title}} at Lazimbana.com!&url={{url()->current()}}&hashtags=Lazimbana" class="color2" target="_blank"><i class="fa fa-twitter"></i></a>
                                 <a href="https://www.linkedin.com/shareArticle?mini=true&url={{url()->current()}}&title={{$product->product_title}}&summary=Check out {{$product->product_title}} at Lazimbana.com!&source=LinkedIn" target="_blank" class="color4"><i class="fa fa-linkedin"></i></a>
@@ -88,14 +88,14 @@
                                     <!--<li>Ek bilgi </li>-->
                                     <!--<li>Yorumlar (0) </li>-->
                                     <!--<li>Satıcı Bilgisi </li>-->
-                                    <li>Ýlginizi Çekebilir </li>
+                                    <li>İlginizi Çekebilir </li>
                                      <li>Yorumlar</li> 
                                 </ul>
                                 <div class="resp-tabs-container">
                                         <div>
                                             <h2>Açıklama</h2>
                                             <p>{!! $product->description !!}.</p>
-                                            <h6>Satýcý -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
+                                            <h6>Satıcı -  {{ ($helper->getVendorName($product->id)) ? $helper->getVendorName($product->id) : 'Admin' }}</h6>
                                         </div>
                                          
                                         <div>    
@@ -150,7 +150,7 @@
                                    <input type="hidden" name="_token" value="{{csrf_token()}}"> 
                                         <div class="col-md-6">
                                            <span class="label label-danger" style="color:#ffffff">{{ $errors->first('name', ':message') }}</span> <br>
-                                           <input class="input-text" type="text" placeholder="Ýsminiz" name="name" value="{{old('name')}}">
+                                           <input class="input-text" type="text" placeholder="İsminiz" name="name" value="{{old('name')}}">
                                        </div>
                                            <div class="col-md-6">
                                                <span class="label label-danger" style="color:#ffffff">{{ $errors->first('email', ':message') }}</span> <br>
