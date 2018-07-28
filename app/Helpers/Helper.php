@@ -336,19 +336,23 @@ class Helper {
             $product_cat_id = $category->id;
         }
         
-        
-            if($helper->getParent($product_cat_id)){
+        //echo $helper->getParent($product_cat_id);die;
+            if($helper->getParent($product_cat_id)){                
                 $parentid =  $helper->getParent($product_cat_id);
+                
                 $crumbs[] =  $parentid;
-                if($parentid) {  return $helper->getBreadcrumbs($parentid,$crumbs); }else { return 0; }
+                if($parentid) {  return $helper->getBreadcrumbs($parentid,$crumbs); }else { return ''; }
             }else{
                 //print_r($crumbs); die;
-                krsort($crumbs);
+                
                 $str = '';
-                foreach($crumbs as $c){
-                    $cat = DB::table('categories')->where('id', $c)->first();                
-                    $str .= $cat->name.' > ';
-                }
+                if(!empty($crumbs)){
+                    krsort($crumbs);
+                    foreach($crumbs as $c){
+                        $cat = DB::table('categories')->where('id', $c)->first();                
+                        $str .= $cat->name.' > ';
+                    }   
+                }                
                 
                 //print_r($str); die;
                 return $str; 
@@ -357,11 +361,11 @@ class Helper {
     }
     
     public static function  getParent($cat_id=null)
-    {        
+    {    
         $cat = DB::table('categories')->where('id', $cat_id)->first();
         
         if($cat!=null){            
-            return $cat->parent_id; 
+                return $cat->parent_id;                 
         }else{
             return 0;
         }
