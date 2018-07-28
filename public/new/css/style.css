@@ -613,7 +613,7 @@ transition-property: opacity, margin-top, visibility;
     padding: 20px 0; background:url(../images/women-headphones-brunettes-photography-grass-girls-us-229124-1.jpg) fixed;
 	position:relative;
 }
-.page_title span a, .page_title span,.page_title h1{ color:#fff;}
+.page_title span a, .page_title span,.page_title h1{ color:#fff !important;}
 .page_title::before {
     position: absolute;
     background: rgba(0,0,0,0.5);
