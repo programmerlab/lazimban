@@ -350,16 +350,52 @@ class ProductController extends Controller {
             $shipBill = ShippingBillingAddress::find($bill->id);
         }
         
-        $shipBill->name = $request->get('name');
-        $shipBill->email = $request->get('email');
-        $shipBill->mobile = $request->get('mobile');
+        //print_r($request->get('same_billing')); die;
+        //$shipBill->name = $request->get('name');
+        //$shipBill->email = $request->get('email');
+        //$shipBill->mobile = $request->get('mobile');
+        //$shipBill->address1 = $request->get('address1');
+        //$shipBill->user_id = $this->user_id;
+        $shipBill->name     = $request->get('name');
+        $shipBill->email    = $request->get('email');
+        $shipBill->mobile   = $request->get('mobile');
         $shipBill->address1 = $request->get('address1');
-        $shipBill->user_id = $this->user_id;
+        $shipBill->address2 = $request->get('address2');
+        $shipBill->zip_code = $request->get('zip_code');
+        $shipBill->city     = $request->get('city');
+        $shipBill->state    = $request->get('state');
+        $shipBill->user_id  = $this->user_id;
         $shipBill->address_type = 1; 
  
         $shipBill->save();
-        $request->session()->put('tab',2);
-        $request->session()->put('billing',$shipBill);
+        
+        if($request->get('same_billing')){
+            $shipBill = '';
+            $shipping = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first();
+
+            if($shipping) 
+            {
+                $shipBill = ShippingBillingAddress::find($shipping->id);
+            }
+            $shipBill->name     = $request->get('name');
+            $shipBill->email    = $request->get('email');
+            $shipBill->mobile   = $request->get('mobile');
+            $shipBill->address1 = $request->get('address1');
+            $shipBill->address2 = $request->get('address2');
+            $shipBill->zip_code = $request->get('zip_code');
+            $shipBill->city     = $request->get('city');
+            $shipBill->state    = $request->get('state');
+            $shipBill->user_id  = $this->user_id;
+            $shipBill->address_type = 2;
+            $shipBill->save();
+            $request->session()->put('shipping',$shipBill);
+            $request->session()->put('tab',3);
+                        
+        }else{
+            $request->session()->put('tab',2);
+            $request->session()->put('billing',$shipBill);               
+        }
+        
         return Redirect::to('order');
 
 

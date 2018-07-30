@@ -39,7 +39,9 @@
       <link href="{{ asset('public/new/css/easy-responsive-tabs.css') }}" rel="stylesheet">
       
       <link href="{{ asset('public/new/css/ubislider.min612e.css') }}" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="http://mactosys.com/allAboutTheMusic/front/css/bootstrap-select.min.css">
         <link href="{{ asset('public/new/css/style.css') }}" rel="stylesheet">
+        
         
 
 
@@ -124,7 +126,8 @@
                                   </div>
                                   <div class="header-icons woocart">
                                       <a href="{{ url('/checkout') }}" class="reversed">
-                                          <span class="fa fa-cart-plus"></span>
+                                          <!--<span class="fa fa-cart-plus"></span>-->
+                                            <img src="{{ asset('public/new/images/view_cart.png') }}" height="15px">
                                           <span class="cart-counts">{{$total_item}}</span>  
                                       </a>
                                   </div>

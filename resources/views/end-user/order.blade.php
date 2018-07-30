@@ -25,7 +25,7 @@
         <div class="panel-heading">
         <h4 class="unicase-checkout-title"> 
             <a  data-toggle="collapse" class="{{ ($tab==0)?'':'collapse'}}"  data-parent="#accordion" href="index.htm#collapseOne">
-              <span># </span>Ödeme Yöntemi
+              <span># </span>Üye Giriş/Kayıt
             </a>
          </h4>
     </div>
@@ -39,7 +39,7 @@
 
                 <!-- guest-login -->            
                 <div class="col-md-6 col-sm-6 guest-login">
-                    <h4 class="checkout-subtitle">Misafir veya Kayıt Giriş</h4>
+                    <h4 class="checkout-subtitle">Kayıt Ol veya Giriş Yap</h4>
                     <p class="text title-tag-line">Gelecekteki kolaylıklar için bize kaydolun:</p>
 
                     <!-- radio-form  -->
@@ -49,12 +49,12 @@
                           <!--   <label class="radio-button guest-check" for="guest">Checkout as Guest</label>  
                               <br> -->
                             <input id="register" name="text" value="kayıt olmak" type="radio" checked="checked">  
-                            <label class="radio-button" for="register">Kayıt olmak</label>  
+                            <label class="radio-button" for="register">Üye Ol</label>  
                         </div>  
                     </form>
                     <!-- radio-form  -->
 
-                    <h4 class="checkout-subtitle outer-top-vs">Kayıt ol ve zaman kazan</h4>
+                    <h4 class="checkout-subtitle outer-top-vs">Üyemiz Olun ve Zaman Kazanın</h4>
                     <p class="text title-tag-line ">Gelecekteki kolaylıklar için bize kaydolun:</p>
                     
                     <ul class="text instruction inner-bottom-30">
@@ -68,18 +68,18 @@
 
                 <!-- already-registered-login -->
                 <div class="col-md-6 col-sm-6 already-registered-login">
-                    <h4 class="checkout-subtitle">Zaten kayıtlı?</h4> 
+                    <h4 class="checkout-subtitle">Zaten Üyemiz Misiniz?</h4> 
 
                        <form method="POST" action="{{ url('Ajaxlogin') }}"  class="form-horizontal" role="form" id="loginForm">
                         {!! csrf_field() !!}
                         <div class="form-group">
-                        <label class="info-title" for="exampleInputEmail1">Email Adres <span>*</span></label>
+                        <label class="info-title" for="exampleInputEmail1">Eposta Adresiniz <span>*</span></label>
                         <input class="form-control unicase-form-control text-input" name="email" id="exampleInputEmail1" placeholder="" type="email">
                       </div>
                       <div class="form-group">
-                        <label class="info-title" for="exampleInputPassword1">Parola <span>*</span></label>
+                        <label class="info-title" for="exampleInputPassword1">Şifreniz <span>*</span></label>
                         <input class="form-control unicase-form-control text-input" name="password" id="exampleInputPassword1" placeholder="" type="password">
-                        <a href="index.htm#" class="forgot-password">Parolanızı mı unuttunuz?</a>
+                        <a href="index.htm#" class="forgot-password">Şifreniznızı mı unuttunuz?</a>
                       </div>
                       <button type="button"  class="btn-upper btn btn-primary checkout-page-button"  onclick="loginBtn()">Oturum aç</button>
                       <span id="loginError" style="padding: 5px; color: red"></span>
@@ -109,27 +109,27 @@
                                         <form class="register-form" role="form" id="register">
                                               {!! csrf_field() !!}
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">İsim <span>*</span></label>
+                                                <label class="info-title" for="exampleInputEmail1">Adınız <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" type="text" name="first_name">
                                             </div> 
 
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">Soyadı <span>*</span></label>
+                                                <label class="info-title" for="exampleInputEmail1">Soyadınız <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" type="text" name="last_name">
                                             </div> 
 
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">Email Adres <span>*</span></label>
+                                                <label class="info-title" for="exampleInputEmail1">Eposta Adresiniz <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" type="email" name="email">
                                             </div>
                                           <div class="form-group">
-                                            <label class="info-title" for="exampleInputPassword1">Parola <span>*</span></label>
+                                            <label class="info-title" for="exampleInputPassword1">Şifreniz <span>*</span></label>
                                             <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" name="password" type="password">
                                              
                                           </div>
 
                                           <div class="form-group">
-                                            <label class="info-title" for="exampleInputPassword1">Şifreyi Onayla <span>*</span></label>
+                                            <label class="info-title" for="exampleInputPassword1">Şifre (Tekrar) <span>*</span></label>
                                             <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" name="confirm_password" type="password">
                                              
                                           </div> 
@@ -153,7 +153,7 @@
                         <div class="panel-heading">
                             <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="{{($tab==1)?'':'collapsed'}}"  id="" data-parent="#accordion" href="#collapseTwo" id="collapsed_biling">
-                                    <span>#</span>Fatura bilgileri
+                                    <span>#</span>Fatura Bilgileri
   
                                 </a>
                             </h4> 
@@ -163,29 +163,88 @@
                                      <div class="col-md-6 col-sm-6 already-registered-login"> 
                                         <form method="post" class="register-form" role="form" id="billing" action="{{route('billing')}}"> 
                                               {!! csrf_field() !!}
-                                              <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">isim <span>*</span></label>
+                                             <!-- <div class="form-group">
+                                                <label class="info-title" for="exampleInputEmail1">İsminiz (Ad/Soyad) <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="name" placeholder="" value="{{$billing->name or ''}}" type="text" name="name" required="required">
                                             </div> 
 
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">Email Addres <span>*</span></label>
+                                                <label class="info-title" for="exampleInputEmail1">Email Adres <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" value="{{$billing->email or ''}}" type="email" name="email" required="required">
                                             </div>
                                           <div class="form-group">
-                                            <label class="info-title" for="exampleInputPassword1">Telefon/seyyar <span>*</span></label>
+                                            <label class="info-title" for="exampleInputPassword1">Telefon (Mobil/Sabit) <span>*</span></label>
                                             <input class="form-control unicase-form-control text-input" name="mobile" id="mobile" placeholder="" value="{{$billing->mobile or ''}}" type="text">
                                              
                                           </div> 
 
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputPassword1"> Addres
+                                                <label class="info-title" for="exampleInputPassword1"> Adres
                                                 <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address1 or ''}}"  name="address1" type="text"> 
+                                            </div>-->
+                                            
+                                            <div class="form-group">
+                                                <label class="info-title" for="exampleInputEmail1">İsminiz (Ad/Soyad) <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="name" placeholder="" value="{{$billing->name or ''}}" type="text" name="name" required="required">
+                                            </div> 
+
+                                            <div class="form-group">
+                                                <label class="info-title" for="exampleInputEmail1">Email Adres <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" value="{{$billing->email or ''}}" type="email" name="email" required="required">
                                             </div>
-                                                   
-                                          <button type="submit" class="btn-upper btn btn-primary checkout-page-button" onclick="billing()">Devam et</button> 
+                                          <div class="form-group">
+                                            <label class="info-title" for="exampleInputPassword1">Telefon (Mobil/Sabit) <span>*</span></label>
+                                            <input class="form-control unicase-form-control text-input" name="mobile" id="mobile" placeholder="" value="{{$billing->mobile or ''}} "type="text">
+                                             
+                                          </div>
+
+                                            <div class="form-group">
+                                                <label class="info-title" for="zip_code"> Posta Kodu
+                                                <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="zip_code" placeholder=""  value="{{$billing->zip_code or '' }}" name="zip_code" type="text">  
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="info-title" for="city"> Şehir
+                                                <span>*</span></label>
+                                                <!--<input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}">-->
+                                                <select class="selectpicker form-control" data-live-search="true" name="city">
+                                                    <option selected="selected" value="">Select City </option>
+                                                    
+                                                    <option data-tokens="Adana" value="">Adana</option>
+                                                    <option data-tokens="Afyon" value="">Afyon</option>
+                                                    <option data-tokens="Bilecik" value="">Bilecik</option>
+                                                </select>
+                                            </div>
+ 
+
+                                            <div class="form-group">
+                                                <label class="info-title" for="state"> Belirtmek, bildirmek
+
+                                                <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="state" placeholder="state" value="{{$billing->state or ''}}" name="state" type="text"> 
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="info-title" for="exampleInputPassword1"> Adres1
+                                                <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address1 or '' }}"" type="text" name="address1"> 
+                                            </div>
+
+                                               <div class="form-group">
+                                                <label class="info-title" for="exampleInputPassword1"> Adres2
+                                                <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address2 or '' }}"" type="text" name="address2"> 
+                                            </div>
+                                                
+                                          <button type="submit" class="btn-upper btn btn-primary checkout-page-button" onclick="billing()">Devam et</button>
+                                            <br>
+                                           <input type="checkbox"  name="same_billing" value="1" onclick="toggle_ship()">Fatura adresinizden farklı bir adrese mi gönderilsin?
                                         </form>
+                                            
                                     </div>  
                             </div>
                         </div>
@@ -194,7 +253,7 @@
                         <!-- checkout-step-02  -->
 
                         <!-- checkout-step-03  -->
-                        <div class="panel panel-default checkout-step-03">
+                        <div class="panel panel-default checkout-step-03" id="shipping" style="display:none;">
                             <div class="panel-heading">
                               <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="{{($tab==2)?'':'collapsed'}}" id="collapse_three" data-parent="#accordion" href="index.htm#collapseThree">
@@ -207,32 +266,39 @@
                                    <div class="col-md-6 col-sm-6 already-registered-login" id="shopping"> 
                                         <form method="post" class="register-form" role="form" id="billing" action="{{route('shipping')}}">  
                                             {!! csrf_field() !!}
-                                            <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">isim <span>*</span></label>
+                                            <!--<div class="form-group">
+                                                <label class="info-title" for="exampleInputEmail1">İsminiz (Ad/Soyad) <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="name" placeholder="" value="{{$shipping->name or ''}}" type="text" name="name" required="required">
                                             </div> 
 
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">Email Addres <span>*</span></label>
+                                                <label class="info-title" for="exampleInputEmail1">Email Adres <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" value="{{$shipping->email or ''}}" type="email" name="email" required="required">
                                             </div>
                                           <div class="form-group">
-                                            <label class="info-title" for="exampleInputPassword1">Telefon/seyyar <span>*</span></label>
+                                            <label class="info-title" for="exampleInputPassword1">Telefon (Mobil/Sabit) <span>*</span></label>
                                             <input class="form-control unicase-form-control text-input" name="mobile" id="mobile" placeholder="" value="{{$shipping->mobile or ''}} "type="text">
                                              
                                           </div>
 
                                             <div class="form-group">
-                                                <label class="info-title" for="zip_code"> PIN Kodu
+                                                <label class="info-title" for="zip_code"> Posta Kodu
                                                 <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="zip_code" placeholder=""  value="{{$shipping->zip_code or '' }}" name="zip_code" type="text">  
                                             </div>
 
 
                                             <div class="form-group">
-                                                <label class="info-title" for="city"> Kent
+                                                <label class="info-title" for="city"> Şehir
                                                 <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}"> 
+                                                <!--<input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}">--
+                                                <select class="selectpicker form-control" data-live-search="true" name="city">
+                                                    <option selected="selected" value="">Select City </option>
+                                                    
+                                                    <option data-tokens="Adana" value="">Adana</option>
+                                                    <option data-tokens="Afyon" value="">Afyon</option>
+                                                    <option data-tokens="Bilecik" value="">Bilecik</option>
+                                                </select>
                                             </div>
  
 
@@ -245,17 +311,71 @@
 
 
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputPassword1"> Addres1
+                                                <label class="info-title" for="exampleInputPassword1"> Adres1
                                                 <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$shipping->address1 or '' }}"" type="text" name="address1"> 
                                             </div>
 
                                                <div class="form-group">
-                                                <label class="info-title" for="exampleInputPassword1"> Addres2
+                                                <label class="info-title" for="exampleInputPassword1"> Adres2
                                                 <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$shipping->address2 or '' }}"" type="text" name="address2"> 
+                                            </div>-->
+                                            <div class="form-group">
+                                                <label class="info-title" for="exampleInputEmail1">İsminiz (Ad/Soyad) <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="name" placeholder="" value="{{$billing->name or ''}}" type="text" name="name" required="required">
+                                            </div> 
+
+                                            <div class="form-group">
+                                                <label class="info-title" for="exampleInputEmail1">Email Adres <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" value="{{$billing->email or ''}}" type="email" name="email" required="required">
                                             </div>
-                                    
+                                          <div class="form-group">
+                                            <label class="info-title" for="exampleInputPassword1">Telefon (Mobil/Sabit) <span>*</span></label>
+                                            <input class="form-control unicase-form-control text-input" name="mobile" id="mobile" placeholder="" value="{{$billing->mobile or ''}} "type="text">
+                                             
+                                          </div>
+
+                                            <div class="form-group">
+                                                <label class="info-title" for="zip_code"> Posta Kodu
+                                                <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="zip_code" placeholder=""  value="{{$billing->zip_code or '' }}" name="zip_code" type="text">  
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="info-title" for="city"> Şehir
+                                                <span>*</span></label>
+                                                <!--<input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}">-->
+                                                <select class="selectpicker form-control" data-live-search="true" name="city">
+                                                    <option selected="selected" value="">Select City </option>
+                                                    
+                                                    <option data-tokens="Adana" value="">Adana</option>
+                                                    <option data-tokens="Afyon" value="">Afyon</option>
+                                                    <option data-tokens="Bilecik" value="">Bilecik</option>
+                                                </select>
+                                            </div>
+ 
+
+                                            <div class="form-group">
+                                                <label class="info-title" for="state"> Belirtmek, bildirmek
+
+                                                <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="state" placeholder="state" value="{{$billing->state or ''}}" name="state" type="text"> 
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="info-title" for="exampleInputPassword1"> Adres1
+                                                <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address1 or '' }}"" type="text" name="address1"> 
+                                            </div>
+
+                                               <div class="form-group">
+                                                <label class="info-title" for="exampleInputPassword1"> Adres2
+                                                <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address2 or '' }}"" type="text" name="address2"> 
+                                            </div>
                                           <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Devam et</button>
                                         </form>
                                     </div>  
@@ -269,7 +389,7 @@
                             <div class="panel-heading">
                               <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="{{($tab==3)?'':'collapsed'}}" data-parent="#accordion" href="index.htm#collapseFour">
-                                    <span>#</span>Nakliye Yöntemi
+                                    <span>#</span>Ödeme Yöntemi
                                 </a>
                               </h4> 
                             </div>
@@ -281,8 +401,8 @@
                                             
                                             <div class="form-group"> 
                                                 <!--<input class="form-control  " id="cod" placeholder="" type="hidden" value="cod">Kapıda ödeme-->
-                                                <input class="" id="cod" placeholder="" {{ (Session::get('paymentMethod') == 'COD') ? 'checked': '' }} name="paymentMethod" type="radio" value="COD">Kapıda ödeme<br>
-                                                <input class="" id="cod" placeholder="" {{ (Session::get('paymentMethod') == 'card') ? 'checked': '' }} name="paymentMethod" type="radio" value="card">Debit/Credit Card
+                                                <input class="" id="cod" placeholder="" {{ (Session::get('paymentMethod') == 'COD') ? 'checked': '' }} name="paymentMethod" type="radio" value="COD">Kapıda Ödeme<br>
+                                                <input class="" id="cod" placeholder="" {{ (Session::get('paymentMethod') == 'card') ? 'checked': '' }} name="paymentMethod" type="radio" value="card">Kredi Kartı
                                             </div> 
                                          <!--<a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="index.htm#collapseSix">-->
                                           <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Devam et</button></a>
@@ -297,7 +417,7 @@
                             <div class="panel-heading">
                               <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="index.htm#collapseSix">
-                                    <span>#</span>Sipariş İnceleme 
+                                    <span>#</span>Siparişi Tamamla
                                 </a>
                               </h4>
                             </div>
@@ -311,10 +431,10 @@
                                     <table class="table">
                                         <thead>
                                                 <tr>
-                                            <th class="cart-product-name item">Ürün adı</th>
+                                            <th class="cart-product-name item">Ürün Adı</th>
                                             <th class="cart-edit item">Fiyat</th>
-                                            <th class="cart-qty item">miktar</th>
-                                            <th class="cart-sub-total item">ara toplam</th> 
+                                            <th class="cart-qty item">Miktar</th>
+                                            <th class="cart-sub-total item">Ara Toplam</th> 
                                         </tr>
                                         </thead><!-- /thead -->
                               
@@ -362,7 +482,7 @@
                                             </div>
                                              <div class="cart-grand-total">
                                              <br><br>
-                                               <a href="{{url('orderSuccess')}}" class="btn btn-primary">Sipariş Vermek</a>
+                                               <a href="{{url('orderSuccess')}}" class="btn btn-primary">SİPARİŞİ VER</a>
                                             </div>
                                         </th>
                                     </tr>
@@ -387,18 +507,18 @@
                             <div class="panel-heading">
                                 <h4 class="unicase-checkout-title"> 
                                     <a data-toggle="collapse" class="" data-parent="#accordion" aria-expanded="true">
-                                      <span># </span>Ödeme Yöntemi
+                                      <span># </span>Sepetiniz
                                     </a>
                                  </h4>
                             </div>
                             <div class="">
                                 <ul class="nav nav-checkout-progress list-unstyled" style="padding: 5px;"> 
-                                 <li> Toplam tutar  :  {{ $sub_total }} <li><br>
-                                  <li> Toplam madde :  {{ $total_item }} </li> <br>
+                                 <li> Toplam Tutar  :  {{ $sub_total }} <li><br>
+                                  <li> Toplam Ürün :  {{ $total_item }} </li> <br>
                                
                                 </ul>  
-                                 <a href="{{url('/')}}" class="btn btn-success">Alışverişe devam</a> 
-                                  <a href="{{url('orderSuccess')}}" class="btn btn-primary">Sipariş Vermek</a>   
+                                 <a href="{{url('/')}}" class="btn btn-success">ALIŞVERİŞE DEVAM</a> 
+                                  <!--<a href="{{url('orderSuccess')}}" class="btn btn-primary">Sipariş Vermek</a> -->  
                                         
                             </div>
                         </div>

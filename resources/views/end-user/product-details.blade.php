@@ -11,7 +11,8 @@
               	<div class="page-wrapper">
                 	@if(session()->has('message'))
                         <div class="alert alert-success">
-                            {{ session()->get('message') }} <a href="{{ url('/checkout') }}"><button class="btn btn-success">View Cart</button></a>
+                            {{ session()->get('message') }} <a href="{{ url('/checkout') }}"><button class="btn btn-success">View Cart</button>
+                                </a>
                         </div>
                     @endif
                     <div class="col-md-6 col-sm-6">

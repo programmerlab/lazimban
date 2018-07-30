@@ -86,12 +86,12 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        <span class="estimate-title">Alışverişe devam </span>
+                                        <span class="estimate-title">ALIŞVERİŞE DEVAM </span>
                                         <p>Daha fazla almak istermisiniz ...</p>
                                     </th>
                                        <tr>
                                     <td>
-                                        <a href="{{url('/')}}" class="btn btn-upper btn-primary outer-left-xs">Alışverişe devam</a>
+                                        <a href="{{url('/')}}" class="btn btn-upper btn-primary outer-left-xs">ALIŞVERİŞE DEVAM</a>
                                     </td>
                                 </tr>
                                 </tr>
@@ -106,8 +106,8 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        <span class="estimate-title">İndirim kodu</span>
-                                        <p>Varsa kupon kodunuzu girin..</p>
+                                        <span class="estimate-title">İndirim Kodu</span>
+                                        <p>Varsa Kupon Kodunuzu Girin..</p>
                                     </th>
                                 </tr>
                              
@@ -116,7 +116,7 @@
                                     <tr>
                                         <td>
                                             <div class="form-group">
-                                                <input class="form-control unicase-form-control text-input" placeholder="Kuponunuz.." type="text">
+                                                <input class="form-control unicase-form-control text-input" placeholder="Kupon Kodunuz.." type="text">
                                             </div>
                                             <div class="clearfix pull-right">
                                                 <button type="submit" class="btn-upper btn btn-primary">KUPONU ONAYLA</button>
@@ -146,7 +146,7 @@
                                         <td>
                                             <div class="cart-checkout-btn pull-right">
                                                 <a href="{{route('order')}}">
-                                                <button type="submit" class="btn btn-primary checkout-btn">SİPARİŞ VERMEK</button>
+                                                <button type="submit" class="btn btn-primary checkout-btn">ALIŞVERİŞİ TAMAMLA</button>
                                                 </a>
                                                
                                             </div>

@@ -11,8 +11,9 @@
                 <div class="shopping-cart">
                     <div class="shopping-cart-table ">
                         <div class="table-responsive" style="padding-bottom:50px">
-                            <h2 class="heading-title">Verilen sipariş için teşekkür ederim!</h2>
-                            <span class="title-tag">Siparişiniz yakında gönderilecek..!</span>
+                            <h2 class="heading-title">Verdiğiniz sipariş için çok teşekkür ederiz!</h2>
+                            <span class="title-tag">Siparişinizin hazırlık işlemlerine hemen başlıyoruz...!</span>
+                            <a href="{{url('myaccount')}}"><button>Siparişlerim</button></a>
                         </div>
                     </div>
                 </div>
