@@ -11,6 +11,7 @@ use Modules\Admin\Models\Category;
 use Modules\Admin\Models\Product; 
 use Modules\Admin\Models\ShippingBillingAddress;
 use Modules\Admin\Models\Transaction;
+use Illuminate\Support\Facades\DB;
 use Input;
 use Validator;
 use Auth;
@@ -350,7 +351,7 @@ class ProductController extends Controller {
             $shipBill = ShippingBillingAddress::find($bill->id);
         }
         
-        //print_r($request->get('same_billing')); die;
+        
         //$shipBill->name = $request->get('name');
         //$shipBill->email = $request->get('email');
         //$shipBill->mobile = $request->get('mobile');
@@ -368,27 +369,43 @@ class ProductController extends Controller {
         $shipBill->address_type = 1; 
  
         $shipBill->save();
-        
-        if($request->get('same_billing')){
-            $shipBill = '';
+        //print_r($shipBill); die;
+        if(!$request->get('same_billing')){
+            //$shipBill = '';
             $shipping = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first();
 
             if($shipping) 
             {
-                $shipBill = ShippingBillingAddress::find($shipping->id);
+                $shipBill1 = ShippingBillingAddress::find($shipping->id);
+                $shipBill1->name     = $request->get('name');
+                $shipBill1->email    = $request->get('email');
+                $shipBill1->mobile   = $request->get('mobile');
+                $shipBill1->address1 = $request->get('address1');
+                $shipBill1->address2 = $request->get('address2');
+                $shipBill1->zip_code = $request->get('zip_code');
+                $shipBill1->city     = $request->get('city');
+                $shipBill1->state    = $request->get('state');
+                $shipBill1->user_id  = $this->user_id;
+                $shipBill1->address_type = 2;
+                $shipBill1->save();
+            }else{
+                DB::table('shipping_billing_addresses')->insert([
+                    ['name' => $request->get('name'),
+                     'email' => $request->get('email'),
+                     'mobile' => $request->get('mobile'),
+                     'address1' => $request->get('address1'),
+                     'address2' => $request->get('address2'),
+                     'zip_code' => $request->get('zip_code'),
+                     'city' => $request->get('city'),
+                     'state' => $request->get('state'),
+                     'user_id' => $this->user_id,
+                     'address_type' => 2,
+                     ]                    
+                ]);
             }
-            $shipBill->name     = $request->get('name');
-            $shipBill->email    = $request->get('email');
-            $shipBill->mobile   = $request->get('mobile');
-            $shipBill->address1 = $request->get('address1');
-            $shipBill->address2 = $request->get('address2');
-            $shipBill->zip_code = $request->get('zip_code');
-            $shipBill->city     = $request->get('city');
-            $shipBill->state    = $request->get('state');
-            $shipBill->user_id  = $this->user_id;
-            $shipBill->address_type = 2;
-            $shipBill->save();
-            $request->session()->put('shipping',$shipBill);
+            
+            //echo "<pre>"; print_r($shipBill1); die;
+            $request->session()->put('billing',$shipBill1);
             $request->session()->put('tab',3);
                         
         }else{
@@ -409,7 +426,7 @@ class ProductController extends Controller {
         {
             $shipBill = ShippingBillingAddress::find($shipping->id);
         }
-        
+        //echo "<pre>"; print_r($shipBill); die;
         $shipBill->name     = $request->get('name');
         $shipBill->email    = $request->get('email');
         $shipBill->mobile   = $request->get('mobile');

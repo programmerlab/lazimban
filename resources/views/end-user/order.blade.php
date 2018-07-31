@@ -323,23 +323,23 @@
                                             </div>-->
                                             <div class="form-group">
                                                 <label class="info-title" for="exampleInputEmail1">İsminiz (Ad/Soyad) <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="name" placeholder="" value="{{$billing->name or ''}}" type="text" name="name" required="required">
+                                                <input class="form-control unicase-form-control text-input" id="name" placeholder="" value="{{$shipping->name or ''}}" type="text" name="name" required="required">
                                             </div> 
 
                                             <div class="form-group">
                                                 <label class="info-title" for="exampleInputEmail1">Email Adres <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" value="{{$billing->email or ''}}" type="email" name="email" required="required">
+                                                <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" value="{{$shipping->email or ''}}" type="email" name="email" required="required">
                                             </div>
                                           <div class="form-group">
                                             <label class="info-title" for="exampleInputPassword1">Telefon (Mobil/Sabit) <span>*</span></label>
-                                            <input class="form-control unicase-form-control text-input" name="mobile" id="mobile" placeholder="" value="{{$billing->mobile or ''}} "type="text">
+                                            <input class="form-control unicase-form-control text-input" name="mobile" id="mobile" placeholder="" value="{{$shipping->mobile or ''}} "type="text">
                                              
                                           </div>
 
                                             <div class="form-group">
                                                 <label class="info-title" for="zip_code"> Posta Kodu
                                                 <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="zip_code" placeholder=""  value="{{$billing->zip_code or '' }}" name="zip_code" type="text">  
+                                                <input class="form-control unicase-form-control text-input" id="zip_code" placeholder=""  value="{{$shipping->zip_code or '' }}" name="zip_code" type="text">  
                                             </div>
 
 
@@ -361,20 +361,20 @@
                                                 <label class="info-title" for="state"> Belirtmek, bildirmek
 
                                                 <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="state" placeholder="state" value="{{$billing->state or ''}}" name="state" type="text"> 
+                                                <input class="form-control unicase-form-control text-input" id="state" placeholder="state" value="{{$shipping->state or ''}}" name="state" type="text"> 
                                             </div>
 
 
                                             <div class="form-group">
                                                 <label class="info-title" for="exampleInputPassword1"> Adres1
                                                 <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address1 or '' }}"" type="text" name="address1"> 
+                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$shipping->address1 or '' }}"" type="text" name="address1"> 
                                             </div>
 
                                                <div class="form-group">
                                                 <label class="info-title" for="exampleInputPassword1"> Adres2
                                                 <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address2 or '' }}"" type="text" name="address2"> 
+                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$shipping->address2 or '' }}"" type="text" name="address2"> 
                                             </div>
                                           <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Devam et</button>
                                         </form>
