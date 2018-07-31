@@ -39,7 +39,7 @@
       <link href="{{ asset('public/new/css/easy-responsive-tabs.css') }}" rel="stylesheet">
       
       <link href="{{ asset('public/new/css/ubislider.min612e.css') }}" rel="stylesheet" type="text/css">
-      <link rel="stylesheet" href="http://mactosys.com/allAboutTheMusic/front/css/bootstrap-select.min.css">
+      <link rel="stylesheet" href="{{ asset('public/new/css/bootstrap-select.min.css') }}">
         <link href="{{ asset('public/new/css/style.css') }}" rel="stylesheet">
         
         

@@ -278,7 +278,7 @@
             $("#wrapper").toggleClass("toggled");
         });
         </script>
-        <script src="http://mactosys.com/allAboutTheMusic/front/js/bootstrap-select.min.js"></script>
+        <script src="{{ asset('public/new/js/bootstrap-select.min.js') }}"></script>
             <script>
         $('.selectpicker').selectpicker({
   style: 'btn',
