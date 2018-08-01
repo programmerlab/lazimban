@@ -358,6 +358,9 @@ class ProductController extends Controller {
         //$shipBill->address1 = $request->get('address1');
         //$shipBill->user_id = $this->user_id;
         $shipBill->name     = $request->get('name');
+        $shipBill->company_name     = $request->get('company_name');
+        $shipBill->tax1     = $request->get('tax1');
+        $shipBill->tax2     = $request->get('tax2');
         $shipBill->email    = $request->get('email');
         $shipBill->mobile   = $request->get('mobile');
         $shipBill->address1 = $request->get('address1');
@@ -378,6 +381,9 @@ class ProductController extends Controller {
             {
                 $shipBill1 = ShippingBillingAddress::find($shipping->id);
                 $shipBill1->name     = $request->get('name');
+                $shipBill->company_name     = $request->get('company_name');
+                $shipBill->tax1     = $request->get('tax1');
+                $shipBill->tax2     = $request->get('tax2');
                 $shipBill1->email    = $request->get('email');
                 $shipBill1->mobile   = $request->get('mobile');
                 $shipBill1->address1 = $request->get('address1');
@@ -391,6 +397,9 @@ class ProductController extends Controller {
             }else{
                 DB::table('shipping_billing_addresses')->insert([
                     ['name' => $request->get('name'),
+                     'company_name' => $request->get('company_name'),
+                     'tax1'     => $request->get('tax1'),
+                     'tax2'     => $request->get('tax2'),
                      'email' => $request->get('email'),
                      'mobile' => $request->get('mobile'),
                      'address1' => $request->get('address1'),
@@ -428,6 +437,9 @@ class ProductController extends Controller {
         }
         //echo "<pre>"; print_r($shipBill); die;
         $shipBill->name     = $request->get('name');
+        $shipBill->company_name     = $request->get('company_name');
+        $shipBill->tax1     = $request->get('tax1');
+        $shipBill->tax2     = $request->get('tax2');
         $shipBill->email    = $request->get('email');
         $shipBill->mobile   = $request->get('mobile');
         $shipBill->address1 = $request->get('address1');

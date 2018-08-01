@@ -290,4 +290,25 @@
         $('#shipping').toggle();
        }
     </script>
+    <script>
+       function show_tax(){
+            if($('#company_name').val() != ''){
+                $('#tax1').show();
+                $('#tax2').show();   
+            }else{
+                $('#tax1').hide();
+                $('#tax2').hide();   
+            }
+       }
+       
+       function show_tax1(){
+            if($('#company_name1').val() != ''){
+                $('#tax11').show();
+                $('#tax22').show();   
+            }else{
+                $('#tax11').hide();
+                $('#tax22').hide();   
+            }
+       }
+    </script>
     </html>
