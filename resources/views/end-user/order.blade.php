@@ -190,17 +190,17 @@
                                             </div>
                                                 
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">Company Name <span></span></label>
+                                                <label class="info-title" for="exampleInputEmail1">Firma Adı <span></span></label>
                                                 <input class="form-control unicase-form-control text-input" id="company_name" placeholder="" value="{{$billing->company_name or ''}}" type="text" name="company_name" onchange="show_tax();">
                                             </div>
                                             
                                             <div class="form-group" id="tax1" style="display:none">
-                                                <label class="info-title" for="exampleInputEmail1">Tax 1 <span></span></label>
+                                                <label class="info-title" for="exampleInputEmail1">Vergi Dairesi <span></span></label>
                                                 <input class="form-control unicase-form-control text-input"  placeholder="" value="{{$billing->tax1 or ''}}" type="text" name="tax1" >
                                             </div>
                                                 
                                             <div class="form-group" id="tax2" style="display:none">
-                                                <label class="info-title" for="exampleInputEmail1">Tax 2 <span></span></label>
+                                                <label class="info-title" for="exampleInputEmail1">Vergi No. <span></span></label>
                                                 <input class="form-control unicase-form-control text-input"  placeholder="" value="{{$billing->tax2 or ''}}" type="text" name="tax2" >
                                             </div>
 
@@ -226,7 +226,7 @@
                                                 <span>*</span></label>
                                                 <!--<input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}">-->
                                                 <select class="selectpicker form-control" data-live-search="true" name="city">
-                                                    <option selected="selected" value="">Select City </option>
+                                                    <option selected="selected" value="">Şehir Seçiniz </option>
                                                     
                                                     <option data-tokens="Adana" value="Adana">Adana</option>
                                                     <option data-tokens="Adıyaman" value="Adıyaman">Adıyaman</option>
@@ -417,17 +417,17 @@
                                             </div> 
                                             
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">Company Name <span></span></label>
+                                                <label class="info-title" for="exampleInputEmail1">Firma Adı <span></span></label>
                                                 <input class="form-control unicase-form-control text-input" id="company_name1" placeholder="" value="{{$shipping->company_name or ''}}" type="text" name="company_name" onchange="show_tax1();">
                                             </div>
                                             
                                             <div class="form-group" id="tax11" style="display:none">
-                                                <label class="info-title" for="exampleInputEmail1">Tax 1 <span></span></label>
+                                                <label class="info-title" for="exampleInputEmail1">Vergi Dairesi<span></span></label>
                                                 <input class="form-control unicase-form-control text-input"  placeholder="" value="{{$shipping->tax1 or ''}}" type="text" name="tax1" >
                                             </div>
                                                 
                                             <div class="form-group" id="tax22" style="display:none">
-                                                <label class="info-title" for="exampleInputEmail1">Tax 2 <span></span></label>
+                                                <label class="info-title" for="exampleInputEmail1">Vergi No. <span></span></label>
                                                 <input class="form-control unicase-form-control text-input"  placeholder="" value="{{$shipping->tax2 or ''}}" type="text" name="tax2" >
                                             </div>
                                             
@@ -453,7 +453,7 @@
                                                 <span>*</span></label>
                                                 <!--<input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}">-->
                                                 <select class="selectpicker form-control" data-live-search="true" name="city">
-                                                    <option selected="selected" value="">Select City </option>
+                                                    <option selected="selected" value="">Şehir Seçiniz </option>
                                                     
                                                     <option data-tokens="Adana" value="Adana">Adana</option>
                                                     <option data-tokens="Adıyaman" value="Adıyaman">Adıyaman</option>
