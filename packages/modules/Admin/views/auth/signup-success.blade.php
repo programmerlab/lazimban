@@ -16,7 +16,7 @@
                             Thank you for registration!
                         </div>  
                           <div class="alert alert-default">
-                          <a href="{{url('admin')}}"> Click here to continue login </a>
+                          <a href="{{url('vendor/signUp')}}"> Click here to continue login </a>
                         </div>    
                       
                     </div> 

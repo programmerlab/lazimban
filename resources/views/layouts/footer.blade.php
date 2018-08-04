@@ -3,10 +3,10 @@
           <div class="col-md-3">
               <h3>şirket</h3>
               <ul>
-                  <li class="fiRSt"><a title="Your Account" href="##">Hakkımızda</a></li>
-                    <li><a title="Information" href="{{ url('contact') }}">Ýletiþim</a></li>
-                    <li><a title="Addresses" href="{{ url('contact') }}">Kurumsal</a></li>
-                    <li><a title="Addresses" href="{{ url('contact') }}">yatırımcı ilişkileri</a></li>
+                  <li class="fiRSt"><a title="Your Account" href="{{ url('about') }}">Hakkımızda</a></li>
+                    <li><a title="Information" href="{{ url('privacy-policy') }}">Gizlilik Politikası</a></li>
+                    <li><a title="Addresses" href="{{ url('delivery-and-returns') }}">Teslimat ve iadeler</a></li>
+                    <li><a title="Addresses" href="{{ url('distance-sales-contract') }}">Mesafeli Satış Sözleşmesi</a></li>
                     <li><a title="Blog" href="{{ url('blogs') }}">Blog</a></li>
               </ul>
           </div>
@@ -287,7 +287,7 @@
 </script>
     <script>
        function toggle_ship(){
-        $('#shipping').toggle();
+        //$('#shipping').toggle();
        }
     </script>
     <script>

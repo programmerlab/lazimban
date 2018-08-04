@@ -118,8 +118,9 @@
                 @endif
                 <div class="form-group">
                     <!--<label class="control-label visible-ie8 visible-ie9">Þehir</label>-->
+                    
                     <div class="input-icon">
-                        <select name="vendor_type" id="vendor_type" class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                        <select name="vendor_type" id="vendor_type" class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" onchange="vendor(this.value)">
                             <option value="">Select Vendor Type</option>
                             <option value="1">Bireysel</option>
                             <option value="2">Kurumsal</option>
@@ -134,9 +135,13 @@
                 </div>
                 <div class="form-group">
                     <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
-                    <div class="input-icon">
-                         
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Þirket Ýsmi" name="company_name" value="{{old('company_name')}}"> </div>
+                    <div class="input-icon">                         
+                        <input class="form-control placeholder-no-fix" id="company_name" style="display:none;" type="text" placeholder="Þirket Ýsmi" name="company_name" value="{{old('company_name')}}"> </div>
+                </div>
+                <div class="form-group">
+                    <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
+                    <div class="input-icon">                         
+                        <input class="form-control placeholder-no-fix" id="manager_name" style="display:none;" type="text" placeholder="Yetkili Adı" name="manager_name" value="{{old('company_name')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -146,11 +151,26 @@
                         <input class="form-control placeholder-no-fix" type="text" placeholder="Telefon" name="phone"  value="{{old('phone')}}"> </div>
                 </div>
                 <div class="form-group">
+                    <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
+                    <div class="input-icon">                         
+                        <input class="form-control placeholder-no-fix" id="bank_name"  type="text" placeholder="Banka Adı" name="bank_name" value="{{old('company_name')}}"> </div>
+                </div>
+                <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                     <!--<label class="control-label visible-ie8 visible-ie9">IBAN No.</label>-->
                     <div class="input-icon">
                         
                         <input class="form-control placeholder-no-fix" type="text" placeholder="IBAN No." name="iban"  value="{{old('iban')}}"> </div>
+                </div>
+                <div class="form-group">
+                    <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
+                    <div class="input-icon">                         
+                        <input class="form-control placeholder-no-fix" id="tax_name" style="display:none;" type="text" placeholder="Vergi Dairesi" name="tax_name" value="{{old('company_name')}}"> </div>
+                </div>
+                <div class="form-group">
+                    <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
+                    <div class="input-icon">                         
+                        <input class="form-control placeholder-no-fix" id="tax_no" style="display:none;" type="text" placeholder="Vergi No." name="tax_no" value="{{old('company_name')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--<label class="control-label visible-ie8 visible-ie9">Address</label>-->
@@ -462,5 +482,22 @@
         var email_req = '{{ Lang::get('admin-lang.email_req') }}';
         var password_req = '{{ Lang::get('admin-lang.password_req') }}';
      </script>
+     <script>
+        function vendor(type){
+        //alert(type);
+            if(type == 1){
+                $('#company_name').hide();
+                $('#manager_name').hide();
+                $('#tax_name').hide();
+                $('#tax_no').hide();
+            }
+            if(type == 2){
+                $('#company_name').show();
+                $('#manager_name').show();
+                $('#tax_name').show();
+                $('#tax_no').show();
+            }
+        }
+     </script>   
   </body>
 </html>

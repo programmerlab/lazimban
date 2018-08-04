@@ -69,12 +69,21 @@ class AuthController extends Controller
                 
            }
         } 
-
+        
+        if($request->vendor_type == 1){ $company_name = '';} else if($request->vendor_type == 2) { $company_name = 'required';} else { $company_name = ''; }
+        if($request->vendor_type == 1){ $manager_name = '';} else if($request->vendor_type == 2) { $manager_name = 'required';} else { $manager_name = ''; }
+        if($request->vendor_type == 1){ $tax_name = '';} else if($request->vendor_type == 2) { $tax_name = 'required';} else { $tax_name = ''; }
+        if($request->vendor_type == 1){ $tax_no = '';} else if($request->vendor_type == 2) { $tax_no = 'required';} else { $tax_no = ''; }
+        //echo $company_name; die;
         //Server side valiation
         $validator = Validator::make($request->all(), [
             'vendor_type'		=> 	'required',
-           	'full_name'		=> 	'required',
-            'company_name'		=> 	'required',
+            'bank_name'		=> 	'required',
+           	'full_name'		=> 	'required',            
+            'company_name'		=> 	$company_name,
+            'manager_name'		=> 	$manager_name,
+            'tax_name'		=> 	$tax_name,
+            'tax_no'		=> 	$tax_no,
             'email'     =>  'required|email|unique:admin',
             'phone'   => 'required|min:10|numeric',
             'iban'   => 'required|min:26',
@@ -111,7 +120,7 @@ class AuthController extends Controller
             
             if($user->vendor_type == 2){
                 $req->setSubMerchantType(\Iyzipay\Model\SubMerchantType::PRIVATE_COMPANY);
-                $req->setTaxOffice(($request->company_name) ? $request->company_name.' Tax Office' : 'Tax Office');
+                $req->setTaxOffice(($request->tax_name) ? $request->tax_name : 'No Tax Name');
                 $req->setLegalCompanyTitle(($request->company_name) ? $request->company_name : 'Not Available');
             }
             

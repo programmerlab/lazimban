@@ -85,16 +85,75 @@
                                       </li>
                                        <li class="topcart"> <a href="{{url('signout')}}">Çıkış Yap</a> </li>
                                       @endif
-                                      <li class="topcart"><a href="{{ url('/checkout') }}">Sepet<span class="cart-counts">{{$total_item}}</span></a><div class="cartdrop widget_shopping_cart nx-animate animated" style="visibility: visible;"><div class="widget_shopping_cart_content"><ul class="cart_list product_list_widget">Genel Toplam : {{$sub_total}}</ul></div></div></li>
+                                      <li class="topcart">
+                                        <a href="{{ url('/checkout') }}">Sepet<span class="cart-counts">{{$total_item}}</span></a>
+                                        <div class="cartdrop widget_shopping_cart nx-animate animated" style="visibility: visible;">
+                                            <div class="widget_shopping_cart_content">
+                                                <ul class="cart_list product_list_widget">
+                                                @if($cart)
+                                                    <table class="cart-table">
+                                                    <tbody>
+                                                    
+                                                        @foreach($cart as  $item)
+                                                        <tr>
+                                                            <td>
+                                                                <div class="product-media">                                                                 
+                                                                    <a href="#">
+                                                                        <!--<img src="{{ asset('public/new/images/small-1.png') }}" alt=" ">-->
+                                                                        @foreach($product_photo as $key => $photo)
+                                    
+                                                                            @if($photo['id']==$item->id)
+                                                                             <img style="width: 100px;height: 100px;" src="{{ asset('storage/uploads/products/'. $photo['photo']) }}" alt="">
+                                                                             @endif
+                                                                         @endforeach
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="product-content">                                                     
+                                                                    <div class="product-name">
+                                                                        <a href="#">{{$item->name}}</a>
+                                                                        
+                                                                    </div>
+                                                                    <div class="product-price">
+                                                                        <span> <b>{{$item->qty}} </b> </span><h5 class="price"><b> £ {{$item->price}} </b></h5>
+                                                                        <!--<a href="{{ url('/removeitem/'.$item->id) }}" class="delete fa fa-close">  </a>-->
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                   
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="sub-total">
+                                                                    <span class="title">Genel Toplam :</span>
+                                                                    <span class="amount"> <b> £{{$sub_total}} </b> </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                                    <div class="chk-out">
+                                                        <a href="{{ url('/checkout') }}"><button class="btn default-btn">Çıkış yapmak</button></a>
+                                                    </div>
+                                                @endif    
+                                                    
+                                                </ul>
+                                            </div>
+                                        </div>
+                                      </li>
                                   </ul>
                               </div>
                               
                               <div class="col-md-7 col-sm-7">
                                   <div class="sf_search">
                                   
-                                  <form>
+                                  <form action="{{ url('/') }}" method = "get">
                                         
-                                    <input class="sf_input" autocomplete="off" value="{{ $q or ''}}" name="q" type="text">
+                                    <input class="sf_input" autocomplete="" value="{{ $q or ''}}" name="q" type="text">
                                     <button class="sf_button searchsubmit" type="submit"><span>Ara</span></button>
                                   </form>
                                         

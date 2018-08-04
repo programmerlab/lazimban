@@ -8,17 +8,8 @@
 
         @section('content') 
 
-            @include('partials.menu')
-            <div class="breadcrumb">
-                <div class="container">
-                    <div class="breadcrumb-inner">
-                        <ul class="list-inline list-unstyled">
-                            <li><a href="home.html">Home</a></li>
-                            <li class="active">Contact Us</li>
-                        </ul>
-                    </div><!-- /.breadcrumb-inner -->
-                </div><!-- /.container -->
-            </div>
+            @include('partials.breadcrumb')
+            
             <div class="checkout-box faq-page">
             <div class="row">
                 <div class="col-md-12">

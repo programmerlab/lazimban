@@ -59,7 +59,7 @@
                                         <p>Web ID: {{$item->id}}</p>
                                     </td>
                                     <td class="cart_price">
-                                        <p>$ {{$item->price}}</p>
+                                        <p><font style="vertical-align: inherit;">₺</font> {{$item->price}}</p>
                                     </td>
                                     <td class="cart_quantity">
                                         <div class="cart_quantity_button">
@@ -69,7 +69,7 @@
                                         </div>
                                     </td>
                                     <td class="cart_total">
-                                        <p class="cart_total_price">Rs {{ money_format('%!i', $item->subtotal) }}</p>
+                                        <p class="cart_total_price"><font style="vertical-align: inherit;">₺</font> {{ money_format('%!i', $item->subtotal) }}</p>
                                     </td>  
                                 </tr> 
                                 @endforeach
@@ -133,10 +133,10 @@
                                 <tr>
                                     <th>
                                         <div class="cart-sub-total">
-                                            <span class="inner-left-md">ara toplam $ {{$sub_total}} </span>
+                                            <span class="inner-left-md">ara toplam <font style="vertical-align: inherit;">₺</font> {{$sub_total}} </span>
                                         </div>
                                         <div class="cart-grand-total">
-                                            <span class="inner-left-md">Genel Toplam $ {{$sub_total}} </span>
+                                            <span class="inner-left-md">Genel Toplam <font style="vertical-align: inherit;">₺</font> {{$sub_total}} </span>
                                         </div>
                                     </th>
                                 </tr>

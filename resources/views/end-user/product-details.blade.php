@@ -45,7 +45,7 @@
                     <div class="col-md-6 col-sm-6">
                     	<div class="product_discription">
                         	<h1 class="product_name">{{$product->product_title}}</h1>
-                            <h3 class="product_price">$ {{$product->price-($product->price*$product->discount/100)}}  </h3> <h5><p style="text-decoration: line-through">$ {{$product->price}}</p></h5>
+                            <h3 class="product_price"><font style="vertical-align: inherit;">₺</font> {{$product->price-($product->price*$product->discount/100)}}  </h3> <h5><p style="text-decoration: line-through"><font style="vertical-align: inherit;">₺</font> {{$product->price}}</p></h5>
                             <table class="variations" cellspacing="0">
                                 <tbody>
                                         <!--<tr>

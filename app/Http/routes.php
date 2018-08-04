@@ -100,7 +100,22 @@ Route::get('category',[
           'uses'  => 'HomeController@tNc'
         ]); 
  
-
+    Route::get('about',[
+          'as' => 'about',
+          'uses'  => 'HomeController@about_us'
+        ]);
+    Route::get('privacy-policy',[
+          'as' => 'privacy',
+          'uses'  => 'HomeController@privacy_policy'
+        ]);
+     Route::get('delivery-and-returns',[
+          'as' => 'returns',
+          'uses'  => 'HomeController@returns'
+        ]);
+     Route::get('distance-sales-contract',[
+          'as' => 'contract',
+          'uses'  => 'HomeController@sales_contract'
+        ]);
 
 
 
@@ -112,7 +127,9 @@ Route::group(['middleware' => ['web']], function(){
   Route::get('/',[
           'as' => 'homePage',
           'uses'  => 'ProductController@showProduct'
-        ]); 
+        ]);
+  
+   
    
   Route::get('/cart', [ 
         'as' => '',

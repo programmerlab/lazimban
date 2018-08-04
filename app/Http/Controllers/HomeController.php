@@ -43,11 +43,19 @@ class HomeController extends Controller
         View::share('total_item',Cart::content()->count());
         View::share('sub_total',Cart::subtotal()); 
         View::share('userData',$request->session()->get('current_user'));
+        View::share('cart',Cart::content());
 
         $hot_products   = Product::orderBy('views','desc')->limit(3)->get();
         $special_deals  = Product::orderBy('discount','desc')->limit(3)->get(); 
         View::share('hot_products',$hot_products);
-        View::share('special_deals',$special_deals);  
+        View::share('special_deals',$special_deals);
+        
+        $pid = [];
+        foreach (Cart::content() as $key => $value) {
+            $pid[] = $value->id;
+        }
+        $product_photo =   Product::whereIn('id',$pid)->get(['photo','id'])->toArray();
+        View::share('product_photo',$product_photo);
 
         $website_title      = $setting::where('field_key','website_title')->first();
         $website_email      = $setting::where('field_key','website_email')->first();
@@ -285,7 +293,35 @@ class HomeController extends Controller
         return view('end-user.faq',compact('categories','products','category')); 
         return view('end-user.faq');   
     }
+    
+    public function about_us()
+    {
+         $products = Product::with('category')->orderBy('id','asc')->get();
+        $categories = Category::nested()->get(); 
+        return view('end-user.about',compact('categories','products','category'));         
+    }
+    
+    public function privacy_policy()
+    {
+         $products = Product::with('category')->orderBy('id','asc')->get();
+        $categories = Category::nested()->get(); 
+        return view('end-user.privacy_policy',compact('categories','products','category'));         
+    }
 
+    public function returns()
+    {
+         $products = Product::with('category')->orderBy('id','asc')->get();
+        $categories = Category::nested()->get(); 
+        return view('end-user.returns',compact('categories','products','category'));         
+    }
+    
+    public function sales_contract()
+    {
+         $products = Product::with('category')->orderBy('id','asc')->get();
+        $categories = Category::nested()->get(); 
+        return view('end-user.sales_contract',compact('categories','products','category'));         
+    }
+    
     public function contact()
     {
          $products = Product::with('category')->orderBy('id','asc')->get();

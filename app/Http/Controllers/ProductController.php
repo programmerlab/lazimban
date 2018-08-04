@@ -59,6 +59,7 @@ class ProductController extends Controller {
         View::share('total_item',Cart::content()->count());
         View::share('sub_total',Cart::subtotal());
         View::share('helper',new Helper);
+        View::share('cart',Cart::content());
 
         View::share('userData',$request->session()->get('current_user'));
          if ($request->session()->has('current_user')) { 
@@ -76,6 +77,13 @@ class ProductController extends Controller {
             View::share('tab',"0");
        
         }
+        
+        $pid = [];
+        foreach (Cart::content() as $key => $value) {
+            $pid[] = $value->id;
+        }
+        $product_photo =   Product::whereIn('id',$pid)->get(['photo','id'])->toArray();
+        View::share('product_photo',$product_photo);
 
         $hot_products   = Product::orderBy('views','desc')->limit(3)->get();
         $special_deals  = Product::orderBy('discount','desc')->limit(3)->get(); 
@@ -135,16 +143,18 @@ class ProductController extends Controller {
     {    
          $category = Input::get('q'); 
          $q = Input::get('q');
+         
          $categories     = Category::nested()->get();  
          if($q)
-         {
+         {            
             $products = Product::with('category')
                         ->where('status',1)
                         ->where('product_title','LIKE','%'.$q.'%')
                         ->orderBy('id','asc')
-                        ->get(); 
+                        ->get();
+            //print_r($products); die;
             $categories = Category::nested()->get(); 
-            return view('end-user.category',compact('categories','products','category','q','category'));
+            return view('end-user.category_search',compact('categories','products','category','q','category'));
              
          } 
          else{
@@ -372,7 +382,7 @@ class ProductController extends Controller {
         $shipBill->address_type = 1; 
  
         $shipBill->save();
-        //print_r($shipBill); die;
+        //print_r($request->get('same_billing')); die;
         if(!$request->get('same_billing')){
             //$shipBill = '';
             $shipping = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first();
@@ -414,10 +424,12 @@ class ProductController extends Controller {
             }
             
             //echo "<pre>"; print_r($shipBill1); die;
+            $request->session()->put('same_address',0);
             $request->session()->put('billing',$shipBill1);
             $request->session()->put('tab',3);
                         
         }else{
+            $request->session()->put('same_address',1);
             $request->session()->put('tab',2);
             $request->session()->put('billing',$shipBill);               
         }

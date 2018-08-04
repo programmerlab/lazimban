@@ -163,26 +163,6 @@
                                      <div class="col-md-6 col-sm-6 already-registered-login"> 
                                         <form method="post" class="register-form" role="form" id="billing" action="{{route('billing')}}"> 
                                               {!! csrf_field() !!}
-                                             <!-- <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">İsminiz (Ad/Soyad) <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="name" placeholder="" value="{{$billing->name or ''}}" type="text" name="name" required="required">
-                                            </div> 
-
-                                            <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">Email Adres <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" value="{{$billing->email or ''}}" type="email" name="email" required="required">
-                                            </div>
-                                          <div class="form-group">
-                                            <label class="info-title" for="exampleInputPassword1">Telefon (Mobil/Sabit) <span>*</span></label>
-                                            <input class="form-control unicase-form-control text-input" name="mobile" id="mobile" placeholder="" value="{{$billing->mobile or ''}}" type="text">
-                                             
-                                          </div> 
-
-                                            <div class="form-group">
-                                                <label class="info-title" for="exampleInputPassword1"> Adres
-                                                <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address1 or ''}}"  name="address1" type="text"> 
-                                            </div>-->
                                             
                                             <div class="form-group">
                                                 <label class="info-title" for="exampleInputEmail1">İsminiz (Ad/Soyad) <span>*</span></label>
@@ -225,7 +205,7 @@
                                                 <label class="info-title" for="city"> Şehir
                                                 <span>*</span></label>
                                                 <!--<input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}">-->
-                                                <select class="selectpicker form-control" data-live-search="true" name="city">
+                                                <select class="selectpicker form-control" data-live-search="true" name="city" required>
                                                     <option selected="selected" value="">Şehir Seçiniz </option>
                                                     
                                                     <option data-tokens="Adana" value="Adana">Adana</option>
@@ -313,7 +293,7 @@
                                             <div class="form-group">
                                                 <label class="info-title" for="state"> Belirtmek, bildirmek
 
-                                                <span>*</span></label>
+                                                </label>
                                                 <input class="form-control unicase-form-control text-input" id="state" placeholder="state" value="{{$billing->state or ''}}" name="state" type="text"> 
                                             </div>
 
@@ -321,18 +301,18 @@
                                             <div class="form-group">
                                                 <label class="info-title" for="exampleInputPassword1"> Adres1
                                                 <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address1 or '' }}"" type="text" name="address1"> 
+                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address1 or '' }}"" type="text" name="address1" required> 
                                             </div>
 
                                                <div class="form-group">
                                                 <label class="info-title" for="exampleInputPassword1"> Adres2
-                                                <span>*</span></label>
+                                                </label>
                                                 <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address2 or '' }}"" type="text" name="address2"> 
                                             </div>
                                                 
                                           <button type="submit" class="btn-upper btn btn-primary checkout-page-button" onclick="billing()">Devam et</button>
                                             <br>
-                                           <input type="checkbox"  name="same_billing" value="1" onclick="toggle_ship()">Fatura adresinizden farklı bir adrese mi gönderilsin?
+                                           <input type="checkbox"  name="same_billing" <?php if(Session::get('same_address') == 1) { echo "checked"; }?> value="1" onclick="toggle_ship()">Fatura adresinizden farklı bir adrese mi gönderilsin?
                                         </form>
                                             
                                     </div>  
@@ -343,7 +323,8 @@
                         <!-- checkout-step-02  -->
 
                         <!-- checkout-step-03  -->
-                        <div class="panel panel-default checkout-step-03" id="shipping" style="display:none;">
+                        
+                        <div class="panel panel-default checkout-step-03" id="shipping" <?php if(Session::get('same_address') == 1) { ?>  style="display:block;" <?php } else { ?> style="display:none;" <?php } ?>>
                             <div class="panel-heading">
                               <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="{{($tab==2)?'':'collapsed'}}" id="collapse_three" data-parent="#accordion" href="index.htm#collapseThree">
@@ -356,61 +337,7 @@
                                    <div class="col-md-6 col-sm-6 already-registered-login" id="shopping"> 
                                         <form method="post" class="register-form" role="form" id="billing" action="{{route('shipping')}}">  
                                             {!! csrf_field() !!}
-                                            <!--<div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">İsminiz (Ad/Soyad) <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="name" placeholder="" value="{{$shipping->name or ''}}" type="text" name="name" required="required">
-                                            </div> 
-
-                                            <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">Email Adres <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" value="{{$shipping->email or ''}}" type="email" name="email" required="required">
-                                            </div>
-                                          <div class="form-group">
-                                            <label class="info-title" for="exampleInputPassword1">Telefon (Mobil/Sabit) <span>*</span></label>
-                                            <input class="form-control unicase-form-control text-input" name="mobile" id="mobile" placeholder="" value="{{$shipping->mobile or ''}} "type="text">
-                                             
-                                          </div>
-
-                                            <div class="form-group">
-                                                <label class="info-title" for="zip_code"> Posta Kodu
-                                                <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="zip_code" placeholder=""  value="{{$shipping->zip_code or '' }}" name="zip_code" type="text">  
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label class="info-title" for="city"> Şehir
-                                                <span>*</span></label>
-                                                <!--<input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}">--
-                                                <select class="selectpicker form-control" data-live-search="true" name="city">
-                                                    <option selected="selected" value="">Select City </option>
-                                                    
-                                                    <option data-tokens="Adana" value="">Adana</option>
-                                                    <option data-tokens="Afyon" value="">Afyon</option>
-                                                    <option data-tokens="Bilecik" value="">Bilecik</option>
-                                                </select>
-                                            </div>
- 
-
-                                            <div class="form-group">
-                                                <label class="info-title" for="state"> Belirtmek, bildirmek
-
-                                                <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="state" placeholder="state" value="{{$shipping->state or ''}}" name="state" type="text"> 
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label class="info-title" for="exampleInputPassword1"> Adres1
-                                                <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$shipping->address1 or '' }}"" type="text" name="address1"> 
-                                            </div>
-
-                                               <div class="form-group">
-                                                <label class="info-title" for="exampleInputPassword1"> Adres2
-                                                <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$shipping->address2 or '' }}"" type="text" name="address2"> 
-                                            </div>-->
+                                            
                                             <div class="form-group">
                                                 <label class="info-title" for="exampleInputEmail1">İsminiz (Ad/Soyad) <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="name" placeholder="" value="{{$shipping->name or ''}}" type="text" name="name" required="required">
@@ -437,14 +364,14 @@
                                             </div>
                                           <div class="form-group">
                                             <label class="info-title" for="exampleInputPassword1">Telefon (Mobil/Sabit) <span>*</span></label>
-                                            <input class="form-control unicase-form-control text-input" name="mobile" id="mobile" placeholder="" value="{{$shipping->mobile or ''}} "type="text">
+                                            <input class="form-control unicase-form-control text-input" name="mobile" id="mobile" placeholder="" value="{{$shipping->mobile or ''}} "type="text" required>
                                              
                                           </div>
 
                                             <div class="form-group">
                                                 <label class="info-title" for="zip_code"> Posta Kodu
                                                 <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="zip_code" placeholder=""  value="{{$shipping->zip_code or '' }}" name="zip_code" type="text">  
+                                                <input class="form-control unicase-form-control text-input" id="zip_code" placeholder=""  value="{{$shipping->zip_code or '' }}" name="zip_code" type="text" required>  
                                             </div>
 
 
@@ -452,7 +379,7 @@
                                                 <label class="info-title" for="city"> Şehir
                                                 <span>*</span></label>
                                                 <!--<input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}">-->
-                                                <select class="selectpicker form-control" data-live-search="true" name="city">
+                                                <select class="selectpicker form-control" data-live-search="true" name="city" required>
                                                     <option selected="selected" value="">Şehir Seçiniz </option>
                                                     
                                                     <option data-tokens="Adana" value="Adana">Adana</option>
@@ -542,7 +469,7 @@
                                             <div class="form-group">
                                                 <label class="info-title" for="state"> Belirtmek, bildirmek
 
-                                                <span>*</span></label>
+                                                </label>
                                                 <input class="form-control unicase-form-control text-input" id="state" placeholder="state" value="{{$shipping->state or ''}}" name="state" type="text"> 
                                             </div>
 
@@ -550,12 +477,12 @@
                                             <div class="form-group">
                                                 <label class="info-title" for="exampleInputPassword1"> Adres1
                                                 <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$shipping->address1 or '' }}"" type="text" name="address1"> 
+                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$shipping->address1 or '' }}"" type="text" name="address1" required> 
                                             </div>
 
                                                <div class="form-group">
                                                 <label class="info-title" for="exampleInputPassword1"> Adres2
-                                                <span>*</span></label>
+                                                </label>
                                                 <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$shipping->address2 or '' }}"" type="text" name="address2"> 
                                             </div>
                                           <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Devam et</button>
@@ -627,7 +554,7 @@
                                                     <h4><a href="">{{$item->name}}</a></h4> 
                                             </td>
                                             <td class="cart_price">
-                                                <p>$ {{$item->price}}</p>
+                                                <p><font style="vertical-align: inherit;">₺</font> {{$item->price}}</p>
                                             </td>
                                             <td class="cart_quantity">
                                                 <div class="cart_quantity_button">
@@ -636,7 +563,7 @@
                                                 </div>
                                             </td>
                                             <td class="cart_total">
-                                                <p class="cart_total_price">$ {{ money_format('%!i', $item->subtotal) }}</p>
+                                                <p class="cart_total_price"><font style="vertical-align: inherit;">₺</font> {{ money_format('%!i', $item->subtotal) }}</p>
                                             </td>  
                                         </tr> 
                                         @endforeach
@@ -657,10 +584,10 @@
                                     <tr>
                                         <th>
                                             <div class="cart-sub-total">
-                                                <span class="inner-left-md">ara toplam $ {{$sub_total}} </span>
+                                                <span class="inner-left-md">ara toplam <font style="vertical-align: inherit;">₺</font> {{$sub_total}} </span>
                                             </div>
                                             <div class="cart-grand-total">
-                                                <span class="inner-left-md">Genel Toplam $ {{$sub_total}} </span>
+                                                <span class="inner-left-md">Genel Toplam <font style="vertical-align: inherit;">₺</font> {{$sub_total}} </span>
                                             </div>
                                              <div class="cart-grand-total">
                                              <br><br>
@@ -695,7 +622,7 @@
                             </div>
                             <div class="">
                                 <ul class="nav nav-checkout-progress list-unstyled" style="padding: 5px;"> 
-                                 <li> Toplam Tutar  :  {{ $sub_total }} <li><br>
+                                 <li> Toplam Tutar  : <font style="vertical-align: inherit;">₺</font> {{ $sub_total }} <li><br>
                                   <li> Toplam Ürün :  {{ $total_item }} </li> <br>
                                
                                 </ul>  

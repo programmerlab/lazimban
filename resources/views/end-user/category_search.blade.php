@@ -8,7 +8,7 @@
 
         @section('content') 
                                             
-               @include('partials.breadcrumb')
+               @include('partials.breadcrumb_search')
                <div id="main" class="site-main">
               	<div class="page-wrapper">
                 	<div class="col-md-3">
@@ -133,15 +133,12 @@
                         <div class="product_info">
                             <div id="horizontalTab">
                                 <ul class="resp-tabs-list">
-                                    <li>Açıklama </li>
+                                    
                                     
                                     <li>Diğer Kategoriler </li> 
                                 </ul>
                                 <div class="resp-tabs-container">
-                                        <div>
-                                           <h2>  Açýklama : {{ isset($category) ? $category : '' }}</h2>
-                                             <p> {!! isset($catID->description) ? $catID->description : '' !!}</p>
-                                        </div>
+                                        
                                          
                                         <div>    
                                             <div class="owl-carousel owl-theme">

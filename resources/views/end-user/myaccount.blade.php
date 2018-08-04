@@ -234,7 +234,7 @@
                                                     <h4><a href="">{{$item->product_name}}</a></h4> 
                                             </th>
                                             <th class="cart_price">
-                                                <p>$ {{$item->total_price}}</p>
+                                                <p><font style="vertical-align: inherit;">₺</font> {{$item->total_price}}</p>
                                             </th>
                                            
                                            
