@@ -48,8 +48,8 @@
                             <input id="guest" name="text" value="konuk" checked="" type="radio">  
                           <!--   <label class="radio-button guest-check" for="guest">Checkout as Guest</label>  
                               <br> -->
-                            <input id="register" name="text" value="kayıt olmak" type="radio" checked="checked">  
-                            <label class="radio-button" for="register">Üye Ol</label>  
+                            <input id="registers" name="text" value="kayıt olmak" type="radio" checked="checked">  
+                            <label class="radio-button" for="registers">Üye Ol</label>  
                         </div>  
                     </form>
                     <!-- radio-form  -->
@@ -165,31 +165,31 @@
                                               {!! csrf_field() !!}
                                             
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">İsminiz (Ad/Soyad) <span>*</span></label>
+                                                <label class="info-title" for="name">İsminiz (Ad/Soyad) <span>*</span></label>
                                                 <input class="form-control unicase-form-control text-input" id="name" placeholder="" value="{{$billing->name or ''}}" type="text" name="name" required="required">
                                             </div>
                                                 
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">Firma Adı <span></span></label>
+                                                <label class="info-title" for="company_name">Firma Adı <span></span></label>
                                                 <input class="form-control unicase-form-control text-input" id="company_name" placeholder="" value="{{$billing->company_name or ''}}" type="text" name="company_name" onchange="show_tax();">
                                             </div>
                                             
                                             <div class="form-group" id="tax1" style="display:none">
-                                                <label class="info-title" for="exampleInputEmail1">Vergi Dairesi <span></span></label>
+                                                <label class="info-title" for="tax1">Vergi Dairesi <span></span></label>
                                                 <input class="form-control unicase-form-control text-input"  placeholder="" value="{{$billing->tax1 or ''}}" type="text" name="tax1" >
                                             </div>
                                                 
                                             <div class="form-group" id="tax2" style="display:none">
-                                                <label class="info-title" for="exampleInputEmail1">Vergi No. <span></span></label>
+                                                <label class="info-title" for="tax12">Vergi No. <span></span></label>
                                                 <input class="form-control unicase-form-control text-input"  placeholder="" value="{{$billing->tax2 or ''}}" type="text" name="tax2" >
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">Email Adres <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" value="{{$billing->email or ''}}" type="email" name="email" required="required">
+                                                <label class="info-title" for="email">Email Adres <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="email" placeholder="" value="{{$billing->email or ''}}" type="email" name="email" required="required">
                                             </div>
                                           <div class="form-group">
-                                            <label class="info-title" for="exampleInputPassword1">Telefon (Mobil/Sabit) <span>*</span></label>
+                                            <label class="info-title" for="mobile">Telefon (Mobil/Sabit) <span>*</span></label>
                                             <input class="form-control unicase-form-control text-input" name="mobile" id="mobile" placeholder="" value="{{$billing->mobile or ''}} "type="text" required>
                                              
                                           </div>
@@ -299,20 +299,20 @@
 
 
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputPassword1"> Adres1
+                                                <label class="info-title" for="address1"> Adres1
                                                 <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address1 or '' }}"" type="text" name="address1" required> 
+                                                <input class="form-control unicase-form-control text-input" id="address1" placeholder="" value="{{$billing->address1 or '' }}"" type="text" name="address1" required> 
                                             </div>
 
                                                <div class="form-group">
-                                                <label class="info-title" for="exampleInputPassword1"> Adres2
+                                                <label class="info-title" for="address1"> Adres2
                                                 </label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$billing->address2 or '' }}"" type="text" name="address2"> 
+                                                <input class="form-control unicase-form-control text-input" id="address1" placeholder="" value="{{$billing->address2 or '' }}"" type="text" name="address2"> 
                                             </div>
                                                 
-                                          <button type="submit" class="btn-upper btn btn-primary checkout-page-button" onclick="billing()">Devam et</button>
+                                          <button type="submit" class="btn-upper btn btn-primary checkout-page-button" >Devam et</button>
                                             <br>
-                                           <input type="checkbox"  name="same_billing" <?php if(Session::get('same_address') == 1) { echo "checked"; }?> value="1" onclick="toggle_ship()">Fatura adresinizden farklı bir adrese mi gönderilsin?
+                                           <input type="checkbox"  name="same_billing" <?php if(Session::get('same_address') == 1) { echo "checked"; }?> value="1" >Fatura adresinizden farklı bir adrese mi gönderilsin?
                                         </form>
                                             
                                     </div>  
@@ -335,16 +335,16 @@
                             <div id="collapseThree" class="panel-collapse collapse {{($tab==2)?'in':''}}">
                               <div class="panel-body">
                                    <div class="col-md-6 col-sm-6 already-registered-login" id="shopping"> 
-                                        <form method="post" class="register-form" role="form" id="billing" action="{{route('shipping')}}">  
+                                        <form method="post" class="register-form" role="form" id="shipping" action="{{route('shipping')}}">  
                                             {!! csrf_field() !!}
                                             
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">İsminiz (Ad/Soyad) <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="name" placeholder="" value="{{$shipping->name or ''}}" type="text" name="name" required="required">
+                                                <label class="info-title" for="name1">İsminiz (Ad/Soyad) <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="name1" placeholder="" value="{{$shipping->name or ''}}" type="text" name="name" required="required">
                                             </div> 
                                             
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">Firma Adı <span></span></label>
+                                                <label class="info-title" for="company_name1">Firma Adı <span></span></label>
                                                 <input class="form-control unicase-form-control text-input" id="company_name1" placeholder="" value="{{$shipping->company_name or ''}}" type="text" name="company_name" onchange="show_tax1();">
                                             </div>
                                             
@@ -359,24 +359,24 @@
                                             </div>
                                             
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputEmail1">Email Adres <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" value="{{$shipping->email or ''}}" type="email" name="email" required="required">
+                                                <label class="info-title" for="email1">Email Adres <span>*</span></label>
+                                                <input class="form-control unicase-form-control text-input" id="email1" placeholder="" value="{{$shipping->email or ''}}" type="email" name="email" required="required">
                                             </div>
                                           <div class="form-group">
-                                            <label class="info-title" for="exampleInputPassword1">Telefon (Mobil/Sabit) <span>*</span></label>
-                                            <input class="form-control unicase-form-control text-input" name="mobile" id="mobile" placeholder="" value="{{$shipping->mobile or ''}} "type="text" required>
+                                            <label class="info-title" for="mobile1">Telefon (Mobil/Sabit) <span>*</span></label>
+                                            <input class="form-control unicase-form-control text-input" name="mobile" id="mobile1" placeholder="" value="{{$shipping->mobile or ''}} "type="text" required>
                                              
                                           </div>
 
                                             <div class="form-group">
-                                                <label class="info-title" for="zip_code"> Posta Kodu
+                                                <label class="info-title" for="zip_code1"> Posta Kodu
                                                 <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="zip_code" placeholder=""  value="{{$shipping->zip_code or '' }}" name="zip_code" type="text" required>  
+                                                <input class="form-control unicase-form-control text-input" id="zip_code1" placeholder=""  value="{{$shipping->zip_code or '' }}" name="zip_code" type="text" required>  
                                             </div>
 
 
                                             <div class="form-group">
-                                                <label class="info-title" for="city"> Şehir
+                                                <label class="info-title" for="city1"> Şehir
                                                 <span>*</span></label>
                                                 <!--<input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}">-->
                                                 <select class="selectpicker form-control" data-live-search="true" name="city" required>
@@ -467,23 +467,23 @@
  
 
                                             <div class="form-group">
-                                                <label class="info-title" for="state"> Belirtmek, bildirmek
+                                                <label class="info-title" for="state1"> Belirtmek, bildirmek
 
                                                 </label>
-                                                <input class="form-control unicase-form-control text-input" id="state" placeholder="state" value="{{$shipping->state or ''}}" name="state" type="text"> 
+                                                <input class="form-control unicase-form-control text-input" id="state1" placeholder="state" value="{{$shipping->state or ''}}" name="state" type="text"> 
                                             </div>
 
 
                                             <div class="form-group">
-                                                <label class="info-title" for="exampleInputPassword1"> Adres1
+                                                <label class="info-title" for="address11"> Adres1
                                                 <span>*</span></label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$shipping->address1 or '' }}"" type="text" name="address1" required> 
+                                                <input class="form-control unicase-form-control text-input" id="address11" placeholder="" value="{{$shipping->address1 or '' }}"" type="text" name="address1" required> 
                                             </div>
 
                                                <div class="form-group">
-                                                <label class="info-title" for="exampleInputPassword1"> Adres2
+                                                <label class="info-title" for="address22"> Adres2
                                                 </label>
-                                                <input class="form-control unicase-form-control text-input" id="exampleInputPassword1" placeholder="" value="{{$shipping->address2 or '' }}"" type="text" name="address2"> 
+                                                <input class="form-control unicase-form-control text-input" id="address22" placeholder="" value="{{$shipping->address2 or '' }}"" type="text" name="address2"> 
                                             </div>
                                           <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Devam et</button>
                                         </form>

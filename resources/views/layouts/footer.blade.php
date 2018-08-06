@@ -218,7 +218,7 @@
 
     <!-- JavaScripts placed at the end of the document so the pages load faster --> 
     
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
     <script type="text/javascript">
       
       $(window).load(function() {
