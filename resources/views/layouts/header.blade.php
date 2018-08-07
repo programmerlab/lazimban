@@ -73,7 +73,10 @@
                                       <li><input class="input-text" name="password" id="password" type="password"></li>
                                       <li><input class="button" name="login" value="Oturum Aç" type="submit"></li>
                                       <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">KAYIT OL</a><a href="{{ url('password/reset') }}" class="forgot">SIFRENI SIFIRLA</a></li>
-                                      <li class="reg-link"><a href="{{ url('vendor/signUp') }}" class="resig">SATICI OL</a> <a href="{{ url('vendor/signUp') }}" class="resig pull-right">SATICI GİRİŞİ</a></li>
+                                      <li class="reg-link">
+                                        <a href="{{ url('vendor/signUp') }}" class="resig">SATICI OL / GİRİŞİ</a>
+                                        <!--<a href="{{ url('vendor/signUp') }}" class="resig pull-right">SATICI GİRİŞİ</a>-->
+                                      </li>
                                       
                                         
                                       </ul>                                      
@@ -93,10 +96,22 @@
                                                 @if($cart)
                                                     <table class="cart-table">
                                                     <tbody>
-                                                    
+                                                    <?php $helper = new Helper(); ?>
                                                         @foreach($cart as  $item)
                                                         <tr>
-                                                            <td>
+                                                            <td width='20%'>
+                                                                <!--<a href="{{ url('/removeitem/'.$item->id) }}" class=""><i class="fa fa-times"></i></a>-->
+                                                                <a class="cart_quantity_delete" href="{{ url('/removeItem/'.$item->id) }}"><i class="fa fa-times"></i></a>
+                                                            </td>
+                                                            <td width='40%'>
+                                                                <div class="product-content">                                                     
+                                                                    <div class="">
+                                                                        <h2><a href="{{ url($helper->getProduct($item->id)->url) }}"> {{$item->name}}</a></h2>
+                                                                        
+                                                                    </div>                                                                    
+                                                                </div>
+                                                            </td>
+                                                            <td width='40%'>
                                                                 <div class="product-media">                                                                 
                                                                     <a href="#">
                                                                         <!--<img src="{{ asset('public/new/images/small-1.png') }}" alt=" ">-->
@@ -109,28 +124,26 @@
                                                                     </a>
                                                                 </div>
                                                             </td>
-                                                            <td>
-                                                                <div class="product-content">                                                     
-                                                                    <div class="product-name">
-                                                                        <a href="#">{{$item->name}}</a>
-                                                                        
-                                                                    </div>
-                                                                    <div class="product-price">
-                                                                        <span> <b>{{$item->qty}} </b> </span><h5 class="price"><b> £ {{$item->price}} </b></h5>
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                <div class="product-price">
+                                                                         <h5 class="price"> <b>{{$item->qty}} </b> x <b> £ {{$item->price}} </b></h5>
                                                                         <!--<a href="{{ url('/removeitem/'.$item->id) }}" class="delete fa fa-close">  </a>-->
-                                                                    </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
+                                                        
                                                         @endforeach
                                                    
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <td>
+                                                            <td colspan='3'>
                                                                 <div class="sub-total">
-                                                                    <span class="title">Genel Toplam :</span>
-                                                                    <span class="amount"> <b> £{{$sub_total}} </b> </span>
+                                                                    
+                                                                    <span class="amount"> Genel Toplam :  £{{$sub_total}} </b> </span>
                                                                 </div>
                                                             </td>
                                                         </tr>

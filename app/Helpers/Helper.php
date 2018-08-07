@@ -370,4 +370,15 @@ class Helper {
             return 0;
         }
     }
+    
+    public static function  getProduct($p_id=null)
+    {    
+        $product = DB::table('products')->where('id', $p_id)->first();
+        
+        if($product!=null){            
+                return $product;                 
+        }else{
+            return 0;
+        }
+    }
 }
