@@ -29,7 +29,7 @@
                         <input type="hidden" name="key" value="{{ $key }}">
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">New Password</label>
+                            <label for="password" class="col-md-4 control-label">Yeni Şifre</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password">
@@ -46,7 +46,7 @@
                         <hr>
 
                         <div class="form-group{{ $errors->has('confirm_password') ? ' has-error' : '' }}">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+                            <label for="password-confirm" class="col-md-4 control-label">Şifreyi Onayla</label>
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="confirm_password">
 
@@ -61,7 +61,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-refresh"></i> Reset Password
+                                    <i class="fa fa-btn fa-refresh"></i> Şifremi Sıfırla
                                 </button>
                             </div>
                         </div>

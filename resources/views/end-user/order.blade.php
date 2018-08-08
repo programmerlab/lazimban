@@ -328,7 +328,7 @@
                             <div class="panel-heading">
                               <h4 class="unicase-checkout-title">
                                 <a data-toggle="collapse" class="{{($tab==2)?'':'collapsed'}}" id="collapse_three" data-parent="#accordion" href="index.htm#collapseThree">
-                                    <span>#</span>Nakliye Bilgisi
+                                    <span>#</span>Nakliye Bilgileri
                                 </a>
                               </h4>
                             </div>

@@ -74,18 +74,22 @@ class AuthController extends Controller
         if($request->vendor_type == 1){ $manager_name = '';} else if($request->vendor_type == 2) { $manager_name = 'required';} else { $manager_name = ''; }
         if($request->vendor_type == 1){ $tax_name = '';} else if($request->vendor_type == 2) { $tax_name = 'required';} else { $tax_name = ''; }
         if($request->vendor_type == 1){ $tax_no = '';} else if($request->vendor_type == 2) { $tax_no = 'required';} else { $tax_no = ''; }
+        if($request->vendor_type == 2){ $full_name = '';} else if($request->vendor_type == 1) { $full_name = 'required';} else { $full_name = ''; }
+        if($request->vendor_type == 2){ $tc_no = '';} else if($request->vendor_type == 1) { $tc_no = 'required';} else { $tc_no = ''; }
         //echo $company_name; die;
         //Server side valiation
         $validator = Validator::make($request->all(), [
-            'vendor_type'		=> 	'required',
-            'bank_name'		=> 	'required',
-           	'full_name'		=> 	'required',            
+            'vendor_type'		=> 	'required',            
+           	'full_name'		=> 	$full_name,
+            'tc_no'		=> 	$tc_no, 
             'company_name'		=> 	$company_name,
-            'manager_name'		=> 	$manager_name,
-            'tax_name'		=> 	$tax_name,
-            'tax_no'		=> 	$tax_no,
+            'manager_name'		=> 	$manager_name,            
+            'city'		=> 	'required',  
             'email'     =>  'required|email|unique:admin',
             'phone'   => 'required|min:10|numeric',
+            'bank_name'		=> 	'required',
+            'tax_name'		=> 	$tax_name,
+            'tax_no'		=> 	$tax_no,
             'iban'   => 'required|min:26',
 	        'password' => 'required|min:6',
 	        'password_confirmation' => 'required|same:password'
@@ -125,11 +129,11 @@ class AuthController extends Controller
             }
             
             $req->setAddress(($request->address) ? $request->address : 'Not Available');
-            $req->setContactName($request->full_name);
-            $req->setContactSurname($request->full_name);
+            $req->setContactName(($request->full_name) ? $request->full_name : $request->company_name );
+            $req->setContactSurname(($request->full_name) ? $request->full_name : $request->company_name);
             $req->setEmail($request->email);
             $req->setGsmNumber(($request->phone) ? $request->phone : '9999999999');
-            $req->setName($request->full_name);
+            $req->setName(($request->full_name) ? $request->full_name : $request->company_name);
             $req->setIban($request->iban); //TR330006100519786457841326
             $req->setIdentityNumber("ID_".$user->id);
             $req->setCurrency(\Iyzipay\Model\Currency::TL);

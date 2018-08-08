@@ -203,7 +203,7 @@ class ProductController extends Controller {
        // dd($cart);
         $products = Product::with('category')->whereIn('id',$pid)->orderBy('id','asc')->get();
         $categories = Category::nested()->get(); 
-
+        
         return view('end-user.checkout',compact('categories','products','category','cart','product_photo'));  
     }
 
@@ -626,8 +626,9 @@ class ProductController extends Controller {
                 $transaction->user_id       = $user_id;
                 $transaction->product_name  = $result->name;
                 $transaction->product_id    = $result->id;
-                $transaction->total_price   = $result->price * $result->qty;
-                $transaction->discount_price= $result->price * $result->qty;
+                $transaction->qty           = $result->qty;
+                $transaction->total_price   = $result->price;
+                $transaction->discount_price= $result->price;
                 $transaction->payment_mode  = "card";
                 $transaction->transaction_id = $checkoutForm->getPaymentId();
                 $transaction->ItemTransactionId = $checkoutForm->getPaymentItems()[$i]->getPaymentTransactionId();
@@ -700,6 +701,7 @@ class ProductController extends Controller {
             $transaction->user_id       = $user_id;
             $transaction->product_name  = $result->name;
             $transaction->product_id    = $result->id;
+            $transaction->qty           = $result->qty;
             $transaction->total_price   = $result->price;
             $transaction->discount_price= $result->price;
             $transaction->payment_mode  = "COD";

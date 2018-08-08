@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
       Route::get('logout','Modules\Admin\Http\Controllers\AuthController@logout');  
       Route::get('admin/signUp','Modules\Admin\Http\Controllers\AuthController@signUp');
       Route::get('vendor/signUp','Modules\Admin\Http\Controllers\AuthController@signUp');
+      Route::get('satici/giris-kayit','Modules\Admin\Http\Controllers\AuthController@signUp');
       
       Route::get('admin/transaction/approve/{id}','Modules\Admin\Http\Controllers\TransactionController@approve');
       Route::get('admin/transaction/decline/{id}','Modules\Admin\Http\Controllers\TransactionController@decline');

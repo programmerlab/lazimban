@@ -74,7 +74,7 @@
                                       <li><input class="button" name="login" value="Oturum Aç" type="submit"></li>
                                       <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">KAYIT OL</a><a href="{{ url('password/reset') }}" class="forgot">SIFRENI SIFIRLA</a></li>
                                       <li class="reg-link">
-                                        <a href="{{ url('vendor/signUp') }}" class="resig">SATICI OL / GİRİŞİ</a>
+                                        <a href="{{ url('satici/giris-kayit') }}" class="resig">SATICI OL / GİRİŞİ</a>
                                         <!--<a href="{{ url('vendor/signUp') }}" class="resig pull-right">SATICI GİRİŞİ</a>-->
                                       </li>
                                       
@@ -106,10 +106,11 @@
                                                             <td width='40%'>
                                                                 <div class="product-content">                                                     
                                                                     <div class="">
-                                                                        <h2><a href="{{ url($helper->getProduct($item->id)->url) }}"> {{$item->name}}</a></h2>
+                                                                        <h3><a href="{{ url($helper->getProduct($item->id)->url) }}"> {{$item->name}}</a></h3>
                                                                         
                                                                     </div>                                                                    
                                                                 </div>
+                                                                <span>Satıcı: {{ ($helper->getVendorName($item->id)) ? $helper->getVendorName($item->id) : 'Admin' }}</span>
                                                             </td>
                                                             <td width='40%'>
                                                                 <div class="product-media">                                                                 

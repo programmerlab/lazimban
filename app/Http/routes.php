@@ -190,7 +190,19 @@ Route::get('checkout',[
   Route::post('signup',[
           'as' => 'signup',
           'uses'  => 'UserController@signup'
-        ]); 
+        ]);
+  Route::post('updateProfile',[
+          'as' => 'updateProfile',
+          'uses'  => 'UserController@update'
+        ]);
+    Route::post('updateBilling',[
+          'as' => 'updateBilling',
+          'uses'  => 'UserController@updateBilling'
+        ]);
+    Route::post('updateShipping',[
+          'as' => 'updateShipping',
+          'uses'  => 'UserController@updateShipping'
+        ]);
 
 
 

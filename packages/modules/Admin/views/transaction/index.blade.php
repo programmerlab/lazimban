@@ -46,7 +46,9 @@
                                                     <th>Buyer Name</th>
                                                     <th>Buyer Email</th>
                                                     <th>Product Title</th>
-                                                    <th>Price</th> 
+                                                    <th>Price</th>
+                                                    <th>Qty</th>
+                                                    <th>Sub Total</th>
                                                     <th>Payment Mode</th>
                                                     <th>Vendor</th>
                                                     <th>Order Date</th>
@@ -77,6 +79,8 @@
                                                 <td>{{ $result->user->email }} </td>
                                                     <td>{{ isset($result->product->product_title)?$result->product->product_title:'' }} </td>
                                                      <td>{{ $result->total_price }} </td>
+                                                    <td>{{ $result->qty }} </td>
+                                                    <td>{{ $result->total_price * $result->qty }} </td>
                                                        <td>{{ $result->payment_mode }} </td> 
                                                    <td>
                                                     {{ isset($result->product->id)? $helper->getVendorName($result->product->id):'' }}

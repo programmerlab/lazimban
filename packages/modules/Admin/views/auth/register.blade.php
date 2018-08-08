@@ -15,7 +15,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ URL::asset('public/assets/dist/css/AdminLTE.min.css') }}">
     <!-- iCheck -->
-    <link rel="stylesheet" href="{{ URL::asset('public/assets/plugins/iCheck/square/blue.css') }}"> 
+    <link rel="stylesheet" href="{{ URL::asset('public/assets/plugins/iCheck/square/blue.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/new/css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('public/assets/css/custom.css') }}"> 
     <style>
 	.account_login {
@@ -121,7 +122,7 @@
                     
                     <div class="input-icon">
                         <select name="vendor_type" id="vendor_type" class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" onchange="vendor(this.value)">
-                            <option value="">Select Vendor Type</option>
+                            <option value="">Satıcı Tipini Seçiniz</option>
                             <option value="1">Bireysel</option>
                             <option value="2">Kurumsal</option>
                         </select>
@@ -131,17 +132,22 @@
                     <!--<label class="control-label visible-ie8 visible-ie9">Ad-Soyad</label>-->
                     <div class="input-icon">
                          
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Ad-Soyad" name="full_name" value="{{old('full_name')}}"> </div>
+                        <input class="form-control placeholder-no-fix" type="text" id="full_name" style="display:none;" placeholder="Ad-Soyad" name="full_name" value="{{old('full_name')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
                     <div class="input-icon">                         
-                        <input class="form-control placeholder-no-fix" id="company_name" style="display:none;" type="text" placeholder="Þirket Ýsmi" name="company_name" value="{{old('company_name')}}"> </div>
+                        <input class="form-control placeholder-no-fix" id="tc_no" style="display:none;" type="text" placeholder="Kimlik No" name="tc_no" value="{{old('tc_no')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
                     <div class="input-icon">                         
-                        <input class="form-control placeholder-no-fix" id="manager_name" style="display:none;" type="text" placeholder="Yetkili Adı" name="manager_name" value="{{old('company_name')}}"> </div>
+                        <input class="form-control placeholder-no-fix" id="company_name" style="display:none;" type="text" placeholder="Şirket Ünvanı" name="company_name" value="{{old('company_name')}}"> </div>
+                </div>
+                <div class="form-group">
+                    <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
+                    <div class="input-icon">                         
+                        <input class="form-control placeholder-no-fix" id="manager_name" style="display:none;" type="text" placeholder="Yetkili Adı" name="manager_name" value="{{old('manager_name')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -153,7 +159,7 @@
                 <div class="form-group">
                     <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
                     <div class="input-icon">                         
-                        <input class="form-control placeholder-no-fix" id="bank_name"  type="text" placeholder="Banka Adı" name="bank_name" value="{{old('company_name')}}"> </div>
+                        <input class="form-control placeholder-no-fix" id="bank_name"  type="text" placeholder="Banka Adı" name="bank_name" value="{{old('bank_name')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -165,26 +171,24 @@
                 <div class="form-group">
                     <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
                     <div class="input-icon">                         
-                        <input class="form-control placeholder-no-fix" id="tax_name" style="display:none;" type="text" placeholder="Vergi Dairesi" name="tax_name" value="{{old('company_name')}}"> </div>
+                        <input class="form-control placeholder-no-fix" id="tax_name" style="display:none;" type="text" placeholder="Vergi Dairesi" name="tax_name" value="{{old('tax_name')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
                     <div class="input-icon">                         
-                        <input class="form-control placeholder-no-fix" id="tax_no" style="display:none;" type="text" placeholder="Vergi No." name="tax_no" value="{{old('company_name')}}"> </div>
+                        <input class="form-control placeholder-no-fix" id="tax_no" style="display:none;" type="text" placeholder="Vergi No." name="tax_no" value="{{old('tax_no')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--<label class="control-label visible-ie8 visible-ie9">Address</label>-->
                     <div class="input-icon">
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address"  value="{{old('address')}}"> </div>
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="Adres" name="address"  value="{{old('address')}}"> </div>
                 </div>
-                <div class="form-group">
-                    <!--<label class="control-label visible-ie8 visible-ie9">Þehir</label>-->
+                <!--<div class="form-group">                    
                     <div class="input-icon">
                          
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Þehir" name="city"  value="{{old('city')}}"> </div>
-                </div>
-                <div class="form-group">
-                    <!--<label class="control-label visible-ie8 visible-ie9">Ülke</label>-->
+                        <input class="form-control placeholder-no-fix" type="text" placeholder="Şehir" name="city"  value="{{old('city')}}"> </div>
+                </div>-->
+                <!--<div class="form-group">                    
                     <select name="country" id="country_list" class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
                         <option value="">Select Ülke</option>
                         <option value="AF">Afghanistan</option>
@@ -422,7 +426,94 @@
                         <option value="ZM">Zambia</option>
                         <option value="ZW">Zimbabwe</option>
                     </select>
-                </div>
+                </div>-->
+                <div class="form-group">                                                
+                        <!--<input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}">-->
+                        <select class="selectpicker form-control" data-live-search="true" name="city" required>
+                            <option selected="selected" value="">Şehir Seçiniz </option>
+                            
+                            <option data-tokens="Adana" value="Adana">Adana</option>
+                            <option data-tokens="Adıyaman" value="Adıyaman">Adıyaman</option>
+                            <option data-tokens="Afyon" value="Afyon" >Afyon</option>
+                            <option data-tokens="Ağrı" value="Ağrı" >Ağrı</option>
+                            <option data-tokens="Amasya" value="Amasya" >Amasya</option>
+                            <option data-tokens="Ankara" value="Ankara" >Ankara</option>
+                            <option data-tokens="Antalya" value="Antalya" >Antalya</option>
+                            <option data-tokens="Artvin" value="Artvin" >Artvin</option>
+                            <option data-tokens="Aydın" value="Aydın" >Aydın</option>
+                                
+                            <option data-tokens="Balıkesir" value="Balıkesir" >Balıkesir</option>
+                            <option data-tokens="Bilecik" value="Bilecik" >Bilecik</option>
+                            <option data-tokens="Bingöl" value="Bingöl" >Bingöl</option>
+                            <option data-tokens="Bitlis" value="Bitlis" >Bitlis</option>
+                            <option data-tokens="Bolu" value="Bolu" >Bolu</option>
+                            <option data-tokens="Burdur" value="Burdur" >Burdur</option>
+                            <option data-tokens="Bursa" value="Bursa" >Bursa</option>
+                                
+                            <option data-tokens="Çanakkale" value="Çanakkale" >Çanakkale</option>
+                            <option data-tokens="Çankırı" value="Çankırı" >Çankırı</option>
+                            <option data-tokens="Çorum" value="Çorum" >Çorum</option>
+                                
+                            <option data-tokens="Denizli" value="Denizli" >Denizli</option>                                                        
+                            <option data-tokens="Diyarbakır" value="Afyon" >Diyarbakır</option>
+                            <option data-tokens="Edirne" value="Edirne" >Edirne</option>
+                            <option data-tokens="Giresun" value="Giresun" >Giresun</option>
+                                
+                            <option data-tokens="Gümüşhane" value="Gümüşhane" >Gümüşhane</option>
+                            <option data-tokens="Hakkari" value="Hakkari" >Hakkari</option>
+                            <option data-tokens="Hatay" value="Hatay" >Hatay</option>
+                            <option data-tokens="Isparta" value="Isparta" >Isparta</option>
+                            <option data-tokens="Mersin" value="Mersin" >Mersin</option>
+                            <option data-tokens="İstanbul" value="İstanbul" >İstanbul</option>
+                            <option data-tokens="İzmir" value="İzmir" >İzmir</option>
+                            <option data-tokens="Kars" value="Kars" >Kars</option>
+                            <option data-tokens="Kastamonu" value="Kastamonu" >Kastamonu</option>
+                            <option data-tokens="Konya" value="Konya" >Konya</option>
+                            <option data-tokens="Kütahya" value="Kütahya" >Kütahya</option>
+                            <option data-tokens="Malatya" value="Malatya" >Malatya</option>
+                            <option data-tokens="Manisa" value="Manisa" >Manisa</option>
+                            <option data-tokens="Kahramanmaraş" value="Kahramanmaraş" >Kahramanmaraş</option>
+                            <option data-tokens="Mardin" value="Mardin" >Mardin</option>
+                            <option data-tokens="Muğla" value="Muğla" >Muğla</option>
+                            <option data-tokens="Muş" value="Muş" >Muş</option>
+                            <option data-tokens="Nevşehir" value="Nevşehir" >Nevşehir</option>
+                            <option data-tokens="Niğde" value="Niğde" >Niğde</option>
+                            <option data-tokens="Ordu" value="Ordu" >Ordu</option>
+                            <option data-tokens="Rize" value="Rize" >Rize</option>
+                            <option data-tokens="Sakarya" value="Sakarya" >Sakarya</option>
+                            <option data-tokens="Samsun" value="Samsun" >Samsun</option>
+                            <option data-tokens="Siirt" value="Siirt" >Siirt</option>
+                            <option data-tokens="Sinop" value="Sinop" >Sinop</option>
+                            <option data-tokens="Sivas" value="Sivas" >Sivas</option>
+                            <option data-tokens="Tekirdağ" value="Tekirdağ" >Tekirdağ</option>
+                            <option data-tokens="Tokat" value="Tokat" >Tokat</option>
+                            <option data-tokens="Trabzon" value="Trabzon" >Trabzon</option>
+                                
+                            <option data-tokens="Tunceli" value="Tunceli" >Tunceli</option>
+                            <option data-tokens="Şanlıurfa" value="Şanlıurfa" >Şanlıurfa</option>
+                            <option data-tokens="Uşak" value="Uşak" >Uşak</option>
+                            <option data-tokens="Van" value="Van" >Van</option>
+                            <option data-tokens="Yozgat" value="Yozgat" >Yozgat</option>
+                            <option data-tokens="Zonguldak" value="Zonguldak" >Zonguldak</option>
+                            <option data-tokens="Aksaray" value="Aksaray" >Aksaray</option>
+                            <option data-tokens="Bayburt" value="Bayburt" >Bayburt</option>
+                            <option data-tokens="Karaman" value="Karaman" >Karaman</option>
+                            <option data-tokens="Kırıkkale" value="Kırıkkale" >Kırıkkale</option>
+                            <option data-tokens="Batman" value="Batman" >Batman</option>
+                            <option data-tokens="Şırnak" value="Şırnak" >Şırnak</option>
+                            <option data-tokens="Bartın" value="Bartın" >Bartın</option>
+                            <option data-tokens="Ardahan" value="Ardahan" >Ardahan</option>
+                            <option data-tokens="Iğdır" value="Iğdır" >Iğdır</option>
+                            <option data-tokens="Yalova" value="Yalova" >Yalova</option>
+                            <option data-tokens="Karabük" value="Karabük" >Karabük</option>
+                            <option data-tokens="Kilis" value="Kilis" >Kilis</option>
+                            <option data-tokens="Osmaniye" value="Osmaniye" >Osmaniye</option>
+                            <option data-tokens="Düzce" value="Düzce" >Düzce</option>
+                            <option data-tokens="Diğer" value="Diğer" >Diğer</option>
+                            
+                            
+                        </select>
+                    </div>
                 <!--<p> <b> Hesap ayrýntýlarýnýzý giriniz: </b> </p>-->
                  <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -436,14 +527,14 @@
                    <!-- <label class="control-label visible-ie8 visible-ie9">Þifre</label>-->
                     <div class="input-icon">
                          
-                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Þifre" name="password"  value="{{old('password')}}"> </div>
+                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Şifre" name="password"  value="{{old('password')}}"> </div>
                 </div>
                 <div class="form-group">
                     <!--<label class="control-label visible-ie8 visible-ie9">Re-type Your Þifre</label>-->
                     <div class="controls">
                         <div class="input-icon">
                              
-                            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Re-type Your Þifre" name="password_confirmation"  value="{{old('password_confirmation')}}"> </div>
+                            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Şifre (Tekrar)" name="password_confirmation"  value="{{old('password_confirmation')}}"> </div>
                     </div>
                 </div>
                
@@ -490,14 +581,25 @@
                 $('#manager_name').hide();
                 $('#tax_name').hide();
                 $('#tax_no').hide();
+                $('#full_name').show();
+                $('#tc_no').show();
             }
             if(type == 2){
                 $('#company_name').show();
                 $('#manager_name').show();
                 $('#tax_name').show();
                 $('#tax_no').show();
+                $('#full_name').hide();
+                $('#tc_no').hide();
             }
         }
-     </script>   
+     </script>
+        <script src="{{ asset('public/new/js/bootstrap-select.min.js') }}"></script>
+            <script>
+        $('.selectpicker').selectpicker({
+  style: 'btn',
+  size: 4,
+});
+</script>
   </body>
 </html>
