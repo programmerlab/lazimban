@@ -13,7 +13,10 @@
 
 Route::match(['post','get'],'cat','HomeController@index');
 
- 
+
+Route::match(['get'],'optimizeProductImage','HomeController@optimize'); 
+
+Route::match(['get'],'404','HomeController@pageNotFound'); 
 
 
 Route::get('{name}/addToCart/{id}', [ 

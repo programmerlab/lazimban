@@ -28,6 +28,9 @@ use Input;
 use App\Helpers\Helper as Helper;
 use Modules\Admin\Models\Settings; 
 
+use Spatie\ImageOptimizer\OptimizerChainFactory;
+
+
 class HomeController extends Controller
 {
     /**
@@ -107,6 +110,26 @@ class HomeController extends Controller
         
     }
 
+
+
+    public function optimize(){
+
+        $optimizerChain = OptimizerChainFactory::create();
+
+       $dir = glob(storage_path('uploads/products/*.*'));
+
+        foreach ($dir as $filename) {
+            $optimizerChain
+               ->optimize($filename);
+        }
+
+
+    }
+
+    public function pageNotFound(){
+        return view('category',compact('content'));
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -124,7 +147,7 @@ class HomeController extends Controller
         $categories =  Category::attr(['name' => 'categories'])
                         ->selected([3])
                         ->renderAsDropdown();
-          return view('category',compact('categories','html')); 
+        return view('category',compact('categories','html')); 
 
     } 
 
