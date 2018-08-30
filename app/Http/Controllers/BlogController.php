@@ -37,8 +37,14 @@ class BlogController extends Controller
         View::share('total_item',Cart::content()->count());
         View::share('sub_total',Cart::subtotal()); 
         View::share('userData',$request->session()->get('current_user'));
-
+        View::share('cart',Cart::content());
          
+        $pid = [];
+        foreach (Cart::content() as $key => $value) {
+            $pid[] = $value->id;
+        }
+        $product_photo =   Product::whereIn('id',$pid)->get(['photo','id'])->toArray();
+        View::share('product_photo',$product_photo);
 
         $website_title      = $setting::where('field_key','website_title')->first();
         $website_email      = $setting::where('field_key','website_email')->first();
@@ -86,14 +92,20 @@ class BlogController extends Controller
      public function detail ($id=Null){
  
         $blog = DB::table('blogs')
-                ->where('id', $id)
+                ->where('slug', $id)
                 ->first();
                 
         $other_blog = DB::table('blogs')
                 ->where('id', '!=' , $blog->id)
                 ->get();
         //echo "<pre>"; print_r($other_blog); die;
-       return view('end-user.blog-detail',compact('blog','other_blog'));   
+        if($blog->meta_key){
+            $meta_key = $blog->meta_key;
+        }
+        if($blog->meta_description){
+            $meta_description = $blog->meta_description;
+        }
+       return view('end-user.blog-detail',compact('blog','other_blog','meta_key','meta_description'));   
  
     }
     

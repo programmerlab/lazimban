@@ -13,10 +13,7 @@
 
 Route::match(['post','get'],'cat','HomeController@index');
 
-
-Route::match(['get'],'optimizeProductImage','HomeController@optimize'); 
-
-Route::match(['get'],'404','HomeController@pageNotFound'); 
+ 
 
 
 Route::get('{name}/addToCart/{id}', [ 
@@ -29,6 +26,11 @@ Route::get('blogs', [
        'uses' =>   'BlogController@index'
        ]);
 Route::get('blog-detail/{id}', [ 
+        'as' => 'blog-detail',
+       'uses' =>   'BlogController@detail'
+       ]);
+
+Route::get('makale-basligi/{slug}', [ 
         'as' => 'blog-detail',
        'uses' =>   'BlogController@detail'
        ]);
@@ -93,6 +95,10 @@ Route::get('category',[
           'as' => 'contact',
           'uses'  => 'HomeController@contact'
         ]);
+   Route::post('contactus',[
+          'as' => 'contactus',
+          'uses'  => 'HomeController@contact_us'
+        ]);
 
    Route::get('track-orders',[
           'as' => 'trackOrder',
@@ -119,7 +125,10 @@ Route::get('category',[
           'as' => 'contract',
           'uses'  => 'HomeController@sales_contract'
         ]);
-
+    Route::get('sayfa/{slug}',[
+          'as' => 'about',
+          'uses'  => 'HomeController@page'
+        ]);
 
 
 

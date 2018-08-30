@@ -29,7 +29,6 @@ use App\RatingFeedback;
 use PHPMailerAutoload;
 use PHPMailer;
 use Illuminate\Support\Facades\DB;
-use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class Helper {
 
@@ -49,18 +48,69 @@ class Helper {
 
          return $key;
     } 
-
-    public static function optimize($filename=null){
-
-        if($filename!=null){
-
-            $optimizerChain = \OptimizerChainFactory::create();
-            $optimizerChain
-               ->optimize($filename);    
-        }
-        
-       
+/* @method : createCompanyGroup
+    * @param : email,user_id
+    * Response :  string
+    * Return : company name
+    */
+    
+/* @method : getCorporateGroupName
+    * @param : email
+    * Response :  string
+    * Return : company name
+    */
+    public function getCorporateGroupName($email=null)
+    {
+        $fps =  strripos($email,"@");
+        $lps =  strpos(substr($email,$fps),".");
+        $company_name = substr($email,$fps+1,$lps-1);
+        return  $company_name;       
+    } 
+/* @method : getCompanyUrl
+    * @param : email
+    * Response :  string
+    * Return : company URL
+    */
+    public function getCompanyUrl($email=null)
+    {   
+        $fps =  strripos($email,"@");
+        $lps =  strpos(substr($email,$fps),".");
+        $company_url = substr($email,$fps+1);
+        return  $company_url;       
     }
+
+ 
+/* @method : isUserExist
+    * @param : user_id
+    * Response : number
+    * Return : count
+    */
+    static public function isUserExist($user_id=null)
+    {
+        $user = User::where('id',$user_id)->count(); 
+        return $user;
+    }
+ 
+/* @method : getpassword
+    * @param : email
+    * Response :  
+    * Return : true or false
+    */
+    
+    public static function getPassword(){
+        $password = "";
+        $user = Auth::user();
+        if(isset($user)){
+            $password = Auth::user()->Password;
+        }
+        return $password;
+    }
+/* @method : check mobile number
+    * @param : mobile_number
+    * Response :  
+    * Return : true or false
+    */     
+   
     
     public static function FormatPhoneNumber($number){
         return preg_replace('~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', '($1) $2-$3', $number). "\n";
@@ -162,6 +212,50 @@ class Helper {
             } catch (Exception $e) {
              
             }
+    }
+    
+    public static function contactusEmail($template_content)
+    {        
+        $mail = new PHPMailer;
+        $html = view::make('emails.contact_us',['data' => $template_content]);
+        $html = $html->render(); 
+        //echo "<pre>"; print_r($html); die;
+        try {
+            $mail->isSMTP(); // tell to use smtp
+            $mail->CharSet = "utf-8"; // set charset to utf8
+             
+
+            $mail->SMTPAuth   = true;                  // enable SMTP authentication
+            $mail->Host       = "smtp.zoho.com"; // sets the SMTP server
+            $mail->Port       = 587;   
+            $mail->SMTPSecure = 'false';                 // set the SMTP port for the GMAIL server
+            $mail->Username   = "support@krsdata.net"; // SMTP account username
+            $mail->Password   = "support@123"; 
+
+            $mail->setFrom("support@krsdata.net", "Admin");
+            $mail->Subject = 'User wants to contact you';
+            $mail->MsgHTML($html);
+            $admin = DB::table('admin')->where('id', 1)->first();
+            $mail->addAddress($admin->email, "New User");
+           
+            //$mail->addAttachment(‘/home/kundan/Desktop/abc.doc’, ‘abc.doc’); // Optional name
+            $mail->SMTPOptions= array(
+            'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+            )
+            );
+
+            $mail->send();
+            //echo "success";
+            } catch (phpmailerException $e) {
+             
+            } catch (Exception $e) {
+             
+            }
+         
+       
     }
     /* @method : send Mail
     * @param : email
@@ -329,6 +423,65 @@ class Helper {
                 return $product;                 
         }else{
             return 0;
+        }
+    }
+    
+    public static function  getGoogleTag()
+    {        
+        $google_tag = DB::table('settings')->where('field_key', 'google_tag')->first();                
+        
+        //print_r($vendor); die;
+        if($google_tag!=null){
+           // $vendor = DB::table('admin')->where('id', $userid)->first(); 
+            return $google_tag->field_value; 
+        }else{
+            return null;
+        }
+    }
+    
+    public static function  getGoogleAnalytic()
+    {        
+        $google_tag = DB::table('settings')->where('field_key', 'google_analytic')->first();                
+        
+        //print_r($vendor); die;
+        if($google_tag!=null){
+           // $vendor = DB::table('admin')->where('id', $userid)->first(); 
+            return $google_tag->field_value; 
+        }else{
+            return null;
+        }
+    }
+    
+    public static function  getSociallink()
+    {        
+        $fb_id = DB::table('settings')->where('field_key', 'fb_id')->first();
+        $twitter_id = DB::table('settings')->where('field_key', 'twitter_id')->first();
+        $linkedin_id = DB::table('settings')->where('field_key', 'linkedin_id')->first();
+        $pinterest_id = DB::table('settings')->where('field_key', 'pinterest_id')->first();
+        $instagram_id = DB::table('settings')->where('field_key', 'instagram_id')->first();
+        $flicker_id = DB::table('settings')->where('field_key', 'flicker_id')->first();
+        $google_id = DB::table('settings')->where('field_key', 'google_id')->first();
+        $skype_id = DB::table('settings')->where('field_key', 'skype_id')->first();
+        $youtube_id = DB::table('settings')->where('field_key', 'youtube_id')->first();
+        
+        $arr =  ['fb_id'=>$fb_id->field_value,'twitter_id'=>$twitter_id->field_value,'linkedin_id'=>$linkedin_id->field_value,
+                 'pinterest_id'=>$pinterest_id->field_value,'instagram_id'=>$instagram_id->field_value,'flicker_id'=>$flicker_id->field_value,
+                 'google_id'=>$google_id->field_value,'skype_id'=>$skype_id->field_value,'youtube_id'=>$youtube_id->field_value];         
+        if($arr!=null){
+           //print_r($arr); die;
+           return $arr; 
+        }else{
+            return null;
+        }
+    }
+    
+    public static function  getPages()
+    {        
+        $pages = DB::table('pages')->get();                                
+        if($pages!=null){        
+            return $pages; 
+        }else{
+            return null;
         }
     }
 }

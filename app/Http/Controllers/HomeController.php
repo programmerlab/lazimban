@@ -28,9 +28,6 @@ use Input;
 use App\Helpers\Helper as Helper;
 use Modules\Admin\Models\Settings; 
 
-use Spatie\ImageOptimizer\OptimizerChainFactory;
-
-
 class HomeController extends Controller
 {
     /**
@@ -47,7 +44,10 @@ class HomeController extends Controller
         View::share('sub_total',Cart::subtotal()); 
         View::share('userData',$request->session()->get('current_user'));
         View::share('cart',Cart::content());
-
+        
+   
+        //echo "<pre>"; print_r($pages); die;
+        
         $hot_products   = Product::orderBy('views','desc')->limit(3)->get();
         $special_deals  = Product::orderBy('discount','desc')->limit(3)->get(); 
         View::share('hot_products',$hot_products);
@@ -110,26 +110,6 @@ class HomeController extends Controller
         
     }
 
-
-
-    public function optimize(){
-
-        $optimizerChain = OptimizerChainFactory::create();
-
-       $dir = glob(storage_path('uploads/products/*.*'));
-
-        foreach ($dir as $filename) {
-            $optimizerChain
-               ->optimize($filename);
-        }
-
-
-    }
-
-    public function pageNotFound(){
-        return view('category',compact('content'));
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -147,7 +127,7 @@ class HomeController extends Controller
         $categories =  Category::attr(['name' => 'categories'])
                         ->selected([3])
                         ->renderAsDropdown();
-        return view('category',compact('categories','html')); 
+          return view('category',compact('categories','html')); 
 
     } 
 
@@ -297,7 +277,10 @@ class HomeController extends Controller
           $product->save(); 
         } 
         $main_title=  $product->product_title;
-        return view('end-user.product-details',compact('categories','product','main_title','helper'));  
+        if($product->is_indexing == 0){
+            $is_indexing = 0;
+        }
+        return view('end-user.product-details',compact('categories','product','main_title','helper','is_indexing'));  
     }
      /*----------*/
     public function order(Request $request)
@@ -320,37 +303,70 @@ class HomeController extends Controller
     public function about_us()
     {
          $products = Product::with('category')->orderBy('id','asc')->get();
-        $categories = Category::nested()->get(); 
-        return view('end-user.about',compact('categories','products','category'));         
+        $categories = Category::nested()->get();
+        $page =  \DB::table('pages')->where('slug','about')->get();
+        
+        return view('end-user.about',compact('categories','products','category','page'));         
     }
     
     public function privacy_policy()
     {
          $products = Product::with('category')->orderBy('id','asc')->get();
-        $categories = Category::nested()->get(); 
-        return view('end-user.privacy_policy',compact('categories','products','category'));         
+        $categories = Category::nested()->get();
+        $page =  \DB::table('pages')->where('slug','privacy-policy')->get();
+        
+        return view('end-user.privacy_policy',compact('categories','products','category','page'));         
     }
 
     public function returns()
     {
          $products = Product::with('category')->orderBy('id','asc')->get();
-        $categories = Category::nested()->get(); 
-        return view('end-user.returns',compact('categories','products','category'));         
+        $categories = Category::nested()->get();
+        $page =  \DB::table('pages')->where('slug','delivery-and-returns')->get();
+          
+        return view('end-user.returns',compact('categories','products','category','page'));         
     }
     
     public function sales_contract()
     {
          $products = Product::with('category')->orderBy('id','asc')->get();
-        $categories = Category::nested()->get(); 
-        return view('end-user.sales_contract',compact('categories','products','category'));         
+        $categories = Category::nested()->get();
+        $page =  \DB::table('pages')->where('slug','distance-sales-contract')->get();
+        
+        return view('end-user.sales_contract',compact('categories','products','category','page'));         
     }
     
     public function contact()
     {
          $products = Product::with('category')->orderBy('id','asc')->get();
-        $categories = Category::nested()->get(); 
-        return view('end-user.contact',compact('categories','products','category')); 
+        $categories = Category::nested()->get();
+        $page =  \DB::table('pages')->where('slug','contact')->get();
+        
+        return view('end-user.contact',compact('categories','products','category','page')); 
         return view('end-user.contact');   
+    }
+    
+    public function contact_us(Request $request)
+    {
+        $template_content['name'] = $request->get('name');
+        $template_content['email'] = $request->get('email');
+        $template_content['message'] = $request->get('message');
+        
+        $helper =  new   Helper;
+        $helper->contactusEmail($template_content);
+        $url = url()->previous().'#bottom';
+        return Redirect::to($url)->withErrors(['successMsgcontact'=>'Thank you, we will get in touch with you soon!']);
+         
+    }
+    
+    public function page($slug=Null)
+    {
+         $products = Product::with('category')->orderBy('id','asc')->get();
+        $categories = Category::nested()->get();
+        $page =  \DB::table('pages')->where('slug',$slug)->get();
+        
+        
+        return view('end-user.'.$page[0]->page_view_name,compact('categories','products','category','page'));         
     }
      /*----------*/
     public function trackOrder()

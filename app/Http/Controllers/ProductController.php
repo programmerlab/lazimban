@@ -225,7 +225,7 @@ class ProductController extends Controller {
         $cart = Cart::content();  
        // $request->session()->put('key', 'value');
         
-         return Redirect::to(url()->previous())->with('message', $product->product_title.' has successfully added to your cart.');
+         return Redirect::to(url()->previous())->with('message', $product->product_title.' sepetinize başarıyla eklendi.');
          
     }
 
@@ -636,6 +636,13 @@ class ProductController extends Controller {
                 //echo "<pre>"; print_r($transaction); die;
                 $transaction->save();
                 $i++;
+                
+                    $prod = DB::table('products')->select('qty')->where('id',$result->id)->get();
+                    $available_qty = $prod[0]->qty;
+                    $left = $available_qty - $result->qty;
+                    DB::table('products')
+                    ->where('id', $result->id)
+                    ->update(['qty' => $left]);
             }
             
             $products   = Product::with('category')->orderBy('id','asc')->get();
@@ -672,6 +679,7 @@ class ProductController extends Controller {
     
     public function thankYou(Request $request)
     {
+        
         $user_id    = $this->user_id;
         $cart       = Cart::content();
 
@@ -694,7 +702,9 @@ class ProductController extends Controller {
             return  Redirect::to('card');
             
         }
-
+        
+        
+        
         foreach ($cart as $key => $result) {
 
             $transaction                = new Transaction;
@@ -708,8 +718,18 @@ class ProductController extends Controller {
             $transaction->transaction_id = strtotime("now");
             $transaction->product_details = json_encode(Product::where('id',$result->id)->get()->toArray());
             $transaction->save();
+            
+            $prod = DB::table('products')->select('qty')->where('id',$result->id)->get();
+            $available_qty = $prod[0]->qty;
+            $left = $available_qty - $result->qty;
+            DB::table('products')
+            ->where('id', $result->id)
+            ->update(['qty' => $left]);
              
-        } 
+        }
+        
+        
+            
         $cart = Cart::content();  
         if($cart){
             
