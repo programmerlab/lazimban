@@ -15,7 +15,7 @@
         "gloudemans/shoppingcart": "^2.3",
         "atayahmet/laravel-nestable": "^0.7.3",
         "phpmailer/phpmailer": "^5.2",
-        "spatie/image-optimizer": "^1.1" 
+        "spatie/image-optimizer": "^1.1"
 
     },
     "require-dev": {
