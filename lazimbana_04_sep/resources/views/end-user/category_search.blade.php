@@ -38,7 +38,7 @@
                                 @foreach($hot_products as $result)
                                     <li>                                        
                                         <div class="product_cont">
-                                            <span class="product-title">{{ $result->product_title }}</span>
+                                            <span class="product-title"><strong><a href="{{ url($result->url) }}">{{ $result->product_title }}</a></strong></span>
                                             <span class="amount"><font style="vertical-align: inherit;">₺</font> {{ $result->price - ($result->price*$result->discount)/100 }}<span class="woocommerce-Price-currencySymbol"></span></span>
                                             <span class="price-before-discount" style="text-decoration: line-through;"><font style="vertical-align: inherit;">₺</font> {{ $result->price }}</span> 
                                         </div>

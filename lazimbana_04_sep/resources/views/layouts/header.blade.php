@@ -80,7 +80,7 @@
                                       <li><input class="button" name="login" value="Oturum Aç" type="submit"></li>
                                       <li class="reg-link"><a href="{{ url('hesabim/kaydol') }}" class="resig">KAYIT OL</a><a href="{{ url('password/reset') }}" class="forgot">SIFRENI SIFIRLA</a></li>
                                       <li class="reg-link">
-                                        <a href="{{ url('satici/giris-kayit') }}" class="resig">SATICI OL / GİRİŞİ</a>
+                                        <a href="{{ url('satici/giris-kayit') }}" class="resig">SATICI OL / GİRİŞ</a>
                                         <!--<a href="{{ url('vendor/signUp') }}" class="resig pull-right">SATICI GİRİŞİ</a>-->
                                       </li>
                                       
@@ -136,7 +136,7 @@
                                                         <tr>
                                                             <td colspan="3">
                                                                 <div class="product-price">
-                                                                         <h5 class="price"> <b>{{$item->qty}} </b> x <b> £ {{$item->price}} </b></h5>
+                                                                         <h5 class="price"> <b>{{$item->qty}} </b> x <b> ₺ {{$item->price}} </b></h5>
                                                                         <!--<a href="{{ url('/removeitem/'.$item->id) }}" class="delete fa fa-close">  </a>-->
                                                                 </div>
                                                             </td>
@@ -150,7 +150,7 @@
                                                             <td colspan='3'>
                                                                 <div class="sub-total">
                                                                     
-                                                                    <span class="amount"> Genel Toplam :  £{{$sub_total}} </b> </span>
+                                                                    <span class="amount"> Genel Toplam :  ₺{{$sub_total}} </b> </span>
                                                                 </div>
                                                             </td>
                                                         </tr>

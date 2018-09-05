@@ -208,84 +208,84 @@
                                                 <select class="selectpicker form-control" data-live-search="true" name="city" required>
                                                     <option selected="selected" value="">Şehir Seçiniz </option>
                                                     
-                                                    <option data-tokens="Adana" value="Adana">Adana</option>
-                                                    <option data-tokens="Adıyaman" value="Adıyaman">Adıyaman</option>
-                                                    <option data-tokens="Afyon" value="Afyon" >Afyon</option>
-                                                    <option data-tokens="Ağrı" value="Ağrı" >Ağrı</option>
-                                                    <option data-tokens="Amasya" value="Amasya" >Amasya</option>
-                                                    <option data-tokens="Ankara" value="Ankara" >Ankara</option>
-                                                    <option data-tokens="Antalya" value="Antalya" >Antalya</option>
-                                                    <option data-tokens="Artvin" value="Artvin" >Artvin</option>
-                                                    <option data-tokens="Aydın" value="Aydın" >Aydın</option>
+                                                    <option data-tokens="Adana" {{ ($billing->city == 'Adana') ? 'selected' : '' }} value="Adana">Adana</option>
+                                                    <option data-tokens="Adıyaman" {{ ($billing->city == 'Adıyaman') ? 'selected' : '' }} value="Adıyaman">Adıyaman</option>
+                                                    <option data-tokens="Afyon" {{ ($billing->city == 'Afyon') ? 'selected' : '' }} value="Afyon" >Afyon</option>
+                                                    <option data-tokens="Ağrı" {{ ($billing->city == 'Ağrı') ? 'selected' : '' }} value="Ağrı" >Ağrı</option>
+                                                    <option data-tokens="Amasya" {{ ($billing->city == 'Amasya') ? 'selected' : '' }} value="Amasya" >Amasya</option>
+                                                    <option data-tokens="Ankara" {{ ($billing->city == 'Ankara') ? 'selected' : '' }} value="Ankara" >Ankara</option>
+                                                    <option data-tokens="Antalya" {{ ($billing->city == 'Antalya') ? 'selected' : '' }} value="Antalya" >Antalya</option>
+                                                    <option data-tokens="Artvin" {{ ($billing->city == 'Artvin') ? 'selected' : '' }} value="Artvin" >Artvin</option>
+                                                    <option data-tokens="Aydın" {{ ($billing->city == 'Aydın') ? 'selected' : '' }} value="Aydın" >Aydın</option>
                                                         
-                                                    <option data-tokens="Balıkesir" value="Balıkesir" >Balıkesir</option>
-                                                    <option data-tokens="Bilecik" value="Bilecik" >Bilecik</option>
-                                                    <option data-tokens="Bingöl" value="Bingöl" >Bingöl</option>
-                                                    <option data-tokens="Bitlis" value="Bitlis" >Bitlis</option>
-                                                    <option data-tokens="Bolu" value="Bolu" >Bolu</option>
-                                                    <option data-tokens="Burdur" value="Burdur" >Burdur</option>
-                                                    <option data-tokens="Bursa" value="Bursa" >Bursa</option>
+                                                    <option data-tokens="Balıkesir" {{ ($billing->city == 'Balıkesir') ? 'selected' : '' }} value="Balıkesir" >Balıkesir</option>
+                                                    <option data-tokens="Bilecik" {{ ($billing->city == 'Bilecik') ? 'selected' : '' }} value="Bilecik" >Bilecik</option>
+                                                    <option data-tokens="Bingöl" {{ ($billing->city == 'Bingöl') ? 'selected' : '' }} value="Bingöl" >Bingöl</option>
+                                                    <option data-tokens="Bitlis" {{ ($billing->city == 'Bitlis') ? 'selected' : '' }} value="Bitlis" >Bitlis</option>
+                                                    <option data-tokens="Bolu" {{ ($billing->city == 'Bolu') ? 'selected' : '' }} value="Bolu" >Bolu</option>
+                                                    <option data-tokens="Burdur" {{ ($billing->city == 'Burdur') ? 'selected' : '' }} value="Burdur" >Burdur</option>
+                                                    <option data-tokens="Bursa" {{ ($billing->city == 'Bursa') ? 'selected' : '' }} value="Bursa" >Bursa</option>
                                                         
-                                                    <option data-tokens="Çanakkale" value="Çanakkale" >Çanakkale</option>
-                                                    <option data-tokens="Çankırı" value="Çankırı" >Çankırı</option>
-                                                    <option data-tokens="Çorum" value="Çorum" >Çorum</option>
+                                                    <option data-tokens="Çanakkale" {{ ($billing->city == 'Çanakkale') ? 'selected' : '' }} value="Çanakkale" >Çanakkale</option>
+                                                    <option data-tokens="Çankırı" {{ ($billing->city == 'Çankırı') ? 'selected' : '' }} value="Çankırı" >Çankırı</option>
+                                                    <option data-tokens="Çorum" {{ ($billing->city == 'Çorum') ? 'selected' : '' }} value="Çorum" >Çorum</option>
                                                         
-                                                    <option data-tokens="Denizli" value="Denizli" >Denizli</option>                                                        
-                                                    <option data-tokens="Diyarbakır" value="Afyon" >Diyarbakır</option>
-                                                    <option data-tokens="Edirne" value="Edirne" >Edirne</option>
-                                                    <option data-tokens="Giresun" value="Giresun" >Giresun</option>
+                                                    <option data-tokens="Denizli" {{ ($billing->city == 'Denizli') ? 'selected' : '' }} value="Denizli" >Denizli</option>                                                        
+                                                    <option data-tokens="Diyarbakır" {{ ($billing->city == 'Afyon') ? 'selected' : '' }} value="Afyon" >Diyarbakır</option>
+                                                    <option data-tokens="Edirne" {{ ($billing->city == 'Edirne') ? 'selected' : '' }} value="Edirne" >Edirne</option>
+                                                    <option data-tokens="Giresun" {{ ($billing->city == 'Giresun') ? 'selected' : '' }} value="Giresun" >Giresun</option>
                                                         
-                                                    <option data-tokens="Gümüşhane" value="Gümüşhane" >Gümüşhane</option>
-                                                    <option data-tokens="Hakkari" value="Hakkari" >Hakkari</option>
-                                                    <option data-tokens="Hatay" value="Hatay" >Hatay</option>
-                                                    <option data-tokens="Isparta" value="Isparta" >Isparta</option>
-                                                    <option data-tokens="Mersin" value="Mersin" >Mersin</option>
-                                                    <option data-tokens="İstanbul" value="İstanbul" >İstanbul</option>
-                                                    <option data-tokens="İzmir" value="İzmir" >İzmir</option>
-                                                    <option data-tokens="Kars" value="Kars" >Kars</option>
-                                                    <option data-tokens="Kastamonu" value="Kastamonu" >Kastamonu</option>
-                                                    <option data-tokens="Konya" value="Konya" >Konya</option>
-                                                    <option data-tokens="Kütahya" value="Kütahya" >Kütahya</option>
-                                                    <option data-tokens="Malatya" value="Malatya" >Malatya</option>
-                                                    <option data-tokens="Manisa" value="Manisa" >Manisa</option>
-                                                    <option data-tokens="Kahramanmaraş" value="Kahramanmaraş" >Kahramanmaraş</option>
-                                                    <option data-tokens="Mardin" value="Mardin" >Mardin</option>
-                                                    <option data-tokens="Muğla" value="Muğla" >Muğla</option>
-                                                    <option data-tokens="Muş" value="Muş" >Muş</option>
-                                                    <option data-tokens="Nevşehir" value="Nevşehir" >Nevşehir</option>
-                                                    <option data-tokens="Niğde" value="Niğde" >Niğde</option>
-                                                    <option data-tokens="Ordu" value="Ordu" >Ordu</option>
-                                                    <option data-tokens="Rize" value="Rize" >Rize</option>
-                                                    <option data-tokens="Sakarya" value="Sakarya" >Sakarya</option>
-                                                    <option data-tokens="Samsun" value="Samsun" >Samsun</option>
-                                                    <option data-tokens="Siirt" value="Siirt" >Siirt</option>
-                                                    <option data-tokens="Sinop" value="Sinop" >Sinop</option>
-                                                    <option data-tokens="Sivas" value="Sivas" >Sivas</option>
-                                                    <option data-tokens="Tekirdağ" value="Tekirdağ" >Tekirdağ</option>
-                                                    <option data-tokens="Tokat" value="Tokat" >Tokat</option>
-                                                    <option data-tokens="Trabzon" value="Trabzon" >Trabzon</option>
+                                                    <option data-tokens="Gümüşhane" {{ ($billing->city == 'Gümüşhane') ? 'selected' : '' }} value="Gümüşhane" >Gümüşhane</option>
+                                                    <option data-tokens="Hakkari" {{ ($billing->city == 'Hakkari') ? 'selected' : '' }} value="Hakkari" >Hakkari</option>
+                                                    <option data-tokens="Hatay" {{ ($billing->city == 'Hatay') ? 'selected' : '' }} value="Hatay" >Hatay</option>
+                                                    <option data-tokens="Isparta" {{ ($billing->city == 'Isparta') ? 'selected' : '' }} value="Isparta" >Isparta</option>
+                                                    <option data-tokens="Mersin" {{ ($billing->city == 'Mersin') ? 'selected' : '' }} value="Mersin" >Mersin</option>
+                                                    <option data-tokens="İstanbul" {{ ($billing->city == 'İstanbul') ? 'selected' : '' }} value="İstanbul" >İstanbul</option>
+                                                    <option data-tokens="İzmir" {{ ($billing->city == 'İzmir') ? 'selected' : '' }} value="İzmir" >İzmir</option>
+                                                    <option data-tokens="Kars" {{ ($billing->city == 'Kars') ? 'selected' : '' }} value="Kars" >Kars</option>
+                                                    <option data-tokens="Kastamonu" {{ ($billing->city == 'Kastamonu') ? 'selected' : '' }} value="Kastamonu" >Kastamonu</option>
+                                                    <option data-tokens="Konya" {{ ($billing->city == 'Konya') ? 'selected' : '' }} value="Konya" >Konya</option>
+                                                    <option data-tokens="Kütahya" {{ ($billing->city == 'Kütahya') ? 'selected' : '' }} value="Kütahya" >Kütahya</option>
+                                                    <option data-tokens="Malatya" {{ ($billing->city == 'Malatya') ? 'selected' : '' }} value="Malatya" >Malatya</option>
+                                                    <option data-tokens="Manisa" {{ ($billing->city == 'Manisa') ? 'selected' : '' }} value="Manisa" >Manisa</option>
+                                                    <option data-tokens="Kahramanmaraş" {{ ($billing->city == 'Kahramanmaraş') ? 'selected' : '' }} value="Kahramanmaraş" >Kahramanmaraş</option>
+                                                    <option data-tokens="Mardin" {{ ($billing->city == 'Mardin') ? 'selected' : '' }} value="Mardin" >Mardin</option>
+                                                    <option data-tokens="Muğla" {{ ($billing->city == 'Muğla') ? 'selected' : '' }} value="Muğla" >Muğla</option>
+                                                    <option data-tokens="Muş" {{ ($billing->city == 'Muş') ? 'selected' : '' }} value="Muş" >Muş</option>
+                                                    <option data-tokens="Nevşehir" {{ ($billing->city == 'Nevşehir') ? 'selected' : '' }} value="Nevşehir" >Nevşehir</option>
+                                                    <option data-tokens="Niğde" {{ ($billing->city == 'Niğde') ? 'selected' : '' }} value="Niğde" >Niğde</option>
+                                                    <option data-tokens="Ordu" {{ ($billing->city == 'Ordu') ? 'selected' : '' }} value="Ordu" >Ordu</option>
+                                                    <option data-tokens="Rize" {{ ($billing->city == 'Rize') ? 'selected' : '' }} value="Rize" >Rize</option>
+                                                    <option data-tokens="Sakarya" {{ ($billing->city == 'Sakarya') ? 'selected' : '' }} value="Sakarya" >Sakarya</option>
+                                                    <option data-tokens="Samsun" {{ ($billing->city == 'Samsun') ? 'selected' : '' }} value="Samsun" >Samsun</option>
+                                                    <option data-tokens="Siirt" {{ ($billing->city == 'Siirt') ? 'selected' : '' }} value="Siirt" >Siirt</option>
+                                                    <option data-tokens="Sinop" {{ ($billing->city == 'Sinop') ? 'selected' : '' }} value="Sinop" >Sinop</option>
+                                                    <option data-tokens="Sivas" {{ ($billing->city == 'Sivas') ? 'selected' : '' }} value="Sivas" >Sivas</option>
+                                                    <option data-tokens="Tekirdağ" {{ ($billing->city == 'Tekirdağ') ? 'selected' : '' }} value="Tekirdağ" >Tekirdağ</option>
+                                                    <option data-tokens="Tokat" {{ ($billing->city == 'Tokat') ? 'selected' : '' }} value="Tokat" >Tokat</option>
+                                                    <option data-tokens="Trabzon" {{ ($billing->city == 'Trabzon') ? 'selected' : '' }} value="Trabzon" >Trabzon</option>
                                                         
-                                                    <option data-tokens="Tunceli" value="Tunceli" >Tunceli</option>
-                                                    <option data-tokens="Şanlıurfa" value="Şanlıurfa" >Şanlıurfa</option>
-                                                    <option data-tokens="Uşak" value="Uşak" >Uşak</option>
-                                                    <option data-tokens="Van" value="Van" >Van</option>
-                                                    <option data-tokens="Yozgat" value="Yozgat" >Yozgat</option>
-                                                    <option data-tokens="Zonguldak" value="Zonguldak" >Zonguldak</option>
-                                                    <option data-tokens="Aksaray" value="Aksaray" >Aksaray</option>
-                                                    <option data-tokens="Bayburt" value="Bayburt" >Bayburt</option>
-                                                    <option data-tokens="Karaman" value="Karaman" >Karaman</option>
-                                                    <option data-tokens="Kırıkkale" value="Kırıkkale" >Kırıkkale</option>
-                                                    <option data-tokens="Batman" value="Batman" >Batman</option>
-                                                    <option data-tokens="Şırnak" value="Şırnak" >Şırnak</option>
-                                                    <option data-tokens="Bartın" value="Bartın" >Bartın</option>
-                                                    <option data-tokens="Ardahan" value="Ardahan" >Ardahan</option>
-                                                    <option data-tokens="Iğdır" value="Iğdır" >Iğdır</option>
-                                                    <option data-tokens="Yalova" value="Yalova" >Yalova</option>
-                                                    <option data-tokens="Karabük" value="Karabük" >Karabük</option>
-                                                    <option data-tokens="Kilis" value="Kilis" >Kilis</option>
-                                                    <option data-tokens="Osmaniye" value="Osmaniye" >Osmaniye</option>
-                                                    <option data-tokens="Düzce" value="Düzce" >Düzce</option>
-                                                    <option data-tokens="Diğer" value="Diğer" >Diğer</option>
+                                                    <option data-tokens="Tunceli" {{ ($billing->city == 'Tunceli') ? 'selected' : '' }} value="Tunceli" >Tunceli</option>
+                                                    <option data-tokens="Şanlıurfa" {{ ($billing->city == 'Şanlıurfa') ? 'selected' : '' }} value="Şanlıurfa" >Şanlıurfa</option>
+                                                    <option data-tokens="Uşak" {{ ($billing->city == 'Uşak') ? 'selected' : '' }} value="Uşak" >Uşak</option>
+                                                    <option data-tokens="Van" {{ ($billing->city == 'Van') ? 'selected' : '' }} value="Van" >Van</option>
+                                                    <option data-tokens="Yozgat" {{ ($billing->city == 'Yozgat') ? 'selected' : '' }} value="Yozgat" >Yozgat</option>
+                                                    <option data-tokens="Zonguldak" {{ ($billing->city == 'Zonguldak') ? 'selected' : '' }} value="Zonguldak" >Zonguldak</option>
+                                                    <option data-tokens="Aksaray" {{ ($billing->city == 'Aksaray') ? 'selected' : '' }} value="Aksaray" >Aksaray</option>
+                                                    <option data-tokens="Bayburt" {{ ($billing->city == 'Bayburt') ? 'selected' : '' }} value="Bayburt" >Bayburt</option>
+                                                    <option data-tokens="Karaman" {{ ($billing->city == 'Karaman') ? 'selected' : '' }} value="Karaman" >Karaman</option>
+                                                    <option data-tokens="Kırıkkale" {{ ($billing->city == 'Kırıkkale') ? 'selected' : '' }} value="Kırıkkale" >Kırıkkale</option>
+                                                    <option data-tokens="Batman" {{ ($billing->city == 'Batman') ? 'selected' : '' }} value="Batman" >Batman</option>
+                                                    <option data-tokens="Şırnak" {{ ($billing->city == 'Şırnak') ? 'selected' : '' }} value="Şırnak" >Şırnak</option>
+                                                    <option data-tokens="Bartın" {{ ($billing->city == 'Bartın') ? 'selected' : '' }} value="Bartın" >Bartın</option>
+                                                    <option data-tokens="Ardahan" {{ ($billing->city == 'Ardahan') ? 'selected' : '' }} value="Ardahan" >Ardahan</option>
+                                                    <option data-tokens="Iğdır" {{ ($billing->city == 'Iğdır') ? 'selected' : '' }} value="Iğdır" >Iğdır</option>
+                                                    <option data-tokens="Yalova" {{ ($billing->city == 'Yalova') ? 'selected' : '' }} value="Yalova" >Yalova</option>
+                                                    <option data-tokens="Karabük" {{ ($billing->city == 'Karabük') ? 'selected' : '' }} value="Karabük" >Karabük</option>
+                                                    <option data-tokens="Kilis" {{ ($billing->city == 'Kilis') ? 'selected' : '' }} value="Kilis" >Kilis</option>
+                                                    <option data-tokens="Osmaniye" {{ ($billing->city == 'Osmaniye') ? 'selected' : '' }} value="Osmaniye" >Osmaniye</option>
+                                                    <option data-tokens="Düzce" {{ ($billing->city == 'Düzce') ? 'selected' : '' }} value="Düzce" >Düzce</option>
+                                                    <option data-tokens="Diğer" {{ ($billing->city == 'Diğer') ? 'selected' : '' }} value="Diğer" >Diğer</option>
                                                 </select>
                                             </div>
  
@@ -382,84 +382,84 @@
                                                 <select class="selectpicker form-control" data-live-search="true" name="city" required>
                                                     <option selected="selected" value="">Şehir Seçiniz </option>
                                                     
-                                                    <option data-tokens="Adana" value="Adana">Adana</option>
-                                                    <option data-tokens="Adıyaman" value="Adıyaman">Adıyaman</option>
-                                                    <option data-tokens="Afyon" value="Afyon" >Afyon</option>
-                                                    <option data-tokens="Ağrı" value="Ağrı" >Ağrı</option>
-                                                    <option data-tokens="Amasya" value="Amasya" >Amasya</option>
-                                                    <option data-tokens="Ankara" value="Ankara" >Ankara</option>
-                                                    <option data-tokens="Antalya" value="Antalya" >Antalya</option>
-                                                    <option data-tokens="Artvin" value="Artvin" >Artvin</option>
-                                                    <option data-tokens="Aydın" value="Aydın" >Aydın</option>
+                                                    <option data-tokens="Adana" {{ ($shipping->city == 'Adana') ? 'selected' : '' }} value="Adana">Adana</option>
+                                                    <option data-tokens="Adıyaman" {{ ($shipping->city == 'Adıyaman') ? 'selected' : '' }} value="Adıyaman">Adıyaman</option>
+                                                    <option data-tokens="Afyon" {{ ($shipping->city == 'Afyon') ? 'selected' : '' }} value="Afyon" >Afyon</option>
+                                                    <option data-tokens="Ağrı" {{ ($shipping->city == 'Ağrı') ? 'selected' : '' }} value="Ağrı" >Ağrı</option>
+                                                    <option data-tokens="Amasya" {{ ($shipping->city == 'Amasya') ? 'selected' : '' }} value="Amasya" >Amasya</option>
+                                                    <option data-tokens="Ankara" {{ ($shipping->city == 'Ankara') ? 'selected' : '' }} value="Ankara" >Ankara</option>
+                                                    <option data-tokens="Antalya" {{ ($shipping->city == 'Antalya') ? 'selected' : '' }} value="Antalya" >Antalya</option>
+                                                    <option data-tokens="Artvin" {{ ($shipping->city == 'Artvin') ? 'selected' : '' }} value="Artvin" >Artvin</option>
+                                                    <option data-tokens="Aydın" {{ ($shipping->city == 'Aydın') ? 'selected' : '' }} value="Aydın" >Aydın</option>
                                                         
-                                                    <option data-tokens="Balıkesir" value="Balıkesir" >Balıkesir</option>
-                                                    <option data-tokens="Bilecik" value="Bilecik" >Bilecik</option>
-                                                    <option data-tokens="Bingöl" value="Bingöl" >Bingöl</option>
-                                                    <option data-tokens="Bitlis" value="Bitlis" >Bitlis</option>
-                                                    <option data-tokens="Bolu" value="Bolu" >Bolu</option>
-                                                    <option data-tokens="Burdur" value="Burdur" >Burdur</option>
-                                                    <option data-tokens="Bursa" value="Bursa" >Bursa</option>
+                                                    <option data-tokens="Balıkesir" {{ ($shipping->city == 'Balıkesir') ? 'selected' : '' }} value="Balıkesir" >Balıkesir</option>
+                                                    <option data-tokens="Bilecik" {{ ($shipping->city == 'Bilecik') ? 'selected' : '' }} value="Bilecik" >Bilecik</option>
+                                                    <option data-tokens="Bingöl" {{ ($shipping->city == 'Bingöl') ? 'selected' : '' }} value="Bingöl" >Bingöl</option>
+                                                    <option data-tokens="Bitlis" {{ ($shipping->city == 'Bitlis') ? 'selected' : '' }} value="Bitlis" >Bitlis</option>
+                                                    <option data-tokens="Bolu" {{ ($shipping->city == 'Bolu') ? 'selected' : '' }} value="Bolu" >Bolu</option>
+                                                    <option data-tokens="Burdur" {{ ($shipping->city == 'Burdur') ? 'selected' : '' }} value="Burdur" >Burdur</option>
+                                                    <option data-tokens="Bursa" {{ ($shipping->city == 'Bursa') ? 'selected' : '' }} value="Bursa" >Bursa</option>
                                                         
-                                                    <option data-tokens="Çanakkale" value="Çanakkale" >Çanakkale</option>
-                                                    <option data-tokens="Çankırı" value="Çankırı" >Çankırı</option>
-                                                    <option data-tokens="Çorum" value="Çorum" >Çorum</option>
+                                                    <option data-tokens="Çanakkale" {{ ($shipping->city == 'Çanakkale') ? 'selected' : '' }} value="Çanakkale" >Çanakkale</option>
+                                                    <option data-tokens="Çankırı" {{ ($shipping->city == 'Çankırı') ? 'selected' : '' }} value="Çankırı" >Çankırı</option>
+                                                    <option data-tokens="Çorum" {{ ($shipping->city == 'Çorum') ? 'selected' : '' }} value="Çorum" >Çorum</option>
                                                         
-                                                    <option data-tokens="Denizli" value="Denizli" >Denizli</option>                                                        
-                                                    <option data-tokens="Diyarbakır" value="Afyon" >Diyarbakır</option>
-                                                    <option data-tokens="Edirne" value="Edirne" >Edirne</option>
-                                                    <option data-tokens="Giresun" value="Giresun" >Giresun</option>
+                                                    <option data-tokens="Denizli" {{ ($shipping->city == 'Denizli') ? 'selected' : '' }} value="Denizli" >Denizli</option>                                                        
+                                                    <option data-tokens="Diyarbakır" {{ ($shipping->city == 'Afyon') ? 'selected' : '' }} value="Afyon" >Diyarbakır</option>
+                                                    <option data-tokens="Edirne" {{ ($shipping->city == 'Edirne') ? 'selected' : '' }} value="Edirne" >Edirne</option>
+                                                    <option data-tokens="Giresun" {{ ($shipping->city == 'Giresun') ? 'selected' : '' }} value="Giresun" >Giresun</option>
                                                         
-                                                    <option data-tokens="Gümüşhane" value="Gümüşhane" >Gümüşhane</option>
-                                                    <option data-tokens="Hakkari" value="Hakkari" >Hakkari</option>
-                                                    <option data-tokens="Hatay" value="Hatay" >Hatay</option>
-                                                    <option data-tokens="Isparta" value="Isparta" >Isparta</option>
-                                                    <option data-tokens="Mersin" value="Mersin" >Mersin</option>
-                                                    <option data-tokens="İstanbul" value="İstanbul" >İstanbul</option>
-                                                    <option data-tokens="İzmir" value="İzmir" >İzmir</option>
-                                                    <option data-tokens="Kars" value="Kars" >Kars</option>
-                                                    <option data-tokens="Kastamonu" value="Kastamonu" >Kastamonu</option>
-                                                    <option data-tokens="Konya" value="Konya" >Konya</option>
-                                                    <option data-tokens="Kütahya" value="Kütahya" >Kütahya</option>
-                                                    <option data-tokens="Malatya" value="Malatya" >Malatya</option>
-                                                    <option data-tokens="Manisa" value="Manisa" >Manisa</option>
-                                                    <option data-tokens="Kahramanmaraş" value="Kahramanmaraş" >Kahramanmaraş</option>
-                                                    <option data-tokens="Mardin" value="Mardin" >Mardin</option>
-                                                    <option data-tokens="Muğla" value="Muğla" >Muğla</option>
-                                                    <option data-tokens="Muş" value="Muş" >Muş</option>
-                                                    <option data-tokens="Nevşehir" value="Nevşehir" >Nevşehir</option>
-                                                    <option data-tokens="Niğde" value="Niğde" >Niğde</option>
-                                                    <option data-tokens="Ordu" value="Ordu" >Ordu</option>
-                                                    <option data-tokens="Rize" value="Rize" >Rize</option>
-                                                    <option data-tokens="Sakarya" value="Sakarya" >Sakarya</option>
-                                                    <option data-tokens="Samsun" value="Samsun" >Samsun</option>
-                                                    <option data-tokens="Siirt" value="Siirt" >Siirt</option>
-                                                    <option data-tokens="Sinop" value="Sinop" >Sinop</option>
-                                                    <option data-tokens="Sivas" value="Sivas" >Sivas</option>
-                                                    <option data-tokens="Tekirdağ" value="Tekirdağ" >Tekirdağ</option>
-                                                    <option data-tokens="Tokat" value="Tokat" >Tokat</option>
-                                                    <option data-tokens="Trabzon" value="Trabzon" >Trabzon</option>
+                                                    <option data-tokens="Gümüşhane" {{ ($shipping->city == 'Gümüşhane') ? 'selected' : '' }} value="Gümüşhane" >Gümüşhane</option>
+                                                    <option data-tokens="Hakkari" {{ ($shipping->city == 'Hakkari') ? 'selected' : '' }} value="Hakkari" >Hakkari</option>
+                                                    <option data-tokens="Hatay" {{ ($shipping->city == 'Hatay') ? 'selected' : '' }} value="Hatay" >Hatay</option>
+                                                    <option data-tokens="Isparta" {{ ($shipping->city == 'Isparta') ? 'selected' : '' }} value="Isparta" >Isparta</option>
+                                                    <option data-tokens="Mersin" {{ ($shipping->city == 'Mersin') ? 'selected' : '' }} value="Mersin" >Mersin</option>
+                                                    <option data-tokens="İstanbul" {{ ($shipping->city == 'İstanbul') ? 'selected' : '' }} value="İstanbul" >İstanbul</option>
+                                                    <option data-tokens="İzmir" {{ ($shipping->city == 'İzmir') ? 'selected' : '' }} value="İzmir" >İzmir</option>
+                                                    <option data-tokens="Kars" {{ ($shipping->city == 'Kars') ? 'selected' : '' }} value="Kars" >Kars</option>
+                                                    <option data-tokens="Kastamonu" {{ ($shipping->city == 'Kastamonu') ? 'selected' : '' }} value="Kastamonu" >Kastamonu</option>
+                                                    <option data-tokens="Konya" {{ ($shipping->city == 'Konya') ? 'selected' : '' }} value="Konya" >Konya</option>
+                                                    <option data-tokens="Kütahya" {{ ($shipping->city == 'Kütahya') ? 'selected' : '' }} value="Kütahya" >Kütahya</option>
+                                                    <option data-tokens="Malatya" {{ ($shipping->city == 'Malatya') ? 'selected' : '' }} value="Malatya" >Malatya</option>
+                                                    <option data-tokens="Manisa" {{ ($shipping->city == 'Manisa') ? 'selected' : '' }} value="Manisa" >Manisa</option>
+                                                    <option data-tokens="Kahramanmaraş" {{ ($shipping->city == 'Kahramanmaraş') ? 'selected' : '' }} value="Kahramanmaraş" >Kahramanmaraş</option>
+                                                    <option data-tokens="Mardin" {{ ($shipping->city == 'Mardin') ? 'selected' : '' }} value="Mardin" >Mardin</option>
+                                                    <option data-tokens="Muğla" {{ ($shipping->city == 'Muğla') ? 'selected' : '' }} value="Muğla" >Muğla</option>
+                                                    <option data-tokens="Muş" {{ ($shipping->city == 'Muş') ? 'selected' : '' }} value="Muş" >Muş</option>
+                                                    <option data-tokens="Nevşehir" {{ ($shipping->city == 'Nevşehir') ? 'selected' : '' }} value="Nevşehir" >Nevşehir</option>
+                                                    <option data-tokens="Niğde" {{ ($shipping->city == 'Niğde') ? 'selected' : '' }} value="Niğde" >Niğde</option>
+                                                    <option data-tokens="Ordu" {{ ($shipping->city == 'Ordu') ? 'selected' : '' }} value="Ordu" >Ordu</option>
+                                                    <option data-tokens="Rize" {{ ($shipping->city == 'Rize') ? 'selected' : '' }} value="Rize" >Rize</option>
+                                                    <option data-tokens="Sakarya" {{ ($shipping->city == 'Sakarya') ? 'selected' : '' }} value="Sakarya" >Sakarya</option>
+                                                    <option data-tokens="Samsun" {{ ($shipping->city == 'Samsun') ? 'selected' : '' }} value="Samsun" >Samsun</option>
+                                                    <option data-tokens="Siirt" {{ ($shipping->city == 'Siirt') ? 'selected' : '' }} value="Siirt" >Siirt</option>
+                                                    <option data-tokens="Sinop" {{ ($shipping->city == 'Sinop') ? 'selected' : '' }} value="Sinop" >Sinop</option>
+                                                    <option data-tokens="Sivas" {{ ($shipping->city == 'Sivas') ? 'selected' : '' }} value="Sivas" >Sivas</option>
+                                                    <option data-tokens="Tekirdağ" {{ ($shipping->city == 'Tekirdağ') ? 'selected' : '' }} value="Tekirdağ" >Tekirdağ</option>
+                                                    <option data-tokens="Tokat" {{ ($shipping->city == 'Tokat') ? 'selected' : '' }} value="Tokat" >Tokat</option>
+                                                    <option data-tokens="Trabzon" {{ ($shipping->city == 'Trabzon') ? 'selected' : '' }} value="Trabzon" >Trabzon</option>
                                                         
-                                                    <option data-tokens="Tunceli" value="Tunceli" >Tunceli</option>
-                                                    <option data-tokens="Şanlıurfa" value="Şanlıurfa" >Şanlıurfa</option>
-                                                    <option data-tokens="Uşak" value="Uşak" >Uşak</option>
-                                                    <option data-tokens="Van" value="Van" >Van</option>
-                                                    <option data-tokens="Yozgat" value="Yozgat" >Yozgat</option>
-                                                    <option data-tokens="Zonguldak" value="Zonguldak" >Zonguldak</option>
-                                                    <option data-tokens="Aksaray" value="Aksaray" >Aksaray</option>
-                                                    <option data-tokens="Bayburt" value="Bayburt" >Bayburt</option>
-                                                    <option data-tokens="Karaman" value="Karaman" >Karaman</option>
-                                                    <option data-tokens="Kırıkkale" value="Kırıkkale" >Kırıkkale</option>
-                                                    <option data-tokens="Batman" value="Batman" >Batman</option>
-                                                    <option data-tokens="Şırnak" value="Şırnak" >Şırnak</option>
-                                                    <option data-tokens="Bartın" value="Bartın" >Bartın</option>
-                                                    <option data-tokens="Ardahan" value="Ardahan" >Ardahan</option>
-                                                    <option data-tokens="Iğdır" value="Iğdır" >Iğdır</option>
-                                                    <option data-tokens="Yalova" value="Yalova" >Yalova</option>
-                                                    <option data-tokens="Karabük" value="Karabük" >Karabük</option>
-                                                    <option data-tokens="Kilis" value="Kilis" >Kilis</option>
-                                                    <option data-tokens="Osmaniye" value="Osmaniye" >Osmaniye</option>
-                                                    <option data-tokens="Düzce" value="Düzce" >Düzce</option>
-                                                    <option data-tokens="Diğer" value="Diğer" >Diğer</option>
+                                                    <option data-tokens="Tunceli" {{ ($shipping->city == 'Tunceli') ? 'selected' : '' }} value="Tunceli" >Tunceli</option>
+                                                    <option data-tokens="Şanlıurfa" {{ ($shipping->city == 'Şanlıurfa') ? 'selected' : '' }} value="Şanlıurfa" >Şanlıurfa</option>
+                                                    <option data-tokens="Uşak" {{ ($shipping->city == 'Uşak') ? 'selected' : '' }} value="Uşak" >Uşak</option>
+                                                    <option data-tokens="Van" {{ ($shipping->city == 'Van') ? 'selected' : '' }} value="Van" >Van</option>
+                                                    <option data-tokens="Yozgat" {{ ($shipping->city == 'Yozgat') ? 'selected' : '' }} value="Yozgat" >Yozgat</option>
+                                                    <option data-tokens="Zonguldak" {{ ($shipping->city == 'Zonguldak') ? 'selected' : '' }} value="Zonguldak" >Zonguldak</option>
+                                                    <option data-tokens="Aksaray" {{ ($shipping->city == 'Aksaray') ? 'selected' : '' }} value="Aksaray" >Aksaray</option>
+                                                    <option data-tokens="Bayburt" {{ ($shipping->city == 'Bayburt') ? 'selected' : '' }} value="Bayburt" >Bayburt</option>
+                                                    <option data-tokens="Karaman" {{ ($shipping->city == 'Karaman') ? 'selected' : '' }} value="Karaman" >Karaman</option>
+                                                    <option data-tokens="Kırıkkale" {{ ($shipping->city == 'Kırıkkale') ? 'selected' : '' }} value="Kırıkkale" >Kırıkkale</option>
+                                                    <option data-tokens="Batman" {{ ($shipping->city == 'Batman') ? 'selected' : '' }} value="Batman" >Batman</option>
+                                                    <option data-tokens="Şırnak" {{ ($shipping->city == 'Şırnak') ? 'selected' : '' }} value="Şırnak" >Şırnak</option>
+                                                    <option data-tokens="Bartın" {{ ($shipping->city == 'Bartın') ? 'selected' : '' }} value="Bartın" >Bartın</option>
+                                                    <option data-tokens="Ardahan" {{ ($shipping->city == 'Ardahan') ? 'selected' : '' }} value="Ardahan" >Ardahan</option>
+                                                    <option data-tokens="Iğdır" {{ ($shipping->city == 'Iğdır') ? 'selected' : '' }} value="Iğdır" >Iğdır</option>
+                                                    <option data-tokens="Yalova" {{ ($shipping->city == 'Yalova') ? 'selected' : '' }} value="Yalova" >Yalova</option>
+                                                    <option data-tokens="Karabük" {{ ($shipping->city == 'Karabük') ? 'selected' : '' }} value="Karabük" >Karabük</option>
+                                                    <option data-tokens="Kilis" {{ ($shipping->city == 'Kilis') ? 'selected' : '' }} value="Kilis" >Kilis</option>
+                                                    <option data-tokens="Osmaniye" {{ ($shipping->city == 'Osmaniye') ? 'selected' : '' }} value="Osmaniye" >Osmaniye</option>
+                                                    <option data-tokens="Düzce" {{ ($shipping->city == 'Düzce') ? 'selected' : '' }} value="Düzce" >Düzce</option>
+                                                    <option data-tokens="Diğer" {{ ($shipping->city == 'Diğer') ? 'selected' : '' }} value="Diğer" >Diğer</option>
                                                     
                                                     
                                                 </select>
@@ -584,7 +584,7 @@
                                     <tr>
                                         <th>
                                             <div class="cart-sub-total">
-                                                <span class="inner-left-md">ara toplam <font style="vertical-align: inherit;">₺</font> {{$sub_total}} </span>
+                                                <span class="inner-left-md">Ara Toplam <font style="vertical-align: inherit;">₺</font> {{$sub_total}} </span>
                                             </div>
                                             <div class="cart-grand-total">
                                                 <span class="inner-left-md">Genel Toplam <font style="vertical-align: inherit;">₺</font> {{$sub_total}} </span>

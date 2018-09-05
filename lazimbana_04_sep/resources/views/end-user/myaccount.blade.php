@@ -228,8 +228,8 @@
                                                     <option data-tokens="Şanlıurfa" {{ ($billing->city == 'Şanlıurfa') ? 'selected' : '' }} value="Şanlıurfa" >Şanlıurfa</option>
                                                     <option data-tokens="Uşak" {{ ($billing->city == 'Uşak') ? 'selected' : '' }} value="Uşak" >Uşak</option>
                                                     <option data-tokens="Van" {{ ($billing->city == 'Van') ? 'selected' : '' }} value="Van" >Van</option>
-                                                    <option data-tokens="Yozgat" {{ ($billing->city == 'Adana') ? 'selected' : '' }} value="Yozgat" >Yozgat</option>
-                                                    <option data-tokens="Zonguldak" {{ ($billing->city == 'Yozgat') ? 'selected' : '' }} value="Zonguldak" >Zonguldak</option>
+                                                    <option data-tokens="Yozgat" {{ ($billing->city == 'Yozgat') ? 'selected' : '' }} value="Yozgat" >Yozgat</option>
+                                                    <option data-tokens="Zonguldak" {{ ($billing->city == 'Zonguldak') ? 'selected' : '' }} value="Zonguldak" >Zonguldak</option>
                                                     <option data-tokens="Aksaray" {{ ($billing->city == 'Aksaray') ? 'selected' : '' }} value="Aksaray" >Aksaray</option>
                                                     <option data-tokens="Bayburt" {{ ($billing->city == 'Bayburt') ? 'selected' : '' }} value="Bayburt" >Bayburt</option>
                                                     <option data-tokens="Karaman" {{ ($billing->city == 'Karaman') ? 'selected' : '' }} value="Karaman" >Karaman</option>
@@ -400,8 +400,8 @@
                                                     <option data-tokens="Şanlıurfa" {{ ($shipping->city == 'Şanlıurfa') ? 'selected' : '' }} value="Şanlıurfa" >Şanlıurfa</option>
                                                     <option data-tokens="Uşak" {{ ($shipping->city == 'Uşak') ? 'selected' : '' }} value="Uşak" >Uşak</option>
                                                     <option data-tokens="Van" {{ ($shipping->city == 'Van') ? 'selected' : '' }} value="Van" >Van</option>
-                                                    <option data-tokens="Yozgat" {{ ($shipping->city == 'Adana') ? 'selected' : '' }} value="Yozgat" >Yozgat</option>
-                                                    <option data-tokens="Zonguldak" {{ ($shipping->city == 'Yozgat') ? 'selected' : '' }} value="Zonguldak" >Zonguldak</option>
+                                                    <option data-tokens="Yozgat" {{ ($shipping->city == 'Yozgat') ? 'selected' : '' }} value="Yozgat" >Yozgat</option>
+                                                    <option data-tokens="Zonguldak" {{ ($shipping->city == 'Zonguldak') ? 'selected' : '' }} value="Zonguldak" >Zonguldak</option>
                                                     <option data-tokens="Aksaray" {{ ($shipping->city == 'Aksaray') ? 'selected' : '' }} value="Aksaray" >Aksaray</option>
                                                     <option data-tokens="Bayburt" {{ ($shipping->city == 'Bayburt') ? 'selected' : '' }} value="Bayburt" >Bayburt</option>
                                                     <option data-tokens="Karaman" {{ ($shipping->city == 'Karaman') ? 'selected' : '' }} value="Karaman" >Karaman</option>

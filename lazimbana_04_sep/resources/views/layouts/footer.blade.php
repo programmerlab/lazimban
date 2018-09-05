@@ -1,7 +1,7 @@
 <footer>
       <div class="page-wrapper">
           <div class="col-md-3">
-              <h3>şirket</h3>
+              <h3>Kurumsal</h3>
               <ul>
                   <!--<li class="fiRSt"><a title="Your Account" href="{{ url('about') }}">Hakkımızda</a></li>
                     <li><a title="Information" href="{{ url('privacy-policy') }}">Gizlilik Politikası</a></li>
@@ -10,10 +10,10 @@
                     <li><a title="Blog" href="{{ url('blogs') }}">Blog</a></li>-->
                      <?php $pagelink = $helper->getPages(); ?>
                     
-                    <li class="fiRSt"><a title="Your Account" href="{{ url('sayfa/'.$pagelink[0]->slug) }}">Hakkımızda</a></li>
-                    <li><a title="Information" href="{{ url('sayfa/'.$pagelink[1]->slug) }}">Gizlilik Politikası</a></li>
-                    <li><a title="Addresses" href="{{ url('sayfa/'.$pagelink[2]->slug) }}">Teslimat ve iadeler</a></li>
-                    <li><a title="Addresses" href="{{ url('sayfa/'.$pagelink[3]->slug) }}">Mesafeli Satış Sözleşmesi</a></li>
+                    <li class="fiRSt"><a title="Your Account" href="{{ url('/Hakkimizda') }}">Hakkımızda</a></li>
+                    <li><a title="Information" href="{{ url('/Gizlilik-Politikası') }}">Gizlilik Politikası</a></li>
+                    <li><a title="Addresses" href="{{ url('/Teslimat-Ve-Iadeler') }}">Teslimat ve iadeler</a></li>
+                    <li><a title="Addresses" href="{{ url('/Mesafeli-Satış-Sözleşmesi') }}">Mesafeli Satış Sözleşmesi</a></li>
                     <li><a title="Blog" href="{{ url('blog') }}">Blog</a></li>
               </ul>
           </div>
@@ -22,9 +22,9 @@
               <ul>
                  <li class="fiRSt"><a href="{{ url('hesabim') }}" title="Contact us">Hesabım</a></li>
                  <li><a href="{{ url('hesabim') }}" title="About us">Sipariş Geçmişi</a></li>
-                 <li><a href="{{url('faq')}}" title="faq">SSS</a></li> 
+                 <li><a href="{{url('SSS')}}" title="faq">SSS</a></li> 
                  <!--<li class="last"><a href="{{ url('contact') }}" title="Where is my order?">Yardım Merkezi</a></li>-->
-                 <li class="last"><a href="{{ url('sayfa/'.$pagelink[4]->slug) }}" title="Where is my order?">Yardım Merkezi</a></li>
+                 <li class="last"><a href="{{ url('/Yardım-Merkezi') }}" title="Where is my order?">Yardım Merkezi</a></li>
               </ul>
           </div>
           <div class="col-md-3">
@@ -49,9 +49,9 @@
             <div class="col-md-5"><p>Lazimbana.com Tüm hakları saklıdır..</p></div>
             <div class="col-md-7">
                 <div class="footer_link pull-right">
-                    <a href="#">Hakkımızda</a>
-                    <a href="#">Yardým</a>
-                    <a href="#">Ýletiþim</a>
+                    <a href="{{ url('/Hakkimizda') }}">Hakkımızda</a>
+                    <a href="{{ url('/Yardım-Merkezi') }}">Yardým</a>
+                    <a href="{{ url('/Yardım-Merkezi') }}">Ýletiþim</a>
                 </div>
                
             </div>

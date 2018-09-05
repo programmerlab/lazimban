@@ -27,6 +27,8 @@ use Cart;
 use Input;
 use App\Helpers\Helper as Helper;
 use Modules\Admin\Models\Settings; 
+use Spatie\ImageOptimizer\OptimizerChainFactory;
+
 
 class HomeController extends Controller
 {
@@ -37,7 +39,7 @@ class HomeController extends Controller
      */
      
 
-      public function __construct(Request $request,Settings $setting) {   
+      public function __construct(Request $request,Settings $setting) {  
         View::share('helper',new Helper);
         View::share('category_name',$request->segment(1));
         View::share('total_item',Cart::content()->count());
@@ -110,6 +112,19 @@ class HomeController extends Controller
         
     }
 
+
+    public function optimize(){
+         $optimizerChain = OptimizerChainFactory::create();
+        $dir = glob(storage_path('uploads/products/*.*'));
+         foreach ($dir as $filename) {
+            $optimizerChain
+               ->optimize($filename);
+        }
+     }
+     public function pageNotFound(){
+        return view('category',compact('content'));
+    }
+    
     /**
      * Show the application dashboard.
      *
@@ -304,7 +319,8 @@ class HomeController extends Controller
     {
          $products = Product::with('category')->orderBy('id','asc')->get();
         $categories = Category::nested()->get();
-        $page =  \DB::table('pages')->where('slug','about')->get();        
+        $page =  \DB::table('pages')->where('slug','about')->get();
+        
         return view('end-user.about',compact('categories','products','category','page'));         
     }
     
@@ -355,20 +371,6 @@ class HomeController extends Controller
         $helper->contactusEmail($template_content);
         $url = url()->previous().'#bottom';
         return Redirect::to($url)->withErrors(['successMsgcontact'=>'Thank you, we will get in touch with you soon!']);
-         
-    }
-    
-    public function enquiry(Request $request)
-    {
-        $template_content['name'] = $request->get('name');
-        $template_content['email'] = $request->get('email');
-        $template_content['title'] = $request->get('title');
-        $template_content['message'] = $request->get('message');
-        
-        $helper =  new   Helper;
-        $helper->contactusEmail($template_content);
-        $url = url()->previous().'#bottom';
-        return Redirect::to($url)->withErrors(['successMsgenquiry'=>'Thank you, we will get in touch with you soon!']);
          
     }
     

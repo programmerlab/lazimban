@@ -31,11 +31,11 @@
                                             <div class="blog_content">
                                                 <h4 class="text-capitalize"><a href="makale/{!! $blog->slug !!}">{{ $blog->title }}</a></h4>
                                                 <p>{!! substr($blog->description,0,200) !!}..</p>
-                                                <a href="makale/{!! $blog->slug !!}" class="block-read-more">Read More<i class="fa fa-arrow-circle-right"></i></a>
+                                                <a href="makale/{!! $blog->slug !!}" class="block-read-more">Devamı<i class="fa fa-arrow-circle-right"></i></a>
                                                 <div class="block-info">
                                                     <ul class="list-info">
                                                         <li class="author">
-                                                            <span class="author-label">By </span><a  class="link"><span class="author-text">Admin</span></a></li>
+                                                            <span class="author-label">By </span><a  class="link"><span class="author-text">Ekleyen</span></a></li>
                                                         <li class="date"><a href="#" class="link date">{!! date('d M Y h:i:s', strtotime($blog->created_at)) !!}</a></li>
                                                     </ul>
                                                 </div>

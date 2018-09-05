@@ -95,13 +95,17 @@ Route::get('category',[
  Route::get('order',[
           'as' => 'order',
           'uses'  => 'ProductController@order'
+        ]);
+ Route::get('siparis',[
+          'as' => 'order',
+          'uses'  => 'ProductController@order'
         ]); 
-  Route::get('faq',[
+  Route::get('SSS',[
           'as' => 'faq',
           'uses'  => 'HomeController@faq'
         ]); 
   
-   Route::get('contact',[
+   Route::get('Yardım-Merkezi',[
           'as' => 'contact',
           'uses'  => 'HomeController@contact'
         ]);
@@ -109,7 +113,10 @@ Route::get('category',[
           'as' => 'contactus',
           'uses'  => 'HomeController@contact_us'
         ]);
-
+   Route::post('enquiry',[
+          'as' => 'contactus',
+          'uses'  => 'HomeController@enquiry'
+        ]);
    Route::get('track-orders',[
           'as' => 'trackOrder',
           'uses'  => 'HomeController@trackOrder'
@@ -119,19 +126,16 @@ Route::get('category',[
           'uses'  => 'HomeController@tNc'
         ]); 
  
-    Route::get('about',[
-          'as' => 'about',
-          'uses'  => 'HomeController@about_us'
-        ]);
-    Route::get('privacy-policy',[
+    
+    Route::get('Gizlilik-Politikası',[
           'as' => 'privacy',
           'uses'  => 'HomeController@privacy_policy'
         ]);
-     Route::get('delivery-and-returns',[
+     Route::get('Teslimat-Ve-Iadeler',[
           'as' => 'returns',
           'uses'  => 'HomeController@returns'
         ]);
-     Route::get('distance-sales-contract',[
+     Route::get('Mesafeli-Satış-Sözleşmesi',[
           'as' => 'contract',
           'uses'  => 'HomeController@sales_contract'
         ]);
@@ -139,7 +143,10 @@ Route::get('category',[
           'as' => 'about',
           'uses'  => 'HomeController@page'
         ]);
-
+    Route::get('Hakkimizda',[
+          'as' => 'about',
+          'uses'  => 'HomeController@about_us'
+        ]);
 
 
 Route::group(['middleware' => ['web']], function(){

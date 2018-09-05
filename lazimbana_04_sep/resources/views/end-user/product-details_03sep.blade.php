@@ -130,7 +130,7 @@
     color: brown;
     background-color: beige;
     padding: 5px; margin: 3px; border-radius: 5px; 
-"> <b>  {{ucfirst($rs->name)}}  </b> tarafından <b> {!! Carbon\Carbon::parse($rs->created_at)->format('d-M-Y'); !!}</b> tarihinde: <br>{{$rs->comments}} </p>
+"> <b> By  {{ucfirst($rs->name)}} de </b> on {!! Carbon\Carbon::parse($rs->created_at)->format('d-M-Y'); !!}: <br>{{$rs->comments}} </p>
                                             @endforeach
                                             @endif
                                         </div>
