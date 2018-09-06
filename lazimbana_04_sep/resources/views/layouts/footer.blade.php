@@ -50,8 +50,8 @@
             <div class="col-md-7">
                 <div class="footer_link pull-right">
                     <a href="{{ url('/Hakkimizda') }}">Hakkımızda</a>
-                    <a href="{{ url('/Yardım-Merkezi') }}">Yardým</a>
-                    <a href="{{ url('/Yardım-Merkezi') }}">Ýletiþim</a>
+                    <a href="{{ url('/SSS') }}">Yardım</a>
+                    <a href="{{ url('/Yardım-Merkezi') }}">İletişim</a>
                 </div>
                
             </div>

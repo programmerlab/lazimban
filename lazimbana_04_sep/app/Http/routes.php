@@ -101,7 +101,7 @@ Route::get('category',[
           'uses'  => 'ProductController@order'
         ]); 
   Route::get('SSS',[
-          'as' => 'faq',
+          'as' => 'faqs',
           'uses'  => 'HomeController@faq'
         ]); 
   

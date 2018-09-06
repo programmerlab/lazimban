@@ -336,7 +336,8 @@ class ProductController extends Controller {
 
 
     public function order(Request $request)
-    { 
+    {
+        $options = configIyzipay::options();
         $cart = Cart::content();
         $products = Product::with('category')->orderBy('id','asc')->get();
         $categories = Category::nested()->get(); 
@@ -344,8 +345,7 @@ class ProductController extends Controller {
         $billing    = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',1)->first(); 
 
         $shipping   = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first(); 
-
-
+        
         return view('end-user.order',compact('categories','products','category','cart','billing','shipping'));   
          
     }
@@ -597,10 +597,13 @@ class ProductController extends Controller {
                 //echo "<pre>"; print_r($request); die;
                 
         $checkoutFormInitialize = \Iyzipay\Model\CheckoutFormInitialize::create($request, $options);
+        
+        //return Redirect::to('order')->with( ['iyzipay' => $request] );
         //echo "<pre>"; print_r($checkoutFormInitialize); die;
         print_r($checkoutFormInitialize->getCheckoutFormContent());
+        return view('end-user.payment',compact(''));   
         ?>
-            <div id="iyzipay-checkout-form" class="responsive"></div>
+            <!--<div id="iyzipay-checkout-form" class="responsive"></div>-->
         <?php        
     }
     

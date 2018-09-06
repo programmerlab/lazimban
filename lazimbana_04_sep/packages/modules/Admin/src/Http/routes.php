@@ -234,6 +234,23 @@ use Illuminate\Support\Facades\DB;
                 'create' => 'blog.create',
             ]
                 ]
+        );
+        
+        Route::bind('faq', function($value, $route) {
+            return Modules\Admin\Models\Faq::find($value);
+        });
+ 
+        Route::resource('admin/faq', 'Modules\Admin\Http\Controllers\FaqController', [
+            'names' => [
+                'edit' => 'faq.edit',
+                'show' => 'faq.show',
+                'destroy' => 'faq.destroy',
+                'update' => 'faq.update',
+                'store' => 'faq.store',
+                'index' => 'faq',
+                'create' => 'faq.create',
+            ]
+                ]
         ); 
 
  
@@ -247,6 +264,8 @@ Route::get('/admin/sitemap', 'Modules\Admin\Http\Controllers\SitemapController@i
 
 Route::get('/admin/robots', 'Modules\Admin\Http\Controllers\RobotsController@robots');
 Route::post('/admin/robots', 'Modules\Admin\Http\Controllers\RobotsController@robots');
+
+      
  
  
      

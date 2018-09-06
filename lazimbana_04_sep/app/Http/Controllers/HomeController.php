@@ -295,8 +295,10 @@ class HomeController extends Controller
     public function faq()
     {
          $products = Product::with('category')->orderBy('id','asc')->get();
-        $categories = Category::nested()->get(); 
-        return view('end-user.faq',compact('categories','products','category')); 
+        $categories = Category::nested()->get();
+        $page =  \DB::table('faq')->orderBy('id','desc')->get();
+        //echo "<pre>"; print_r($page); die;
+        return view('end-user.faq',compact('categories','products','category','page')); 
         return view('end-user.faq');   
     }
     

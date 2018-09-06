@@ -35,7 +35,7 @@
                                                 <div class="block-info">
                                                     <ul class="list-info">
                                                         <li class="author">
-                                                            <span class="author-label">By </span><a  class="link"><span class="author-text">Ekleyen</span></a></li>
+                                                            <span class="author-label"></span><a  class="link"><span class="author-text">Ekleyen</span></a></li>
                                                         <li class="date"><a href="#" class="link date">{!! date('d M Y h:i:s', strtotime($blog->created_at)) !!}</a></li>
                                                     </ul>
                                                 </div>
