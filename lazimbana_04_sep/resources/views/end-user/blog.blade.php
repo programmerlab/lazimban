@@ -36,7 +36,15 @@
                                                     <ul class="list-info">
                                                         <li class="author">
                                                             <span class="author-label"></span><a  class="link"><span class="author-text">Ekleyen</span></a></li>
-                                                        <li class="date"><a href="#" class="link date">{!! date('d M Y h:i:s', strtotime($blog->created_at)) !!}</a></li>
+																<?php
+																$mc = array("01"=>"ocak","02"=>"şubat","03"=>"mart",
+																			"04"=>"nisan","05"=>"mayıs","06"=>"haziran",
+																			"07"=>"temmuz","08"=>"ağustos","09"=>"eylül",
+																			"10"=>"ekim","11"=>"kasım","12"=>"aralık");
+																$month = (date('m', strtotime($blog->created_at)));
+																
+																?>
+                                                        <li class="date"><a href="#" class="link date">{!! date('d', strtotime($blog->created_at)) !!} {!! $mc[$month] !!} {!! date('Y h:i:s', strtotime($blog->created_at)) !!}</a></li>
                                                     </ul>
                                                 </div>
                                             </div>

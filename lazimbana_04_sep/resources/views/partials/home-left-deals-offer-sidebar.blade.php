@@ -22,7 +22,7 @@
     </div>-->
      
     <div class="top_rated_products">
-        <h3>Yüksek Puanli Ürünler</h3>
+        <h3>Yüksek Puanlı Ürünler</h3>
         <ul class="product_list">
           @foreach($hot_products as $result)
               <li>                                             

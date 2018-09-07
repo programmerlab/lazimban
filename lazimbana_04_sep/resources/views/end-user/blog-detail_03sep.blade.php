@@ -29,17 +29,9 @@
                                         <div class="blog-content-wrap">
                                             
                                             <h3 class="text-capitalize"><a href="#">{!! $blog->title !!}</a></h3>
-                                                <?php
-                                                $mc = array("01"=>"ocak","02"=>"şubat","03"=>"mart",
-                                                            "04"=>"nisan","05"=>"mayıs","06"=>"haziran",
-                                                            "07"=>"temmuz","08"=>"ağustos","09"=>"eylül",
-                                                            "10"=>"ekim","11"=>"kasım","12"=>"aralık");
-                                                $month = (date('m', strtotime($blog->created_at)));
-                                                
-                                                ?>
                                             <ul class="blog-meta text-capitalize">
-                                                <li class="entry-meta-author"><a href=""><i class="fa fa-user"></i> Ekleyen</a> </li>
-                                                <li class="entry-meta-date"><i class="fa fa-calendar"></i> {!! date('d', strtotime($blog->created_at)) !!} {!! $mc[$month] !!} {!! date('Y h:i:s', strtotime($blog->created_at)) !!}	</li>                                                
+                                                <li class="entry-meta-author"><a href=""><i class="fa fa-user"></i> admin</a> </li>
+                                                <li class="entry-meta-date"><i class="fa fa-calendar"></i> {!! date('d M Y h:i:s', strtotime($blog->created_at)) !!}	</li>                                                
                                             </ul> 
                                             <p>
                                                 {!! $blog->description !!}
@@ -48,7 +40,7 @@
                                             
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <h3 class="text-capitalize">Etiket</h3>
+                                                    <h3 class="text-capitalize">tag</h3>
                                                     <ul class="tag-list">
                                                         @foreach(explode(',',$blog->tags) as $tag)
                                                             <li><a href="">{!! $tag !!}</a></li>
@@ -72,10 +64,10 @@
                                 </div>
                                 <div class="col-lg-4">            	
                                     <aside class="widget widget-contact">
-                                        <h3 class="widget-title">Diğer Bloglar</h3>
+                                        <h3 class="widget-title">Other Blogs</h3>
                                         <ul class="list-unstyled list-cat">
                                              @foreach($other_blog as $b)
-                                                 <li><a href="{!! $b->slug !!}">{!! $b->title !!}</a> <span>  </span></li>
+                                                 <li><a href="{!! $b->id !!}">{!! $b->title !!}</a> <span>  </span></li>
                                              @endforeach                                                                                          
                                         </ul>
                                     </aside>
