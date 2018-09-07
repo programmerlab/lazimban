@@ -92,10 +92,10 @@ Route::get('category',[
           'as' => 'category-front',
           'uses'  => 'HomeController@category'
         ]); 
- Route::get('order',[
-          'as' => 'order',
-          'uses'  => 'ProductController@order'
-        ]);
+ //Route::get('order',[
+ //         'as' => 'order',
+ //         'uses'  => 'ProductController@order'
+ //       ]);
  Route::get('siparis',[
           'as' => 'order',
           'uses'  => 'ProductController@order'
