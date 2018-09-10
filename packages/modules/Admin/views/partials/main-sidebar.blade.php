@@ -101,7 +101,18 @@
           <li class="{{ (isset($page_action) && $page_action=='Create Blog')?"active":'' }}" ><a href="{{ route('blog.create')}}"><i class="fa fa-user-plus"></i> Create Blog</a></li>
           <li class="{{ (isset($page_action) && $page_action=='View Blog')?"active":'' }}"><a href="{{ route('blog')}}"><i class="fa  fa-list"></i> View Blog</a></li>
         </ul>
-      </li> 
+      </li>
+      <li class="treeview {{ (isset($page_action) && $page_title=='Blog')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Manage Faq</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a> 
+        <ul class="treeview-menu">
+          <li class="{{ (isset($page_action) && $page_action=='Create Faq')?"active":'' }}" ><a href="{{ route('faq.create')}}"><i class="fa fa-user-plus"></i> Create Question</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='View Faq')?"active":'' }}"><a href="{{ route('faq')}}"><i class="fa  fa-list"></i> View Question</a></li>
+        </ul>
+      </li>
 
       <li class="treeview {{ (isset($page_action) && $page_title=='setting')?"active":'' }} ">
         <a href="#">
@@ -123,6 +134,28 @@
           <li class="{{ (isset($page_action) && $page_action=='Create Vendor')?"active":'' }}" ><a href="{{ route('vendor.create')}}"><i class="fa fa-user-plus"></i> Create Vendor</a></li>
            <li class="{{ (isset($page_action) && $page_action=='View Vendor')?"active":'' }}"><a href="{{ route('vendor')}}"><i class="fa  fa-list"></i> View Vendor</a></li>
         </ul>
+      </li>
+      <li class="treeview {{ (isset($page_action) && $page_title=='Pages')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Manage Pages</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">          
+           <li class="{{ (isset($page_action) && $page_action=='View Pages')?"active":'' }}"><a href="{{ route('page')}}"><i class="fa  fa-list"></i> View Pages</a></li>
+        </ul>
+      </li>
+        <li class="treeview">
+        <a href="{{ url('admin/robots') }}" target="_blank">
+          <i class="fa fa-dashboard"></i> <span>Upload robots.txt</span> </i>
+        </a>
+          
+      </li>
+     <li class="treeview">
+        <a href="{{ url('admin/sitemap') }}" target="_blank">
+          <i class="fa fa-dashboard"></i> <span>Generate Sitemap</span> </i>
+        </a>
+          
       </li>
       @else
 

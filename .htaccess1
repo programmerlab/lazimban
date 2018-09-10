@@ -1,0 +1,65 @@
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+Redirect 301 /urunler/genel/ https://www.lazimbana.com/genel/
+Redirect 301 /urunler/otomotiv-motosiklet/ https://www.lazimbana.com/otomotiv-motosiklet/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/ https://www.lazimbana.com/motosiklet-aksesuarlari/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/ https://www.lazimbana.com/kask/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/acik-kask/ https://www.lazimbana.com/acik-kask/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/bayan-kask/ https://www.lazimbana.com/bayan-kask/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/ceneden-acilir-kask/ https://www.lazimbana.com/ceneden-acilir-kask/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/cocuk-kaski/ https://www.lazimbana.com/cocuk-kaski/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/cross-kask/ https://www.lazimbana.com/cross-kask/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kapali-kask/ https://www.lazimbana.com/kapali-kask/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/ https://www.lazimbana.com/kask-markalari/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/agv/ https://www.lazimbana.com/agv/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/airoh/ https://www.lazimbana.com/airoh/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/arai/ https://www.lazimbana.com/arai/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/bell/ https://www.lazimbana.com/bell/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/caberg/ https://www.lazimbana.com/caberg/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/dainese/ https://www.lazimbana.com/dainese/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/givi/ https://www.lazimbana.com/givi/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/kappa/ https://www.lazimbana.com/kappa/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/lem/ https://www.lazimbana.com/lem/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/ls2/ https://www.lazimbana.com/ls2/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/mt/ https://www.lazimbana.com/mt/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/nitro/ https://www.lazimbana.com/nitro/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/nolan/ https://www.lazimbana.com/nolan/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/nzi/ https://www.lazimbana.com/nzi/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/revolution/ https://www.lazimbana.com/revolution/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/schuberth/ https://www.lazimbana.com/schuberth/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/shark/ https://www.lazimbana.com/shark/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/shiro/ https://www.lazimbana.com/shiro/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/shoei/ https://www.lazimbana.com/shoei/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/smk/ https://www.lazimbana.com/smk/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/suomy/ https://www.lazimbana.com/suomy/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/sway/ https://www.lazimbana.com/sway/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/venom/ https://www.lazimbana.com/venom/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/x-lite/ https://www.lazimbana.com/x-lite/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-markalari/yohe/ https://www.lazimbana.com/yohe/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/kask-yedek-parca/ https://www.lazimbana.com/kask-yedek-parca/
+Redirect 301 /urunler/otomotiv-motosiklet/motosiklet/kask/nazi-kask/ https://www.lazimbana.com/nazi-kask/
+Redirect 301 /urunler/supermarket/ https://www.lazimbana.com/supermarket/
+Redirect 301 /urunler/supermarket/gida-urunleri/ https://www.lazimbana.com/gida-urunleri/
+Redirect 301 /urunler/supermarket/gida-urunleri/aroma/ https://www.lazimbana.com/aroma/
+Redirect 301 /urunler/supermarket/gida-urunleri/aroma/tfa-aroma/ https://www.lazimbana.com/tfa-aroma/
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php70” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddType application/x-httpd-ea-php70 .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

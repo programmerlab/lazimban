@@ -64,7 +64,7 @@ class PageController extends Controller {
         $page_title = 'page';
         $page_action = 'View page'; 
         
-        $banner             = $page::where('banner_image1','LIKE','%banner_image%')->get();
+        $banner             = '';//$page::where('banner_image1','LIKE','%banner_image%')->get();
  
 
         $page = Pages::Paginate(15);
@@ -84,7 +84,7 @@ class PageController extends Controller {
         $page_action = 'Create page';
         
       
-        $banner             = $page->where('banner_image1','LIKE','%banner_image%')->get();
+        $banner             = '';//$page->where('banner_image1','LIKE','%banner_image%')->get();
 
         return view('packages::pages.create', compact('page','website_title','website_email','website_url','contact_number','company_address','banner', 'page_title', 'page_action','helper'));
      }
@@ -94,20 +94,12 @@ class PageController extends Controller {
      * */
 
     public function store(PageRequest $request, Pages $page) 
-    {
-        if ($request->file('banner_image1')) {  
-
-            $photo = $request->file('banner_image1');
-            $destinationPath = storage_path('files/banner_content/');
-            $photo->move($destinationPath, time().$photo->getClientOriginalName());
-            $banner_image1 = time().$photo->getClientOriginalName();
-            $page->banner_image1   =   $banner_image1;
-            
-        } 
-
+    {        
+        
         $page->title     =   $request->get('title');
         $page->page_content   =   $request->get('page_content');
-        $page->save();   
+        
+        //$page->save();   
        
        return Redirect::to(route('page'))
                             ->with('flash_alert_notice2', 'Page was successfully created !');
@@ -140,7 +132,9 @@ class PageController extends Controller {
         } 
 
         $page->title     =   $request->get('title');
+        $page->slug     =   $request->get('slug');
         $page->page_content   =   $request->get('page_content');
+        $page->contact_email   =   $request->get('contact_email');
         $page->save();  
 
         return Redirect::to(route('page'))

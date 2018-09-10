@@ -8,7 +8,15 @@
 
         @section('content') 
 
-            @include('partials.breadcrumb')
+            <div class="page_title">
+                <div class="page-wrapper">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6 text-right">
+                            <span><a href="#">Home</a> </span>                                            
+                            <span> giris </span>  
+                       </div>
+                </div>
+            </div>
             
    <div class="container">
         <div class="checkout-box ">
@@ -65,7 +73,7 @@
                                             <i class="fa fa-btn fa-sign-in"></i> Oturum aç
 
                                         </button>
-                                        <a class="" href="{{ url('myaccount/signup') }}" style="margin-left: 20px">  Kaydol?</a> veya 
+                                        <a class="" href="{{ url('hesabim/kaydol') }}" style="margin-left: 20px">  Kaydol?</a> veya 
                                         <a class="" href="{{ url('/password/reset') }}" > Parolanızı mı unuttunuz?</a>  
                                          
                                        

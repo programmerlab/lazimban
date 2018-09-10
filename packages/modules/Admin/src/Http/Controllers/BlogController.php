@@ -116,7 +116,7 @@ class BlogController extends Controller {
             if($request->get('slug') && !empty($request->get('slug'))){
                 $blog->slug              =   strtolower(str_replace(" ", "-", $request->get('slug')));  
                 $pro_slug   = strtolower(str_replace(" ", "-", $request->get('slug')));
-                $url        = $cat_url.$pro_slug;  
+                $url        = $pro_slug;  
             }else{
                 $blog->slug              =   strtolower(str_replace(" ", "-", $request->get('title')));
                 $pro_slug   = strtolower(str_replace(" ", "-", $request->get('title')));
@@ -127,7 +127,9 @@ class BlogController extends Controller {
             $blog->description        =   $request->get('description');            
             $blog->image              =   $photo_name;            
             $blog->user_id            =   $vendor_id;
-            $blog->slug               =   $url;  
+            $blog->slug               =   $url;
+            $blog->meta_key           =   $request->get('meta_key');
+            $blog->meta_description   =   $request->get('meta_description');
 
             //echo "<pre>"; print_r($blog); die;
             DB::table('blogs')->insert(
@@ -135,6 +137,8 @@ class BlogController extends Controller {
                  'description' => $request->get('description'),
                  'image' => $photo_name,
                  'tags' => $request->get('tags'),
+                 'meta_key'           =>   $request->get('meta_key'),
+                 'meta_description'   =>   $request->get('meta_description'),
                  'user_id' => 1,
                  'slug' => $url,
                  ]
@@ -184,7 +188,8 @@ class BlogController extends Controller {
             }
             
             $blog->description        =   $request->get('description');
-            $blog->image              =   $photo_name;            
+            $blog->image              =   $photo_name;
+            
             
             if($request->get('title')){
                 $blog->title  = $request->get('title');
@@ -195,6 +200,9 @@ class BlogController extends Controller {
                     ->update(['title' => $request->get('title'),
                                 'description' => $request->get('description'),
                                 'tags' => $request->get('tags'),
+                                'slug' => $url,
+                                'meta_key'           =>   $request->get('meta_key'),
+                                'meta_description'   =>   $request->get('meta_description'),
                                 'image' => $photo_name]);
             //$blog->save(); 
         }else{            
@@ -216,12 +224,15 @@ class BlogController extends Controller {
             if($request->get('title')){
                 $blog->title  = $request->get('title');
             }
-            
+            //echo $request->get('meta_key');die;
             DB::table('blogs')
                     ->where('id', $blog->id)
                     ->update(['title' => $request->get('title'),
                                 'description' => $request->get('description'),
                                 'tags' => $request->get('tags'),
+                                'slug' => $url,
+                                'meta_key'           =>   $request->get('meta_key'),
+                                'meta_description'   =>   $request->get('meta_description'),
                                 'image' => $request->get('images')]);
             //$blog->save(); 
         }

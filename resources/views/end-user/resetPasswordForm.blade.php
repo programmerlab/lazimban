@@ -8,7 +8,15 @@
 
         @section('content') 
 
-            @include('partials.breadcrumb')
+            <div class="page_title">
+                <div class="page-wrapper">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6 text-right">
+                            <span><a href="#">Home</a> </span>                                            
+                            <span> reset </span>  
+                       </div>
+                </div>
+            </div>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">

@@ -7,7 +7,9 @@
 body{color: #777777;font-family: 'Open Sans', sans-serif;font-size: 13px;line-height: 24px; position: relative !important;}
 h1, h2, h3, h4, h5, h6, .nx-heading, .nx-service-title {
 
-   font-family: 'Fjalla One', sans-serif; color:#373737;
+   /*font-family: 'Fjalla One', sans-serif;*/
+   font-weight: 600;
+   color:#373737;
 
 }
 p{line-height:24px}

@@ -8,13 +8,21 @@
 
         @section('content') 
 
-            @include('partials.breadcrumb')
+            <div class="page_title">
+                <div class="page-wrapper">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6 text-right">
+                            <span><a href="#">Home</a> </span>                                            
+                            <span> Yardım Merkezi </span>  
+                       </div>
+                </div>
+            </div>
             
             <div class="checkout-box faq-page">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="heading-title">Contact Us</h2>
-                    <span class="title-tag">Last Updated on 2017 </span>
+                    <h2 class="heading-title">İletişim</h2>
+                    <!--<span class="title-tag">Last Updated on 2017 </span>-->
                     <div class="panel-group checkout-steps" id="accordion">
                         <!-- checkout-step-01  -->
             <div class="panel panel-default checkout-step-01">
@@ -23,7 +31,7 @@
                     <div class="panel-heading">
                     <h4 class="unicase-checkout-title">
                         <a data-toggle="collapse" class="" data-parent="#accordion" href="index.htm#collapseOne">
-                          <span>Enquiry form</span> 
+                          <span>İletişim Formu</span> 
                         </a>
                      </h4>
                 </div>
@@ -38,47 +46,53 @@
              
                 <div class="col-md-9 contact-form">
     <div class="col-md-12 contact-title">
-        <h4>Contact Form</h4>
+        <!--<h4>Contact Form</h4>-->
     </div>
-    <div class="col-md-4 ">
-        <form class="register-form" role="form">
+        @if ($errors->has('successMsgenquiry'))
+                    <span class="btn btn-success">{{ $errors->first('successMsgenquiry') }} </span>
+                     
+                @endif
+    <form method="post" action="{{ url('/enquiry') }}" class="register-form" >
+    <div class="col-md-4 ">        
+        
             <div class="form-group">
-            <label class="info-title" for="exampleInputName">Your Name <span>*</span></label>
-            <input type="email" class="form-control unicase-form-control text-input" id="exampleInputName" placeholder="">
+            <label class="info-title" for="exampleInputName">İsminiz <span>*</span></label>
+            <input type="text" name="name" class="form-control unicase-form-control text-input" id="exampleInputName" placeholder="" required>
           </div>
-        </form>
-    </div>
-    <div class="col-md-4">
-        <form class="register-form" role="form">
-            <div class="form-group">
-            <label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
-            <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="">
-          </div>
-        </form>
+        
     </div>
     <div class="col-md-4">
-        <form class="register-form" role="form">
+        
             <div class="form-group">
-            <label class="info-title" for="exampleInputTitle">Title <span>*</span></label>
-            <input type="email" class="form-control unicase-form-control text-input" id="exampleInputTitle" placeholder="Title">
+            <label class="info-title" for="exampleInputEmail1">Eposta Adresiniz <span>*</span></label>
+            <input type="email" name="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" required>
           </div>
-        </form>
+        
+    </div>
+    <div class="col-md-4">
+        
+            <div class="form-group">
+            <label class="info-title" for="exampleInputTitle">Konu <span></span></label>
+            <input type="text" name="title" class="form-control unicase-form-control text-input" id="exampleInputTitle" placeholder="Title" >
+          </div>
+        
     </div>
     <div class="col-md-12">
-        <form class="register-form" role="form">
+        
             <div class="form-group">
-            <label class="info-title" for="exampleInputComments">Your Comments <span>*</span></label>
-            <textarea class="form-control unicase-form-control" id="exampleInputComments"></textarea>
+            <label class="info-title" for="exampleInputComments">Mesajınız <span>*</span></label>
+            <textarea name="message" class="form-control unicase-form-control" id="exampleInputComments" required></textarea>
           </div>
-        </form>
+        
     </div>
     <div class="col-md-12 outer-bottom-small m-t-20">
-        <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Send Message</button>
+        <button type="submit" class="btn-upper btn btn-primary checkout-page-button">MESAJI GÖNDER</button>
     </div>
+    </form>
 </div>
 <div class="col-md-3 contact-info">
     <div class="contact-title">
-        <h4>Mailing Address</h4>
+        <h4>İletişim Bilgileri</h4>
     </div>
     <div class="clearfix address">
         <span class="contact-i"><i class="fa fa-map-marker"></i></span>

@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ URL::asset('public/assets/bootstrap/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ URL::asset('public/assets/css/font-awesome.min.css') }}">
+    
+    <link href="{{ asset('public/new/css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ URL::asset('public/assets/css/ionicons.min.css') }}">
     <!-- Theme style -->
@@ -17,7 +19,8 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ URL::asset('public/assets/plugins/iCheck/square/blue.css') }}">
     <link rel="stylesheet" href="{{ asset('public/new/css/bootstrap-select.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('public/assets/css/custom.css') }}"> 
+    <link rel="stylesheet" href="{{ URL::asset('public/assets/css/custom.css') }}">
+    <link href="{{ asset('public/new/css/style.css') }}" rel="stylesheet">
     <style>
 	.account_login {
     float: left;
@@ -75,482 +78,544 @@
 
   <body class="hold-transition login-page">
   
-  
-  <div class="account_login">
-  	<div class="container">
-  		<div class="col-md-6">
-        	<h2>Satıcı Giriş</h2>
-             
-              <div class="login-box-body"> 
-                <div class="login-box-msg"> 
-                  @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    
-                @endif
-        
-                  {!! Form::model($user, ['url' => ['admin/login'],'class'=>'form-horizontal','files' => true]) !!}
-                    @include('packages::auth.form')
-                  {!! Form::close() !!}
-        
-              </div>
-		</div>
-        </div>
-        <div class="col-md-6">
-        	<h2>  Satıcı Kayıt Formu </h2>
-             
-              <div class="login-box-body"> 
-                 <form class="register-form" action="{{url('admin/registration')}}" method="post" novalidate>
-                
-                <!--<p> Kiþisel bilgilerinizi giriniz: </p>-->               
-                @if(session()->has('message'))                    
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach (session()->get('message') as $error1)
-                                <li>{{ $error1 }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                <div class="form-group">
-                    <!--<label class="control-label visible-ie8 visible-ie9">Þehir</label>-->
-                    
-                    <div class="input-icon">
-                        <select name="vendor_type" id="vendor_type" class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" onchange="vendor(this.value)">
-                            <option value="">Satıcı Tipini Seçiniz</option>
-                            <option value="1">Bireysel</option>
-                            <option value="2">Kurumsal</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <!--<label class="control-label visible-ie8 visible-ie9">Ad-Soyad</label>-->
-                    <div class="input-icon">
-                         
-                        <input class="form-control placeholder-no-fix" type="text" id="full_name" style="display:none;" placeholder="Ad-Soyad" name="full_name" value="{{old('full_name')}}"> </div>
-                </div>
-                <div class="form-group">
-                    <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
-                    <div class="input-icon">                         
-                        <input class="form-control placeholder-no-fix" id="tc_no" style="display:none;" type="text" placeholder="Kimlik No" name="tc_no" value="{{old('tc_no')}}"> </div>
-                </div>
-                <div class="form-group">
-                    <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
-                    <div class="input-icon">                         
-                        <input class="form-control placeholder-no-fix" id="company_name" style="display:none;" type="text" placeholder="Şirket Ünvanı" name="company_name" value="{{old('company_name')}}"> </div>
-                </div>
-                <div class="form-group">
-                    <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
-                    <div class="input-icon">                         
-                        <input class="form-control placeholder-no-fix" id="manager_name" style="display:none;" type="text" placeholder="Yetkili Adı" name="manager_name" value="{{old('manager_name')}}"> </div>
-                </div>
-                <div class="form-group">
-                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                   <!-- <label class="control-label visible-ie8 visible-ie9">Telefon</label>-->
-                    <div class="input-icon">
-                        
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Telefon" name="phone"  value="{{old('phone')}}"> </div>
-                </div>
-                <div class="form-group">
-                    <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
-                    <div class="input-icon">                         
-                        <input class="form-control placeholder-no-fix" id="bank_name"  type="text" placeholder="Banka Adı" name="bank_name" value="{{old('bank_name')}}"> </div>
-                </div>
-                <div class="form-group">
-                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                    <!--<label class="control-label visible-ie8 visible-ie9">IBAN No.</label>-->
-                    <div class="input-icon">
-                        
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="IBAN No." name="iban"  value="{{old('iban')}}"> </div>
-                </div>
-                <div class="form-group">
-                    <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
-                    <div class="input-icon">                         
-                        <input class="form-control placeholder-no-fix" id="tax_name" style="display:none;" type="text" placeholder="Vergi Dairesi" name="tax_name" value="{{old('tax_name')}}"> </div>
-                </div>
-                <div class="form-group">
-                    <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
-                    <div class="input-icon">                         
-                        <input class="form-control placeholder-no-fix" id="tax_no" style="display:none;" type="text" placeholder="Vergi No." name="tax_no" value="{{old('tax_no')}}"> </div>
-                </div>
-                <div class="form-group">
-                    <!--<label class="control-label visible-ie8 visible-ie9">Address</label>-->
-                    <div class="input-icon">
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Adres" name="address"  value="{{old('address')}}"> </div>
-                </div>
-                <!--<div class="form-group">                    
-                    <div class="input-icon">
-                         
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="Şehir" name="city"  value="{{old('city')}}"> </div>
-                </div>-->
-                <!--<div class="form-group">                    
-                    <select name="country" id="country_list" class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-                        <option value="">Select Ülke</option>
-                        <option value="AF">Afghanistan</option>
-                        <option value="AL">Albania</option>
-                        <option value="DZ">Algeria</option>
-                        <option value="AS">American Samoa</option>
-                        <option value="AD">Andorra</option>
-                        <option value="AO">Angola</option>
-                        <option value="AI">Anguilla</option>
-                        <option value="AR">Argentina</option>
-                        <option value="AM">Armenia</option>
-                        <option value="AW">Aruba</option>
-                        <option value="AU">Australia</option>
-                        <option value="AT">Austria</option>
-                        <option value="AZ">Azerbaijan</option>
-                        <option value="BS">Bahamas</option>
-                        <option value="BH">Bahrain</option>
-                        <option value="BD">Bangladesh</option>
-                        <option value="BB">Barbados</option>
-                        <option value="BY">Belarus</option>
-                        <option value="BE">Belgium</option>
-                        <option value="BZ">Belize</option>
-                        <option value="BJ">Benin</option>
-                        <option value="BM">Bermuda</option>
-                        <option value="BT">Bhutan</option>
-                        <option value="BO">Bolivia</option>
-                        <option value="BA">Bosnia and Herzegowina</option>
-                        <option value="BW">Botswana</option>
-                        <option value="BV">Bouvet Island</option>
-                        <option value="BR">Brazil</option>
-                        <option value="IO">British Indian Ocean Territory</option>
-                        <option value="BN">Brunei Darussalam</option>
-                        <option value="BG">Bulgaria</option>
-                        <option value="BF">Burkina Faso</option>
-                        <option value="BI">Burundi</option>
-                        <option value="KH">Cambodia</option>
-                        <option value="CM">Cameroon</option>
-                        <option value="CA">Canada</option>
-                        <option value="CV">Cape Verde</option>
-                        <option value="KY">Cayman Islands</option>
-                        <option value="CF">Central African Republic</option>
-                        <option value="TD">Chad</option>
-                        <option value="CL">Chile</option>
-                        <option value="CN">China</option>
-                        <option value="CX">Christmas Island</option>
-                        <option value="CC">Cocos (Keeling) Islands</option>
-                        <option value="CO">Colombia</option>
-                        <option value="KM">Comoros</option>
-                        <option value="CG">Congo</option>
-                        <option value="CD">Congo, the Democratic Republic of the</option>
-                        <option value="CK">Cook Islands</option>
-                        <option value="CR">Costa Rica</option>
-                        <option value="CI">Cote d'Ivoire</option>
-                        <option value="HR">Croatia (Hrvatska)</option>
-                        <option value="CU">Cuba</option>
-                        <option value="CY">Cyprus</option>
-                        <option value="CZ">Czech Republic</option>
-                        <option value="DK">Denmark</option>
-                        <option value="DJ">Djibouti</option>
-                        <option value="DM">Dominica</option>
-                        <option value="DO">Dominican Republic</option>
-                        <option value="EC">Ecuador</option>
-                        <option value="EG">Egypt</option>
-                        <option value="SV">El Salvador</option>
-                        <option value="GQ">Equatorial Guinea</option>
-                        <option value="ER">Eritrea</option>
-                        <option value="EE">Estonia</option>
-                        <option value="ET">Ethiopia</option>
-                        <option value="FK">Falkland Islands (Malvinas)</option>
-                        <option value="FO">Faroe Islands</option>
-                        <option value="FJ">Fiji</option>
-                        <option value="FI">Finland</option>
-                        <option value="FR">France</option>
-                        <option value="GF">French Guiana</option>
-                        <option value="PF">French Polynesia</option>
-                        <option value="TF">French Southern Territories</option>
-                        <option value="GA">Gabon</option>
-                        <option value="GM">Gambia</option>
-                        <option value="GE">Georgia</option>
-                        <option value="DE">Germany</option>
-                        <option value="GH">Ghana</option>
-                        <option value="GI">Gibraltar</option>
-                        <option value="GR">Greece</option>
-                        <option value="GL">Greenland</option>
-                        <option value="GD">Grenada</option>
-                        <option value="GP">Guadeloupe</option>
-                        <option value="GU">Guam</option>
-                        <option value="GT">Guatemala</option>
-                        <option value="GN">Guinea</option>
-                        <option value="GW">Guinea-Bissau</option>
-                        <option value="GY">Guyana</option>
-                        <option value="HT">Haiti</option>
-                        <option value="HM">Heard and Mc Donald Islands</option>
-                        <option value="VA">Holy See (Vatican City State)</option>
-                        <option value="HN">Honduras</option>
-                        <option value="HK">Hong Kong</option>
-                        <option value="HU">Hungary</option>
-                        <option value="IS">Iceland</option>
-                        <option value="IN" selected="" >India</option>
-                        <option value="ID">Indonesia</option>
-                        <option value="IR">Iran (Islamic Republic of)</option>
-                        <option value="IQ">Iraq</option>
-                        <option value="IE">Ireland</option>
-                        <option value="IL">Israel</option>
-                        <option value="IT">Italy</option>
-                        <option value="JM">Jamaica</option>
-                        <option value="JP">Japan</option>
-                        <option value="JO">Jordan</option>
-                        <option value="KZ">Kazakhstan</option>
-                        <option value="KE">Kenya</option>
-                        <option value="KI">Kiribati</option>
-                        <option value="KP">Korea, Democratic People's Republic of</option>
-                        <option value="KR">Korea, Republic of</option>
-                        <option value="KW">Kuwait</option>
-                        <option value="KG">Kyrgyzstan</option>
-                        <option value="LA">Lao People's Democratic Republic</option>
-                        <option value="LV">Latvia</option>
-                        <option value="LB">Lebanon</option>
-                        <option value="LS">Lesotho</option>
-                        <option value="LR">Liberia</option>
-                        <option value="LY">Libyan Arab Jamahiriya</option>
-                        <option value="LI">Liechtenstein</option>
-                        <option value="LT">Lithuania</option>
-                        <option value="LU">Luxembourg</option>
-                        <option value="MO">Macau</option>
-                        <option value="MK">Macedonia, The Former Yugoslav Republic of</option>
-                        <option value="MG">Madagascar</option>
-                        <option value="MW">Malawi</option>
-                        <option value="MY">Malaysia</option>
-                        <option value="MV">Maldives</option>
-                        <option value="ML">Mali</option>
-                        <option value="MT">Malta</option>
-                        <option value="MH">Marshall Islands</option>
-                        <option value="MQ">Martinique</option>
-                        <option value="MR">Mauritania</option>
-                        <option value="MU">Mauritius</option>
-                        <option value="YT">Mayotte</option>
-                        <option value="MX">Mexico</option>
-                        <option value="FM">Micronesia, Federated States of</option>
-                        <option value="MD">Moldova, Republic of</option>
-                        <option value="MC">Monaco</option>
-                        <option value="MN">Mongolia</option>
-                        <option value="MS">Montserrat</option>
-                        <option value="MA">Morocco</option>
-                        <option value="MZ">Mozambique</option>
-                        <option value="MM">Myanmar</option>
-                        <option value="NA">Namibia</option>
-                        <option value="NR">Nauru</option>
-                        <option value="NP">Nepal</option>
-                        <option value="NL">Netherlands</option>
-                        <option value="AN">Netherlands Antilles</option>
-                        <option value="NC">New Caledonia</option>
-                        <option value="NZ">New Zealand</option>
-                        <option value="NI">Nicaragua</option>
-                        <option value="NE">Niger</option>
-                        <option value="NG">Nigeria</option>
-                        <option value="NU">Niue</option>
-                        <option value="NF">Norfolk Island</option>
-                        <option value="MP">Northern Mariana Islands</option>
-                        <option value="NO">Norway</option>
-                        <option value="OM">Oman</option>
-                        <option value="PK">Pakistan</option>
-                        <option value="PW">Palau</option>
-                        <option value="PA">Panama</option>
-                        <option value="PG">Papua New Guinea</option>
-                        <option value="PY">Paraguay</option>
-                        <option value="PE">Peru</option>
-                        <option value="PH">Philippines</option>
-                        <option value="PN">Pitcairn</option>
-                        <option value="PL">Poland</option>
-                        <option value="PT">Portugal</option>
-                        <option value="PR">Puerto Rico</option>
-                        <option value="QA">Qatar</option>
-                        <option value="RE">Reunion</option>
-                        <option value="RO">Romania</option>
-                        <option value="RU">Russian Federation</option>
-                        <option value="RW">Rwanda</option>
-                        <option value="KN">Saint Kitts and Nevis</option>
-                        <option value="LC">Saint LUCIA</option>
-                        <option value="VC">Saint Vincent and the Grenadines</option>
-                        <option value="WS">Samoa</option>
-                        <option value="SM">San Marino</option>
-                        <option value="ST">Sao Tome and Principe</option>
-                        <option value="SA">Saudi Arabia</option>
-                        <option value="SN">Senegal</option>
-                        <option value="SC">Seychelles</option>
-                        <option value="SL">Sierra Leone</option>
-                        <option value="SG">Singapore</option>
-                        <option value="SK">Slovakia (Slovak Republic)</option>
-                        <option value="SI">Slovenia</option>
-                        <option value="SB">Solomon Islands</option>
-                        <option value="SO">Somalia</option>
-                        <option value="ZA">South Africa</option>
-                        <option value="GS">South Georgia and the South Sandwich Islands</option>
-                        <option value="ES">Spain</option>
-                        <option value="LK">Sri Lanka</option>
-                        <option value="SH">St. Helena</option>
-                        <option value="PM">St. Pierre and Miquelon</option>
-                        <option value="SD">Sudan</option>
-                        <option value="SR">Suriname</option>
-                        <option value="SJ">Svalbard and Jan Mayen Islands</option>
-                        <option value="SZ">Swaziland</option>
-                        <option value="SE">Sweden</option>
-                        <option value="CH">Switzerland</option>
-                        <option value="SY">Syrian Arab Republic</option>
-                        <option value="TW">Taiwan, Province of China</option>
-                        <option value="TJ">Tajikistan</option>
-                        <option value="TZ">Tanzania, United Republic of</option>
-                        <option value="TH">Thailand</option>
-                        <option value="TG">Togo</option>
-                        <option value="TK">Tokelau</option>
-                        <option value="TO">Tonga</option>
-                        <option value="TT">Trinidad and Tobago</option>
-                        <option value="TN">Tunisia</option>
-                        <option value="TR">Turkey</option>
-                        <option value="TM">Turkmenistan</option>
-                        <option value="TC">Turks and Caicos Islands</option>
-                        <option value="TV">Tuvalu</option>
-                        <option value="UG">Uganda</option>
-                        <option value="UA">Ukraine</option>
-                        <option value="AE">United Arab Emirates</option>
-                        <option value="GB">United Kingdom</option>
-                        <option value="US">United States</option>
-                        <option value="UM">United States Minor Outlying Islands</option>
-                        <option value="UY">Uruguay</option>
-                        <option value="UZ">Uzbekistan</option>
-                        <option value="VU">Vanuatu</option>
-                        <option value="VE">Venezuela</option>
-                        <option value="VN">Viet Nam</option>
-                        <option value="VG">Virgin Islands (British)</option>
-                        <option value="VI">Virgin Islands (U.S.)</option>
-                        <option value="WF">Wallis and Futuna Islands</option>
-                        <option value="EH">Western Sahara</option>
-                        <option value="YE">Yemen</option>
-                        <option value="ZM">Zambia</option>
-                        <option value="ZW">Zimbabwe</option>
-                    </select>
-                </div>-->
-                <div class="form-group">                                                
-                        <!--<input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}">-->
-                        <select class="selectpicker form-control" data-live-search="true" name="city" required>
-                            <option selected="selected" value="">Şehir Seçiniz </option>
+<div class="container">
+    <div class="container_bg row">
+        <div id="wrapper">
+            <div class="top_bar">
+                <div class="page-wrapper">
+                    <div class="col-md-5 col-sm-5">
+                        <ul class="woocom">
+                                                                   
+                             @if($userData==null)   
+                            <li class="top-login"><a href="#" onclick="return false">Giriş / Kayıt</a>
+                            <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                            {{ csrf_field() }}
+                            <ul>
+                            <li><label for="username">E-posta <span class="required">*</span></label></li>
+                            <li><input class="input-text" name="email" id="email" value="" type="email"></li>
+                            <li><label for="password">Parola <span class="required">*</span></label></li>
+                            <li><input class="input-text" name="password" id="password" type="password"></li>
+                            <li><input class="button" name="login" value="Oturum Aç" type="submit"></li>
+                            <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">KAYIT OL</a><a href="{{ url('password/reset') }}" class="forgot">SIFRENI SIFIRLA</a></li>
+                            <li class="reg-link">
+                              <a href="{{ url('satici/giris-kayit') }}" class="resig">SATICI OL / GİRİŞ</a>
+                              <!--<a href="{{ url('vendor/signUp') }}" class="resig pull-right">SATICI GİRİŞİ</a>-->
+                            </li>
                             
-                            <option data-tokens="Adana" value="Adana">Adana</option>
-                            <option data-tokens="Adıyaman" value="Adıyaman">Adıyaman</option>
-                            <option data-tokens="Afyon" value="Afyon" >Afyon</option>
-                            <option data-tokens="Ağrı" value="Ağrı" >Ağrı</option>
-                            <option data-tokens="Amasya" value="Amasya" >Amasya</option>
-                            <option data-tokens="Ankara" value="Ankara" >Ankara</option>
-                            <option data-tokens="Antalya" value="Antalya" >Antalya</option>
-                            <option data-tokens="Artvin" value="Artvin" >Artvin</option>
-                            <option data-tokens="Aydın" value="Aydın" >Aydın</option>
-                                
-                            <option data-tokens="Balıkesir" value="Balıkesir" >Balıkesir</option>
-                            <option data-tokens="Bilecik" value="Bilecik" >Bilecik</option>
-                            <option data-tokens="Bingöl" value="Bingöl" >Bingöl</option>
-                            <option data-tokens="Bitlis" value="Bitlis" >Bitlis</option>
-                            <option data-tokens="Bolu" value="Bolu" >Bolu</option>
-                            <option data-tokens="Burdur" value="Burdur" >Burdur</option>
-                            <option data-tokens="Bursa" value="Bursa" >Bursa</option>
-                                
-                            <option data-tokens="Çanakkale" value="Çanakkale" >Çanakkale</option>
-                            <option data-tokens="Çankırı" value="Çankırı" >Çankırı</option>
-                            <option data-tokens="Çorum" value="Çorum" >Çorum</option>
-                                
-                            <option data-tokens="Denizli" value="Denizli" >Denizli</option>                                                        
-                            <option data-tokens="Diyarbakır" value="Afyon" >Diyarbakır</option>
-                            <option data-tokens="Edirne" value="Edirne" >Edirne</option>
-                            <option data-tokens="Giresun" value="Giresun" >Giresun</option>
-                                
-                            <option data-tokens="Gümüşhane" value="Gümüşhane" >Gümüşhane</option>
-                            <option data-tokens="Hakkari" value="Hakkari" >Hakkari</option>
-                            <option data-tokens="Hatay" value="Hatay" >Hatay</option>
-                            <option data-tokens="Isparta" value="Isparta" >Isparta</option>
-                            <option data-tokens="Mersin" value="Mersin" >Mersin</option>
-                            <option data-tokens="İstanbul" value="İstanbul" >İstanbul</option>
-                            <option data-tokens="İzmir" value="İzmir" >İzmir</option>
-                            <option data-tokens="Kars" value="Kars" >Kars</option>
-                            <option data-tokens="Kastamonu" value="Kastamonu" >Kastamonu</option>
-                            <option data-tokens="Konya" value="Konya" >Konya</option>
-                            <option data-tokens="Kütahya" value="Kütahya" >Kütahya</option>
-                            <option data-tokens="Malatya" value="Malatya" >Malatya</option>
-                            <option data-tokens="Manisa" value="Manisa" >Manisa</option>
-                            <option data-tokens="Kahramanmaraş" value="Kahramanmaraş" >Kahramanmaraş</option>
-                            <option data-tokens="Mardin" value="Mardin" >Mardin</option>
-                            <option data-tokens="Muğla" value="Muğla" >Muğla</option>
-                            <option data-tokens="Muş" value="Muş" >Muş</option>
-                            <option data-tokens="Nevşehir" value="Nevşehir" >Nevşehir</option>
-                            <option data-tokens="Niğde" value="Niğde" >Niğde</option>
-                            <option data-tokens="Ordu" value="Ordu" >Ordu</option>
-                            <option data-tokens="Rize" value="Rize" >Rize</option>
-                            <option data-tokens="Sakarya" value="Sakarya" >Sakarya</option>
-                            <option data-tokens="Samsun" value="Samsun" >Samsun</option>
-                            <option data-tokens="Siirt" value="Siirt" >Siirt</option>
-                            <option data-tokens="Sinop" value="Sinop" >Sinop</option>
-                            <option data-tokens="Sivas" value="Sivas" >Sivas</option>
-                            <option data-tokens="Tekirdağ" value="Tekirdağ" >Tekirdağ</option>
-                            <option data-tokens="Tokat" value="Tokat" >Tokat</option>
-                            <option data-tokens="Trabzon" value="Trabzon" >Trabzon</option>
-                                
-                            <option data-tokens="Tunceli" value="Tunceli" >Tunceli</option>
-                            <option data-tokens="Şanlıurfa" value="Şanlıurfa" >Şanlıurfa</option>
-                            <option data-tokens="Uşak" value="Uşak" >Uşak</option>
-                            <option data-tokens="Van" value="Van" >Van</option>
-                            <option data-tokens="Yozgat" value="Yozgat" >Yozgat</option>
-                            <option data-tokens="Zonguldak" value="Zonguldak" >Zonguldak</option>
-                            <option data-tokens="Aksaray" value="Aksaray" >Aksaray</option>
-                            <option data-tokens="Bayburt" value="Bayburt" >Bayburt</option>
-                            <option data-tokens="Karaman" value="Karaman" >Karaman</option>
-                            <option data-tokens="Kırıkkale" value="Kırıkkale" >Kırıkkale</option>
-                            <option data-tokens="Batman" value="Batman" >Batman</option>
-                            <option data-tokens="Şırnak" value="Şırnak" >Şırnak</option>
-                            <option data-tokens="Bartın" value="Bartın" >Bartın</option>
-                            <option data-tokens="Ardahan" value="Ardahan" >Ardahan</option>
-                            <option data-tokens="Iğdır" value="Iğdır" >Iğdır</option>
-                            <option data-tokens="Yalova" value="Yalova" >Yalova</option>
-                            <option data-tokens="Karabük" value="Karabük" >Karabük</option>
-                            <option data-tokens="Kilis" value="Kilis" >Kilis</option>
-                            <option data-tokens="Osmaniye" value="Osmaniye" >Osmaniye</option>
-                            <option data-tokens="Düzce" value="Düzce" >Düzce</option>
-                            <option data-tokens="Diğer" value="Diğer" >Diğer</option>
-                            
-                            
-                        </select>
-                    </div>
-                <!--<p> <b> Hesap ayrýntýlarýnýzý giriniz: </b> </p>-->
-                 <div class="form-group">
-                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                  <!--  <label class="control-label visible-ie8 visible-ie9">E-posta</label>-->
-                    <div class="input-icon">
-                        
-                        <input class="form-control placeholder-no-fix" type="text" placeholder="E-posta" name="email"  value="{{old('email')}}"> </div>
-                </div>
+                              
+                            </ul>                                      
+                            </form>
+                            </li>
+                            @else
+                            <li class="topcart"> <a href="{{url('myaccount')}}">Hesabım</a> 
 
-                <div class="form-group">
-                   <!-- <label class="control-label visible-ie8 visible-ie9">Þifre</label>-->
-                    <div class="input-icon">
-                         
-                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Şifre" name="password"  value="{{old('password')}}"> </div>
-                </div>
-                <div class="form-group">
-                    <!--<label class="control-label visible-ie8 visible-ie9">Re-type Your Þifre</label>-->
-                    <div class="controls">
-                        <div class="input-icon">
-                             
-                            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Şifre (Tekrar)" name="password_confirmation"  value="{{old('password_confirmation')}}"> </div>
+                            </li>
+                             <li class="topcart"> <a href="{{url('signout')}}">Çıkış Yap</a> </li>
+                            @endif
+                            <li class="topcart">
+                                        <a href="{{ url('/checkout') }}">Sepet<span class="cart-counts">{{$total_item}}</span></a>
+                                        <div class="cartdrop widget_shopping_cart nx-animate animated" style="visibility: visible;">
+                                            <div class="widget_shopping_cart_content">
+                                                <ul class="cart_list product_list_widget">
+                                                @if($cart)
+                                                    <table class="cart-table">
+                                                    <tbody>
+                                                    <?php $helper = new Helper(); ?>
+                                                        @foreach($cart as  $item)
+                                                        <tr>
+                                                            <td width='20%'>
+                                                                <!--<a href="{{ url('/removeitem/'.$item->id) }}" class=""><i class="fa fa-times"></i></a>-->
+                                                                <a class="cart_quantity_delete" href="{{ url('/removeItem/'.$item->id) }}"><i class="fa fa-times"></i></a>
+                                                            </td>
+                                                            <td width='40%'>
+                                                                <div class="product-content">                                                     
+                                                                    <div class="">
+                                                                        <h3><a href="{{ url($helper->getProduct($item->id)->url) }}"> {{$item->name}}</a></h3>
+                                                                        
+                                                                    </div>                                                                    
+                                                                </div>
+                                                                <span>Satıcı: {{ ($helper->getVendorName($item->id)) ? $helper->getVendorName($item->id) : 'Admin' }}</span>
+                                                            </td>
+                                                            <td width='40%'>
+                                                                <div class="product-media">                                                                 
+                                                                    <a href="#">
+                                                                        <!--<img src="{{ asset('public/new/images/small-1.png') }}" alt=" ">-->
+                                                                        @foreach($product_photo as $key => $photo)
+                                    
+                                                                            @if($photo->id==$item->id)
+                                                                             <img style="width: 100px;height: 100px;" src="{{ asset('storage/uploads/products/'. $photo->photo) }}" alt="">
+                                                                             @endif
+                                                                         @endforeach
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                <div class="product-price">
+                                                                         <h5 class="price"> <b>{{$item->qty}} </b> x <b> ₺ {{$item->price}} </b></h5>
+                                                                        <!--<a href="{{ url('/removeitem/'.$item->id) }}" class="delete fa fa-close">  </a>-->
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        @endforeach
+                                                   
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan='3'>
+                                                                <div class="sub-total">
+                                                                    
+                                                                    <span class="amount"> Genel Toplam :  ₺{{$sub_total}} </b> </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                                    <div class="chk-out">
+                                                        <a href="{{ url('/checkout') }}"><button class="btn default-btn">Çıkış yapmak</button></a>
+                                                    </div>
+                                                @endif    
+                                                    
+                                                </ul>
+                                            </div>
+                                        </div>
+                                      </li>
+                        </ul>
                     </div>
+                    
+                    <div class="col-md-7 col-sm-7">
+                        <div class="sf_search">
+                        
+                        <form action="" method = "get">
+                              
+                          <input class="sf_input" autocomplete="" value="" name="q" type="text">
+                          <button class="sf_button searchsubmit" type="submit"><span>Ara</span></button>
+                        </form>
+                              
+                        </div>
+                    </div>
+                </div>                            
+            </div>
+            <?php $arr = $helper->getSociallink() ?>
+                      
+            <div class="social-bar">              
+                    <ul class="social">
+                    <li class="twitter"><a href="{{ $arr['twitter_id']}}" title="twitter" target="_blank"><i class="fa fa-twitter"></i></a></li> 
+                    <li class="facebook"><a href="{{ $arr['fb_id']}}" title="facebook" target="_blank"><i class="fa fa-facebook"></i></a></li> 
+                    <li class="skype"><a href="{{ $arr['skype_id']}}" title="skype" target="_blank"><i class="fa fa-skype"></i></a></li> 
+                    <li class="googleplus"><a href="{{ $arr['google_id']}}" title="googleplus" target="_blank"><i class="fa fa-google-plus"></i></a></li> 
+                    <li class="flickr"><a href="{{ $arr['flicker_id']}}" title="flickr" target="_blank"><i class="fa fa-flickr"></i></a></li> 
+                    <li class="youtube"><a href="{{ $arr['youtube_id']}}" title="youtube" target="_blank"><i class="fa fa-youtube"></i></a></li> 
+                    <li class="instagram"><a href="{{ $arr['instagram_id']}}" title="instagram" target="_blank"><i class="fa fa-instagram"></i></a></li> 
+                    <li class="pinterest"><a href="{{ $arr['pinterest_id']}}" title="pinterest" target="_blank"><i class="fa fa-pinterest"></i></a></li> 
+                    <li class="linkedin"><a href="{{ $arr['linkedin_id']}}" title="linkedin" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+            </div>
+            <header>
+                          <div class="page-wrapper">
+                              <div class="col-md-4"><a href="{{ url('/') }}" class="logo"><img src="{{ asset('public/new/images/logo-lazimbana.png') }}"></a></div>
+                              <div class="col-md-8">
+                              <div class="navbar-header">
+                                      <button id="menu-toggle" data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                                  </div>
+                                  <div class="header-icons woocart">
+                                      <a href="{{ url('/checkout') }}" class="reversed">
+                                          <!--<span class="fa fa-cart-plus"></span>-->
+                                            <img src="{{ asset('public/new/images/view_cart.png') }}" height="15px">
+                                          <span class="cart-counts">{{$total_item}}</span>  
+                                      </a>
+                                  </div>
+                                  
+                                  <div class="navbar-inverse side-collapse in">
+                                    
+                                      <!--<nav role="navigation" class="navbar-collapse">
+                                      @if(isset($category_menu) && $category_menu->count()==0) 
+                                        <ul class="nav navbar-nav">
+                                            @foreach ($category_list as $key => $value) 
+                                                <li><a href="{{ url($value->slug) }}">{!! ucfirst($value->name) !!}</a> 
+                                                @if(isset($mega_menu[$value->id]))
+                                                
+                                                    <ul>
+                                                     @foreach ($mega_menu[$value->id] as $key => $result)
+                                                        @foreach ($result as $url => $menu)
+                                                        <li class="col-md-3">
+                                                            <ul>
+                                                                 <li><a href="{{url($url)}}">{{ucfirst($menu) }}</a></li>
+                                                            </ul>
+                                                        </li> 
+                                                        @endforeach 
+                                                     @endforeach         
+                                                    </ul>
+                                                </li>
+                                                @endif
+                                            @endforeach    
+                                        </ul>
+                                      @endif
+                                      </nav>-->
+                                 </div>
+
+                                <div class="navbar-inverse side-collapse in">
+                                    <nav role="navigation" class="navbar-collapse">
+                                        <ul class="nav navbar-nav">
+                                        
+                                        @foreach ($cats as $key => $value)
+                                            @if($value['name'] != NULL)
+                                                <li><a href="{{ url($value['slug']) }}">{!! ucfirst($value['name']) !!}</a>
+                                            @endif
+                                            @if(isset($value['child']) && count($value['child'] > 0) && $value['name'] != NULL )
+                                                <ul class="dropdown">
+                                                    <li class="category_menu_list">
+                                                    
+                                                        @foreach ($value['child'] as $key => $result)
+                                                            @if($result['name'] != NULL)
+                                                            <ul onmouseenter="func();">
+                                                                <li class="category_title">
+                                                                    <a href="{{ url($result['slug']) }}">{!! ucfirst($result['name']) !!}</a></li>
+                                                                       @if(isset($result['child']) && count($result['child'] > 0) && $result['name'] != NULL )
+                                                                           
+                                                                                @foreach ($result['child'] as $key => $menu)
+                                                                                    @if($menu['name'] != NULL)
+                                                                                        <li>
+                                                                                            <a href="{{ url($menu['slug']) }}">{!! ucfirst($menu['name']) !!}</a>
+                                                                                                @if(isset($menu['child']) && count($menu['child'] > 0) && $menu['name'] != NULL )
+                                                                                                    <ul>
+                                                                                                       @foreach ($menu['child'] as $key => $submenu)
+                                                                                                            @if($submenu['name'] != NULL)
+                                                                                                                <li><a href="{{ url($submenu['slug']) }}">{!! ucfirst($submenu['name']) !!}</a></li>
+                                                                                                            @endif
+                                                                                                        @endforeach
+                                                                                                    </ul>
+                                                                                                @endif
+                                                                                        </li>
+                                                                                    @endif       
+                                                                                @endforeach    
+                                                                           
+                                                                       @endif
+                                                                </li>
+                                                            </ul>
+                                                            @endif
+                                                        @endforeach                                                   
+                                                    </li>                                                        
+                                                    <li class="category_img_menu"><a href="#"><img src="{{ file_exists(public_path('/new/images/category/'.$value['slug'].'.png')) ? asset('public/new/images/category/'.$value['slug'].'.png') : asset('public/new/images/category/default.png') }}"></a></li>
+                                                      
+                                                </ul>
+                                            @endif
+                                            </li>
+                                            
+                                        @endforeach    
+                                        </ul>
+                                    </nav>
+                                </div>
+                                
+                            </div>
+                        </div>
+                      </header>
+												<div class="page_title">
+                <div class="page-wrapper">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6 text-right">
+                            <span><a href="#">Home</a> </span>                                            
+                            <span> giris-kayit </span>  
+                       </div>
+                </div>
+            </div>
+            <div class="account_login">            
+                <div class="container">
+                    <div class="col-md-6">
+                        <h2>Satıcı Girişi</h2>
+                         
+                          <div class="login-box-body"> 
+                            <div class="login-box-msg"> 
+                              @if (count($errors) > 0)
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                
+                            @endif
+                    
+                              {!! Form::model($user, ['url' => ['admin/login'],'class'=>'form-horizontal','files' => true]) !!}
+                                @include('packages::auth.form')
+                              {!! Form::close() !!}
+                    
+                          </div>
+                    </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>  Satıcı Kayıt Formu </h2>
+                         
+                          <div class="login-box-body"> 
+                             <form class="register-form" action="{{url('admin/registration')}}" method="post" novalidate>
+                            
+                            <!--<p> Kiþisel bilgilerinizi giriniz: </p>-->               
+                            @if(session()->has('message'))                    
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach (session()->get('message') as $error1)
+                                            <li>{{ $error1 }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <div class="form-group">
+                                <!--<label class="control-label visible-ie8 visible-ie9">Þehir</label>-->
+                                
+                                <div class="input-icon">
+                                    <select name="vendor_type" id="vendor_type" class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" onchange="vendor(this.value)">
+                                        <option value="">Satıcı Tipini Seçiniz</option>
+                                        <option value="1">Bireysel</option>
+                                        <option value="2">Kurumsal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <!--<label class="control-label visible-ie8 visible-ie9">Ad-Soyad</label>-->
+                                <div class="input-icon">
+                                     
+                                    <input class="form-control placeholder-no-fix" type="text" id="full_name" style="display:none;" placeholder="Ad-Soyad" name="full_name" value="{{old('full_name')}}"> </div>
+                            </div>
+                            <div class="form-group">
+                                <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
+                                <div class="input-icon">                         
+                                    <input class="form-control placeholder-no-fix" id="tc_no" style="display:none;" type="text" placeholder="Kimlik No" name="tc_no" value="{{old('tc_no')}}"> </div>
+                            </div>
+                            <div class="form-group">
+                                <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
+                                <div class="input-icon">                         
+                                    <input class="form-control placeholder-no-fix" id="company_name" style="display:none;" type="text" placeholder="Şirket Ünvanı" name="company_name" value="{{old('company_name')}}"> </div>
+                            </div>
+                            <div class="form-group">
+                                <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
+                                <div class="input-icon">                         
+                                    <input class="form-control placeholder-no-fix" id="manager_name" style="display:none;" type="text" placeholder="Yetkili Adı" name="manager_name" value="{{old('manager_name')}}"> </div>
+                            </div>
+                            <div class="form-group">
+                                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                               <!-- <label class="control-label visible-ie8 visible-ie9">Telefon</label>-->
+                                <div class="input-icon">
+                                    
+                                    <input class="form-control placeholder-no-fix" type="text" placeholder="Telefon" name="phone"  value="{{old('phone')}}"> </div>
+                            </div>
+                            <div class="form-group">
+                                <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
+                                <div class="input-icon">                         
+                                    <input class="form-control placeholder-no-fix" id="bank_name"  type="text" placeholder="Banka Adı" name="bank_name" value="{{old('bank_name')}}"> </div>
+                            </div>
+                            <div class="form-group">
+                                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                <!--<label class="control-label visible-ie8 visible-ie9">IBAN No.</label>-->
+                                <div class="input-icon">
+                                    
+                                    <input class="form-control placeholder-no-fix" type="text" placeholder="IBAN No." name="iban"  value="{{old('iban')}}"> </div>
+                            </div>
+                            <div class="form-group">
+                                <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
+                                <div class="input-icon">                         
+                                    <input class="form-control placeholder-no-fix" id="tax_name" style="display:none;" type="text" placeholder="Vergi Dairesi" name="tax_name" value="{{old('tax_name')}}"> </div>
+                            </div>
+                            <div class="form-group">
+                                <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
+                                <div class="input-icon">                         
+                                    <input class="form-control placeholder-no-fix" id="tax_no" style="display:none;" type="text" placeholder="Vergi No." name="tax_no" value="{{old('tax_no')}}"> </div>
+                            </div>
+                            <div class="form-group">
+                                <!--<label class="control-label visible-ie8 visible-ie9">Address</label>-->
+                                <div class="input-icon">
+                                    <input class="form-control placeholder-no-fix" type="text" placeholder="Adres" name="address"  value="{{old('address')}}"> </div>
+                            </div>
+                            
+                            <div class="form-group">                                                
+                                    <!--<input class="form-control unicase-form-control text-input" id="city" placeholder="" type="text" name="city" value="{{$shipping->city or '' }}">-->
+                                    <select class="selectpicker form-control" data-live-search="true" name="city" required>
+                                        <option selected="selected" value="">Şehir Seçiniz </option>
+                                        
+                                        <option data-tokens="Adana" value="Adana">Adana</option>
+                                        <option data-tokens="Adıyaman" value="Adıyaman">Adıyaman</option>
+                                        <option data-tokens="Afyon" value="Afyon" >Afyon</option>
+                                        <option data-tokens="Ağrı" value="Ağrı" >Ağrı</option>
+                                        <option data-tokens="Amasya" value="Amasya" >Amasya</option>
+                                        <option data-tokens="Ankara" value="Ankara" >Ankara</option>
+                                        <option data-tokens="Antalya" value="Antalya" >Antalya</option>
+                                        <option data-tokens="Artvin" value="Artvin" >Artvin</option>
+                                        <option data-tokens="Aydın" value="Aydın" >Aydın</option>
+                                            
+                                        <option data-tokens="Balıkesir" value="Balıkesir" >Balıkesir</option>
+                                        <option data-tokens="Bilecik" value="Bilecik" >Bilecik</option>
+                                        <option data-tokens="Bingöl" value="Bingöl" >Bingöl</option>
+                                        <option data-tokens="Bitlis" value="Bitlis" >Bitlis</option>
+                                        <option data-tokens="Bolu" value="Bolu" >Bolu</option>
+                                        <option data-tokens="Burdur" value="Burdur" >Burdur</option>
+                                        <option data-tokens="Bursa" value="Bursa" >Bursa</option>
+                                            
+                                        <option data-tokens="Çanakkale" value="Çanakkale" >Çanakkale</option>
+                                        <option data-tokens="Çankırı" value="Çankırı" >Çankırı</option>
+                                        <option data-tokens="Çorum" value="Çorum" >Çorum</option>
+                                            
+                                        <option data-tokens="Denizli" value="Denizli" >Denizli</option>                                                        
+                                        <option data-tokens="Diyarbakır" value="Afyon" >Diyarbakır</option>
+                                        <option data-tokens="Edirne" value="Edirne" >Edirne</option>
+                                        <option data-tokens="Giresun" value="Giresun" >Giresun</option>
+                                            
+                                        <option data-tokens="Gümüşhane" value="Gümüşhane" >Gümüşhane</option>
+                                        <option data-tokens="Hakkari" value="Hakkari" >Hakkari</option>
+                                        <option data-tokens="Hatay" value="Hatay" >Hatay</option>
+                                        <option data-tokens="Isparta" value="Isparta" >Isparta</option>
+                                        <option data-tokens="Mersin" value="Mersin" >Mersin</option>
+                                        <option data-tokens="İstanbul" value="İstanbul" >İstanbul</option>
+                                        <option data-tokens="İzmir" value="İzmir" >İzmir</option>
+                                        <option data-tokens="Kars" value="Kars" >Kars</option>
+                                        <option data-tokens="Kastamonu" value="Kastamonu" >Kastamonu</option>
+                                        <option data-tokens="Konya" value="Konya" >Konya</option>
+                                        <option data-tokens="Kütahya" value="Kütahya" >Kütahya</option>
+                                        <option data-tokens="Malatya" value="Malatya" >Malatya</option>
+                                        <option data-tokens="Manisa" value="Manisa" >Manisa</option>
+                                        <option data-tokens="Kahramanmaraş" value="Kahramanmaraş" >Kahramanmaraş</option>
+                                        <option data-tokens="Mardin" value="Mardin" >Mardin</option>
+                                        <option data-tokens="Muğla" value="Muğla" >Muğla</option>
+                                        <option data-tokens="Muş" value="Muş" >Muş</option>
+                                        <option data-tokens="Nevşehir" value="Nevşehir" >Nevşehir</option>
+                                        <option data-tokens="Niğde" value="Niğde" >Niğde</option>
+                                        <option data-tokens="Ordu" value="Ordu" >Ordu</option>
+                                        <option data-tokens="Rize" value="Rize" >Rize</option>
+                                        <option data-tokens="Sakarya" value="Sakarya" >Sakarya</option>
+                                        <option data-tokens="Samsun" value="Samsun" >Samsun</option>
+                                        <option data-tokens="Siirt" value="Siirt" >Siirt</option>
+                                        <option data-tokens="Sinop" value="Sinop" >Sinop</option>
+                                        <option data-tokens="Sivas" value="Sivas" >Sivas</option>
+                                        <option data-tokens="Tekirdağ" value="Tekirdağ" >Tekirdağ</option>
+                                        <option data-tokens="Tokat" value="Tokat" >Tokat</option>
+                                        <option data-tokens="Trabzon" value="Trabzon" >Trabzon</option>
+                                            
+                                        <option data-tokens="Tunceli" value="Tunceli" >Tunceli</option>
+                                        <option data-tokens="Şanlıurfa" value="Şanlıurfa" >Şanlıurfa</option>
+                                        <option data-tokens="Uşak" value="Uşak" >Uşak</option>
+                                        <option data-tokens="Van" value="Van" >Van</option>
+                                        <option data-tokens="Yozgat" value="Yozgat" >Yozgat</option>
+                                        <option data-tokens="Zonguldak" value="Zonguldak" >Zonguldak</option>
+                                        <option data-tokens="Aksaray" value="Aksaray" >Aksaray</option>
+                                        <option data-tokens="Bayburt" value="Bayburt" >Bayburt</option>
+                                        <option data-tokens="Karaman" value="Karaman" >Karaman</option>
+                                        <option data-tokens="Kırıkkale" value="Kırıkkale" >Kırıkkale</option>
+                                        <option data-tokens="Batman" value="Batman" >Batman</option>
+                                        <option data-tokens="Şırnak" value="Şırnak" >Şırnak</option>
+                                        <option data-tokens="Bartın" value="Bartın" >Bartın</option>
+                                        <option data-tokens="Ardahan" value="Ardahan" >Ardahan</option>
+                                        <option data-tokens="Iğdır" value="Iğdır" >Iğdır</option>
+                                        <option data-tokens="Yalova" value="Yalova" >Yalova</option>
+                                        <option data-tokens="Karabük" value="Karabük" >Karabük</option>
+                                        <option data-tokens="Kilis" value="Kilis" >Kilis</option>
+                                        <option data-tokens="Osmaniye" value="Osmaniye" >Osmaniye</option>
+                                        <option data-tokens="Düzce" value="Düzce" >Düzce</option>
+                                        <option data-tokens="Diğer" value="Diğer" >Diğer</option>
+                                        
+                                        
+                                    </select>
+                                </div>
+                            <!--<p> <b> Hesap ayrýntýlarýnýzý giriniz: </b> </p>-->
+                             <div class="form-group">
+                                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                              <!--  <label class="control-label visible-ie8 visible-ie9">E-posta</label>-->
+                                <div class="input-icon">
+                                    
+                                    <input class="form-control placeholder-no-fix" type="text" placeholder="E-posta" name="email"  value="{{old('email')}}"> </div>
+                            </div>
+            
+                            <div class="form-group">
+                               <!-- <label class="control-label visible-ie8 visible-ie9">Þifre</label>-->
+                                <div class="input-icon">
+                                     
+                                    <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Şifre" name="password"  value="{{old('password')}}"> </div>
+                            </div>
+                            <div class="form-group">
+                                <!--<label class="control-label visible-ie8 visible-ie9">Re-type Your Þifre</label>-->
+                                <div class="controls">
+                                    <div class="input-icon">
+                                         
+                                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Şifre (Tekrar)" name="password_confirmation"  value="{{old('password_confirmation')}}"> </div>
+                                </div>
+                            </div>
+                           
+                            
+                            <div class="form-actions">
+                                <button type="submit" id="register-submit-btn" class="btn btn-primary btn-block btn-flat"> KAYDOL </button>
+                               <!--<a href="{{url('admin')}}" class="link"> Giriþ </a>-->
+                                
+                            </div>
+                        </form>
+                    
+                          </div>
+                    </div>
+                    
+                    </div>
+                </div>
+<footer>
+      <div class="page-wrapper">
+          <div class="col-md-3">
+              <h3>Kurumsal</h3>
+              <ul>
+                  <!--<li class="fiRSt"><a title="Your Account" href="{{ url('about') }}">Hakkımızda</a></li>
+                    <li><a title="Information" href="{{ url('privacy-policy') }}">Gizlilik Politikası</a></li>
+                    <li><a title="Addresses" href="{{ url('delivery-and-returns') }}">Teslimat ve iadeler</a></li>
+                    <li><a title="Addresses" href="{{ url('distance-sales-contract') }}">Mesafeli Satış Sözleşmesi</a></li>
+                    <li><a title="Blog" href="{{ url('blogs') }}">Blog</a></li>-->
+                     <?php $pagelink = $helper->getPages(); ?>
+                    
+                    <li class="fiRSt"><a title="Your Account" href="{{ url('/Hakkimizda') }}">Hakkımızda</a></li>
+                    <li><a title="Information" href="{{ url('/Gizlilik-Politikası') }}">Gizlilik Politikası</a></li>
+                    <li><a title="Addresses" href="{{ url('/Teslimat-Ve-Iadeler') }}">Teslimat ve iadeler</a></li>
+                    <li><a title="Addresses" href="{{ url('/Mesafeli-Satış-Sözleşmesi') }}">Mesafeli Satış Sözleşmesi</a></li>
+                    <li><a title="Blog" href="{{ url('blog') }}">Blog</a></li>
+              </ul>
+          </div>
+          <div class="col-md-3">
+              <h3>Müşteri Hizmetleri</h3>
+              <ul>
+                 <li class="fiRSt"><a href="{{ url('hesabim') }}" title="Contact us">Hesabım</a></li>
+                 <li><a href="{{ url('hesabim') }}" title="About us">Sipariş Geçmişi</a></li>
+                 <li><a href="{{url('SSS')}}" title="faq">SSS</a></li> 
+                 <!--<li class="last"><a href="{{ url('contact') }}" title="Where is my order?">Yardım Merkezi</a></li>-->
+                 <li class="last"><a href="{{ url('/Yardım-Merkezi') }}" title="Where is my order?">Yardım Merkezi</a></li>
+              </ul>
+          </div>
+          <div class="col-md-3">
+              <h3>Bize Ulaşın</h3>
+              @if ($errors->has('successMsgcontact'))
+                    <span class="btn btn-success">{{ $errors->first('successMsgcontact') }} </span>
+                     
+                @endif
+               <form method="post" action="{{ url('/contactus') }}">
+                    <ul>
+                        <li><input type="text" class="footer_input" name="name" placeholder="Adınız (Gerekli)" required></li>
+                        <li><input type="text" class="footer_input" name="email" placeholder="Eposta Adresiniz (Gerekli)" required></li>
+                        <li><textarea placeholder="Mesajınız" name="message" class="footer_textarea" required></textarea></li>
+                        <li><input type="submit" value="Gönder" class="submit-btn"></li>
+                    </ul>
+                </form> 
+          </div>                            
+      </div>  
+</footer>      
+      <div class="bottom_footer" id="bottom">
+        <div class="page-wrapper">
+            <div class="col-md-5"><p>Lazimbana.com Tüm hakları saklıdır..</p></div>
+            <div class="col-md-7">
+                <div class="footer_link pull-right">
+                    <a href="{{ url('/Hakkimizda') }}">Hakkımızda</a>
+                    <a href="{{ url('/Yardım-Merkezi') }}">Yardým</a>
+                    <a href="{{ url('/Yardım-Merkezi') }}">Ýletiþim</a>
                 </div>
                
-                
-                <div class="form-actions">
-                	<button type="submit" id="register-submit-btn" class="btn btn-primary btn-block btn-flat"> KAYDOL </button>
-                   <!--<a href="{{url('admin')}}" class="link"> Giriþ </a>-->
-                    
-                </div>
-            </form>
-        
-              </div>
-		</div>
-        
+            </div>
         </div>
+      </div>  
+            </div>            
     </div>
+</div>
     <!-- jQuery 2.1.4 -->
       <script src="{{ URL::asset('public/assets/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
       <script src="{{ URL::asset('public/assets/js/jquery.validate.js') }}"></script>

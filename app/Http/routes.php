@@ -13,8 +13,7 @@
 
 Route::match(['post','get'],'cat','HomeController@index');
 
-Route::match(['get'],'optimizeProductImage','HomeController@optimize'); 
-Route::match(['get'],'404','HomeController@pageNotFound'); 
+ 
 
 
 Route::get('{name}/addToCart/{id}', [ 
@@ -26,12 +25,16 @@ Route::get('blogs', [
         'as' => 'blogs',
        'uses' =>   'BlogController@index'
        ]);
+Route::get('blog', [ 
+        'as' => 'blogs',
+       'uses' =>   'BlogController@index'
+       ]);
 Route::get('blog-detail/{id}', [ 
         'as' => 'blog-detail',
        'uses' =>   'BlogController@detail'
        ]);
 
-Route::get('makale-basligi/{slug}', [ 
+Route::get('makale/{slug}', [ 
         'as' => 'blog-detail',
        'uses' =>   'BlogController@detail'
        ]);
@@ -45,7 +48,13 @@ Route::get('myaccount/login',[
 Route::get('myaccount/forgetPassword',[
           'as' => 'showLoginForm',
           'uses'  => 'ProductController@sendResetPasswordLink'
+        ])->where(['name'=>'myaccount','name'=>'[A-Za-z]+']);
+
+Route::get('hesabim/giris',[
+          'as' => 'showLoginForm',
+          'uses'  => 'ProductController@showLoginForm'
         ])->where(['name'=>'myaccount','name'=>'[A-Za-z]+']); 
+
 
 
 Route::post('password/email','ProductController@forgetPasswordLink');
@@ -83,16 +92,20 @@ Route::get('category',[
           'as' => 'category-front',
           'uses'  => 'HomeController@category'
         ]); 
- Route::get('order',[
+ //Route::get('order',[
+ //         'as' => 'order',
+ //         'uses'  => 'ProductController@order'
+ //       ]);
+ Route::get('siparis',[
           'as' => 'order',
           'uses'  => 'ProductController@order'
         ]); 
-  Route::get('faq',[
-          'as' => 'faq',
+  Route::get('SSS',[
+          'as' => 'faqs',
           'uses'  => 'HomeController@faq'
         ]); 
   
-   Route::get('contact',[
+   Route::get('Yardım-Merkezi',[
           'as' => 'contact',
           'uses'  => 'HomeController@contact'
         ]);
@@ -100,7 +113,10 @@ Route::get('category',[
           'as' => 'contactus',
           'uses'  => 'HomeController@contact_us'
         ]);
-
+   Route::post('enquiry',[
+          'as' => 'contactus',
+          'uses'  => 'HomeController@enquiry'
+        ]);
    Route::get('track-orders',[
           'as' => 'trackOrder',
           'uses'  => 'HomeController@trackOrder'
@@ -110,19 +126,16 @@ Route::get('category',[
           'uses'  => 'HomeController@tNc'
         ]); 
  
-    Route::get('about',[
-          'as' => 'about',
-          'uses'  => 'HomeController@about_us'
-        ]);
-    Route::get('privacy-policy',[
+    
+    Route::get('Gizlilik-Politikası',[
           'as' => 'privacy',
           'uses'  => 'HomeController@privacy_policy'
         ]);
-     Route::get('delivery-and-returns',[
+     Route::get('Teslimat-Ve-Iadeler',[
           'as' => 'returns',
           'uses'  => 'HomeController@returns'
         ]);
-     Route::get('distance-sales-contract',[
+     Route::get('Mesafeli-Satış-Sözleşmesi',[
           'as' => 'contract',
           'uses'  => 'HomeController@sales_contract'
         ]);
@@ -130,7 +143,10 @@ Route::get('category',[
           'as' => 'about',
           'uses'  => 'HomeController@page'
         ]);
-
+    Route::get('Hakkimizda',[
+          'as' => 'about',
+          'uses'  => 'HomeController@about_us'
+        ]);
 
 
 Route::group(['middleware' => ['web']], function(){
@@ -288,7 +304,10 @@ Route::get('myaccount',[
           'as' => 'myaccount',
           'uses'  => 'ProductController@myaccount'
         ]); 
-
+Route::get('hesabim',[
+          'as' => 'myaccount',
+          'uses'  => 'ProductController@myaccount'
+        ]); 
  
         
 Route::get('myaccount/signup',[
@@ -297,6 +316,15 @@ Route::get('myaccount/signup',[
         ]); 
 
 Route::post('myaccount/signup',[
+          'as' => 'userSignup',
+          'uses'  => 'UserController@userSignup'
+        ]);
+Route::get('hesabim/kaydol',[
+          'as' => 'myaccount-signup',
+          'uses'  => 'ProductController@showSignupForm'
+        ]); 
+
+Route::post('hesabim/kaydol',[
           'as' => 'userSignup',
           'uses'  => 'UserController@userSignup'
         ]); 

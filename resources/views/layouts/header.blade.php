@@ -10,6 +10,8 @@
       <meta name="description" content="{{$meta_description or '' }}"/>
 
       <meta name="keywords" content="{{$meta_key or ''}}"/>
+      
+      <meta name="robots" content="{{ (isset($is_indexing) && ($is_indexing == 0)) ? 'noindex, nofollow' : 'index, dofollow' }}" />
 
         <meta property="og:title" content="{{$meta_key or ''}}" />
         <meta property="og:site_name" content="Lazimbana.com" />
@@ -21,7 +23,8 @@
     
       <link rel="icon" href="../../favicon.ico">
 
-      <title> 
+      <title>
+            {{ $website_title->field_value }}
             @if(isset($meta_key))    
             {{ isset($meta_key)?$meta_key:''}}                             
                     @else
@@ -50,6 +53,9 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
+      <!--- Google Analytic script   --->    
+        <?php $helper = new Helper();?>
+        {!! $helper->getGoogleAnalytic() !!}
     </head>
 
         <body>
@@ -72,9 +78,9 @@
                                       <li><label for="password">Parola <span class="required">*</span></label></li>
                                       <li><input class="input-text" name="password" id="password" type="password"></li>
                                       <li><input class="button" name="login" value="Oturum Aç" type="submit"></li>
-                                      <li class="reg-link"><a href="{{ url('myaccount/signup') }}" class="resig">KAYIT OL</a><a href="{{ url('password/reset') }}" class="forgot">SIFRENI SIFIRLA</a></li>
+                                      <li class="reg-link"><a href="{{ url('hesabim/kaydol') }}" class="resig">KAYIT OL</a><a href="{{ url('password/reset') }}" class="forgot">SIFRENI SIFIRLA</a></li>
                                       <li class="reg-link">
-                                        <a href="{{ url('satici/giris-kayit') }}" class="resig">SATICI OL / GİRİŞİ</a>
+                                        <a href="{{ url('satici/giris-kayit') }}" class="resig">SATICI OL / GİRİŞ</a>
                                         <!--<a href="{{ url('vendor/signUp') }}" class="resig pull-right">SATICI GİRİŞİ</a>-->
                                       </li>
                                       
@@ -83,7 +89,7 @@
                                       </form>
                                       </li>
                                       @else
-                                      <li class="topcart"> <a href="{{url('myaccount')}}">Hesabım</a> 
+                                      <li class="topcart"> <a href="{{url('hesabim')}}">Hesabım</a> 
 
                                       </li>
                                        <li class="topcart"> <a href="{{url('signout')}}">Çıkış Yap</a> </li>
@@ -130,7 +136,7 @@
                                                         <tr>
                                                             <td colspan="3">
                                                                 <div class="product-price">
-                                                                         <h5 class="price"> <b>{{$item->qty}} </b> x <b> £ {{$item->price}} </b></h5>
+                                                                         <h5 class="price"> <b>{{$item->qty}} </b> x <b> ₺ {{$item->price}} </b></h5>
                                                                         <!--<a href="{{ url('/removeitem/'.$item->id) }}" class="delete fa fa-close">  </a>-->
                                                                 </div>
                                                             </td>
@@ -144,14 +150,14 @@
                                                             <td colspan='3'>
                                                                 <div class="sub-total">
                                                                     
-                                                                    <span class="amount"> Genel Toplam :  £{{$sub_total}} </b> </span>
+                                                                    <span class="amount"> Genel Toplam :  ₺{{$sub_total}} </b> </span>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
                                                     <div class="chk-out">
-                                                        <a href="{{ url('/checkout') }}"><button class="btn default-btn">Çıkış yapmak</button></a>
+                                                        <a href="{{ url('/checkout') }}"><button class="btn default-btn">Sepete Git</button></a>
                                                     </div>
                                                 @endif    
                                                     
@@ -175,18 +181,19 @@
                               </div>
                           </div>                            
                       </div>
+                      <?php $arr = $helper->getSociallink() ?>
                       
                       <div class="social-bar">              
                               <ul class="social">
-                              <li class="twitter"><a href="#" title="twitter" target="_blank"><i class="fa fa-twitter"></i></a></li> 
-                              <li class="facebook"><a href="#" title="facebook" target="_blank"><i class="fa fa-facebook"></i></a></li> 
-                              <li class="skype"><a href="#" title="skype" target="_blank"><i class="fa fa-skype"></i></a></li> 
-                              <li class="googleplus"><a href="#" title="googleplus" target="_blank"><i class="fa fa-google-plus"></i></a></li> 
-                              <li class="flickr"><a href="#" title="flickr" target="_blank"><i class="fa fa-flickr"></i></a></li> 
-                              <li class="youtube"><a href="#" title="youtube" target="_blank"><i class="fa fa-youtube"></i></a></li> 
-                              <li class="instagram"><a href="#" title="instagram" target="_blank"><i class="fa fa-instagram"></i></a></li> 
-                              <li class="pinterest"><a href="#" title="pinterest" target="_blank"><i class="fa fa-pinterest"></i></a></li> 
-                              <li class="linkedin"><a href="#" title="linkedin" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                              <li class="twitter"><a href="{{ $arr['twitter_id']}}" title="twitter" target="_blank"><i class="fa fa-twitter"></i></a></li> 
+                              <li class="facebook"><a href="{{ $arr['fb_id']}}" title="facebook" target="_blank"><i class="fa fa-facebook"></i></a></li> 
+                              <li class="skype"><a href="{{ $arr['skype_id']}}" title="skype" target="_blank"><i class="fa fa-skype"></i></a></li> 
+                              <li class="googleplus"><a href="{{ $arr['google_id']}}" title="googleplus" target="_blank"><i class="fa fa-google-plus"></i></a></li> 
+                              <li class="flickr"><a href="{{ $arr['flicker_id']}}" title="flickr" target="_blank"><i class="fa fa-flickr"></i></a></li> 
+                              <li class="youtube"><a href="{{ $arr['youtube_id']}}" title="youtube" target="_blank"><i class="fa fa-youtube"></i></a></li> 
+                              <li class="instagram"><a href="{{ $arr['instagram_id']}}" title="instagram" target="_blank"><i class="fa fa-instagram"></i></a></li> 
+                              <li class="pinterest"><a href="{{ $arr['pinterest_id']}}" title="pinterest" target="_blank"><i class="fa fa-pinterest"></i></a></li> 
+                              <li class="linkedin"><a href="{{ $arr['linkedin_id']}}" title="linkedin" target="_blank"><i class="fa fa-linkedin"></i></a></li>
                               </ul>
                       </div>    
                               

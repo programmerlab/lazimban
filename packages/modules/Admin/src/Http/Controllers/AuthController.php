@@ -18,6 +18,8 @@ use Cookie;
 use Closure; 
 use Hash;
 use URL;
+use Illuminate\Support\Facades\DB;
+use Cart; 
 use Validator;
 use App\Http\Requests;
 use App\Helpers\Helper as Helper;
@@ -33,9 +35,35 @@ class AuthController extends Controller
     protected $redirectTo = 'admin';
 	protected $guard = 'admin';
     
-    public function __construct()
+    public function __construct(Request $request)
     {          
         View::share('helper',new Helper);
+        
+        $cat = $categories = \App\Category::nested()->orderBy('order_id','asc')->get();        
+        View::share('cats',$cat);
+        
+        View::share('total_item',Cart::content()->count());
+        View::share('sub_total',Cart::subtotal());
+        
+        View::share('cart',Cart::content());
+        
+        $pid = [];
+        foreach (Cart::content() as $key => $value) {
+            $pid[] = $value->id;
+        }
+        $product_photo =   DB::table('products')->select('photo','id')->whereIn('id',$pid)->get();//DB::table('products')->whereIn('id',$pid)->get(['photo','id'])->toArray();
+        //print_r(Cart::content()); die;
+        View::share('product_photo',$product_photo);
+
+        View::share('userData',$request->session()->get('current_user'));
+         if ($request->session()->has('current_user')) { 
+
+            $this->user_id = $request->session()->get('current_user')->id;
+
+        }else{
+            $this->user_id = "";
+        }
+        
     }
 	 
 	public function index(User $user, Request $request)
@@ -93,7 +121,16 @@ class AuthController extends Controller
             'iban'   => 'required|min:26',
 	        'password' => 'required|min:6',
 	        'password_confirmation' => 'required|same:password'
-        ]);
+        ],[
+		'vendor_type.required' => 'Satıcı tipini seçmelisiniz.',
+		'city.required' => 'Şehir seçmelisiniz.',
+		'email.required' => 'Geçerli bir eposta adresi girmelisiniz.',
+		'phone.required' => 'Geçerli bir telefon no. girmelisiniz.',
+		'bank_name.required' => 'Banka ismi girmelisiniz.',
+		'iban.required' => 'IBAN no. girmelisiniz.',
+		'password.required' => 'Şifre girmelisiniz.',
+		'password_confirmation.required' => 'Şifrenizi onaylamak için tekrar girmelisiniz.',
+		]);
         /** Return Error Message **/
         if ($validator->fails()) {
                    	$error_msg	=	[];
@@ -159,6 +196,7 @@ class AuthController extends Controller
                             ->withInput()  
                             ->withErrors(['errors'=>$errors]); 
         }
+        
 		return view::make('packages::auth.register', compact('user','errors1'));
 	} 
 	

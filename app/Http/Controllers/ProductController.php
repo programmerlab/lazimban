@@ -336,7 +336,9 @@ class ProductController extends Controller {
 
 
     public function order(Request $request)
-    { 
+    {
+        
+        $options = configIyzipay::options();
         $cart = Cart::content();
         $products = Product::with('category')->orderBy('id','asc')->get();
         $categories = Category::nested()->get(); 
@@ -344,8 +346,7 @@ class ProductController extends Controller {
         $billing    = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',1)->first(); 
 
         $shipping   = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first(); 
-
-
+        
         return view('end-user.order',compact('categories','products','category','cart','billing','shipping'));   
          
     }
@@ -434,7 +435,7 @@ class ProductController extends Controller {
             $request->session()->put('billing',$shipBill);               
         }
         
-        return Redirect::to('order');
+        return Redirect::to('siparis');
 
 
     }
@@ -464,7 +465,7 @@ class ProductController extends Controller {
         $shipBill->save();
         $request->session()->put('shipping',$shipBill);
         $request->session()->put('tab',3);
-         return Redirect::to('order');
+         return Redirect::to('siparis');
         
     }
 
@@ -486,7 +487,7 @@ class ProductController extends Controller {
         $shipBill->save();
          $request->session()->put('paymentMethod',$_REQUEST['paymentMethod']);
          $request->session()->put('tab',4);
-        return Redirect::to('order');
+        return Redirect::to('siparis');
         
     }
 
@@ -514,7 +515,7 @@ class ProductController extends Controller {
             }
             if($user_id=="")
             {
-               return  Redirect::to('order');
+               return  Redirect::to('siparis');
             }
             
             $conversation_id = uniqid().rand(100,999);
@@ -597,10 +598,13 @@ class ProductController extends Controller {
                 //echo "<pre>"; print_r($request); die;
                 
         $checkoutFormInitialize = \Iyzipay\Model\CheckoutFormInitialize::create($request, $options);
+        
+        //return Redirect::to('order')->with( ['iyzipay' => $request] );
         //echo "<pre>"; print_r($checkoutFormInitialize); die;
         print_r($checkoutFormInitialize->getCheckoutFormContent());
+        return view('end-user.payment',compact(''));   
         ?>
-            <div id="iyzipay-checkout-form" class="responsive"></div>
+            <!--<div id="iyzipay-checkout-form" class="responsive"></div>-->
         <?php        
     }
     
@@ -671,7 +675,7 @@ class ProductController extends Controller {
             }
             return  Redirect::to('success');            
         }else{
-            return Redirect::to('order');
+            return Redirect::to('siparis');
         }
         die;
         
@@ -689,7 +693,7 @@ class ProductController extends Controller {
         }
         if($user_id=="")
         {
-           return  Redirect::to('order');
+           return  Redirect::to('siparis');
         }
 
         $products   = Product::with('category')->orderBy('id','asc')->get();
@@ -791,12 +795,12 @@ class ProductController extends Controller {
     }
 
     public function myaccount(Request $request)
-    {
-        
+    {    
         if($this->user_id=="")
         {      
-            return Redirect::to('myaccount/login');
+            return Redirect::to('hesabim/giris');
         }
+        
         $cart = Cart::content();
         $products = Product::with('category')->orderBy('id','asc')->get();
         $categories = Category::nested()->get(); 
@@ -806,7 +810,7 @@ class ProductController extends Controller {
         $shipping   = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first(); 
         $transaction                = Transaction::where('user_id',$this->user_id)->get();
 
-
+        
         return view('end-user.myaccount',compact('transaction','categories','products','category','cart','billing','shipping'));
 
     }

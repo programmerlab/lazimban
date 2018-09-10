@@ -159,12 +159,21 @@ class ProductController extends Controller {
         $cat_url    = $this->getCategoryById($request->get('product_category')); 
         $vendor_id = $request->session()->get('current_vendor_id');
         //echo "<pre>"; print_r($vendor_id); die;
-
+        
         if ($request->file('image')) { 
             $photo = $request->file('image');
             $destinationPath = storage_path('uploads/products');
-            $photo->move($destinationPath, time().$photo->getClientOriginalName());
-            $photo_name = time().$photo->getClientOriginalName();
+            
+            if($request->get('img_name')){
+                $ext = pathinfo($photo->getClientOriginalName(), PATHINFO_EXTENSION);
+                $photo->move($destinationPath, $request->get('img_name'));
+                $photo_name = $request->get('img_name').'.'.$ext;
+            }else{
+                $photo->move($destinationPath, time().$photo->getClientOriginalName());
+                $photo_name = time().$photo->getClientOriginalName();
+            }
+            
+            
             $request->merge(['photo'=>$photo_name]);
            
             $product->product_title      =   $request->get('product_title');
@@ -179,7 +188,8 @@ class ProductController extends Controller {
             }
             
             
-            if($request->file('additional_image')){
+            
+            if($request->file('additional_image')[0]){
                 $images = $request->file('additional_image');
                 
                 foreach($images as $imgs){
@@ -188,17 +198,26 @@ class ProductController extends Controller {
                     $additionalphotoname[] = time().$imgs->getClientOriginalName();                    
                 }
                 
-                $request->merge(['additional_image'=>json_encode($additionalphotoname)]);
+                if(isset($additionalphotoname) && $additionalphotoname != ''){
+                //$request->merge(['additional_image'=>json_encode($additionalphotoname)]);
+                }
                 //echo "<pre>"; print_r($photoname); die;
             }
 
-
+            //echo $request->get('img_name'); die;
             $product->product_category   =   $request->get('product_category');
             $product->description        =   $request->get('description');
             $product->price              =   $request->get('price');
             $product->discount           =   $request->get('discount');
+            $product->qty                =   $request->get('qty');
             $product->photo              =   $photo_name;
-            $product->additional_images  =   json_encode($additionalphotoname);
+            $product->img_name           =   $request->get('img_name');
+            $product->img_alt           =   $request->get('img_alt');
+            $product->is_indexing           =   $request->get('is_indexing');
+            if(isset($additionalphotoname) && $additionalphotoname != ''){
+                $product->additional_images  =   isset($additionalphotoname) ? json_encode($additionalphotoname) : '';
+            }
+            
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
             $product->video              =   $request->get('video');
@@ -266,8 +285,16 @@ class ProductController extends Controller {
             $photo = $request->file('image');
             //$destinationPath = base_path() . '/public/uploads/products/';
             $destinationPath = storage_path('uploads/products');
-            $photo->move($destinationPath, time().$photo->getClientOriginalName());
-            $photo_name = time().$photo->getClientOriginalName();
+            
+            if($request->get('img_name')){
+                $ext = pathinfo($photo->getClientOriginalName(), PATHINFO_EXTENSION);
+                $photo->move($destinationPath, $request->get('img_name').'.'.$ext);
+                $photo_name = $request->get('img_name').'.'.$ext;
+            }else{
+                $photo->move($destinationPath, time().$photo->getClientOriginalName());
+                $photo_name = time().$photo->getClientOriginalName();
+            }
+            
             $request->merge(['photo'=>$photo_name]);
            
             $product->product_title      =   $request->get('product_title');
@@ -282,7 +309,10 @@ class ProductController extends Controller {
             }
             $product->product_category   =   $request->get('product_category');
             $product->description        =   $request->get('description');
+            $product->qty                =   $request->get('qty');
             $product->photo              =   $photo_name;
+            $product->img_name           =   $request->get('img_name');
+            $product->img_alt           =    $request->get('img_alt');
             $product->additional_images  =   $additional_image;
             $product->price              =   $request->get('price');
             $product->discount           =   $request->get('discount');
@@ -290,7 +320,7 @@ class ProductController extends Controller {
             $product->meta_description   =   $request->get('meta_description');
             $product->url               =   $url;
             $product->video              =   $request->get('video');
-            
+            $product->is_indexing           =   $request->get('is_indexing');
             if($request->get('title')){
                 $product->title  = $request->get('title');
             }
@@ -307,9 +337,14 @@ class ProductController extends Controller {
                 $pro_slug   = strtolower(str_replace(" ", "-", $request->get('product_title')));
                 $url        = $cat_url.$pro_slug;
             }
+            
+            
             $product->product_category   =   $request->get('product_category');
             $product->description        =   $request->get('description');
+            $product->qty                =   $request->get('qty');
             $product->photo              =   $request->get('photo');
+            $product->img_name           =   $request->get('img_name');
+            $product->img_alt           =    $request->get('img_alt');
             $product->additional_images  =   $additional_image;
             $product->price              =   $request->get('price');
             $product->discount           =   $request->get('discount');
@@ -317,6 +352,7 @@ class ProductController extends Controller {
             $product->meta_description   =   $request->get('meta_description');
             $product->url                =   $url;
             $product->video              =   $request->get('video');
+            $product->is_indexing           =   $request->get('is_indexing');
             //echo "<pre>"; print_r($product); die;
             if($request->get('title')){
                 $product->title  = $request->get('title');

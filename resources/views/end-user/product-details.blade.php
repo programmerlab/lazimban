@@ -11,7 +11,7 @@
               	<div class="page-wrapper">
                 	@if(session()->has('message'))
                         <div class="alert alert-success">
-                            {{ session()->get('message') }} <a href="{{ url('/checkout') }}"><button class="btn btn-success">View Cart</button>
+                            {{ session()->get('message') }} <a href="{{ url('/checkout') }}"><button class="btn btn-success">Sepeti Görüntüle</button>
                                 </a>
                         </div>
                     @endif
@@ -26,7 +26,7 @@
 		                    <ul id="gal1" class="ubislider-inner">
 		                    	<li> 
 		                    		<a> 
-		                    			<img class="product-v-img" src="{{ asset('storage/uploads/products/'. $product->photo) }}"> 
+		                    			<img class="product-v-img" src="{{ asset('storage/uploads/products/'. $product->photo) }}" alt="{{ $product->img_alt }}" title="{{ $product->img_alt }}"> 
 		                    		</a> 
 		                    	</li>
                                 @if(!empty($product->additional_images))
@@ -55,6 +55,7 @@
                                         </tr>-->
                                 </tbody>
                             </table>
+                            @if($product->qty)    
         					<div class="quantity_outer">
                             	<input type="number" value="1" onchange="updateCart(this.value)" min=1>
                                  <a href="{{ url(str_slug($product->product_title,'-').'/addToCart/'.$product->id) }}" id="addToCart" >
@@ -64,6 +65,11 @@
                                 <a href="{{ url(str_slug($product->product_title,'-').'/buyNow/'.$product->id) }}" >
                                 <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">HEMEN AL</button></a>                                    
                             </div>
+                            @else
+                            <div class="quantity_outer">
+                                <button type="submit" class="single_add_to_cart_button button alt disabled wc-variation-selection-needed">Out of Stock</button>                                                                
+                            </div>    
+                            @endif
                             <div class="category_list">
                             	<span><strong>Açıklama:</strong></span> <span>{!! str_limit($product->description,100) !!}</span>                                
                             </div>
@@ -103,7 +109,7 @@
                                             <div class="owl-carousel owl-theme">
                                             @foreach($hot_products as $result)
                                                     <div class="item">
-                                                         <a href="{{url($result->url)}}"><img src="{{ asset('storage/uploads/products/'. $result->photo) }}" alt="Gıda Ürünleri">								
+                                                         <a href="{{url($result->url)}}"><img src="{{ asset('storage/uploads/products/'. $result->photo) }}" alt="{{ $result->img_alt }}" title="{{ $result->img_alt }}">								
                                                             <h2>{{ $result->product_title }} </h2>
                                                             <h6>satıcı -  {{ ($helper->getVendorName($result->id)) ? $helper->getVendorName($result->id) : 'Admin' }}</h6>
                                                         </a>
@@ -124,7 +130,7 @@
     color: brown;
     background-color: beige;
     padding: 5px; margin: 3px; border-radius: 5px; 
-"> <b> By  {{ucfirst($rs->name)}} de </b> on {!! Carbon\Carbon::parse($rs->created_at)->format('d-M-Y'); !!}: <br>{{$rs->comments}} </p>
+"> <b>  {{ucfirst($rs->name)}}  </b> tarafından <b> {!! Carbon\Carbon::parse($rs->created_at)->format('d-M-Y'); !!}</b> tarihinde: <br>{{$rs->comments}} </p>
                                             @endforeach
                                             @endif
                                         </div>
@@ -139,7 +145,7 @@
                                 
                                            
                                        
-                                        <h2>Yorumlar</h2>
+                                        <h2>Yorum Yaz</h2>
                                         @if ($errors->has('successMsg'))
                                            <span class="btn btn-success">{{ $errors->first('successMsg') }} </span>
                                             
@@ -164,7 +170,7 @@
                                            <div class="col-md-12"><input value="Gönder" class="submit-btn" type="submit"></div>
                                        </div>
                                    </form>
-                                      <h2  id="displayRating" data="{{$product->rating or 0}}">Yorumlar </h2>
+                                      <h2  id="displayRating" data="{{$product->rating or 0}}">Ürün Puanı </h2>
        
                                    <div class="rating_outer"><span class="fa fa-star" id="star1" onclick="rating(1,{{$product->id}})"></span>
                                        <span class="fa fa-star" id="star2" onclick="rating(2,{{$product->id}})"></span>

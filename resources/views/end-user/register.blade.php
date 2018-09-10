@@ -8,7 +8,15 @@
 
         @section('content') 
 
-            @include('partials.breadcrumb')
+            <div class="page_title">
+                <div class="page-wrapper">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6 text-right">
+                            <span><a href="#">Home</a> </span>                                            
+                            <span> kaydol </span>  
+                       </div>
+                </div>
+            </div>
             
           <div class="container" ng-app="postApp" ng-controller="postController">
     <div class="row">
@@ -96,7 +104,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-user"></i> Kayıt olmak
                                 </button>
-                                <a href="{{ url('myaccount/login') }}">Zaten hesabım var ? </a>
+                                <a href="{{ url('hesabim/giris') }}">Zaten hesabım var ? </a>
                             </div>
                             
                     </form>

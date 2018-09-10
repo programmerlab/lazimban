@@ -9,7 +9,15 @@
         @section('content') 
 
             
-            @include('partials.breadcrumb')
+            <div class="page_title">
+                <div class="page-wrapper">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6 text-right">
+                            <span><a href="#">Home</a> </span>                                            
+                            <span> Teslimat Ve Iadeler </span>  
+                       </div>
+                </div>
+            </div>
             <div class="checkout-box faq-page">
             <div class="container">
                 <div class="col-md-12">

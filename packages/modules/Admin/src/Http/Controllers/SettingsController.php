@@ -75,8 +75,18 @@ class SettingsController extends Controller {
 
         $meta_description    = $setting::where('field_key','meta_description')->first();
 
- 
-
+        $google_tag      = $setting::where('field_key','google_tag')->first();
+        $google_analytic      = $setting::where('field_key','google_analytic')->first();
+        $fb_id      = $setting::where('field_key','fb_id')->first();
+        $twitter_id      = $setting::where('field_key','twitter_id')->first();
+        $linkedin_id      = $setting::where('field_key','linkedin_id')->first();
+        $flicker_id      = $setting::where('field_key','flicker_id')->first();
+        $skype_id      = $setting::where('field_key','skype_id')->first();
+        $google_id      = $setting::where('field_key','google_id')->first();
+        $pinterest_id      = $setting::where('field_key','pinterest_id')->first();
+        $instagram_id      = $setting::where('field_key','instagram_id')->first();
+        $youtube_id      = $setting::where('field_key','youtube_id')->first();
+        
         $setting = Settings::first();
 
         if($setting)
@@ -87,7 +97,8 @@ class SettingsController extends Controller {
         }
       
 
-        return view('packages::setting.edit', compact('setting','website_title','website_email','website_url','contact_number','company_address','banner', 'page_title', 'page_action','helper','meta_key','meta_description'));
+        return view('packages::setting.edit', compact('setting','website_title','website_email','website_url','contact_number','company_address','banner', 'page_title', 'page_action','helper','meta_key','meta_description','google_tag','google_analytic','fb_id',
+                                                      'twitter_id','linkedin_id','flicker_id','skype_id','google_id','pinterest_id','instagram_id','youtube_id'));
    
     }
 
@@ -222,5 +233,6 @@ class SettingsController extends Controller {
     public function show(Settings $setting) {
         
     }
+        
 
 }

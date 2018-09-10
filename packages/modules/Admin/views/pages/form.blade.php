@@ -13,9 +13,18 @@
             <span class="label label-danger">{{ $errors->first('title', ':message') }}</span>
            
         </div>
-    </div> 
+    </div>
+             
+   <!--  <div class="form-group{{ $errors->first('slug', ' has-error') }}">
+        <label class="col-lg-2 col-md-2 control-label"> Custom Url <span class="error">*</span></label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('slug',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('slug', ':message') }}</span>
+           
+        </div>
+    </div>-->
  
-
+     
      <div class="form-group{{ $errors->first('page_content', ' has-error') }}">
         <label class="col-lg-2 col-md-2 control-label">Page content</label>
         <div class="col-lg-8 col-md-8"> 
@@ -28,9 +37,20 @@
 
             </span>@endif
         </div>
-    </div> 
+    </div>
     
-
+    @if($page->slug == 'contact')  
+    <div class="form-group{{ $errors->first('contact_email', ' has-error') }}">
+        <label class="col-lg-2 col-md-2 control-label"> Contact Email <span class="error">*</span></label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('contact_email',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('contact_email', ':message') }}</span>
+           
+        </div>
+    </div>
+    @endif
+    
+<!--
 <hr> <center> <b> Banner  (minimum size : 800x350) </b> </a><hr>
      <div class="form-group{{ $errors->first('banner_image1', ' has-error') }}">
         <label class="col-lg-2 col-md-2 control-label">Banner Image1 </label>
@@ -49,7 +69,7 @@
 
             </span>@endif
         </div>
-    </div>  
+    </div> --> 
       
     
     <div class="form-group">
@@ -58,7 +78,7 @@
 
             {!! Form::submit(' Save ', ['class'=>'btn  btn-primary text-white','id'=>'saveBtn']) !!}
 
-            <a href="{{route('product')}}">
+            <a href="{{route('page')}}">
             {!! Form::button('Back', ['class'=>'btn btn-warning text-white']) !!} </a>
         </div>
     </div>
