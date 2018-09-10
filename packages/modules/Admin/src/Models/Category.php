@@ -59,6 +59,12 @@ class Category extends Eloquent {
     {
         return $this->hasMany('Modules\Admin\Models\Category', 'parent_id','id');
     }
+
+
+    public function product()
+    {
+        return $this->hasMany('Modules\Admin\Models\Product', 'product_category','id');
+    }
   
     
   

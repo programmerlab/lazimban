@@ -56,6 +56,60 @@ class ProductController extends Controller {
      * Dashboard
      * */
 
+    public function redirect( Request $request){
+        $page_title = 'Redirect 301';
+        $page_action = 'View Redirect';  
+ 
+        $search = $request->get('search');
+
+        if(!empty($search)){
+                 $u = Category::with(['product' => function($q) use($search) { 
+                if(!empty($search)){
+                     $q->where('url','LIKE',"%$search%");
+                }  
+            }])->where(function($q) use($search) { 
+                if(!empty($search)){
+                     $q->where('slug','=',$search);
+                     $q->Orwhere('old_slug','=',$search);
+                }  
+            })->Paginate(15); 
+        }else{
+             $u = Category::with('product')->orderBy('id','desc')->Paginate(15); 
+        }
+
+       
+
+          
+
+        if($request->method()=='POST'){ 
+
+            if($request->get('category_id')){
+                $data['slug'] =  $request->get('new_url');
+                $data['old_slug'] = $request->get('old_url');
+
+                \DB::table('categories')->where(['id'=>$request->get('category_id')])->update($data);
+
+                return Redirect::to(url('admin/redirect-301'))
+                            ->with('flash_alert_notice', 'New Url updated !');
+
+            }
+
+            if($request->get('product_id')){
+
+                $data['url'] =  $request->get('new_url');
+                $data['old_url'] = $request->get('old_url');
+
+                \DB::table('products')->where(['id'=>$request->get('product_id')])->update($data);
+                return Redirect::to(url('admin/redirect-301'))
+                            ->with('flash_alert_notice', 'New Url updated !');
+            }
+
+
+        }
+
+        return view('packages::redirect.index', compact('url1', 'page_title', 'page_action','helper','url2','u'));
+    }
+
     public function index(Product $product, Request $request) 
     { 
         

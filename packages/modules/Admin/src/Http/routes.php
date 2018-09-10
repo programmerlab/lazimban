@@ -255,6 +255,9 @@ use Illuminate\Support\Facades\DB;
 
  
         Route::match(['get','post'],'admin/profile', 'Modules\Admin\Http\Controllers\AdminController@profile'); 
+
+
+         Route::match(['get','post'],'admin/redirect-301', 'Modules\Admin\Http\Controllers\ProductController@redirect'); 
             
   });
 

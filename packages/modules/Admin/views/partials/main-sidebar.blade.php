@@ -157,6 +157,12 @@
         </a>
           
       </li>
+       <li class="treeview">
+        <a href="{{ url('admin/redirect-301') }}" >
+          <i class="fa fa-dashboard"></i> <span>301 Redirection</span> </i>
+        </a>
+          
+      </li>
       @else
 
 

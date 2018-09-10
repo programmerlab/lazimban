@@ -276,7 +276,9 @@
                                             @if($value['name'] != NULL)
                                                 <li><a href="{{ url($value['slug']) }}">{!! ucfirst($value['name']) !!}</a>
                                             @endif
-                                            @if(isset($value['child']) && count($value['child'] > 0) && $value['name'] != NULL )
+
+                                         
+                                            @if(is_array($value['child'])   && $value['name'] != NULL )
                                                 <ul class="dropdown">
                                                     <li class="category_menu_list">
                                                     
@@ -285,24 +287,27 @@
                                                             <ul onmouseenter="func();">
                                                                 <li class="category_title">
                                                                     <a href="{{ url($result['slug']) }}">{!! ucfirst($result['name']) !!}</a></li>
-                                                                       @if(isset($result['child']) && count($result['child'] > 0) && $result['name'] != NULL )
+                                                                    
+                                                                       @if(is_array($result['child']) && (count($result['child']) > 0) && $result['name'] != NULL )
                                                                            
-                                                                                @foreach ($result['child'] as $key => $menu)
-                                                                                    @if($menu['name'] != NULL)
-                                                                                        <li>
-                                                                                            <a href="{{ url($menu['slug']) }}">{!! ucfirst($menu['name']) !!}</a>
-                                                                                                @if(isset($menu['child']) && count($menu['child'] > 0) && $menu['name'] != NULL )
-                                                                                                    <ul>
-                                                                                                       @foreach ($menu['child'] as $key => $submenu)
-                                                                                                            @if($submenu['name'] != NULL)
-                                                                                                                <li><a href="{{ url($submenu['slug']) }}">{!! ucfirst($submenu['name']) !!}</a></li>
-                                                                                                            @endif
-                                                                                                        @endforeach
-                                                                                                    </ul>
-                                                                                                @endif
-                                                                                        </li>
-                                                                                    @endif       
-                                                                                @endforeach    
+                                                                              @foreach ($result['child'] as $key => $menu)
+                                                                                  @if($menu['name'] != NULL)
+                                                                                      <li>
+                                                                                          <a href="{{ url($menu['slug']) }}">{!! ucfirst($menu['name']) !!}</a>
+                                                                                              @if(is_array($menu['child']) && (count($menu['child']) > 0) && $menu['name'] != NULL )
+                                                                                                  <ul>
+                                                                                                     @if(count($menu['child']))
+                                                                                                     @foreach ($menu['child'] as $key => $submenu)
+                                                                                                          @if($submenu['name'] != NULL)
+                                                                                                              <li><a href="{{ url($submenu['slug']) }}">{!! ucfirst($submenu['name']) !!}</a></li>
+                                                                                                          @endif
+                                                                                                      @endforeach
+                                                                                                      @endif
+                                                                                                  </ul>
+                                                                                              @endif
+                                                                                      </li>
+                                                                                  @endif       
+                                                                              @endforeach    
                                                                            
                                                                        @endif
                                                                 </li>
