@@ -1,0 +1,17 @@
+ul#sortable{
+	list-style: none;
+}
+
+ul#sortable li{
+	background: black;
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	border: 1px solid red;
+}
+
+ul#sortable a{
+	text-decoration: none;
+	color: white;
+}
