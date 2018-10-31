@@ -1,5 +1,4 @@
 
-
 @extends('packages::layouts.master') 
     @section('content') 
       @include('packages::partials.main-header')

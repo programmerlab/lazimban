@@ -24,11 +24,15 @@
       <link rel="icon" href="../../favicon.ico">
 
       <title>
-            {{ $website_title->field_value }}
-            @if(isset($meta_key))    
-            {{ isset($meta_key)?$meta_key:''}}                             
-                    @else
-                {{  $main_title  or $product->category->name }}
+            
+                @if(isset($meta_key) && $meta_key != '')    
+                      {{ isset($meta_key)?$meta_key:''}}                             
+                @else
+                      @if(isset($product->product_title))
+                        {{ $product->product_title }}
+                      @else  
+                        {{  $product->category->name  or $main_title }}
+                      @endif  
 
                 @endif                      
                 
@@ -44,9 +48,14 @@
       <link href="{{ asset('public/new/css/ubislider.min612e.css') }}" rel="stylesheet" type="text/css">
       <link rel="stylesheet" href="{{ asset('public/new/css/bootstrap-select.min.css') }}">
         <link href="{{ asset('public/new/css/style.css') }}" rel="stylesheet">
-        
-        
-
+      
+        @if(isset($product->canonical_tag) && ($product->canonical_tag != ''))
+        <link rel="canonical" href="{{ $product->canonical_tag or '' }}" />
+        @elseif(isset($page[0]->canonical_tag) && ($page[0]->canonical_tag != ''))
+        <link rel="canonical" href="{{ $page[0]->canonical_tag or '' }}" />
+        @elseif(isset($blog->canonical_tag) && ($blog->canonical_tag != ''))
+        <link rel="canonical" href="{{ $blog->canonical_tag or '' }}" />
+        @endif
 
       <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
       <!--[if lt IE 9]>
@@ -74,11 +83,11 @@
                                       {{ csrf_field() }}
                                       <ul>
                                       <li><label for="username">E-posta <span class="required">*</span></label></li>
-                                      <li><input class="input-text" name="email" id="email" value="" type="email"></li>
+                                      <li><input class="input-text" name="email" id="email" value="" type="email" autocomplete="off"></li>
                                       <li><label for="password">Parola <span class="required">*</span></label></li>
                                       <li><input class="input-text" name="password" id="password" type="password"></li>
                                       <li><input class="button" name="login" value="Oturum Aç" type="submit"></li>
-                                      <li class="reg-link"><a href="{{ url('hesabim/kaydol') }}" class="resig">KAYIT OL</a><a href="{{ url('password/reset') }}" class="forgot">SIFRENI SIFIRLA</a></li>
+                                      <li class="reg-link"><a href="{{ url('hesabim/kaydol') }}" class="resig">KAYIT OL</a><a href="{{ url('sifre/sifirla') }}" class="forgot">SIFRENI SIFIRLA</a></li>
                                       <li class="reg-link">
                                         <a href="{{ url('satici/giris-kayit') }}" class="resig">SATICI OL / GİRİŞ</a>
                                         <!--<a href="{{ url('vendor/signUp') }}" class="resig pull-right">SATICI GİRİŞİ</a>-->
@@ -201,18 +210,21 @@
                           <div class="page-wrapper">
                               <div class="col-md-4"><a href="{{ url('/') }}" class="logo"><img src="{{ asset('public/new/images/logo-lazimbana.png') }}"></a></div>
                               <div class="col-md-8">
-                              <div class="navbar-header">
-                                      <button id="menu-toggle" data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                                  </div>
-                                  <div class="header-icons woocart">
+                              <div class="header-icons woocart">
                                       <a href="{{ url('/checkout') }}" class="reversed">
                                           <!--<span class="fa fa-cart-plus"></span>-->
                                             <img src="{{ asset('public/new/images/view_cart.png') }}" height="15px">
                                           <span class="cart-counts">{{$total_item}}</span>  
                                       </a>
                                   </div>
+                              </div>
+                              <div class="row">
+                              <div class="navbar-header">
+                                      <button id="menu-toggle" data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                                  </div>
                                   
-                                  <div class="navbar-inverse side-collapse in">
+                                  
+                                  <!--<div class="navbar-inverse side-collapse in">
                                     
                                       <nav role="navigation" class="navbar-collapse">
                                       @if(isset($category_menu) && $category_menu->count()==0) 
@@ -238,7 +250,7 @@
                                         </ul>
                                       @endif
                                       </nav>
-                                 </div>
+                                 </div>-->
 
                                 <!--<div class="navbar-inverse side-collapse in">
                                     <nav role="navigation" class="navbar-collapse">
@@ -278,7 +290,7 @@
                                             @endif
 
                                          
-                                            @if(is_array($value['child'])   && $value['name'] != NULL )
+                                            @if(is_array($value['child']) && !empty(($value['child']))  && $value['name'] != NULL )
                                                 <ul class="dropdown">
                                                     <li class="category_menu_list">
                                                     

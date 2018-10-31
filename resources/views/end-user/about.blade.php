@@ -12,7 +12,7 @@
                 <div class="page-wrapper">
                     <div class="col-md-6"></div>
                     <div class="col-md-6 text-right">
-                            <span><a href="#">Home</a> </span>                                            
+                            <span><a href="{{ url('/') }}">Anasayfa</a> </span>                                            
                             <span> Hakkimizda </span>  
                        </div>
                 </div>

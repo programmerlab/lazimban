@@ -111,5 +111,121 @@
          });
     });
   </script>
+    <script>
+    $(document).on("click", "#add_more_milestone", function () {
+            var img_count = Number($("#milestone_field").val());
+            
+            //if(img_count <= 3){
+                img_count = Number(img_count) + 1;
+                $("#milestone_field").val(img_count);
+                var html = '';
+                html += "<div class='row' style='margin:5px'>";
+                html += "<div class='col-sm-3' style='padding-right:20px'>";
+                html += "<div class='form-group'>";
+                html += "<label class='control-label'>Size</label>";
+                html += "<select class='form-control milestone' id='s_"+img_count+"' name='size[]'>";
+                html += "<option value=''>Select Size</option>";
+                html += "<option value='xxs'>XXS</option>";
+                html += "<option value='xs'>XS</option>";
+                html += "<option value='s'>S</option>";
+                html += "<option value='m'>M</option>";
+                html += "<option value='l'>L</option>";
+                html += "<option value='xl'>XL</option>";
+                html += "<option value='xxl'>XXL</option>";
+                html += "<option value='xxxl'>XXXL</option>";
+                html += "<option value='24'>24'</option>";
+                html += "<option value='32'>32'</option>";
+                
+
+                
+                html += "</select>";                
+                html += "</div>";
+                html += "</div>";
+                
+                //html += "<div class='col-sm-3' style='padding-right:20px'>";
+                //html += "<div class='form-group'>";
+                //html += "<label class='control-label'>Color</label>";
+                //html += "<select class='form-control milestone' id='"+img_count+"' name='color[]'>";
+                //html += "<option value=''>Select Color</option>";
+                //html += "<option value='Black'>Black</option>";
+                //html += "<option value='Blue'>Blue</option>";
+                //html += "<option value='Pink'>Pink</option>";
+                //html += "<option value='Purple'>Purple</option>";
+                //html += "<option value='Yellow'>Yellow</option>";
+                //html += "<option value='Red'>Red</option>";
+                //html += "</select>";                
+                //html += "</div>";
+                //html += "</div>";
+                
+                              html += "<div class='col-sm-3' style='padding-right:20px'>";
+                              html += "<div class='form-group'>";
+                              html += "<label class='control-label'>Color</label>";
+                              html += "<input class='jscolor form-control' value='' id='"+img_count+"' name='color[]'>";                              
+                              var a  = "'#f00'"; var b  = "'#000'"; var c = "'#FFFFFF'"; var d = "'#F0F'"; var e = "'#06F'"; var f = "'#FFD700'"; var g = "'#96F'"; var h = "'#777777'"; var h1 = "'mix'"; 
+                              html += '<p style="background-color:#f00; width:10px; float:left; margin:3px;" onclick="document.getElementById('+img_count+').style.background='+a+'; document.getElementById('+img_count+').value = '+a+';">&nbsp;</p>';
+                              html += '<p style="background-color:#000; width:10px; float:left; margin:3px;" onclick="document.getElementById('+img_count+').style.background='+b+'; document.getElementById('+img_count+').value = '+b+';">&nbsp;</p>';
+                              html += '<p style="background-color:#FFFFFF; width:10px; float:left; margin:3px;  border:1px solid;" onclick="document.getElementById('+img_count+').style.background='+c+'; document.getElementById('+img_count+').value = '+c+';">&nbsp;</p>';
+                              html += '<p style="background-color:#F0F; width:10px; float:left; margin:3px;" onclick="document.getElementById('+img_count+').style.background='+d+'; document.getElementById('+img_count+').value = '+d+';">&nbsp;</p>';
+                              html += '<p style="background-color:#06F; width:10px; float:left; margin:3px;" onclick="document.getElementById('+img_count+').style.background='+e+'; document.getElementById('+img_count+').value = '+e+';">&nbsp;</p>';
+                              html += '<p style="background-color:#FFD700; width:10px; float:left; margin:3px;" onclick="document.getElementById('+img_count+').style.background='+f+'; document.getElementById('+img_count+').value = '+f+';">&nbsp;</p>';
+                              html += '<p style="background-color:#96F; width:10px; float:left; margin:3px;" onclick="document.getElementById('+img_count+').style.background='+g+'; document.getElementById('+img_count+').value = '+g+';">&nbsp;</p>';
+                              html += '<p style="background-color:#777777; width:25px; float:left; margin:3px; border:1px solid;" onclick="document.getElementById('+img_count+').style.background='+h+'; document.getElementById('+img_count+').value = '+h+';">Mix</p>';                                                                                        
+                              html += "</div>";
+                              html += "</div>";
+                
+                html += "<div class='col-sm-3' style='padding-right:20px'>";
+                html += "<div class='form-group'>";
+                html += "<label class='control-label'>Quantity</label>";
+                html += "<input type='number' class='form-control milestone' id='"+img_count+"' name='quantity[]' placeholder='quantity' required/>";
+                html += "</div>";
+                html += "</div>";
+                
+                html += "<div class='col-sm-3' style='padding-right:20px'>";
+                html += "<label class='control-label'>&nbsp;</label>";
+                html += "<div class='form-group'>";
+                html += "&nbsp;<img src='http://mactosys.com/allAboutTheMusic/assets/dist/img/bt_delete.png' style='cursor:pointer; height:10px; width:10px;' title='Remove variation' class='remove_img_div'/>";
+                html += "</div>";
+                html += "</div>";
+                html += "</div>";
+                
+                $("#milestone_upload_section").append(html);
+                var color = new jscolor($("#milestone_upload_section").find('input.jscolor:last')[0]);
+            //}else{
+            //    alert('You can create maximum 3 milestones.');
+            //}
+            
+	    $('input.milestone').each(function() {
+                $(this).rules("add", 
+                    {
+                        required: true
+                    })
+            }); 
+	    
+        });
+        
+        //remove product image from page
+        $(document).on("click", ".remove_img_div", function () {
+            var img_count = Number($("#milestone_field").val());
+            img_count = Number(img_count) - 1;
+            $("#milestone_field").val(img_count);
+            $(this).closest(".row").remove();
+        });
+	
+	
+  </script>
+    <script src="{{ URL::asset('public/new/js/jscolor.js') }}"></script>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
   </body>
 </html>

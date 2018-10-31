@@ -116,7 +116,13 @@ class UserController extends Controller
             'email'     =>  'required|email|unique:users',
             'password' => 'required|min:6',
             'confirm_password' => 'required|same:password'
-        ]);
+        ],[
+		'first_name.required'=>'Adınızı girmeniz gerekmektedir.',
+		'last_name.required'=>'Soyadınızı girmeniz gerekmektedir.',
+		'email.required'=>'Eposta adresi girmeniz gerekmektedir.',
+		'password.required'=>'Şifre belirlemeniz gerekmektedir.',
+		'confirm_password.required'=>'Şifrenizi tekrar girmeniz gerekmektedir.',
+		]);
         /** Return Error Message **/
         if ($validator->fails()) {
                     $error_msg  =   [];

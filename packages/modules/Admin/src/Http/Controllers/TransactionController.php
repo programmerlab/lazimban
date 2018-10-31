@@ -30,6 +30,7 @@ use Modules\Admin\Helpers\Helper as Helper;
 use Response;
 use Illuminate\Support\Facades\DB;
 use App\iyzipay\configIyzipay;
+use Cart; 
 /**
  * Class AdminController
  */
@@ -48,6 +49,17 @@ class TransactionController extends Controller {
         View::share('viewPage', 'product');
         View::share('helper',new Helper);
         $this->record_per_page = Config::get('app.record_per_page');
+        View::share('total_item',Cart::content()->count());
+        View::share('sub_total',Cart::subtotal());
+        
+        View::share('cart',Cart::content());
+        $pid = [];
+        foreach (Cart::content() as $key => $value) {
+            $pid[] = $value->id;
+        }
+        $product_photo =   DB::table('products')->select('photo','id')->whereIn('id',$pid)->get();//DB::table('products')->whereIn('id',$pid)->get(['photo','id'])->toArray();
+        //print_r(Cart::content()); die;
+        View::share('product_photo',$product_photo);
     }
 
     protected $categories;
@@ -74,11 +86,29 @@ class TransactionController extends Controller {
         
         if($request->session()->get('current_vendor_type') != 1){
             $transaction = $transaction->with('user','product','coupan')->select('transactions.*')->join('products', 'transactions.product_id', '=', 'products.id')->where('products.created_by',$vendor_id)->orderBy('transactions.id','desc')->Paginate($this->record_per_page);
+            foreach($transaction as $txn){
+                DB::table('notifications')
+                        ->where('txn_id', $txn->id)
+                        ->update(['v_status' => '1']);
+            }
         }else{
             $transaction = $transaction->with('user','product','coupan')->orderBy('id','desc')->Paginate($this->record_per_page);
+            foreach($transaction as $txn){
+                DB::table('notifications')
+                        ->where('txn_id', $txn->id)
+                        ->update(['status' => '1']);
+            }
         }
-        //echo "<pre>"; print_r($transaction); die;
-        return view('packages::transaction.index', compact('transaction', 'page_title', 'page_action','helper'));
+        //echo "<pre>"; print_r($transaction[0]->id); die;
+        
+        
+                    
+        if($request->session()->get('current_vendor_type') == 1){
+            return view('packages::transaction.index_1', compact('transaction', 'page_title', 'page_action','helper'));
+        }else{
+            return view('packages::transaction.index', compact('transaction', 'page_title', 'page_action','helper'));
+        }
+        
    
     }
 
@@ -169,10 +199,10 @@ class TransactionController extends Controller {
         if($approval->getStatus() != 'failure'){
             $transaction->status = 3;
             $transaction->save();
-            return Redirect::to(route('transaction'))
+            return Redirect::back()
                             ->with('flash_alert_notice', 'Order Approved successfully !');
         }else{
-            return Redirect::to(route('transaction'))
+            return Redirect::back()
                             ->with('flash_alert_warning', 'Order Not Approved !');
         }
         

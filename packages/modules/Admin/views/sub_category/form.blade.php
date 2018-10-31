@@ -76,7 +76,20 @@
             <span class="label label-danger">{{ $errors->first('commission', ':message') }}</span>
         </div>
     </div>
-    
+    <div class="form-group{{ $errors->first('commission', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Weekly Featured Product Amount<span class="error"> </span></label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('weekly_featured',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('weekly_featured', ':message') }}</span>
+        </div>
+    </div>
+    <div class="form-group{{ $errors->first('commission', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Monthly Featured Product Amount<span class="error"> </span></label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('monthly_featured',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('monthly_featured', ':message') }}</span>
+        </div>
+    </div>
     <div class="form-group">
         <label class="col-lg-4 col-md-4 control-label"></label>
         <div class="col-lg-8 col-md-8">

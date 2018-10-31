@@ -1,13 +1,15 @@
 @extends('packages::layouts.master')
 @section('content') 
 @include('packages::partials.main-header')
+
+    
 <!-- Left side column. contains the logo and sidebar -->
 @include('packages::partials.main-sidebar')
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper"> 
     @include('packages::partials.breadcrumb')
-
+    
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
@@ -38,7 +40,15 @@
                                             <i class="icon fa fa-check"></i>  
                                            {{ Session::get('flash_alert_notice') }} 
                                            </div>
-                                      @endif 
+                                      @endif
+                                      
+                                      
+                                      
+                                      
+                        
+                                      
+                                      
+                                      
                                       <div class="box-body table-responsive no-padding" >
                                       <!--{!!  $category_listing !!}-->
                                         <form method="post" action="{{ url('admin/category/save_menu') }}">

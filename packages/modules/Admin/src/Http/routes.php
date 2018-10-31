@@ -10,10 +10,24 @@ use Illuminate\Support\Facades\DB;
       Route::get('admin/transaction/approve/{id}','Modules\Admin\Http\Controllers\TransactionController@approve');
       Route::get('admin/transaction/decline/{id}','Modules\Admin\Http\Controllers\TransactionController@decline');
       
+      Route::post('featuredProducts/get_products','Modules\Admin\Http\Controllers\FeaturedProductsController@get_products');
+      Route::post('featuredProducts/get_validity','Modules\Admin\Http\Controllers\FeaturedProductsController@get_validity');
+      
+      Route::get('satici-paneli/featuredProducts/card',[
+                'as' => 'card',
+                'uses'  => 'Modules\Admin\Http\Controllers\FeaturedProductsController@card'
+              ]);
+      
+      Route::post('satici-paneli/featuredProducts/card_callback',[
+                'as' => 'card_callback',
+                'uses'  => 'Modules\Admin\Http\Controllers\FeaturedProductsController@card_callback'
+              ]);
+      
       Route::get('admin/products','Modules\Admin\Http\Controllers\ProductController@index');
       Route::post('admin/products','Modules\Admin\Http\Controllers\ProductController@index');
        
       Route::post('admin/registration','Modules\Admin\Http\Controllers\AuthController@registration');
+      Route::post('satici/registration','Modules\Admin\Http\Controllers\AuthController@registration');
       
       Route::post('admin/category/save_menu','Modules\Admin\Http\Controllers\CategoryController@save_menu');
       
@@ -38,19 +52,20 @@ use Illuminate\Support\Facades\DB;
                     $request->session()->put('current_vendor_name',$vendor->full_name);
                     $request->session()->put('current_vendor_image',$vendor->image);
                     $request->session()->put('current_vendor_type',2);
-                return Redirect::to('admin');
+                return Redirect::to('bana-ozel/satici-paneli');
             }
             else{ 
                 return redirect()
                             ->back()
                             ->withInput()  
-                            ->withErrors(['message'=>'Invalid email or password. Try again!']);
+                            ->withErrors(['message'=>'Geçersiz e-posta veya şifre. Tekrar deneyin!']);
                 } 
         }); 
       
     Route::group(['middleware' => ['admin']], function () { 
 
         Route::get('admin', 'Modules\Admin\Http\Controllers\AdminController@index');
+        Route::get('bana-ozel/satici-paneli', 'Modules\Admin\Http\Controllers\AdminController@index');
         
         
         /*------------User Model and controller---------*/
@@ -145,7 +160,25 @@ use Illuminate\Support\Facades\DB;
                 'create' => 'product.create',
             ]
                 ]
-        ); 
+        );
+        
+        Route::bind('urunler', function($value, $route) {
+            return Modules\Admin\Models\Product::find($value);
+        });
+        Route::resource('satici-paneli/urunler', 'Modules\Admin\Http\Controllers\ProductController', [
+            'names' => [
+                'edit' => 'product.edit',
+                'show' => 'product.show',
+                'destroy' => 'product.destroy',                
+                'store' => 'product.store',
+                'index' => 'product',
+                'create' => 'product.create',
+            ]
+                ]
+        );
+        
+        
+        
 
         Route::bind('transaction', function($value, $route) {
             return Modules\Admin\Models\Transaction::find($value);
@@ -162,7 +195,8 @@ use Illuminate\Support\Facades\DB;
                 'create' 	=> 'transaction.create',                
             ]
                 ]
-        ); 
+        );
+        
 
         Route::bind('setting', function($value, $route) {
             return Modules\Admin\Models\Settings::find($value);
@@ -236,6 +270,90 @@ use Illuminate\Support\Facades\DB;
                 ]
         );
         
+        Route::bind('brand', function($value, $route) {
+            return Modules\Admin\Models\Brand::find($value);
+        });
+ 
+        Route::resource('admin/brand', 'Modules\Admin\Http\Controllers\BrandController', [
+            'names' => [
+                'edit' => 'brand.edit',
+                'show' => 'brand.show',
+                'destroy' => 'brand.destroy',
+                'update' => 'brand.update',
+                'store' => 'brand.store',
+                'index' => 'brand',
+                'create' => 'brand.create',
+            ]
+                ]
+        );
+        
+        Route::bind('size', function($value, $route) {
+            return Modules\Admin\Models\Size::find($value);
+        });
+ 
+        Route::resource('admin/size', 'Modules\Admin\Http\Controllers\SizeController', [
+            'names' => [
+                'edit' => 'size.edit',
+                'show' => 'size.show',
+                'destroy' => 'size.destroy',
+                'update' => 'size.update',
+                'store' => 'size.store',
+                'index' => 'size',
+                'create' => 'size.create',
+            ]
+                ]
+        );
+        
+        Route::bind('color', function($value, $route) {
+            return Modules\Admin\Models\Color::find($value);
+        });
+ 
+        Route::resource('admin/color', 'Modules\Admin\Http\Controllers\ColorController', [
+            'names' => [
+                'edit' => 'color.edit',
+                'show' => 'color.show',
+                'destroy' => 'color.destroy',
+                'update' => 'color.update',
+                'store' => 'color.store',
+                'index' => 'color',
+                'create' => 'color.create',
+            ]
+                ]
+        );
+        
+        Route::bind('featuredProduct', function($value, $route) {
+            return Modules\Admin\Models\FeaturedProduct::find($value);
+        });
+ 
+        Route::resource('admin/featuredProduct', 'Modules\Admin\Http\Controllers\FeaturedProductsController', [
+            'names' => [
+                'edit' => 'featuredProduct.edit',
+                'show' => 'featuredProduct.show',
+                'destroy' => 'featuredProduct.destroy',
+                'update' => 'featuredProduct.update',
+                'store' => 'featuredProduct.store',
+                'index' => 'featuredProduct',
+                'create' => 'featuredProduct.create',
+            ]
+                ]
+        );
+        
+        Route::bind('featuredProduct', function($value, $route) {
+            return Modules\Admin\Models\FeaturedProduct::find($value);
+        });
+        Route::resource('satici-paneli/featuredProduct', 'Modules\Admin\Http\Controllers\FeaturedProductsController', [
+            'names' => [
+                'edit' => 'featuredProduct.edit',
+                'show' => 'featuredProduct.show',
+                'destroy' => 'featuredProduct.destroy',
+                'update' => 'featuredProduct.update',
+                'store' => 'featuredProduct.store',
+                'index' => 'featuredProduct',
+                'create' => 'featuredProduct.create',                
+            ]
+                ]
+        );
+        
         Route::bind('faq', function($value, $route) {
             return Modules\Admin\Models\Faq::find($value);
         });
@@ -252,12 +370,17 @@ use Illuminate\Support\Facades\DB;
             ]
                 ]
         ); 
-
+        
+        Route::match(['get'],'satici-paneli/işlem', 'Modules\Admin\Http\Controllers\TransactionController@index');
+        Route::get('satici-paneli/transaction/approve/{id}','Modules\Admin\Http\Controllers\TransactionController@approve');
+        Route::match(['get'],'satici-paneli/urun/ekle', 'Modules\Admin\Http\Controllers\ProductController@create');
  
-        Route::match(['get','post'],'admin/profile', 'Modules\Admin\Http\Controllers\AdminController@profile'); 
+        Route::match(['get','post'],'admin/profile', 'Modules\Admin\Http\Controllers\AdminController@profile');
+        Route::match(['get','post'],'bana-ozel/satici-paneli/profil', 'Modules\Admin\Http\Controllers\AdminController@profile');
 
 
-         Route::match(['get','post'],'admin/redirect-301', 'Modules\Admin\Http\Controllers\ProductController@redirect'); 
+         Route::match(['get','post'],'admin/redirect-301', 'Modules\Admin\Http\Controllers\ProductController@redirect');
+         Route::match(['get','post'],'admin/redirect-302', 'Modules\Admin\Http\Controllers\ProductController@redirects'); 
             
   });
 

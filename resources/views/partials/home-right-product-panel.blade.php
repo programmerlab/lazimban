@@ -3,7 +3,22 @@
                                       <div class="col-md-6"><img src="{{ asset('public/new/images/indirim-kazan.jpg') }}"></div>
                                       <div class="col-md-6"><img src="{{ asset('public/new/images/sepette-indirim.jpg') }}"></div>
                                   </div>
-                                  
+                                  <div class="product_list_outer">
+                                  <h3><span>Featured </span> Products</h3>
+                                      <div class="owl-carousel owl-theme">
+                                      @if(isset($featured_products) && !empty($featured_products))
+                                            @foreach($featured_products as $key2 => $product) 
+                                                <div class="item">
+                                                     <a href="{{ url($product->url) }}"><img src="{{ asset('storage/uploads/products/'. $product->photo) }}"></a>
+                                                        <h2>{{$product->product_title}} </h2>
+                                                    </a>
+                                                </div>
+                                            @endforeach
+                                      @else
+                                            No Items available to show                            
+                                      @endif      
+                                      </div>  
+                                  </div>
                                   
                                   <div class="product_list_outer">
                                       <h3><span>Yeni</span> Ürünler</h3>

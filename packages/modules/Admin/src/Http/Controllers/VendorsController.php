@@ -26,6 +26,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Dispatcher; 
 use App\Helpers\Helper;
 use App\iyzipay\configIyzipay;
+use Illuminate\Support\Facades\DB;
 /**
  * Class AdminController
  */
@@ -110,7 +111,11 @@ class VendorsController extends Controller {
         $page_title = 'Vendor';
         $page_action = 'Show Vendors'; 
         //echo $page_title; die;
-                        
+        //echo $vendor->id;    die;
+        DB::table('notifications')
+            ->where('vendor_id', $vendor->id)
+            ->update(['status' => '1']);
+            
         return view('packages::vendors.user.edit', compact('vendor', 'page_title', 'page_action'));
     }
 

@@ -73,9 +73,11 @@
                                             <i class="fa fa-btn fa-sign-in"></i> Oturum aç
 
                                         </button>
-                                        <a class="" href="{{ url('hesabim/kaydol') }}" style="margin-left: 20px">  Kaydol?</a> veya 
-                                        <a class="" href="{{ url('/password/reset') }}" > Parolanızı mı unuttunuz?</a>  
-                                         
+                                            <br>
+                                        
+                                       
+                                        <a class="" href="{{ url('hesabim/kaydol') }}" style="margin-left: 20px">Hesap oluşturun ?</a> veya 
+                                        <a class="" href="{{ url('sifre/sifirla') }}" > Şifrenizi mi unuttunuz ?</a>  
                                        
                                     </div>
                                 </div>

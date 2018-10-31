@@ -41,7 +41,7 @@ class FaqController extends Controller {
      *
      * @return \Illuminate\View\View
      */
-    public function __construct() {        
+    public function __construct() {
         $this->middleware('admin');
         View::share('viewPage', 'faq');
         View::share('helper',new Helper);
@@ -86,7 +86,7 @@ class FaqController extends Controller {
      * */
 
     public function create(Faq $faq, Request $request) 
-    {        
+    {       
         $page_title = 'Faq';
         $page_action = 'Create Question';
          

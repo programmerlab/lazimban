@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth; 
 use Modules\Admin\Models\User;
 use Modules\Admin\Models\Category;
+use Modules\Admin\Models\Brand;
 use Modules\Admin\Models\Product;
 use Modules\Admin\Models\Transaction;
 use View;
@@ -37,7 +38,7 @@ class HomeController extends Controller
      */
      
 
-      public function __construct(Request $request,Settings $setting) {   
+      public function __construct(Request $request,Settings $setting) {
         View::share('helper',new Helper);
         View::share('category_name',$request->segment(1));
         View::share('total_item',Cart::content()->count());
@@ -48,7 +49,7 @@ class HomeController extends Controller
    
         //echo "<pre>"; print_r($pages); die;
         
-        $hot_products   = Product::orderBy('views','desc')->limit(3)->get();
+        $hot_products   = Product::orderBy('views','desc')->where('status',1)->limit(3)->get();        
         $special_deals  = Product::orderBy('discount','desc')->limit(3)->get(); 
         View::share('hot_products',$hot_products);
         View::share('special_deals',$special_deals);
@@ -199,21 +200,37 @@ class HomeController extends Controller
         $q = Input::get('q'); 
          
         $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
+        
         if($catID!=null && $catID->count()){ 
 
             $sub_cat = Category::where('parent_id', $catID->id)->Orwhere('id', $catID->id)->lists('id');
-             
-            $products = Product::with('category')->where('status',1)->whereIn('product_category',$sub_cat)->orderBy('id','asc')->get();
+            $co_sub_cat = [];
+            foreach($sub_cat as $c){
+                 $co_sub_cat[] = Category::where('parent_id', $c)->get();    
+            }
+            $resltt = [];
+            foreach($co_sub_cat as $cs){
+                  if(!empty($cs))
+                  {
+                        foreach($cs as $css){
+                              $resltt[] =  $css->id;      
+                        }                     
+                  }                  
+            }
+            
+           
+            
+            $products = Product::with('category')->where('status',1)->whereIn('product_category',$sub_cat)->orwhereIn('product_category',$resltt)->orderBy('id','asc')->get();
              
             if($products->count())
             { 
                  
-                $products = Product::with('category')->where('status',1)->whereIn('product_category',$sub_cat) 
+                $products = Product::with('category')->where('status',1)->whereIn('product_category',$sub_cat)->orwhereIn('product_category',$resltt) 
                                 ->orderBy('id','asc')
                                 ->get();
                  if($q)
                  {
-                    $products = Product::with('category')->where('status',1)->whereIn('product_category',$sub_cat)
+                    $products = Product::with('category')->where('status',1)->whereIn('product_category',$sub_cat)->orwhereIn('product_category',$resltt)
                                 ->where('product_title','LIKE','%'.$q.'%')
                                 ->orderBy('id','asc')
                                 ->get(); 
@@ -223,18 +240,162 @@ class HomeController extends Controller
             $products = Product::with('category')->where('status',1)->where('product_category',0)->orderBy('id','asc')->get();
 
         } 
+        $category = isset($catID->name)?$catID->name:null;
+        $category_slug = isset($catID->slug)?$catID->slug:null; 
+        $categories = Category::nested()->get();
+        $brand   = Brand::all();
+        return view('end-user.category',compact('categories','products','category','brand','q','category','catID','helper','category_slug'));   
+    }
+      
+      
+    public function filter_content( $category=null)
+    {   
+        $request = new Request;
+        $q = Input::get('q'); 
+        
+        
+        $category = Input::get('category');
+        $brand = Input::get('brand');
+        $min_price = explode('₺',explode('-',Input::get('price'))[0])[1];
+        $max_price = explode('₺',explode('-',Input::get('price'))[1])[1];
+        $size = Input::get('size');
+        $color = Input::get('color');
+         
+        $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
+        
+        if($catID!=null && $catID->count()){ 
+
+            $sub_cat = Category::where('parent_id', $catID->id)->Orwhere('id', $catID->id)->lists('id');
+            
+            $co_sub_cat = [];
+            foreach($sub_cat as $c){
+                 $co_sub_cat[] = Category::where('parent_id', $c)->get();    
+            }
+            
+            $resltt = [];
+            foreach($co_sub_cat as $cs){
+                  if(!empty($cs))
+                  {
+                        foreach($cs as $css){
+                              $resltt[] =  $css->id;      
+                        }                     
+                  }                  
+            }
+            
+            
+                  $query = Product::with('category')->where('status',1)
+                                    ->whereIn('product_category',$sub_cat)
+                                    ->orwhereIn('product_category',$resltt);
+                  
+                  if(!empty($brand)){
+                            $query->whereIn('brand',$brand)->where('brand','!=',Null);        
+                  }
+                  
+                  if($min_price != '' || $max_price != ''){
+                            $query->where('price','>=',$min_price)->where('price','<=',$max_price);        
+                  }
+                  
+                                             
+                  if(!empty($color)){
+                            //$query->whereExists(function ($query) {
+                            //              $query->select('v.color')                                                
+                            //                    ->from('products as p')
+                            //                    ->join('product_variations as v','p.id','=','v.product_id')
+                            //                    ->whereIn('v.color',['Black' , 'Blue']);                                                
+                            //          });    
+                  }  
+                  
+                                                
+                  $products = $query->orderBy('id','asc')->get();
+                  
+                  if(!empty($size)){
+                        //print_r($size); die;
+                        $productss = [];
+                        foreach($products as $p){
+                              $reslt = DB::table('product_variations')
+                                    ->where('product_id', $p->id)
+                                    ->whereIn('size', $size)
+                                    ->get();
+                              if(!empty($reslt)){
+                                    $productss[] = $p;
+                              }
+                        }
+                       $products = $productss;             
+                  }
+                  
+                  if(!empty($color)){
+                        //print_r($color); die;
+                        $productss = [];
+                        foreach($products as $p){
+                              $reslt = DB::table('product_variations')
+                                    ->where('product_id', $p->id)
+                                    ->whereIn('color', $color)
+                                    ->get();
+                              if(!empty($reslt)){
+                                    $productss[] = $p;
+                              }
+                        }
+                       $products = $productss;             
+                  }
+                  
+                  //echo "<pre>"; print_r($products); die;
+             
+            //if($products->count())
+            //{ 
+            //     
+            //    $products = Product::with('category')->where('status',1)->whereIn('product_category',$sub_cat) 
+            //                    ->orderBy('id','asc')
+            //                    ->get();
+            //     if($q)
+            //     {
+            //        $products = Product::with('category')->where('status',1)->whereIn('product_category',$sub_cat)
+            //                    ->where('product_title','LIKE','%'.$q.'%')
+            //                    ->orderBy('id','asc')
+            //                    ->get(); 
+            //     }  
+            //} 
+        }else{
+            $query = Product::with('category')->where('status',1);
+            if(!empty($brand)){
+                            $query->whereIn('brand',$brand)->where('brand','!=',Null);        
+                  }
+                  
+                  if($min_price != '' || $max_price != ''){
+                            $query->where('price','>=',$min_price)->where('price','<=',$max_price);        
+                  }
+                  
+                  if(!empty($size)){
+                            $query->whereExists(function ($query) {
+                                          $query->select('v.size')                                                
+                                                ->from('products as p')
+                                                ->join('product_variations as v','p.id','=','v.product_id')
+                                                ->whereIn('v.size',['m' , 'l']);                                                
+                                      });    
+                  }                            
+                  if(!empty($color)){
+                            $query->whereExists(function ($query) {
+                                          $query->select('v.color')                                                
+                                                ->from('products as p')
+                                                ->join('product_variations as v','p.id','=','v.product_id')
+                                                ->whereIn('v.color',['Black' , 'Blue']);                                                
+                                      });    
+                  }
+                  $products = $query->orderBy('id','asc')->get();
+
+        } 
         $category = isset($catID->name)?$catID->name:null; 
         $categories = Category::nested()->get();  
-        return view('end-user.category',compact('categories','products','category','q','category','catID','helper'));   
-    }
-
+        return view('end-user.category_filter',compact('categories','products','category','q','category','catID','helper'));   
+    }  
+      
      /*----------*/
     public function productCategory( $category=null)
-    {  
+    { 
         $request = new Request;
         $q = Input::get('q'); 
          
-        $catID = Category::where('slug',$category)->orWhere('name',$category)->first(); 
+        $catID = Category::where('slug',$category)->orWhere('name',$category)->first();
+        
         if($catID!=null && $catID->count()){ 
             $products = Product::with('category')->where('status',1)->where('product_category',$catID->id)->orderBy('id','asc')->get();
             
@@ -263,7 +424,8 @@ class HomeController extends Controller
     }
     /*----------*/
     public function productDetail($subCategoryName=null,$productName=null)
-    {   
+    {
+        
         $product = Product::with('category')->where('slug',$productName)->first();
          
         $categories = Category::nested()->get();  
@@ -280,7 +442,11 @@ class HomeController extends Controller
         if($product->is_indexing == 0){
             $is_indexing = 0;
         }
-        return view('end-user.product-details',compact('categories','product','main_title','helper','is_indexing'));  
+        
+         $variations = \DB::table('product_variations')                                
+                                ->where('product_id',$product->id)
+                                ->get();    
+        return view('end-user.product-details',compact('categories','product','main_title','helper','is_indexing','variations'));  
     }
      /*----------*/
     public function order(Request $request)
@@ -356,7 +522,7 @@ class HomeController extends Controller
         $helper =  new   Helper;
         $helper->contactusEmail($template_content);
         $url = url()->previous().'#bottom';
-        return Redirect::to($url)->withErrors(['successMsgcontact'=>'Thank you, we will get in touch with you soon!']);
+        return Redirect::to($url)->withErrors(['successMsgcontact'=>'Teşekkürler, mümkün olan en kısa sürede sizinle iletişime geçeceğiz!']);
          
     }
     
@@ -370,7 +536,7 @@ class HomeController extends Controller
         $helper =  new   Helper;
         $helper->contactusEmail($template_content);
         $url = url()->previous().'#bottom';
-        return Redirect::to($url)->withErrors(['successMsgenquiry'=>'Thank you, we will get in touch with you soon!']);
+        return Redirect::to($url)->withErrors(['successMsgenquiry'=>'Teşekkürler, mümkün olan en kısa sürede sizinle iletişime geçeceğiz!']);
          
     }
     
@@ -409,7 +575,11 @@ class HomeController extends Controller
                 'name' => 'required|min:3',
                 'email' => 'required|email',
                 'comments' => 'required'
-            ]); 
+            ],[
+               'name.required'=>'İsminizi girmeniz gerekmektedir.',
+               'email.required'=>'Eposta adresi girmeniz gerekmektedir.',
+               'comments.required'=>'Yorum alanı boş olmamalıdır.'
+               ]); 
 
             if ($validator->fails()) {
                  return Redirect::to($url)
@@ -430,23 +600,109 @@ class HomeController extends Controller
                     $data =  \DB::table('comments')->insert($input);
                 }
                 
-                return Redirect::to($url)->withErrors(['successMsg'=>'Your comments is successfully posted.Thank you!']);
+                return Redirect::to($url)->withErrors(['successMsg'=>'Yorumunuz gönderilmiştir. Teşekkür ederiz!']);
                 
             }
         }
     }
     public function addReview(Request $request)
-    {      
-        $input = $request->only('rating','product_id');
-        $data =  \DB::table('reviews')->insert($input);
-
-        $rating = \DB::table('reviews')->avg('rating');
+    {
+        $is_buy = [];
+        if(($request->session()->get('current_user'))){            
+            $user_id = $request->session()->get('current_user')->id;
+            $is_buy = \DB::table('transactions')
+                                ->where('user_id',$user_id)
+                                ->where('product_id',$request->get('product_id'))
+                                ->first();    
+        }
         
-        \DB::table('products')
-            ->where('id',$request->get('product_id'))
-                ->update(['rating'=>$rating]);
-
-        $total_review = round($rating);
-        return json_encode($total_review);
+            
+        
+        if(!empty($is_buy)){            
+            $input = $request->only('rating','product_id');
+            $data =  \DB::table('reviews')->insert($input);
+            
+            $rating = \DB::table('reviews')->avg('rating');
+        
+            \DB::table('products')
+                ->where('id',$request->get('product_id'))
+                    ->update(['rating'=>$rating]);
+    
+            $total_review = round($rating);
+            return json_encode($total_review);            
+        }else{            
+            $rating = \DB::table('reviews')->avg('rating');
+                    
+            $total_review = round($rating);
+            return json_encode(-1);
+        }                
+    }
+    
+    public function check_variation(Request $request){
+      $size = $request->get('size');
+      $p_id = $request->get('product_id');
+      
+      $all = \DB::table('product_variations')
+                                ->select('*')
+                                ->where('size',strtolower($size))
+                                ->where('product_id',$p_id)
+                                ->get();                                                              
+            
+      foreach($all as $row){                       
+            $colors[] = $row->color;
+            $color_quantity[] = $row->color.';'.$row->quantity;
+      }
+      
+      $total_color = \DB::table('product_variations')
+                                ->select('*')                                
+                                ->where('product_id',$p_id)
+                                ->get();
+      
+      $all_color = [];
+      foreach($total_color as $row){
+            if(!in_array($row->color,$all_color)) {
+                        $all_color[] = $row->color; 
+            }
+                       
+      }
+      //print_r($all_color); die;
+      //$all_color = ['Black','Blue','Red'];
+      $color = [];
+      foreach($all_color as $row){            
+           if(!in_array($row,$colors)) {
+                  $color[] = $row;
+           }
+      }
+      $array = [$color,$color_quantity];
+      echo json_encode($array);
+      die;
+    }
+    
+    public function check_variation_size(Request $request){
+      $color = $request->get('color');
+      $p_id = $request->get('product_id');
+      
+      $all = \DB::table('product_variations')
+                                ->select('*')
+                                ->where('color',($color))
+                                ->where('product_id',$p_id)
+                                ->get();
+      //print_r($all); die;      
+      foreach($all as $row){            
+            $sizes[] = $row->size;
+            $size_quantity[] = $row->size.';'.$row->quantity;
+      }
+      //print_r($sizes); die;
+      $all_size = ['xxs','xs','s','m','l','xl','xxl','xxxl'];
+      $size = [];
+      foreach($all_size as $row){            
+           if(!in_array($row,$sizes)) {
+                  $size[] = $row;
+           }
+      }
+      
+      $array = [$size,$size_quantity];
+      echo json_encode($array);
+      die;
     }
 }

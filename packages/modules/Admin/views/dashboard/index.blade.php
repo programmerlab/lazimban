@@ -1,26 +1,38 @@
 
-@extends('packages::layouts.master')
+@extends('packages::layouts.master_vendor')
   @section('title', 'Dashboard')
-    @section('header')
-    <h1>Dashboard</h1>
+    @section('header_vendor')
+    
     @stop
     @section('content') 
-      @include('packages::partials.main-header')
+      @include('packages::partials.vendor-header')
       <!-- Left side column. contains the logo and sidebar -->
-      @include('packages::partials.main-sidebar')
+      <div class="page_title">
+            <div class="page-wrapper">
+                <div class="col-md-6"></div>
+                <div class="col-md-6 text-right">
+                        <span><a href="{{ url('/bana-ozel/satici-paneli') }}">Anasayfa</a> </span>                                            
+                        <span>{{ $page_title or '' }}</span> 
+                   </div>
+            </div>
+        </div>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
+      <div class="row vendor_sidebar">
+      <div class="col-md-3">
+        @include('packages::partials.vendor-sidebar')
+      </div>
+        <div class="col-md-9">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Dashboard
-            <small>Control panel</small>
+             Satıcı Yönetim Paneli
+           <!-- <small>Control panel</small>-->
           </h1>
-          <ol class="breadcrumb">
+          <!--<ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Dashboard</li>
-          </ol>
+          </ol>-->
         </section>
 
         <section style="margin:15px 30px -30px 30px">
@@ -38,12 +50,12 @@
           <!-- Main content -->
           <section class="content">
             <!-- Small boxes (Stat box) -->                      
-              <div class="col-lg-3 col-xs-3">
+              <div class="col-lg-4 col-sm-12">
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                   <div class="inner">
                     <h3>{{ $user }}</h3> 
-                    <p>Total Users</p>
+                    <p>Toplam Müşteri</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -52,12 +64,12 @@
                 </div>
               </div><!-- ./col -->
 
-                <div class="col-lg-3 col-xs-3">
+                <div class="col-lg-4 col-sm-12">
                 <!-- small box -->
                 <div class="small-box bg-green">
                   <div class="inner">
                     <h3>{{ $product }}</h3> 
-                    <p>Total products</p>
+                    <p>Toplam Ürün</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -66,12 +78,12 @@
                 </div>
               </div><!-- ./col -->
 
-                <div class="col-lg-3 col-xs-3">
+                <div class="col-lg-4 col-sm-12">
                 <!-- small box -->
                 <div class="small-box bg-blue">
                   <div class="inner">
                     <h3>{{ $category }}</h3> 
-                    <p>Total category</p>
+                    <p>Toplam Kategori</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -80,12 +92,12 @@
                 </div>
               </div><!-- ./col -->
 
-               <div class="col-lg-3 col-xs-3">
+               <div class="col-lg-4 col-sm-12">
                 <!-- small box -->
                 <div class="small-box bg-red">
                   <div class="inner">
                     <h3>{{ $order }}</h3> 
-                    <p>Total Order</p>
+                    <p>Toplam Sipariş</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -93,12 +105,12 @@
                   <a href="{{route('transaction')}}" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div><!-- ./col --> 
-               <div class="col-lg-3 col-xs-3">
+               <div class="col-lg-4 col-sm-12">
                 <!-- small box -->
                 <div class="small-box bg-green">
                   <div class="inner">
                     <h3>{{ $today_order }}</h3> 
-                    <p>Total  Order Today </p>
+                    <p>Bugünkü Toplam Sipariş </p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -107,7 +119,7 @@
                 </div>
               </div><!-- ./col --> 
                @if(Session::get('current_vendor_type') == 1)
-               <div class="col-lg-3 col-xs-3">
+               <div class="col-lg-4 col-sm-12">
                 <!-- small box -->
                 <div class="small-box bg-green">
                   <div class="inner">
@@ -130,6 +142,6 @@
           </section>
         @endif 
       </div><!-- /.content-wrapper -->
-     
+     </div>
 
 @stop

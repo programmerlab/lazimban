@@ -255,6 +255,22 @@
     <script src="{{ asset('public/enduser/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('public/assets/js/bootbox.js') }}"></script>
     <script src="{{ asset('public/assets/js/common.js') }}"></script> 
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+	$( function() {
+		$( "#slider-range" ).slider({
+			range: true,
+			min: 0,
+			max: 50000,
+			values: [ 1000, 15000 ],
+			slide: function( event, ui ) {
+				$( "#price_filter" ).val( "₺" + ui.values[ 0 ] + " - ₺" + ui.values[ 1 ] );
+			}
+		});
+		$( "#price_filter" ).val( "₺" + $( "#slider-range" ).slider( "values", 0 ) +
+			" - ₺" + $( "#slider-range" ).slider( "values", 1 ) );
+	} );
+	</script>
       <script>
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
@@ -360,7 +376,35 @@ $("#menu-toggle").on('click', function(){
             }
        }
     </script>
+      
+     <script>
+       $('.filter_content').on('click',function () {                
+            
+                var url = '{{ url('filter_content') }}'; // the script where you handle the form input.
+                
+                $.ajax({
+                       type: "POST",
+                       url: url,
+                       data: $("#filter_form").serialize(), // serializes the form's elements.
+                       beforeSend: function() {
+                            $("#preloader").show();
+                            $(".pace").show();
+                         },
+                       success: function(data)
+                       {
+                          console.log(data); // show response from the php script.
+                          $("#preloader").hide();
+                          $(".pace").hide();
+                          $('.product_list_outer').html(data);
+                       }
+                     });
+            
+                e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    });
+     </script> 
     <!--- Google Tag script   --->    
     {!! $helper->getGoogleTag() !!}
+    
     
     </html>

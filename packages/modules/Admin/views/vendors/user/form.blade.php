@@ -1,33 +1,123 @@
 
 <div class="col-md-6">
-    
+    @if(!isset($vendor->id))
     <div class="form-group{{ $errors->first('vendor_type', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label"> Vendor Type <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8"> 
-            <select name="vendor_type" id="vendor_type" class="form-control" tabindex="-1" aria-hidden="true">
+            <select name="vendor_type" id="vendor_type" class="form-control" tabindex="-1" aria-hidden="true" onchange="vendor(this.value)">
                             <option value="">Select Vendor Type</option>
                             <option value="1">Individual</option>
-                            <option value="2">Corporate</option>
+                            <option value="2" {{ old('user_type') }}>Corporate</option>
                         </select>
             <span class="label label-danger">{{ $errors->first('vendor_type', ':message') }}</span>
         </div>
-    </div> 
-    <div class="form-group{{ $errors->first('full_name', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label"> Full Name <span class="error">*</span></label>
+    </div>                
+            <div class="form-group{{ $errors->first('full_name', ' has-error') }}">
+                <label class="col-lg-4 col-md-4 control-label"> Full Name <span class="error">*</span></label>
+                <div class="col-lg-8 col-md-8"> 
+                    {!! Form::text('full_name',null, ['class' => 'form-control form-cascade-control input-small','id'=>'full_name'])  !!} 
+                    <span class="label label-danger">{{ $errors->first('full_name', ':message') }}</span>
+                </div>
+            </div>
+            <div class="form-group{{ $errors->first('tc_no', ' has-error') }}">
+                <label class="col-lg-4 col-md-4 control-label"> TC Number <span class="error">*</span></label>
+                <div class="col-lg-8 col-md-8"> 
+                    {!! Form::text('tc_no',null, ['class' => 'form-control form-cascade-control input-small','id'=>'tc_no'])  !!} 
+                    <span class="label label-danger">{{ $errors->first('tc_no', ':message') }}</span>
+                </div>
+            </div>
+            <div class="form-group{{ $errors->first('company_name', ' has-error') }}">
+                <label class="col-lg-4 col-md-4 control-label"> Company Name <span class="error">*</span></label>
+                <div class="col-lg-8 col-md-8"> 
+                    {!! Form::text('company_name',null, ['class' => 'form-control form-cascade-control input-small','id'=>'company_name'])  !!} 
+                    <span class="label label-danger">{{ $errors->first('company_name', ':message') }}</span>
+                </div>
+            </div>
+             <div class="form-group{{ $errors->first('manager_name', ' has-error') }}">
+                <label class="col-lg-4 col-md-4 control-label"> Manager Name <span class="error">*</span></label>
+                <div class="col-lg-8 col-md-8"> 
+                    {!! Form::text('manager_name',null, ['class' => 'form-control form-cascade-control input-small','id'=>'manager_name'])  !!} 
+                    <span class="label label-danger">{{ $errors->first('manager_name', ':message') }}</span>
+                </div>
+            </div>
+            <div class="form-group{{ $errors->first('tax_name', ' has-error') }}">
+                <label class="col-lg-4 col-md-4 control-label"> Tax Name <span class="error">*</span></label>
+                <div class="col-lg-8 col-md-8"> 
+                    {!! Form::text('tax_name',null, ['class' => 'form-control form-cascade-control input-small','id'=>'tax_name'])  !!} 
+                    <span class="label label-danger">{{ $errors->first('tax_name', ':message') }}</span>
+                </div>
+            </div>
+            <div class="form-group{{ $errors->first('tax_no', ' has-error') }}">
+                <label class="col-lg-4 col-md-4 control-label"> Tax Number <span class="error">*</span></label>
+                <div class="col-lg-8 col-md-8"> 
+                    {!! Form::text('tax_no',null, ['class' => 'form-control form-cascade-control input-small','id'=>'tax_no'])  !!} 
+                    <span class="label label-danger">{{ $errors->first('tax_no', ':message') }}</span>
+                </div>
+            </div>            
+    @else
+    <div class="form-group{{ $errors->first('user_type', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Vendor Type <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8"> 
-            {!! Form::text('full_name',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
-            <span class="label label-danger">{{ $errors->first('full_name', ':message') }}</span>
+            <input name="vendor_type" class="form-control form-cascade-control input-small" value="{!! ($vendor->user_type == 2) ? 'Corporate' : 'Individual' !!}" readonly>
+            <span class="label label-danger">{{ $errors->first('user_type', ':message') }}</span>
         </div>
-    </div> 
-    <div class="form-group{{ $errors->first('company_name', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label"> Company Name <span class="error">*</span></label>
+    </div>
+            @if($vendor->user_type == 1)
+            <div class="form-group{{ $errors->first('full_name', ' has-error') }}">
+                <label class="col-lg-4 col-md-4 control-label"> Full Name <span class="error">*</span></label>
+                <div class="col-lg-8 col-md-8"> 
+                    {!! Form::text('full_name',null, ['class' => 'form-control form-cascade-control input-small','id'=>'full_name'])  !!} 
+                    <span class="label label-danger">{{ $errors->first('full_name', ':message') }}</span>
+                </div>
+            </div>
+            <div class="form-group{{ $errors->first('tc_no', ' has-error') }}">
+                <label class="col-lg-4 col-md-4 control-label"> TC Number <span class="error">*</span></label>
+                <div class="col-lg-8 col-md-8"> 
+                    {!! Form::text('tc_no',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+                    <span class="label label-danger">{{ $errors->first('tc_no', ':message') }}</span>
+                </div>
+            </div>
+            @else
+            <div class="form-group{{ $errors->first('company_name', ' has-error') }}">
+                <label class="col-lg-4 col-md-4 control-label"> Company Name <span class="error">*</span></label>
+                <div class="col-lg-8 col-md-8"> 
+                    {!! Form::text('company_name',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+                    <span class="label label-danger">{{ $errors->first('company_name', ':message') }}</span>
+                </div>
+            </div>
+             <div class="form-group{{ $errors->first('manager_name', ' has-error') }}">
+                <label class="col-lg-4 col-md-4 control-label"> Manager Name <span class="error">*</span></label>
+                <div class="col-lg-8 col-md-8"> 
+                    {!! Form::text('manager_name',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+                    <span class="label label-danger">{{ $errors->first('manager_name', ':message') }}</span>
+                </div>
+            </div>
+            <div class="form-group{{ $errors->first('tax_name', ' has-error') }}">
+                <label class="col-lg-4 col-md-4 control-label"> Tax Name <span class="error">*</span></label>
+                <div class="col-lg-8 col-md-8"> 
+                    {!! Form::text('tax_name',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+                    <span class="label label-danger">{{ $errors->first('tax_name', ':message') }}</span>
+                </div>
+            </div>
+            <div class="form-group{{ $errors->first('tax_no', ' has-error') }}">
+                <label class="col-lg-4 col-md-4 control-label"> Tax Number <span class="error">*</span></label>
+                <div class="col-lg-8 col-md-8"> 
+                    {!! Form::text('tax_no',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+                    <span class="label label-danger">{{ $errors->first('tax_no', ':message') }}</span>
+                </div>
+            </div>
+            @endif
+    @endif
+    
+    <div class="form-group{{ $errors->first('bank_name', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Bank Name <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8"> 
-            {!! Form::text('company_name',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
-            <span class="label label-danger">{{ $errors->first('company_name', ':message') }}</span>
+            {!! Form::text('bank_name',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('bank_name', ':message') }}</span>
         </div>
     </div>
     <div class="form-group{{ $errors->first('phone', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">Phone</label>
+        <label class="col-lg-4 col-md-4 control-label">Phone <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8"> 
             {!! Form::text('phone',null, ['class' => 'form-control form-cascade-control input-small'])  !!}
             <span class="label label-danger">{{ $errors->first('phone', ':message') }}</span>
@@ -35,7 +125,7 @@
     </div>
 
     <div class="form-group{{ $errors->first('email', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">Email</label>
+        <label class="col-lg-4 col-md-4 control-label">Email <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8"> 
             {!! Form::email('email',null, ['class' => 'form-control form-cascade-control input-small'])  !!}
             <span class="label label-danger">{{ $errors->first('email', ':message') }}</span>
@@ -49,21 +139,106 @@
     </div>
     
     <div class="form-group{{ $errors->first('address', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">Address</label>
+        <label class="col-lg-4 col-md-4 control-label">Address <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8"> 
             {!! Form::text('address',null, ['class' => 'form-control form-cascade-control input-small'])  !!}
             <span class="label label-danger">{{ $errors->first('address', ':message') }}</span>
         </div>
     </div>
     <div class="form-group{{ $errors->first('city', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">City</label>
+        <label class="col-lg-4 col-md-4 control-label">City <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8"> 
-            {!! Form::text('city',null, ['class' => 'form-control form-cascade-control input-small'])  !!}
+            
+        <select class="selectpicker form-control" data-live-search="true" name="city" required>
+                                                    <option selected="selected" value="">Şehir Seçiniz </option>
+                                                    
+                                                   <option data-tokens="Adana" {{ ( isset($vendor) && $vendor->city == 'Adana') ? 'selected' : '' }} value="Adana">Adana</option>
+                                                    <option data-tokens="Adıyaman" {{ ( isset($vendor) && $vendor->city == 'Adıyaman') ? 'selected' : '' }} value="Adıyaman">Adıyaman</option>
+                                                    <option data-tokens="Afyon" {{ ( isset($vendor) && $vendor->city == 'Afyon') ? 'selected' : '' }} value="Afyon" >Afyon</option>
+                                                    <option data-tokens="Ağrı" {{ ( isset($vendor) && $vendor->city == 'Ağrı') ? 'selected' : '' }} value="Ağrı" >Ağrı</option>
+                                                    <option data-tokens="Amasya" {{ ( isset($vendor) && $vendor->city == 'Amasya') ? 'selected' : '' }} value="Amasya" >Amasya</option>
+                                                    <option data-tokens="Ankara" {{ ( isset($vendor) && $vendor->city == 'Ankara') ? 'selected' : '' }} value="Ankara" >Ankara</option>
+                                                    <option data-tokens="Antalya" {{ ( isset($vendor) && $vendor->city == 'Antalya') ? 'selected' : '' }} value="Antalya" >Antalya</option>
+                                                    <option data-tokens="Artvin" {{ ( isset($vendor) && $vendor->city == 'Artvin') ? 'selected' : '' }} value="Artvin" >Artvin</option>
+                                                    <option data-tokens="Aydın" {{ ( isset($vendor) && $vendor->city == 'Aydın') ? 'selected' : '' }} value="Aydın" >Aydın</option>
+                                                        
+                                                    <option data-tokens="Balıkesir" {{ ( isset($vendor) && $vendor->city == 'Balıkesir') ? 'selected' : '' }} value="Balıkesir" >Balıkesir</option>
+                                                    <option data-tokens="Bilecik" {{ ( isset($vendor) && $vendor->city == 'Bilecik') ? 'selected' : '' }} value="Bilecik" >Bilecik</option>
+                                                    <option data-tokens="Bingöl" {{ ( isset($vendor) && $vendor->city == 'Bingöl') ? 'selected' : '' }} value="Bingöl" >Bingöl</option>
+                                                    <option data-tokens="Bitlis" {{ ( isset($vendor) && $vendor->city == 'Bitlis') ? 'selected' : '' }} value="Bitlis" >Bitlis</option>
+                                                    <option data-tokens="Bolu" {{ ( isset($vendor) && $vendor->city == 'Bolu') ? 'selected' : '' }} value="Bolu" >Bolu</option>
+                                                    <option data-tokens="Burdur" {{ ( isset($vendor) && $vendor->city == 'Burdur') ? 'selected' : '' }} value="Burdur" >Burdur</option>
+                                                    <option data-tokens="Bursa" {{ ( isset($vendor) && $vendor->city == 'Bursa') ? 'selected' : '' }} value="Bursa" >Bursa</option>
+                                                        
+                                                    <option data-tokens="Çanakkale" {{ ( isset($vendor) && $vendor->city == 'Çanakkale') ? 'selected' : '' }} value="Çanakkale" >Çanakkale</option>
+                                                    <option data-tokens="Çankırı" {{ ( isset($vendor) && $vendor->city == 'Çankırı') ? 'selected' : '' }} value="Çankırı" >Çankırı</option>
+                                                    <option data-tokens="Çorum" {{ ( isset($vendor) && $vendor->city == 'Çorum') ? 'selected' : '' }} value="Çorum" >Çorum</option>
+                                                        
+                                                    <option data-tokens="Denizli" {{ ( isset($vendor) && $vendor->city == 'Denizli') ? 'selected' : '' }} value="Denizli" >Denizli</option>                                                        
+                                                    <option data-tokens="Diyarbakır" {{ ( isset($vendor) && $vendor->city == 'Afyon') ? 'selected' : '' }} value="Afyon" >Diyarbakır</option>
+                                                    <option data-tokens="Edirne" {{ ( isset($vendor) && $vendor->city == 'Edirne') ? 'selected' : '' }} value="Edirne" >Edirne</option>
+                                                    <option data-tokens="Giresun" {{ ( isset($vendor) && $vendor->city == 'Giresun') ? 'selected' : '' }} value="Giresun" >Giresun</option>
+                                                        
+                                                    <option data-tokens="Gümüşhane" {{ ( isset($vendor) && $vendor->city == 'Gümüşhane') ? 'selected' : '' }} value="Gümüşhane" >Gümüşhane</option>
+                                                    <option data-tokens="Hakkari" {{ ( isset($vendor) && $vendor->city == 'Hakkari') ? 'selected' : '' }} value="Hakkari" >Hakkari</option>
+                                                    <option data-tokens="Hatay" {{ ( isset($vendor) && $vendor->city == 'Hatay') ? 'selected' : '' }} value="Hatay" >Hatay</option>
+                                                    <option data-tokens="Isparta" {{ ( isset($vendor) && $vendor->city == 'Isparta') ? 'selected' : '' }} value="Isparta" >Isparta</option>
+                                                    <option data-tokens="Mersin" {{ ( isset($vendor) && $vendor->city == 'Mersin') ? 'selected' : '' }} value="Mersin" >Mersin</option>
+                                                    <option data-tokens="İstanbul" {{ ( isset($vendor) && $vendor->city == 'İstanbul') ? 'selected' : '' }} value="İstanbul" >İstanbul</option>
+                                                    <option data-tokens="İzmir" {{ ( isset($vendor) && $vendor->city == 'İzmir') ? 'selected' : '' }} value="İzmir" >İzmir</option>
+                                                    <option data-tokens="Kars" {{ ( isset($vendor) && $vendor->city == 'Kars') ? 'selected' : '' }} value="Kars" >Kars</option>
+                                                    <option data-tokens="Kastamonu" {{ ( isset($vendor) && $vendor->city == 'Kastamonu') ? 'selected' : '' }} value="Kastamonu" >Kastamonu</option>
+                                                    <option data-tokens="Konya" {{ ( isset($vendor) && $vendor->city == 'Konya') ? 'selected' : '' }} value="Konya" >Konya</option>
+                                                    <option data-tokens="Kütahya" {{ ( isset($vendor) && $vendor->city == 'Kütahya') ? 'selected' : '' }} value="Kütahya" >Kütahya</option>
+                                                    <option data-tokens="Malatya" {{ ( isset($vendor) && $vendor->city == 'Malatya') ? 'selected' : '' }} value="Malatya" >Malatya</option>
+                                                    <option data-tokens="Manisa" {{ ( isset($vendor) && $vendor->city == 'Manisa') ? 'selected' : '' }} value="Manisa" >Manisa</option>
+                                                    <option data-tokens="Kahramanmaraş" {{ ( isset($vendor) && $vendor->city == 'Kahramanmaraş') ? 'selected' : '' }} value="Kahramanmaraş" >Kahramanmaraş</option>
+                                                    <option data-tokens="Mardin" {{ ( isset($vendor) && $vendor->city == 'Mardin') ? 'selected' : '' }} value="Mardin" >Mardin</option>
+                                                    <option data-tokens="Muğla" {{ ( isset($vendor) && $vendor->city == 'Muğla') ? 'selected' : '' }} value="Muğla" >Muğla</option>
+                                                    <option data-tokens="Muş" {{ ( isset($vendor) && $vendor->city == 'Muş') ? 'selected' : '' }} value="Muş" >Muş</option>
+                                                    <option data-tokens="Nevşehir" {{ ( isset($vendor) && $vendor->city == 'Nevşehir') ? 'selected' : '' }} value="Nevşehir" >Nevşehir</option>
+                                                    <option data-tokens="Niğde" {{ ( isset($vendor) && $vendor->city == 'Niğde') ? 'selected' : '' }} value="Niğde" >Niğde</option>
+                                                    <option data-tokens="Ordu" {{ ( isset($vendor) && $vendor->city == 'Ordu') ? 'selected' : '' }} value="Ordu" >Ordu</option>
+                                                    <option data-tokens="Rize" {{ ( isset($vendor) && $vendor->city == 'Rize') ? 'selected' : '' }} value="Rize" >Rize</option>
+                                                    <option data-tokens="Sakarya" {{ ( isset($vendor) && $vendor->city == 'Sakarya') ? 'selected' : '' }} value="Sakarya" >Sakarya</option>
+                                                    <option data-tokens="Samsun" {{ ( isset($vendor) && $vendor->city == 'Samsun') ? 'selected' : '' }} value="Samsun" >Samsun</option>
+                                                    <option data-tokens="Siirt" {{ ( isset($vendor) && $vendor->city == 'Siirt') ? 'selected' : '' }} value="Siirt" >Siirt</option>
+                                                    <option data-tokens="Sinop" {{ ( isset($vendor) && $vendor->city == 'Sinop') ? 'selected' : '' }} value="Sinop" >Sinop</option>
+                                                    <option data-tokens="Sivas" {{ ( isset($vendor) && $vendor->city == 'Sivas') ? 'selected' : '' }} value="Sivas" >Sivas</option>
+                                                    <option data-tokens="Tekirdağ" {{ ( isset($vendor) && $vendor->city == 'Tekirdağ') ? 'selected' : '' }} value="Tekirdağ" >Tekirdağ</option>
+                                                    <option data-tokens="Tokat" {{ ( isset($vendor) && $vendor->city == 'Tokat') ? 'selected' : '' }} value="Tokat" >Tokat</option>
+                                                    <option data-tokens="Trabzon" {{ ( isset($vendor) && $vendor->city == 'Trabzon') ? 'selected' : '' }} value="Trabzon" >Trabzon</option>
+                                                        
+                                                    <option data-tokens="Tunceli" {{ ( isset($vendor) && $vendor->city == 'Tunceli') ? 'selected' : '' }} value="Tunceli" >Tunceli</option>
+                                                    <option data-tokens="Şanlıurfa" {{ ( isset($vendor) && $vendor->city == 'Şanlıurfa') ? 'selected' : '' }} value="Şanlıurfa" >Şanlıurfa</option>
+                                                    <option data-tokens="Uşak" {{ ( isset($vendor) && $vendor->city == 'Uşak') ? 'selected' : '' }} value="Uşak" >Uşak</option>
+                                                    <option data-tokens="Van" {{ ( isset($vendor) && $vendor->city == 'Van') ? 'selected' : '' }} value="Van" >Van</option>
+                                                    <option data-tokens="Yozgat" {{ ( isset($vendor) && $vendor->city == 'Yozgat') ? 'selected' : '' }} value="Yozgat" >Yozgat</option>
+                                                    <option data-tokens="Zonguldak" {{ ( isset($vendor) && $vendor->city == 'Zonguldak') ? 'selected' : '' }} value="Zonguldak" >Zonguldak</option>
+                                                    <option data-tokens="Aksaray" {{ ( isset($vendor) && $vendor->city == 'Aksaray') ? 'selected' : '' }} value="Aksaray" >Aksaray</option>
+                                                    <option data-tokens="Bayburt" {{ ( isset($vendor) && $vendor->city == 'Bayburt') ? 'selected' : '' }} value="Bayburt" >Bayburt</option>
+                                                    <option data-tokens="Karaman" {{ ( isset($vendor) && $vendor->city == 'Karaman') ? 'selected' : '' }} value="Karaman" >Karaman</option>
+                                                    <option data-tokens="Kırıkkale" {{ ( isset($vendor) && $vendor->city == 'Kırıkkale') ? 'selected' : '' }} value="Kırıkkale" >Kırıkkale</option>
+                                                    <option data-tokens="Batman" {{ ( isset($vendor) && $vendor->city == 'Batman') ? 'selected' : '' }} value="Batman" >Batman</option>
+                                                    <option data-tokens="Şırnak" {{ ( isset($vendor) && $vendor->city == 'Şırnak') ? 'selected' : '' }} value="Şırnak" >Şırnak</option>
+                                                    <option data-tokens="Bartın" {{ ( isset($vendor) && $vendor->city == 'Bartın') ? 'selected' : '' }} value="Bartın" >Bartın</option>
+                                                    <option data-tokens="Ardahan" {{ ( isset($vendor) && $vendor->city == 'Ardahan') ? 'selected' : '' }} value="Ardahan" >Ardahan</option>
+                                                    <option data-tokens="Iğdır" {{ ( isset($vendor) && $vendor->city == 'Iğdır') ? 'selected' : '' }} value="Iğdır" >Iğdır</option>
+                                                    <option data-tokens="Yalova" {{ ( isset($vendor) && $vendor->city == 'Yalova') ? 'selected' : '' }} value="Yalova" >Yalova</option>
+                                                    <option data-tokens="Karabük" {{ ( isset($vendor) && $vendor->city == 'Karabük') ? 'selected' : '' }} value="Karabük" >Karabük</option>
+                                                    <option data-tokens="Kilis" {{ ( isset($vendor) && $vendor->city == 'Kilis') ? 'selected' : '' }} value="Kilis" >Kilis</option>
+                                                    <option data-tokens="Osmaniye" {{ ( isset($vendor) && $vendor->city == 'Osmaniye') ? 'selected' : '' }} value="Osmaniye" >Osmaniye</option>
+                                                    <option data-tokens="Düzce" {{ ( isset($vendor) && $vendor->city == 'Düzce') ? 'selected' : '' }} value="Düzce" >Düzce</option>
+                                                    <option data-tokens="Diğer" {{ ( isset($vendor) && $vendor->city == 'Diğer') ? 'selected' : '' }} value="Diğer" >Diğer</option>
+                                                    
+                                                    
+                                                </select>
+        
             <span class="label label-danger">{{ $errors->first('city', ':message') }}</span>
         </div>
     </div>
-    <div class="form-group{{ $errors->first('country', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">Country</label>
+    <!--<div class="form-group{{ $errors->first('country', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label">Country <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8">             
             <select name="country" id="country_list" class="form-control" tabindex="-1" aria-hidden="true">
                         <option value="">Select Country</option>
@@ -304,9 +479,9 @@
                     </select>
             <span class="label label-danger">{{ $errors->first('country', ':message') }}</span>
         </div>
-    </div>
+    </div>-->
     <div class="form-group{{ $errors->first('iban', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">IBAN</label>
+        <label class="col-lg-4 col-md-4 control-label">IBAN <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8"> 
             {!! Form::text('iban',null, ['class' => 'form-control form-cascade-control input-small'])  !!}
             <span class="label label-danger">{{ $errors->first('iban', ':message') }}</span>
@@ -314,7 +489,7 @@
         </div>
     </div>
     <div class="form-group{{ $errors->first('password', ' has-error') }}">
-        <label class="col-lg-4 col-md-4 control-label">Password</label>
+        <label class="col-lg-4 col-md-4 control-label">Password <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8">   
             <input type="password" name="password" id="password" class="form-control form-cascade-control input-small" value="">
             <span class="label label-danger">{{ $errors->first('password', ':message') }}</span>
@@ -333,4 +508,25 @@
         </div>
     </div>
 
-</div> 
+</div>
+<script>
+        function vendor(type){
+        //alert(type);
+            if(type == 1){
+                $('#company_name').attr('disabled',true);
+                $('#manager_name').attr('disabled',true);
+                $('#tax_name').attr('disabled',true);
+                $('#tax_no').attr('disabled',true);
+                $('#full_name').attr('disabled',false);
+                $('#tc_no').attr('disabled',false);
+            }
+            if(type == 2){
+                $('#company_name').attr('disabled',false);
+                $('#manager_name').attr('disabled',false);
+                $('#tax_name').attr('disabled',false);
+                $('#tax_no').attr('disabled',false);
+                $('#full_name').attr('disabled',true);
+                $('#tc_no').attr('disabled',true);
+            }
+        }
+     </script>

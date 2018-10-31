@@ -92,7 +92,7 @@
                             {{ csrf_field() }}
                             <ul>
                             <li><label for="username">E-posta <span class="required">*</span></label></li>
-                            <li><input class="input-text" name="email" id="email" value="" type="email"></li>
+                            <li><input class="input-text" name="email" id="email" value="" type="email" autocomplete="off"></li>
                             <li><label for="password">Parola <span class="required">*</span></label></li>
                             <li><input class="input-text" name="password" id="password" type="password"></li>
                             <li><input class="button" name="login" value="Oturum Aç" type="submit"></li>
@@ -218,16 +218,19 @@
                           <div class="page-wrapper">
                               <div class="col-md-4"><a href="{{ url('/') }}" class="logo"><img src="{{ asset('public/new/images/logo-lazimbana.png') }}"></a></div>
                               <div class="col-md-8">
-                              <div class="navbar-header">
-                                      <button id="menu-toggle" data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                                  </div>
-                                  <div class="header-icons woocart">
+																<div class="header-icons woocart">
                                       <a href="{{ url('/checkout') }}" class="reversed">
                                           <!--<span class="fa fa-cart-plus"></span>-->
                                             <img src="{{ asset('public/new/images/view_cart.png') }}" height="15px">
                                           <span class="cart-counts">{{$total_item}}</span>  
                                       </a>
                                   </div>
+															</div>
+															<div class="row">
+                              <div class="navbar-header">
+                                      <button id="menu-toggle" data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                                  </div>
+                                  
                                   
                                   <div class="navbar-inverse side-collapse in">
                                     
@@ -265,7 +268,7 @@
                                             @if($value['name'] != NULL)
                                                 <li><a href="{{ url($value['slug']) }}">{!! ucfirst($value['name']) !!}</a>
                                             @endif
-                                            @if(isset($value['child']) && count($value['child'] > 0) && $value['name'] != NULL )
+                                            @if(isset($value['child']) && !empty(($value['child'])) && count($value['child'] > 0) && $value['name'] != NULL )
                                                 <ul class="dropdown">
                                                     <li class="category_menu_list">
                                                     
@@ -317,41 +320,19 @@
                 <div class="page-wrapper">
                     <div class="col-md-6"></div>
                     <div class="col-md-6 text-right">
-                            <span><a href="#">Home</a> </span>                                            
+                            <span><a href="{{ url('/') }}">Anasayfa</a> </span>                                            
                             <span> giris-kayit </span>  
                        </div>
                 </div>
             </div>
             <div class="account_login">            
                 <div class="container">
-                    <div class="col-md-6">
-                        <h2>Satıcı Girişi</h2>
-                         
-                          <div class="login-box-body"> 
-                            <div class="login-box-msg"> 
-                              @if (count($errors) > 0)
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                
-                            @endif
                     
-                              {!! Form::model($user, ['url' => ['admin/login'],'class'=>'form-horizontal','files' => true]) !!}
-                                @include('packages::auth.form')
-                              {!! Form::close() !!}
-                    
-                          </div>
-                    </div>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <h2>  Satıcı Kayıt Formu </h2>
                          
                           <div class="login-box-body"> 
-                             <form class="register-form" action="{{url('admin/registration')}}" method="post" novalidate>
+                             <form class="register-form" action="{{url('satici/registration')}}" method="post" novalidate>
                             
                             <!--<p> Kiþisel bilgilerinizi giriniz: </p>-->               
                             @if(session()->has('message'))                    
@@ -369,8 +350,8 @@
                                 <div class="input-icon">
                                     <select name="vendor_type" id="vendor_type" class="select2 form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true" onchange="vendor(this.value)">
                                         <option value="">Satıcı Tipini Seçiniz</option>
-                                        <option value="1">Bireysel</option>
-                                        <option value="2">Kurumsal</option>
+                                        <option value="1" {{ (old('vendor_type') == 1) ? 'selected' : '' }}>Bireysel</option>
+                                        <option value="2" {{ (old('vendor_type') == 2) ? 'selected' : '' }}>Kurumsal</option>
                                     </select>
                                 </div>
                             </div>
@@ -378,22 +359,22 @@
                                 <!--<label class="control-label visible-ie8 visible-ie9">Ad-Soyad</label>-->
                                 <div class="input-icon">
                                      
-                                    <input class="form-control placeholder-no-fix" type="text" id="full_name" style="display:none;" placeholder="Ad-Soyad" name="full_name" value="{{old('full_name')}}"> </div>
+                                    <input class="form-control placeholder-no-fix" type="text" id="full_name" style="{{ (old('vendor_type') == 1) ? '' : 'display:none;' }}" placeholder="Ad-Soyad" name="full_name" value="{{old('full_name')}}"> </div>
                             </div>
                             <div class="form-group">
                                 <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
                                 <div class="input-icon">                         
-                                    <input class="form-control placeholder-no-fix" id="tc_no" style="display:none;" type="text" placeholder="Kimlik No" name="tc_no" value="{{old('tc_no')}}"> </div>
+                                    <input class="form-control placeholder-no-fix" id="tc_no" style="{{ (old('vendor_type') == 1) ? '' : 'display:none;' }}" type="text" placeholder="Kimlik No" name="tc_no" value="{{old('tc_no')}}"> </div>
                             </div>
                             <div class="form-group">
                                 <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
                                 <div class="input-icon">                         
-                                    <input class="form-control placeholder-no-fix" id="company_name" style="display:none;" type="text" placeholder="Şirket Ünvanı" name="company_name" value="{{old('company_name')}}"> </div>
+                                    <input class="form-control placeholder-no-fix" id="company_name" style="{{ (old('vendor_type') == 2) ? '' : 'display:none;' }}" type="text" placeholder="Şirket Ünvanı" name="company_name" value="{{old('company_name')}}"> </div>
                             </div>
                             <div class="form-group">
                                 <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
                                 <div class="input-icon">                         
-                                    <input class="form-control placeholder-no-fix" id="manager_name" style="display:none;" type="text" placeholder="Yetkili Adı" name="manager_name" value="{{old('manager_name')}}"> </div>
+                                    <input class="form-control placeholder-no-fix" id="manager_name" style="{{ (old('vendor_type') == 2) ? '' : 'display:none;' }}" type="text" placeholder="Yetkili Adı" name="manager_name" value="{{old('manager_name')}}"> </div>
                             </div>
                             <div class="form-group">
                                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -417,12 +398,12 @@
                             <div class="form-group">
                                 <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
                                 <div class="input-icon">                         
-                                    <input class="form-control placeholder-no-fix" id="tax_name" style="display:none;" type="text" placeholder="Vergi Dairesi" name="tax_name" value="{{old('tax_name')}}"> </div>
+                                    <input class="form-control placeholder-no-fix" id="tax_name" style="{{ (old('vendor_type') == 2) ? '' : 'display:none;' }}" type="text" placeholder="Vergi Dairesi" name="tax_name" value="{{old('tax_name')}}"> </div>
                             </div>
                             <div class="form-group">
                                 <!--<label class="control-label visible-ie8 visible-ie9">Þirket Ýsmi</label>-->
                                 <div class="input-icon">                         
-                                    <input class="form-control placeholder-no-fix" id="tax_no" style="display:none;" type="text" placeholder="Vergi No." name="tax_no" value="{{old('tax_no')}}"> </div>
+                                    <input class="form-control placeholder-no-fix" id="tax_no" style="{{ (old('vendor_type') == 2) ? '' : 'display:none;' }}" type="text" placeholder="Vergi No." name="tax_no" value="{{old('tax_no')}}"> </div>
                             </div>
                             <div class="form-group">
                                 <!--<label class="control-label visible-ie8 visible-ie9">Address</label>-->
@@ -435,84 +416,84 @@
                                     <select class="selectpicker form-control" data-live-search="true" name="city" required>
                                         <option selected="selected" value="">Şehir Seçiniz </option>
                                         
-                                        <option data-tokens="Adana" value="Adana">Adana</option>
-                                        <option data-tokens="Adıyaman" value="Adıyaman">Adıyaman</option>
-                                        <option data-tokens="Afyon" value="Afyon" >Afyon</option>
-                                        <option data-tokens="Ağrı" value="Ağrı" >Ağrı</option>
-                                        <option data-tokens="Amasya" value="Amasya" >Amasya</option>
-                                        <option data-tokens="Ankara" value="Ankara" >Ankara</option>
-                                        <option data-tokens="Antalya" value="Antalya" >Antalya</option>
-                                        <option data-tokens="Artvin" value="Artvin" >Artvin</option>
-                                        <option data-tokens="Aydın" value="Aydın" >Aydın</option>
-                                            
-                                        <option data-tokens="Balıkesir" value="Balıkesir" >Balıkesir</option>
-                                        <option data-tokens="Bilecik" value="Bilecik" >Bilecik</option>
-                                        <option data-tokens="Bingöl" value="Bingöl" >Bingöl</option>
-                                        <option data-tokens="Bitlis" value="Bitlis" >Bitlis</option>
-                                        <option data-tokens="Bolu" value="Bolu" >Bolu</option>
-                                        <option data-tokens="Burdur" value="Burdur" >Burdur</option>
-                                        <option data-tokens="Bursa" value="Bursa" >Bursa</option>
-                                            
-                                        <option data-tokens="Çanakkale" value="Çanakkale" >Çanakkale</option>
-                                        <option data-tokens="Çankırı" value="Çankırı" >Çankırı</option>
-                                        <option data-tokens="Çorum" value="Çorum" >Çorum</option>
-                                            
-                                        <option data-tokens="Denizli" value="Denizli" >Denizli</option>                                                        
-                                        <option data-tokens="Diyarbakır" value="Afyon" >Diyarbakır</option>
-                                        <option data-tokens="Edirne" value="Edirne" >Edirne</option>
-                                        <option data-tokens="Giresun" value="Giresun" >Giresun</option>
-                                            
-                                        <option data-tokens="Gümüşhane" value="Gümüşhane" >Gümüşhane</option>
-                                        <option data-tokens="Hakkari" value="Hakkari" >Hakkari</option>
-                                        <option data-tokens="Hatay" value="Hatay" >Hatay</option>
-                                        <option data-tokens="Isparta" value="Isparta" >Isparta</option>
-                                        <option data-tokens="Mersin" value="Mersin" >Mersin</option>
-                                        <option data-tokens="İstanbul" value="İstanbul" >İstanbul</option>
-                                        <option data-tokens="İzmir" value="İzmir" >İzmir</option>
-                                        <option data-tokens="Kars" value="Kars" >Kars</option>
-                                        <option data-tokens="Kastamonu" value="Kastamonu" >Kastamonu</option>
-                                        <option data-tokens="Konya" value="Konya" >Konya</option>
-                                        <option data-tokens="Kütahya" value="Kütahya" >Kütahya</option>
-                                        <option data-tokens="Malatya" value="Malatya" >Malatya</option>
-                                        <option data-tokens="Manisa" value="Manisa" >Manisa</option>
-                                        <option data-tokens="Kahramanmaraş" value="Kahramanmaraş" >Kahramanmaraş</option>
-                                        <option data-tokens="Mardin" value="Mardin" >Mardin</option>
-                                        <option data-tokens="Muğla" value="Muğla" >Muğla</option>
-                                        <option data-tokens="Muş" value="Muş" >Muş</option>
-                                        <option data-tokens="Nevşehir" value="Nevşehir" >Nevşehir</option>
-                                        <option data-tokens="Niğde" value="Niğde" >Niğde</option>
-                                        <option data-tokens="Ordu" value="Ordu" >Ordu</option>
-                                        <option data-tokens="Rize" value="Rize" >Rize</option>
-                                        <option data-tokens="Sakarya" value="Sakarya" >Sakarya</option>
-                                        <option data-tokens="Samsun" value="Samsun" >Samsun</option>
-                                        <option data-tokens="Siirt" value="Siirt" >Siirt</option>
-                                        <option data-tokens="Sinop" value="Sinop" >Sinop</option>
-                                        <option data-tokens="Sivas" value="Sivas" >Sivas</option>
-                                        <option data-tokens="Tekirdağ" value="Tekirdağ" >Tekirdağ</option>
-                                        <option data-tokens="Tokat" value="Tokat" >Tokat</option>
-                                        <option data-tokens="Trabzon" value="Trabzon" >Trabzon</option>
-                                            
-                                        <option data-tokens="Tunceli" value="Tunceli" >Tunceli</option>
-                                        <option data-tokens="Şanlıurfa" value="Şanlıurfa" >Şanlıurfa</option>
-                                        <option data-tokens="Uşak" value="Uşak" >Uşak</option>
-                                        <option data-tokens="Van" value="Van" >Van</option>
-                                        <option data-tokens="Yozgat" value="Yozgat" >Yozgat</option>
-                                        <option data-tokens="Zonguldak" value="Zonguldak" >Zonguldak</option>
-                                        <option data-tokens="Aksaray" value="Aksaray" >Aksaray</option>
-                                        <option data-tokens="Bayburt" value="Bayburt" >Bayburt</option>
-                                        <option data-tokens="Karaman" value="Karaman" >Karaman</option>
-                                        <option data-tokens="Kırıkkale" value="Kırıkkale" >Kırıkkale</option>
-                                        <option data-tokens="Batman" value="Batman" >Batman</option>
-                                        <option data-tokens="Şırnak" value="Şırnak" >Şırnak</option>
-                                        <option data-tokens="Bartın" value="Bartın" >Bartın</option>
-                                        <option data-tokens="Ardahan" value="Ardahan" >Ardahan</option>
-                                        <option data-tokens="Iğdır" value="Iğdır" >Iğdır</option>
-                                        <option data-tokens="Yalova" value="Yalova" >Yalova</option>
-                                        <option data-tokens="Karabük" value="Karabük" >Karabük</option>
-                                        <option data-tokens="Kilis" value="Kilis" >Kilis</option>
-                                        <option data-tokens="Osmaniye" value="Osmaniye" >Osmaniye</option>
-                                        <option data-tokens="Düzce" value="Düzce" >Düzce</option>
-                                        <option data-tokens="Diğer" value="Diğer" >Diğer</option>
+                                        <option data-tokens="Adana" {{ ( old('city') == 'Adana') ? 'selected' : '' }} value="Adana">Adana</option>
+                                                    <option data-tokens="Adıyaman" {{ ( old('city') == 'Adıyaman') ? 'selected' : '' }} value="Adıyaman">Adıyaman</option>
+                                                    <option data-tokens="Afyon" {{ ( old('city') == 'Afyon') ? 'selected' : '' }} value="Afyon" >Afyon</option>
+                                                    <option data-tokens="Ağrı" {{ ( old('city') == 'Ağrı') ? 'selected' : '' }} value="Ağrı" >Ağrı</option>
+                                                    <option data-tokens="Amasya" {{ ( old('city') == 'Amasya') ? 'selected' : '' }} value="Amasya" >Amasya</option>
+                                                    <option data-tokens="Ankara" {{ ( old('city') == 'Ankara') ? 'selected' : '' }} value="Ankara" >Ankara</option>
+                                                    <option data-tokens="Antalya" {{ ( old('city') == 'Antalya') ? 'selected' : '' }} value="Antalya" >Antalya</option>
+                                                    <option data-tokens="Artvin" {{ ( old('city') == 'Artvin') ? 'selected' : '' }} value="Artvin" >Artvin</option>
+                                                    <option data-tokens="Aydın" {{ ( old('city') == 'Aydın') ? 'selected' : '' }} value="Aydın" >Aydın</option>
+                                                        
+                                                    <option data-tokens="Balıkesir" {{ ( old('city') == 'Balıkesir') ? 'selected' : '' }} value="Balıkesir" >Balıkesir</option>
+                                                    <option data-tokens="Bilecik" {{ ( old('city') == 'Bilecik') ? 'selected' : '' }} value="Bilecik" >Bilecik</option>
+                                                    <option data-tokens="Bingöl" {{ ( old('city') == 'Bingöl') ? 'selected' : '' }} value="Bingöl" >Bingöl</option>
+                                                    <option data-tokens="Bitlis" {{ ( old('city') == 'Bitlis') ? 'selected' : '' }} value="Bitlis" >Bitlis</option>
+                                                    <option data-tokens="Bolu" {{ ( old('city') == 'Bolu') ? 'selected' : '' }} value="Bolu" >Bolu</option>
+                                                    <option data-tokens="Burdur" {{ ( old('city') == 'Burdur') ? 'selected' : '' }} value="Burdur" >Burdur</option>
+                                                    <option data-tokens="Bursa" {{ ( old('city') == 'Bursa') ? 'selected' : '' }} value="Bursa" >Bursa</option>
+                                                        
+                                                    <option data-tokens="Çanakkale" {{ ( old('city') == 'Çanakkale') ? 'selected' : '' }} value="Çanakkale" >Çanakkale</option>
+                                                    <option data-tokens="Çankırı" {{ ( old('city') == 'Çankırı') ? 'selected' : '' }} value="Çankırı" >Çankırı</option>
+                                                    <option data-tokens="Çorum" {{ ( old('city') == 'Çorum') ? 'selected' : '' }} value="Çorum" >Çorum</option>
+                                                        
+                                                    <option data-tokens="Denizli" {{ ( old('city') == 'Denizli') ? 'selected' : '' }} value="Denizli" >Denizli</option>                                                        
+                                                    <option data-tokens="Diyarbakır" {{ ( old('city') == 'Afyon') ? 'selected' : '' }} value="Afyon" >Diyarbakır</option>
+                                                    <option data-tokens="Edirne" {{ ( old('city') == 'Edirne') ? 'selected' : '' }} value="Edirne" >Edirne</option>
+                                                    <option data-tokens="Giresun" {{ ( old('city') == 'Giresun') ? 'selected' : '' }} value="Giresun" >Giresun</option>
+                                                        
+                                                    <option data-tokens="Gümüşhane" {{ ( old('city') == 'Gümüşhane') ? 'selected' : '' }} value="Gümüşhane" >Gümüşhane</option>
+                                                    <option data-tokens="Hakkari" {{ ( old('city') == 'Hakkari') ? 'selected' : '' }} value="Hakkari" >Hakkari</option>
+                                                    <option data-tokens="Hatay" {{ ( old('city') == 'Hatay') ? 'selected' : '' }} value="Hatay" >Hatay</option>
+                                                    <option data-tokens="Isparta" {{ ( old('city') == 'Isparta') ? 'selected' : '' }} value="Isparta" >Isparta</option>
+                                                    <option data-tokens="Mersin" {{ ( old('city') == 'Mersin') ? 'selected' : '' }} value="Mersin" >Mersin</option>
+                                                    <option data-tokens="İstanbul" {{ ( old('city') == 'İstanbul') ? 'selected' : '' }} value="İstanbul" >İstanbul</option>
+                                                    <option data-tokens="İzmir" {{ ( old('city') == 'İzmir') ? 'selected' : '' }} value="İzmir" >İzmir</option>
+                                                    <option data-tokens="Kars" {{ ( old('city') == 'Kars') ? 'selected' : '' }} value="Kars" >Kars</option>
+                                                    <option data-tokens="Kastamonu" {{ ( old('city') == 'Kastamonu') ? 'selected' : '' }} value="Kastamonu" >Kastamonu</option>
+                                                    <option data-tokens="Konya" {{ ( old('city') == 'Konya') ? 'selected' : '' }} value="Konya" >Konya</option>
+                                                    <option data-tokens="Kütahya" {{ ( old('city') == 'Kütahya') ? 'selected' : '' }} value="Kütahya" >Kütahya</option>
+                                                    <option data-tokens="Malatya" {{ ( old('city') == 'Malatya') ? 'selected' : '' }} value="Malatya" >Malatya</option>
+                                                    <option data-tokens="Manisa" {{ ( old('city') == 'Manisa') ? 'selected' : '' }} value="Manisa" >Manisa</option>
+                                                    <option data-tokens="Kahramanmaraş" {{ ( old('city') == 'Kahramanmaraş') ? 'selected' : '' }} value="Kahramanmaraş" >Kahramanmaraş</option>
+                                                    <option data-tokens="Mardin" {{ ( old('city') == 'Mardin') ? 'selected' : '' }} value="Mardin" >Mardin</option>
+                                                    <option data-tokens="Muğla" {{ ( old('city') == 'Muğla') ? 'selected' : '' }} value="Muğla" >Muğla</option>
+                                                    <option data-tokens="Muş" {{ ( old('city') == 'Muş') ? 'selected' : '' }} value="Muş" >Muş</option>
+                                                    <option data-tokens="Nevşehir" {{ ( old('city') == 'Nevşehir') ? 'selected' : '' }} value="Nevşehir" >Nevşehir</option>
+                                                    <option data-tokens="Niğde" {{ ( old('city') == 'Niğde') ? 'selected' : '' }} value="Niğde" >Niğde</option>
+                                                    <option data-tokens="Ordu" {{ ( old('city') == 'Ordu') ? 'selected' : '' }} value="Ordu" >Ordu</option>
+                                                    <option data-tokens="Rize" {{ ( old('city') == 'Rize') ? 'selected' : '' }} value="Rize" >Rize</option>
+                                                    <option data-tokens="Sakarya" {{ ( old('city') == 'Sakarya') ? 'selected' : '' }} value="Sakarya" >Sakarya</option>
+                                                    <option data-tokens="Samsun" {{ ( old('city') == 'Samsun') ? 'selected' : '' }} value="Samsun" >Samsun</option>
+                                                    <option data-tokens="Siirt" {{ ( old('city') == 'Siirt') ? 'selected' : '' }} value="Siirt" >Siirt</option>
+                                                    <option data-tokens="Sinop" {{ ( old('city') == 'Sinop') ? 'selected' : '' }} value="Sinop" >Sinop</option>
+                                                    <option data-tokens="Sivas" {{ ( old('city') == 'Sivas') ? 'selected' : '' }} value="Sivas" >Sivas</option>
+                                                    <option data-tokens="Tekirdağ" {{ ( old('city') == 'Tekirdağ') ? 'selected' : '' }} value="Tekirdağ" >Tekirdağ</option>
+                                                    <option data-tokens="Tokat" {{ ( old('city') == 'Tokat') ? 'selected' : '' }} value="Tokat" >Tokat</option>
+                                                    <option data-tokens="Trabzon" {{ ( old('city') == 'Trabzon') ? 'selected' : '' }} value="Trabzon" >Trabzon</option>
+                                                        
+                                                    <option data-tokens="Tunceli" {{ ( old('city') == 'Tunceli') ? 'selected' : '' }} value="Tunceli" >Tunceli</option>
+                                                    <option data-tokens="Şanlıurfa" {{ ( old('city') == 'Şanlıurfa') ? 'selected' : '' }} value="Şanlıurfa" >Şanlıurfa</option>
+                                                    <option data-tokens="Uşak" {{ ( old('city') == 'Uşak') ? 'selected' : '' }} value="Uşak" >Uşak</option>
+                                                    <option data-tokens="Van" {{ ( old('city') == 'Van') ? 'selected' : '' }} value="Van" >Van</option>
+                                                    <option data-tokens="Yozgat" {{ ( old('city') == 'Yozgat') ? 'selected' : '' }} value="Yozgat" >Yozgat</option>
+                                                    <option data-tokens="Zonguldak" {{ ( old('city') == 'Zonguldak') ? 'selected' : '' }} value="Zonguldak" >Zonguldak</option>
+                                                    <option data-tokens="Aksaray" {{ ( old('city') == 'Aksaray') ? 'selected' : '' }} value="Aksaray" >Aksaray</option>
+                                                    <option data-tokens="Bayburt" {{ ( old('city') == 'Bayburt') ? 'selected' : '' }} value="Bayburt" >Bayburt</option>
+                                                    <option data-tokens="Karaman" {{ ( old('city') == 'Karaman') ? 'selected' : '' }} value="Karaman" >Karaman</option>
+                                                    <option data-tokens="Kırıkkale" {{ ( old('city') == 'Kırıkkale') ? 'selected' : '' }} value="Kırıkkale" >Kırıkkale</option>
+                                                    <option data-tokens="Batman" {{ ( old('city') == 'Batman') ? 'selected' : '' }} value="Batman" >Batman</option>
+                                                    <option data-tokens="Şırnak" {{ ( old('city') == 'Şırnak') ? 'selected' : '' }} value="Şırnak" >Şırnak</option>
+                                                    <option data-tokens="Bartın" {{ ( old('city') == 'Bartın') ? 'selected' : '' }} value="Bartın" >Bartın</option>
+                                                    <option data-tokens="Ardahan" {{ ( old('city') == 'Ardahan') ? 'selected' : '' }} value="Ardahan" >Ardahan</option>
+                                                    <option data-tokens="Iğdır" {{ ( old('city') == 'Iğdır') ? 'selected' : '' }} value="Iğdır" >Iğdır</option>
+                                                    <option data-tokens="Yalova" {{ ( old('city') == 'Yalova') ? 'selected' : '' }} value="Yalova" >Yalova</option>
+                                                    <option data-tokens="Karabük" {{ ( old('city') == 'Karabük') ? 'selected' : '' }} value="Karabük" >Karabük</option>
+                                                    <option data-tokens="Kilis" {{ ( old('city') == 'Kilis') ? 'selected' : '' }} value="Kilis" >Kilis</option>
+                                                    <option data-tokens="Osmaniye" {{ ( old('city') == 'Osmaniye') ? 'selected' : '' }} value="Osmaniye" >Osmaniye</option>
+                                                    <option data-tokens="Düzce" {{ ( old('city') == 'Düzce') ? 'selected' : '' }} value="Düzce" >Düzce</option>
+                                                    <option data-tokens="Diğer" {{ ( old('city') == 'Diğer') ? 'selected' : '' }} value="Diğer" >Diğer</option>
                                         
                                         
                                     </select>

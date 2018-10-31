@@ -50,6 +50,15 @@
     </div>
     @endif
     
+    <div class="form-group{{ $errors->first('canonical_tag', ' has-error') }}">
+        <label class="col-lg-2 col-md-2 control-label"> Canonical Url </label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('canonical_tag',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            <span class="label label-danger">{{ $errors->first('canonical_tag', ':message') }}</span>
+           
+        </div>
+    </div>
+    
 <!--
 <hr> <center> <b> Banner  (minimum size : 800x350) </b> </a><hr>
      <div class="form-group{{ $errors->first('banner_image1', ' has-error') }}">

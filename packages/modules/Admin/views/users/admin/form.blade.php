@@ -1,23 +1,76 @@
 
-
+@if($users->full_name) 
 <div class="form-group{{ $errors->first('full_name', ' has-error') }}">
-    <label class="col-lg-3 col-md-3 control-label">Full Name <span class="error">*</span></label>
+    <label class="col-lg-3 col-md-3 control-label">Ad-Soyad <span class="error">*</span></label>
     <div class="col-lg-9 col-md-9"> 
         {!! Form::text('full_name',$users->full_name, ['class' => 'form-control form-cascade-control input-small'])  !!} 
           <span class="label label-danger">{{ $errors->first('full_name', ':message') }}</span>
     </div>
   </div>
-    
+    <div class="form-group{{ $errors->first('tc_no', ' has-error') }}">
+    <label class="col-lg-3 col-md-3 control-label"> TC No<span class="error">*</span></label>
+    <div class="col-lg-9 col-md-9"> 
+        {!! Form::text('tc_no',$users->tc_no, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+          <span class="label label-danger">{{ $errors->first('tc_no', ':message') }}</span>
+    </div>
+  </div>
+    <input name="vendor_type" type="hidden" value="1">
+  @endif
+   @if($users->company_name) 
   <div class="form-group{{ $errors->first('company_name', ' has-error') }}">
-    <label class="col-lg-3 col-md-3 control-label">Company Name <span class="error">*</span></label>
+    <label class="col-lg-3 col-md-3 control-label"> Firma İsmi <span class="error">*</span></label>
     <div class="col-lg-9 col-md-9"> 
         {!! Form::text('company_name',$users->company_name, ['class' => 'form-control form-cascade-control input-small'])  !!} 
           <span class="label label-danger">{{ $errors->first('company_name', ':message') }}</span>
     </div>
   </div>
+       
+    
+    <div class="form-group{{ $errors->first('manager_name', ' has-error') }}">
+    <label class="col-lg-3 col-md-3 control-label"> yönetici ismi<span class="error">*</span></label>
+    <div class="col-lg-9 col-md-9"> 
+        {!! Form::text('manager_name',$users->manager_name, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+          <span class="label label-danger">{{ $errors->first('manager_name', ':message') }}</span>
+    </div>
+  </div>
+    
+    <div class="form-group{{ $errors->first('tax_name', ' has-error') }}">
+    <label class="col-lg-3 col-md-3 control-label"> Vergi adı<span class="error">*</span></label>
+    <div class="col-lg-9 col-md-9"> 
+        {!! Form::text('tax_name',$users->tax_name, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+          <span class="label label-danger">{{ $errors->first('manager_tax_namename', ':message') }}</span>
+    </div>
+  </div>
+    
+    <div class="form-group{{ $errors->first('tax_no', ' has-error') }}">
+    <label class="col-lg-3 col-md-3 control-label"> Vergi no<span class="error">*</span></label>
+    <div class="col-lg-9 col-md-9"> 
+        {!! Form::text('tax_no',$users->tax_no, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+          <span class="label label-danger">{{ $errors->first('tax_no', ':message') }}</span>
+    </div>
+  </div>
+    <input name="vendor_type" type="hidden" value="2">
+    @endif
+   
+    
+  <div class="form-group{{ $errors->first('bank_name', ' has-error') }}">
+    <label class="col-lg-3 col-md-3 control-label">Banka adı<span class="error">*</span></label>
+    <div class="col-lg-9 col-md-9"> 
+        {!! Form::text('bank_name',$users->bank_name, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+          <span class="label label-danger">{{ $errors->first('bank_name', ':message') }}</span>
+    </div>
+  </div>
+    
+   <div class="form-group{{ $errors->first('iban', ' has-error') }}">
+    <label class="col-lg-3 col-md-3 control-label"> IBAN<span class="error">*</span></label>
+    <div class="col-lg-9 col-md-9"> 
+        {!! Form::text('iban',$users->iban, ['class' => 'form-control form-cascade-control input-small','readonly'=>'readonly'])  !!} 
+          <span class="label label-danger">{{ $errors->first('iban', ':message') }}</span>
+    </div>
+  </div>
     
     <div class="form-group{{ $errors->first('phone', ' has-error') }}">
-    <label class="col-lg-3 col-md-3 control-label">Phone <span class="error">*</span></label>
+    <label class="col-lg-3 col-md-3 control-label">Telefon <span class="error">*</span></label>
     <div class="col-lg-9 col-md-9"> 
         {!! Form::text('phone',$users->phone, ['class' => 'form-control form-cascade-control input-small'])  !!} 
           <span class="label label-danger">{{ $errors->first('phone', ':message') }}</span>
@@ -25,7 +78,7 @@
   </div>
     
    <div class="form-group{{ $errors->first('address', ' has-error') }}">
-    <label class="col-lg-3 col-md-3 control-label">Address <span class="error"></span></label>
+    <label class="col-lg-3 col-md-3 control-label">Adres <span class="error"></span></label>
     <div class="col-lg-9 col-md-9"> 
         {!! Form::text('address',$users->address, ['class' => 'form-control form-cascade-control input-small'])  !!} 
           <span class="label label-danger">{{ $errors->first('address', ':message') }}</span>
@@ -33,14 +86,97 @@
   </div>
     
    <div class="form-group{{ $errors->first('city', ' has-error') }}">
-    <label class="col-lg-3 col-md-3 control-label">City <span class="error"></span></label>
+    <label class="col-lg-3 col-md-3 control-label">Şehir <span class="error"></span></label>
     <div class="col-lg-9 col-md-9"> 
-        {!! Form::text('city',$users->city, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+        <select class="form-control" data-live-search="true" name="city" required>
+                                        <option selected="selected" value="">Şehir Seçiniz </option>
+                                        
+                                        <option data-tokens="Adana" {{ ( $users->city == 'Adana') ? 'selected' : '' }} value="Adana">Adana</option>
+                                                    <option data-tokens="Adıyaman" {{ ( $users->city == 'Adıyaman') ? 'selected' : '' }} value="Adıyaman">Adıyaman</option>
+                                                    <option data-tokens="Afyon" {{ ( $users->city == 'Afyon') ? 'selected' : '' }} value="Afyon" >Afyon</option>
+                                                    <option data-tokens="Ağrı" {{ ( $users->city == 'Ağrı') ? 'selected' : '' }} value="Ağrı" >Ağrı</option>
+                                                    <option data-tokens="Amasya" {{ ( $users->city == 'Amasya') ? 'selected' : '' }} value="Amasya" >Amasya</option>
+                                                    <option data-tokens="Ankara" {{ ( $users->city == 'Ankara') ? 'selected' : '' }} value="Ankara" >Ankara</option>
+                                                    <option data-tokens="Antalya" {{ ( $users->city == 'Antalya') ? 'selected' : '' }} value="Antalya" >Antalya</option>
+                                                    <option data-tokens="Artvin" {{ ( $users->city == 'Artvin') ? 'selected' : '' }} value="Artvin" >Artvin</option>
+                                                    <option data-tokens="Aydın" {{ ( $users->city == 'Aydın') ? 'selected' : '' }} value="Aydın" >Aydın</option>
+                                                        
+                                                    <option data-tokens="Balıkesir" {{ ( $users->city == 'Balıkesir') ? 'selected' : '' }} value="Balıkesir" >Balıkesir</option>
+                                                    <option data-tokens="Bilecik" {{ ( $users->city == 'Bilecik') ? 'selected' : '' }} value="Bilecik" >Bilecik</option>
+                                                    <option data-tokens="Bingöl" {{ ( $users->city == 'Bingöl') ? 'selected' : '' }} value="Bingöl" >Bingöl</option>
+                                                    <option data-tokens="Bitlis" {{ ( $users->city == 'Bitlis') ? 'selected' : '' }} value="Bitlis" >Bitlis</option>
+                                                    <option data-tokens="Bolu" {{ ( $users->city == 'Bolu') ? 'selected' : '' }} value="Bolu" >Bolu</option>
+                                                    <option data-tokens="Burdur" {{ ( $users->city == 'Burdur') ? 'selected' : '' }} value="Burdur" >Burdur</option>
+                                                    <option data-tokens="Bursa" {{ ( $users->city == 'Bursa') ? 'selected' : '' }} value="Bursa" >Bursa</option>
+                                                        
+                                                    <option data-tokens="Çanakkale" {{ ( $users->city == 'Çanakkale') ? 'selected' : '' }} value="Çanakkale" >Çanakkale</option>
+                                                    <option data-tokens="Çankırı" {{ ( $users->city == 'Çankırı') ? 'selected' : '' }} value="Çankırı" >Çankırı</option>
+                                                    <option data-tokens="Çorum" {{ ( $users->city == 'Çorum') ? 'selected' : '' }} value="Çorum" >Çorum</option>
+                                                        
+                                                    <option data-tokens="Denizli" {{ ( $users->city == 'Denizli') ? 'selected' : '' }} value="Denizli" >Denizli</option>                                                        
+                                                    <option data-tokens="Diyarbakır" {{ ( $users->city == 'Afyon') ? 'selected' : '' }} value="Afyon" >Diyarbakır</option>
+                                                    <option data-tokens="Edirne" {{ ( $users->city == 'Edirne') ? 'selected' : '' }} value="Edirne" >Edirne</option>
+                                                    <option data-tokens="Giresun" {{ ( $users->city == 'Giresun') ? 'selected' : '' }} value="Giresun" >Giresun</option>
+                                                        
+                                                    <option data-tokens="Gümüşhane" {{ ( $users->city == 'Gümüşhane') ? 'selected' : '' }} value="Gümüşhane" >Gümüşhane</option>
+                                                    <option data-tokens="Hakkari" {{ ( $users->city == 'Hakkari') ? 'selected' : '' }} value="Hakkari" >Hakkari</option>
+                                                    <option data-tokens="Hatay" {{ ( $users->city == 'Hatay') ? 'selected' : '' }} value="Hatay" >Hatay</option>
+                                                    <option data-tokens="Isparta" {{ ( $users->city == 'Isparta') ? 'selected' : '' }} value="Isparta" >Isparta</option>
+                                                    <option data-tokens="Mersin" {{ ( $users->city == 'Mersin') ? 'selected' : '' }} value="Mersin" >Mersin</option>
+                                                    <option data-tokens="İstanbul" {{ ( $users->city == 'İstanbul') ? 'selected' : '' }} value="İstanbul" >İstanbul</option>
+                                                    <option data-tokens="İzmir" {{ ( $users->city == 'İzmir') ? 'selected' : '' }} value="İzmir" >İzmir</option>
+                                                    <option data-tokens="Kars" {{ ( $users->city == 'Kars') ? 'selected' : '' }} value="Kars" >Kars</option>
+                                                    <option data-tokens="Kastamonu" {{ ( $users->city == 'Kastamonu') ? 'selected' : '' }} value="Kastamonu" >Kastamonu</option>
+                                                    <option data-tokens="Konya" {{ ( $users->city == 'Konya') ? 'selected' : '' }} value="Konya" >Konya</option>
+                                                    <option data-tokens="Kütahya" {{ ( $users->city == 'Kütahya') ? 'selected' : '' }} value="Kütahya" >Kütahya</option>
+                                                    <option data-tokens="Malatya" {{ ( $users->city == 'Malatya') ? 'selected' : '' }} value="Malatya" >Malatya</option>
+                                                    <option data-tokens="Manisa" {{ ( $users->city == 'Manisa') ? 'selected' : '' }} value="Manisa" >Manisa</option>
+                                                    <option data-tokens="Kahramanmaraş" {{ ( $users->city == 'Kahramanmaraş') ? 'selected' : '' }} value="Kahramanmaraş" >Kahramanmaraş</option>
+                                                    <option data-tokens="Mardin" {{ ( $users->city == 'Mardin') ? 'selected' : '' }} value="Mardin" >Mardin</option>
+                                                    <option data-tokens="Muğla" {{ ( $users->city == 'Muğla') ? 'selected' : '' }} value="Muğla" >Muğla</option>
+                                                    <option data-tokens="Muş" {{ ( $users->city == 'Muş') ? 'selected' : '' }} value="Muş" >Muş</option>
+                                                    <option data-tokens="Nevşehir" {{ ( $users->city == 'Nevşehir') ? 'selected' : '' }} value="Nevşehir" >Nevşehir</option>
+                                                    <option data-tokens="Niğde" {{ ( $users->city == 'Niğde') ? 'selected' : '' }} value="Niğde" >Niğde</option>
+                                                    <option data-tokens="Ordu" {{ ( $users->city == 'Ordu') ? 'selected' : '' }} value="Ordu" >Ordu</option>
+                                                    <option data-tokens="Rize" {{ ( $users->city == 'Rize') ? 'selected' : '' }} value="Rize" >Rize</option>
+                                                    <option data-tokens="Sakarya" {{ ( $users->city == 'Sakarya') ? 'selected' : '' }} value="Sakarya" >Sakarya</option>
+                                                    <option data-tokens="Samsun" {{ ( $users->city == 'Samsun') ? 'selected' : '' }} value="Samsun" >Samsun</option>
+                                                    <option data-tokens="Siirt" {{ ( $users->city == 'Siirt') ? 'selected' : '' }} value="Siirt" >Siirt</option>
+                                                    <option data-tokens="Sinop" {{ ( $users->city == 'Sinop') ? 'selected' : '' }} value="Sinop" >Sinop</option>
+                                                    <option data-tokens="Sivas" {{ ( $users->city == 'Sivas') ? 'selected' : '' }} value="Sivas" >Sivas</option>
+                                                    <option data-tokens="Tekirdağ" {{ ( $users->city == 'Tekirdağ') ? 'selected' : '' }} value="Tekirdağ" >Tekirdağ</option>
+                                                    <option data-tokens="Tokat" {{ ( $users->city == 'Tokat') ? 'selected' : '' }} value="Tokat" >Tokat</option>
+                                                    <option data-tokens="Trabzon" {{ ( $users->city == 'Trabzon') ? 'selected' : '' }} value="Trabzon" >Trabzon</option>
+                                                        
+                                                    <option data-tokens="Tunceli" {{ ( $users->city == 'Tunceli') ? 'selected' : '' }} value="Tunceli" >Tunceli</option>
+                                                    <option data-tokens="Şanlıurfa" {{ ( $users->city == 'Şanlıurfa') ? 'selected' : '' }} value="Şanlıurfa" >Şanlıurfa</option>
+                                                    <option data-tokens="Uşak" {{ ( $users->city == 'Uşak') ? 'selected' : '' }} value="Uşak" >Uşak</option>
+                                                    <option data-tokens="Van" {{ ( $users->city == 'Van') ? 'selected' : '' }} value="Van" >Van</option>
+                                                    <option data-tokens="Yozgat" {{ ( $users->city == 'Yozgat') ? 'selected' : '' }} value="Yozgat" >Yozgat</option>
+                                                    <option data-tokens="Zonguldak" {{ ( $users->city == 'Zonguldak') ? 'selected' : '' }} value="Zonguldak" >Zonguldak</option>
+                                                    <option data-tokens="Aksaray" {{ ( $users->city == 'Aksaray') ? 'selected' : '' }} value="Aksaray" >Aksaray</option>
+                                                    <option data-tokens="Bayburt" {{ ( $users->city == 'Bayburt') ? 'selected' : '' }} value="Bayburt" >Bayburt</option>
+                                                    <option data-tokens="Karaman" {{ ( $users->city == 'Karaman') ? 'selected' : '' }} value="Karaman" >Karaman</option>
+                                                    <option data-tokens="Kırıkkale" {{ ( $users->city == 'Kırıkkale') ? 'selected' : '' }} value="Kırıkkale" >Kırıkkale</option>
+                                                    <option data-tokens="Batman" {{ ( $users->city == 'Batman') ? 'selected' : '' }} value="Batman" >Batman</option>
+                                                    <option data-tokens="Şırnak" {{ ( $users->city == 'Şırnak') ? 'selected' : '' }} value="Şırnak" >Şırnak</option>
+                                                    <option data-tokens="Bartın" {{ ( $users->city == 'Bartın') ? 'selected' : '' }} value="Bartın" >Bartın</option>
+                                                    <option data-tokens="Ardahan" {{ ( $users->city == 'Ardahan') ? 'selected' : '' }} value="Ardahan" >Ardahan</option>
+                                                    <option data-tokens="Iğdır" {{ ( $users->city == 'Iğdır') ? 'selected' : '' }} value="Iğdır" >Iğdır</option>
+                                                    <option data-tokens="Yalova" {{ ( $users->city == 'Yalova') ? 'selected' : '' }} value="Yalova" >Yalova</option>
+                                                    <option data-tokens="Karabük" {{ ( $users->city == 'Karabük') ? 'selected' : '' }} value="Karabük" >Karabük</option>
+                                                    <option data-tokens="Kilis" {{ ( $users->city == 'Kilis') ? 'selected' : '' }} value="Kilis" >Kilis</option>
+                                                    <option data-tokens="Osmaniye" {{ ( $users->city == 'Osmaniye') ? 'selected' : '' }} value="Osmaniye" >Osmaniye</option>
+                                                    <option data-tokens="Düzce" {{ ( $users->city == 'Düzce') ? 'selected' : '' }} value="Düzce" >Düzce</option>
+                                                    <option data-tokens="Diğer" {{ ( $users->city == 'Diğer') ? 'selected' : '' }} value="Diğer" >Diğer</option>
+                                        
+                                        
+                                    </select> 
           <span class="label label-danger">{{ $errors->first('city', ':message') }}</span>
     </div>
   </div>
     
-    <div class="form-group{{ $errors->first('country', ' has-error') }}">
+    <!--<div class="form-group{{ $errors->first('country', ' has-error') }}">
     <label class="col-lg-3 col-md-3 control-label">Country<span class="error"></span></label>
     <div class="col-lg-9 col-md-9"> 
         
@@ -283,11 +419,11 @@
                     </select>
           <span class="label label-danger">{{ $errors->first('country', ':message') }}</span>
     </div>
-  </div>
+  </div>-->
     
     
    <div class="form-group{{ $errors->first('email', ' has-error') }}">
-    <label class="col-lg-3 col-md-3 control-label"> Email <span class="error">*</span></label>
+    <label class="col-lg-3 col-md-3 control-label"> Eposta <span class="error">*</span></label>
     <div class="col-lg-9 col-md-9"> 
         {!! Form::text('email',$users->email, ['class' => 'form-control form-cascade-control input-small'])  !!} 
           <span class="label label-danger">{{ $errors->first('email', ':message') }}</span>
@@ -295,15 +431,23 @@
   </div>
     
    <div class="form-group{{ $errors->first('password', ' has-error') }}">
-    <label class="col-lg-3 col-md-3 control-label"> Password <span class="error">*</span></label>
+    <label class="col-lg-3 col-md-3 control-label"> Şifre <span class="error">*</span></label>
     <div class="col-lg-9 col-md-9"> 
         {!! Form::text('password',null, ['class' => 'form-control form-cascade-control input-small','placeholder'=>'******'])  !!} 
           <span class="label label-danger">{{ $errors->first('password', ':message') }}</span>
     </div>
   </div> 
+   
+   <div class="form-group{{ $errors->first('password_confirmation', ' has-error') }}">
+    <label class="col-lg-3 col-md-3 control-label"> Confirm Şifre <span class="error">*</span></label>
+    <div class="col-lg-9 col-md-9"> 
+        {!! Form::text('password_confirmation',null, ['class' => 'form-control form-cascade-control input-small','placeholder'=>'******'])  !!} 
+          <span class="label label-danger">{{ $errors->first('password_confirmation', ':message') }}</span>
+    </div>
+  </div>
     
   <div class="form-group{{ $errors->first('image', ' has-error') }}">
-    <label class="col-lg-3 col-md-3 control-label"> Profile Picture <span class="error"></span></label>
+    <label class="col-lg-3 col-md-3 control-label"> Profil Resmi <span class="error"></span></label>
     <div class="col-lg-9 col-md-9"> 
         <input type="file"  class="form-control" name="image">
           <span class="label label-danger">{{ $errors->first('image', ':message') }}</span>
@@ -314,6 +458,6 @@
   <div class="form-group">
       <label class="col-lg-3 col-md-3 control-label"></label>
       <div class="col-lg-9 col-md-9">
-          {!! Form::submit('Update', ['class'=>'btn btn-primary text-white']) !!}
+          {!! Form::submit('GÜNCELLE', ['class'=>'btn btn-primary text-white']) !!}
       </div>
   </div> 

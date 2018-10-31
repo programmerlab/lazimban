@@ -8,7 +8,7 @@ use App\Admin;
 
 class LoginController extends Controller
 {
-    public function userLogin(){        
+    public function userLogin(){      
         $input = Input::all();
         //echo "<pre>"; print_r($input); die;
         if(count($input) > 0){

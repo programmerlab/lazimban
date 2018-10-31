@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\ProductRequest;
 use Modules\Admin\Models\User;
 use Modules\Admin\Models\Category;
+use Modules\Admin\Models\Brand;
 use Modules\Admin\Models\Product; 
 use Modules\Admin\Models\ShippingBillingAddress;
 use Modules\Admin\Models\Transaction;
@@ -85,9 +86,19 @@ class ProductController extends Controller {
         $product_photo =   Product::whereIn('id',$pid)->get(['photo','id'])->toArray();
         View::share('product_photo',$product_photo);
 
-        $hot_products   = Product::orderBy('views','desc')->limit(3)->get();
+        $hot_products   = Product::orderBy('views','desc')->where('status',1)->limit(3)->get();
+                
+        $featured_products = DB::table('featuredProducts as fp')
+                                                ->leftjoin('products as p','fp.product_id','=','p.id')
+                                                ->select('p.*')
+                                                ->where('fp.status',1)
+                                                ->where('fp.validity','>=',strtotime(date('d M Y')))
+                                                ->orderBy('fp.id','desc')
+                                                ->limit(4)
+                                                ->get();
         $special_deals  = Product::orderBy('discount','desc')->limit(3)->get(); 
         View::share('hot_products',$hot_products);
+        View::share('featured_products',$featured_products);
         View::share('special_deals',$special_deals);  
 
         $website_title      = $setting::where('field_key','website_title')->first();
@@ -153,8 +164,9 @@ class ProductController extends Controller {
                         ->orderBy('id','asc')
                         ->get();
             //print_r($products); die;
-            $categories = Category::nested()->get(); 
-            return view('end-user.category_search',compact('categories','products','category','q','category'));
+            $categories = Category::nested()->get();
+            $brand   = Brand::all();
+            return view('end-user.category_search',compact('categories','brand','products','category','q','category'));
              
          } 
          else{
@@ -211,21 +223,37 @@ class ProductController extends Controller {
     public function addToCart(Request $request, $name,$id) 
     { 
        
-         $item =  $request->get('item'); 
+         $item =  $request->get('item');
+         
+         $options = [];
+         if($request->get('size')){
+            $size = $request->get('size');
+            $options['size']  = $size;
+         }
+         if($request->get('color')){
+            $color = $request->get('color');
+            $options['color']  = $color;
+         }
+         
          if($item ){
             $qty = substr($item,-1);
          } else{
             $qty = 1;
-         } 
+         }
+         
+         if($request->get('qty')){
+            $qty = $request->get('qty');
+         }
+         
         if ($request->isMethod('get')) {
             $product_id = $request->get('id');
             $product = Product::find($id);   
-            Cart::add(array('id' => $product->id, 'name' => $product->product_title, 'qty' => $qty, 'price' => ((100 - $product->discount)/100)*$product->price,'photo'=>$product->photo));
+            Cart::add(array('id' => $product->id, 'name' => $product->product_title, 'qty' => $qty, 'price' => ((100 - $product->discount)/100)*$product->price,'photo'=>$product->photo,'options'=>$options));
         }
         $cart = Cart::content();  
        // $request->session()->put('key', 'value');
-        
-         return Redirect::to(url()->previous())->with('message', $product->product_title.' sepetinize başarıyla eklendi.');
+       // print_r($cart); die;
+         return Redirect::to(url()->previous())->with('message1', $product->product_title.' sepetinize başarıyla eklendi.');
          
     }
 
@@ -625,10 +653,13 @@ class ProductController extends Controller {
         //echo "<pre>"; print_r($transaction); die;
         if($checkoutForm->getPaymentStatus() == 'SUCCESS'){
              $i = 0;       
-            foreach ($cart as $key => $result) {    
+            foreach ($cart as $key => $result) {
+                $color = ($result->options->color) ? ' ('.$result->options->color.')' : '';
+                $size = ($result->options->size) ? ' ('.$result->options->size.')' : '';
+                
                 $transaction                = new Transaction;
                 $transaction->user_id       = $user_id;
-                $transaction->product_name  = $result->name;
+                $transaction->product_name  = $result->name.$size.$color;
                 $transaction->product_id    = $result->id;
                 $transaction->qty           = $result->qty;
                 $transaction->total_price   = $result->price;
@@ -647,6 +678,23 @@ class ProductController extends Controller {
                     DB::table('products')
                     ->where('id', $result->id)
                     ->update(['qty' => $left]);
+                    
+                            //update quantity in variations
+                           $size = strtolower($result->options->size);
+                           $color = ucwords(strtolower($result->options->color));
+                           $prod = DB::table('product_variations')->select('quantity')->where('product_id',$result->id)->where('size', $size)->where('color', $color)->get();                    
+                           //print_r($prod); die;
+                           $available_qty = (!empty($prod)) ? $prod[0]->quantity : 0;
+                           $left = $available_qty - $result->qty;
+                           DB::table('product_variations')
+                           ->where('product_id', $result->id)
+                           ->where('size', $size)
+                           ->where('color', $color)
+                           ->update(['quantity' => $left]);
+                    
+                    DB::table('notifications')->insert([
+                        ['message' => 'New Order Received', 'txn_id' => $transaction->id]            
+                    ]);
             }
             
             $products   = Product::with('category')->orderBy('id','asc')->get();
@@ -707,13 +755,15 @@ class ProductController extends Controller {
             
         }
         
+        //print_r($cart); die;
         
-        
-        foreach ($cart as $key => $result) {
-
+        foreach ($cart as $key => $result) {           
+            
+            $color = ($result->options->color) ? ' ('.$result->options->color.')' : '';
+            $size = ($result->options->size) ? ' ('.$result->options->size.')' : '';
             $transaction                = new Transaction;
             $transaction->user_id       = $user_id;
-            $transaction->product_name  = $result->name;
+            $transaction->product_name  = $result->name.$size.$color;
             $transaction->product_id    = $result->id;
             $transaction->qty           = $result->qty;
             $transaction->total_price   = $result->price;
@@ -721,6 +771,7 @@ class ProductController extends Controller {
             $transaction->payment_mode  = "COD";
             $transaction->transaction_id = strtotime("now");
             $transaction->product_details = json_encode(Product::where('id',$result->id)->get()->toArray());
+            //echo "<pre>"; print_r($transaction); die;
             $transaction->save();
             
             $prod = DB::table('products')->select('qty')->where('id',$result->id)->get();
@@ -729,6 +780,22 @@ class ProductController extends Controller {
             DB::table('products')
             ->where('id', $result->id)
             ->update(['qty' => $left]);
+                    //update quantity in variations
+                    $size = strtolower($result->options->size);
+                    $color = ucwords(strtolower($result->options->color));
+                    $prod = DB::table('product_variations')->select('quantity')->where('product_id',$result->id)->where('size', $size)->where('color', $color)->get();                    
+                    //print_r($prod); die;
+                    $available_qty = (!empty($prod)) ? $prod[0]->quantity : 0;
+                    $left = $available_qty - $result->qty;
+                    DB::table('product_variations')
+                    ->where('product_id', $result->id)
+                    ->where('size', $size)
+                    ->where('color', $color)
+                    ->update(['quantity' => $left]);
+            
+            DB::table('notifications')->insert([
+                ['message' => 'New Order Received', 'txn_id' => $transaction->id]            
+            ]);
              
         }
         
@@ -759,6 +826,7 @@ class ProductController extends Controller {
         foreach ($cart as $key => $value) {
              Cart::remove($key);
         }
+        
         return view('end-user.thanku',compact('categories','products','category','cart','billing','shipping'));
     }
     
@@ -776,7 +844,7 @@ class ProductController extends Controller {
     
     public function showLoginForm(Request $request)
     {
-  
+    
         $cart       = Cart::content(); 
         $products   = Product::with('category')->orderBy('id','asc')->get();
         $categories = Category::nested()->get(); 
@@ -808,7 +876,7 @@ class ProductController extends Controller {
         $billing    = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',1)->first(); 
 
         $shipping   = ShippingBillingAddress::where('user_id',$this->user_id)->where('address_type',2)->first(); 
-        $transaction                = Transaction::where('user_id',$this->user_id)->get();
+        $transaction                = Transaction::where('user_id',$this->user_id)->orderBy('id','desc')->get();
 
         
         return view('end-user.myaccount',compact('transaction','categories','products','category','cart','billing','shipping'));
@@ -851,26 +919,30 @@ class ProductController extends Controller {
                     return redirect()
                         ->back()
                         ->withInput()  
-                        ->withErrors(['message'=>'Invalid reset password link!']);
+                        ->withErrors(['message'=>'Geçersiz şifre sıfırlama bağlantısı!']);
                 } 
                 
             } catch (DecryptException $e) {
 
                 return view('end-user.resetPasswordForm',compact('categories','products','category','cart','token','email','key'))
-                            ->withErrors(['message'=>'Invalid reset password link!']);
+                            ->withErrors(['message'=>'Geçersiz şifre sıfırlama bağlantısı!']);
 
                }
             
         }else
         {    
-
+        
            try { 
-
+            
                 $validator = Validator::make($request->all(), [
                     'password' => 'required',
                     'confirm_password' => 'required|same:password'
 
-                                    ]);
+                                    ],[
+                                       'password.required'=>'Şifre belirlemeniz gerekmektedir.',
+                                       'confirm_password.required'=>'Şifrenizi tekrar girmeniz gerekmektedir.',
+                                       'confirm_password.same'=>'Şifreyi ve şifreyi doğrulamanız gerekir.'
+                                       ]);
 
                 if ($validator->fails()) {
 
@@ -891,7 +963,7 @@ class ProductController extends Controller {
                     return redirect()
                             ->back()
                             ->withInput()  
-                            ->withErrors(['message'=>'Password reset successfully!','class'=>' ']);
+                            ->withErrors(['message'=>'Şifre başarıyla sıfırlandı!','class'=>' ']);
 
                 }else{
                      
@@ -899,14 +971,14 @@ class ProductController extends Controller {
                      return redirect()
                             ->back()
                             ->withInput()  
-                            ->withErrors(['message'=>'Invalid reset password link!']);
+                            ->withErrors(['message'=>'Geçersiz şifre sıfırlama bağlantısı!']);
                 }
             }catch (DecryptException $e) {
 
                  return redirect()
                             ->back()
                             ->withInput()  
-                            ->withErrors(['message'=>'Invalid reset password link!']);
+                            ->withErrors(['message'=>'Geçersiz şifre sıfırlama bağlantısı!']);
 
                }
             
@@ -930,7 +1002,7 @@ class ProductController extends Controller {
         return redirect()
                         ->back()
                         ->withInput()  
-                        ->withErrors(['message'=>'Email id is required!']);
+                        ->withErrors(['message'=>'Geçerli bir eposta girmelisiniz!']);
         }
 
         $user =   User::where('email',$email)->first();
@@ -972,7 +1044,7 @@ class ProductController extends Controller {
         return redirect()
                         ->back()
                         ->withInput()  
-                        ->withErrors(['message'=>"Reset password link has sent. Please check your email."]);
+                        ->withErrors(['message'=>"Şifre bağlantısını sıfırla. Lütfen emailinizi kontrol edin."]);
     }
 }   
 

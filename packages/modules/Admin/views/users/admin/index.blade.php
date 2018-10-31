@@ -1,11 +1,28 @@
-@extends('packages::layouts.master') 
+@extends('packages::layouts.master_vendor') 
     @section('content') 
-      @include('packages::partials.main-header')
-      <!-- Left side column. contains the logo and sidebar -->
-      @include('packages::partials.main-sidebar')
+      @include('packages::partials.vendor-header')
+      <!-- Left side column. contains the logo and sidebar -->      
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper"> 
-       @include('packages::partials.breadcrumb')
+      <div class="page_title">
+           <div class="page-wrapper">
+               <div class="col-md-6"></div>
+               <div class="col-md-6 text-right">
+                       <span><a href="{{ url('/bana-ozel/satici-paneli') }}">Anasayfa</a> </span>
+                       <span>Satıcı Paneli &nbsp;></span>
+                       <span>{{ $page_title or '' }}</span> 
+                  </div>
+           </div>
+       </div>
+<div class="row vendor_sidebar">
+ <div class="col-md-3">
+    @include('packages::partials.vendor-sidebar')
+ </div>
+ <div class="col-md-9">
+          <section class="content-header">
+          <h1>
+            Kişisel Bilgiler            
+          </h1>         
+        </section>
         <!-- Main content -->
           <section class="content">
             <!-- Small boxes (Stat box) -->
@@ -15,7 +32,7 @@
 
                        <div class="panel panel-cascade">
                           <div class="panel-body ">
-                              <fieldset><legend>Personel Information:</legend>
+                              
 
                               @if($flash_alert_notice)
                                    <div class="alert alert-success   bg-olive btn-flat margin alert-dismissable" style="margin:10px">
@@ -38,8 +55,8 @@
                               @endif
                                       
                                 <div class="row"> 
-                                <div class="col-md-2"></div>   
-                                  <div class="col-md-8"> 
+                                 
+                                  <div class="col-md-12"> 
                                     <form method="post" style="margin-top:30px;" enctype="multipart/form-data">
                                       @include('packages::users.admin.form', compact('users'))
                                     </form>
@@ -53,7 +70,8 @@
               </div>  
             <!-- Main row --> 
           </section><!-- /.content -->
-      </div> 
+      </div>
+</div>
      <style type="text/css">
        .form-group{
           float: left;

@@ -153,5 +153,18 @@ class Helper {
         }
     }
     
+    public static function  getNotifications()
+    {        
+        $res = DB::table('notifications')->where('status', '0')->get();                
+        
+        //print_r($vendor); die;
+        if($res!=null){
+           // $vendor = DB::table('admin')->where('id', $userid)->first(); 
+            return $res; 
+        }else{
+            return null;
+        }
+    }
+    
     
 }

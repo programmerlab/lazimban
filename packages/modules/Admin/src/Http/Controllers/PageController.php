@@ -59,8 +59,7 @@ class PageController extends Controller {
      * */
 
     public function index(Pages $page, Request $request) 
-    { 
-        
+    {         
         $page_title = 'page';
         $page_action = 'View page'; 
         
@@ -132,9 +131,10 @@ class PageController extends Controller {
         } 
 
         $page->title     =   $request->get('title');
-        $page->slug     =   $request->get('slug');
+        //$page->slug     =   $request->get('slug');
         $page->page_content   =   $request->get('page_content');
         $page->contact_email   =   $request->get('contact_email');
+        $page->canonical_tag     =   $request->get('canonical_tag');
         $page->save();  
 
         return Redirect::to(route('page'))

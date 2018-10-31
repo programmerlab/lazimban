@@ -165,7 +165,7 @@ class CategoryController extends Controller {
        // category/106/edit
 
         $category_listing = Category::route(['category' => 'id'])->renderAsHtml();
-        //echo "<pre>"; print_r($category_listing); die;
+        //echo "<pre>"; print_r($result_set); die;
 
         return view('packages::category.index', compact('result_set','categories','data', 'page_title', 'page_action','html','category_listing'));
     }
@@ -225,7 +225,8 @@ class CategoryController extends Controller {
         $cat->description           =  $request->get('description');
         $cat->title                 =  $request->get('title');
         $cat->commission            =  $request->get('commission');
-        
+        $cat->weekly_featured     =  $request->get('weekly_featured');
+        $cat->monthly_featured     =  $request->get('monthly_featured');
 
         if($request->get('meta_key')){
             $cat->meta_key  = $request->get('meta_key');
@@ -290,6 +291,8 @@ class CategoryController extends Controller {
         $cat->sub_category_name     =  $request->get('category_name');
         $cat->level                 =  1;
         $cat->commission     =  $request->get('commission');
+        $cat->weekly_featured     =  $request->get('weekly_featured');
+        $cat->monthly_featured     =  $request->get('monthly_featured');
          
         if($request->get('title')){
             $cat->title  = $request->get('title');
@@ -336,7 +339,7 @@ class CategoryController extends Controller {
             $a = explode('-',$row);
             $tmp[$a[0]][] = $a[1].';'.$a[2];            
         }
-        //print_r($tmp); die;
+        //echo "<pre>"; print_r($_REQUEST['order']); die;
         foreach($tmp as $key=>$value){
             
                 $cat = DB::table('categories')->select('id')->where('parent_id',$key)->get();

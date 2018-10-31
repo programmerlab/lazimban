@@ -1,13 +1,30 @@
-@extends('packages::layouts.master')
+@extends('packages::layouts.master_vendor')
 @section('content') 
-@include('packages::partials.main-header')
+@include('packages::partials.vendor-header')
 <!-- Left side column. contains the logo and sidebar -->
-@include('packages::partials.main-sidebar')
+<div class="page_title">
+           <div class="page-wrapper">
+               <div class="col-md-6"></div>
+               <div class="col-md-6 text-right">
+                       <span><a href="{{ url('/bana-ozel/satici-paneli') }}">Anasayfa</a> </span>
+                       <span>Satıcı Paneli &nbsp;></span>
+                       <span>işlemler</span> 
+                  </div>
+           </div>
+       </div>
+
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper"> 
-    @include('packages::partials.breadcrumb')
-
+<div class="row vendor_sidebar">
+<div class="col-md-3">
+    @include('packages::partials.vendor-sidebar')
+</div>
+ <div class="col-md-9">
+    <section class="content-header">
+          <h1>
+            işlemler            
+          </h1>         
+        </section>
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
@@ -42,19 +59,19 @@
                                    <div class="box-body table-responsive no-padding" >
                                         <table class="table table-hover table-condensed">
                                             <thead><tr>
-                                                    <th>Sno</th> 
-                                                    <th>Buyer Name</th>
-                                                    <th>Buyer Email</th>
-                                                    <th>Product Title</th>
-                                                    <th>Price</th>
-                                                    <th>Qty</th>
-                                                    <th>Sub Total</th>
-                                                    <th>Payment Mode</th>
-                                                    <th>Vendor</th>
-                                                    <th>Order Date</th>
-                                                    <th>Status</th>
+                                                    <th>Sıra</th> 
+                                                    <th>Alıcı adı</th>
+                                                    <th>Alıcı e-posta</th>
+                                                    <th>ürün başlığı</th>
+                                                    <th>Fiyat</th>
+                                                    <th>Adet</th>
+                                                    <th>Ara toplam</th>
+                                                    <th>Ödeme şekli</th>
+                                                    <!--<th>Vendor</th>-->
+                                                    <th>Sipariş tarihi</th>
+                                                    <th>durum</th>
                                                     
-                                                   <!--  <th>Action</th> -->
+                                                   <th>Aksiyon</th>
                                                 </tr>
                                                 @if(count($transaction)==0)
                                                     <tr>
@@ -62,7 +79,7 @@
                                                         <div class="alert alert-danger alert-dismissable">
                                                           <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
                                                           <i class="icon fa fa-check"></i>  
-                                                          {{ 'Record not found. Try again !' }}
+                                                          {{ 'Kayıt bulunamadı. Tekrar deneyin !' }}
                                                         </div>
                                                       </td>
                                                     </tr>
@@ -77,43 +94,47 @@
                                                     <td>{{ ++$key }}</td> 
                                                     <td>{{ $result->user->first_name }} </td>
                                                 <td>{{ $result->user->email }} </td>
-                                                    <td>{{ isset($result->product->product_title)?$result->product->product_title:'' }} </td>
+                                                    <td>{{ isset($result->product->product_title)?$result->product_name:'' }} </td>
                                                      <td>{{ $result->total_price }} </td>
                                                     <td>{{ $result->qty }} </td>
                                                     <td>{{ $result->total_price * $result->qty }} </td>
                                                        <td>{{ $result->payment_mode }} </td> 
-                                                   <td>
+                                                   <!--<td>
                                                     {{ isset($result->product->id)? $helper->getVendorName($result->product->id):'' }}
-                                                   </td>
+                                                   </td>-->
                                                     <td>
                                                         {!! Carbon\Carbon::parse($result->created_at)->format('d-M-Y'); !!}
                                                     </td>
                                                     <td>
                                                         <span class="label label-{{ ($result->status==1)?'success':'warning'}} status" id="{{$result->id}}"  data="{{$result->status}}"  >
                                                              @if($result->status==1)
-                                                             Pending
+                                                             kadar
                                                              @elseif($result->status==2)
-                                                             In Progress
+                                                             Devam etmekte
                                                              @elseif($result->status==3)
-                                                             Success
+                                                             başarı
                                                              @elseif($result->status==4)
-                                                             Cancel
+                                                             İptal etmek
                                                              @else
-                                                             Pending
+                                                             kadar
                                                              @endif
                                                         </span>
                                                     </td>
                                                     @if($result->payment_mode == 'card')
                                                         @if($result->status != '3')
                                                         <td>
-                                                            <a href="{{ 'transaction/approve/'.$result->id }}"><button class="btn-xs btn-success">Approve</button></a>
+                                                            <a href="{{ 'transaction/approve/'.$result->id }}"><button class="btn-xs btn-info">onaylamak</button></a>
                                                             <!--<a href="{{ 'transaction/decline/'.$result->id }}"><button class="btn-xs btn-danger">Decline</button></a>-->
                                                         </td>
                                                         @else
                                                             <td>
-                                                                <button class="btn-xs btn-success">Approved</button>                                                                
+                                                                <span class="btn-xs btn-success">onaylı</span>                                                                
                                                             </td>
                                                         @endif
+                                                    @else
+                                                        <td>
+                                                            N/A
+                                                        </td>
                                                     @endif        
                                                  <!--    <td>  
 
@@ -138,6 +159,7 @@
         </div> 
         <!-- Main row --> 
     </section><!-- /.content -->
-</div> 
+</div>
+</div>
 
 @stop

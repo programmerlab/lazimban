@@ -342,7 +342,7 @@ class Helper {
                     krsort($crumbs);
                     foreach($crumbs as $c){
                         $cat = DB::table('categories')->where('id', $c)->first();                
-                        $str .= $cat->name.' > ';
+                        $str .= $cat->name.';'.$cat->slug.' > ';
                     }   
                 }                
                 
@@ -428,6 +428,53 @@ class Helper {
         $pages = DB::table('pages')->get();                                
         if($pages!=null){        
             return $pages; 
+        }else{
+            return null;
+        }
+    }
+    
+    public static function  getNotifications()
+    {        
+        $res = DB::table('notifications')->where('status', '0')->where('vendor_id','!=', '')->get();                
+        
+        //print_r($vendor); die;
+        if($res!=null){
+           // $vendor = DB::table('admin')->where('id', $userid)->first(); 
+            return $res; 
+        }else{
+            return null;
+        }
+    }
+    public static function  getOrderNotifications()
+    {        
+        $res = DB::table('notifications')->where('status', '0')->where('txn_id','!=', '')->get();                
+        
+        //print_r($vendor); die;
+        if($res!=null){
+           // $vendor = DB::table('admin')->where('id', $userid)->first(); 
+            return $res; 
+        }else{
+            return null;
+        }
+    }
+    
+    public static function  getVendorOrderNotifications()
+    {        
+        $res = DB::table('notifications')->where('v_status', '0')->where('txn_id','!=', '')->get();                        
+        //print_r($res); die;
+        if($res!=null){
+           $count = 0;
+                foreach($res as $row){
+                    $txn = DB::table('transactions')->where('id', $row->txn_id)->first();
+                    $product = DB::table('products')->where('id', $txn->product_id)->first();
+                    if(!empty($product)){
+                        if($product->created_by == (Auth::guard('admin')->user()->id) ){
+                            $count++;
+                        }
+                    }
+                    //print_r(); die;
+                }                
+            return $count; 
         }else{
             return null;
         }

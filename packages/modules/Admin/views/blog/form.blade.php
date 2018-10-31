@@ -5,7 +5,7 @@
      <div class="form-group{{ $errors->first('title', ' has-error') }}">
         <label class="col-lg-4 col-md-4 control-label"> Blog Title <span class="error">*</span></label>
         <div class="col-lg-8 col-md-8"> 
-            {!! Form::text('title',null, ['class' => 'form-control form-cascade-control input-small'])  !!} 
+            {!! Form::text('title',null, ['class' => 'form-control form-cascade-control input-small', 'placeholder'=>'Blog Title'])  !!} 
             <span class="label label-danger">{{ $errors->first('title', ':message') }}</span>
         </div>
     </div>  
@@ -52,7 +52,35 @@
             {!! Form::text('tags',null, ['class' => 'form-control form-cascade-control input-small' , 'placeholder'=>'Use Comma separated tags'])  !!} 
             <span class="label label-danger">{{ $errors->first('tags', ':message') }}</span>
         </div>
-    </div> 
+    </div>
+    <div class="form-group{{ $errors->first('slug', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Blog Custom Url</label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('slug',null, ['class' => 'form-control form-cascade-control input-small', 'placeholder'=>'Custom Url'])  !!} 
+            <span class="label label-danger">{{ $errors->first('slug', ':message') }}</span>
+        </div>
+    </div>
+    <div class="form-group{{ $errors->first('meta_key', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Blog Meta Key</label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('meta_key',null, ['class' => 'form-control form-cascade-control input-small', 'placeholder'=>'Meta Key'])  !!} 
+            <span class="label label-danger">{{ $errors->first('meta_key', ':message') }}</span>
+        </div>
+    </div>
+     <div class="form-group{{ $errors->first('meta_description', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Blog Meta Description</label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('meta_description',null, ['class' => 'form-control form-cascade-control input-small', 'placeholder'=>'Meta Description'])  !!} 
+            <span class="label label-danger">{{ $errors->first('meta_description', ':message') }}</span>
+        </div>
+    </div>
+     <div class="form-group{{ $errors->first('canonical_tag', ' has-error') }}">
+        <label class="col-lg-4 col-md-4 control-label"> Canonical Url</label>
+        <div class="col-lg-8 col-md-8"> 
+            {!! Form::text('canonical_tag',null, ['class' => 'form-control form-cascade-control input-small', 'placeholder'=>'Canonical Url'])  !!} 
+            <span class="label label-danger">{{ $errors->first('canonical_tag', ':message') }}</span>
+        </div>
+    </div>
     <div class="form-group">
         <label class="col-lg-4 col-md-4 control-label"></label>
         <div class="col-lg-8 col-md-8">

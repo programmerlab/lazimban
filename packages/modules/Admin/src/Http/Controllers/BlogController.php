@@ -41,7 +41,9 @@ class BlogController extends Controller {
      *
      * @return \Illuminate\View\View
      */
-    public function __construct() {        
+    public function __construct() {
+        error_reporting(0);
+        ini_set('display_errors', 0);
         $this->middleware('admin');
         View::share('viewPage', 'blog');
         View::share('helper',new Helper);
@@ -139,6 +141,7 @@ class BlogController extends Controller {
                  'tags' => $request->get('tags'),
                  'meta_key'           =>   $request->get('meta_key'),
                  'meta_description'   =>   $request->get('meta_description'),
+                 'canonical_tag'      =>   $request->get('canonical_tag'),
                  'user_id' => 1,
                  'slug' => $url,
                  ]
@@ -203,6 +206,7 @@ class BlogController extends Controller {
                                 'slug' => $url,
                                 'meta_key'           =>   $request->get('meta_key'),
                                 'meta_description'   =>   $request->get('meta_description'),
+                                'canonical_tag'      =>   $request->get('canonical_tag'),
                                 'image' => $photo_name]);
             //$blog->save(); 
         }else{            
@@ -233,6 +237,7 @@ class BlogController extends Controller {
                                 'slug' => $url,
                                 'meta_key'           =>   $request->get('meta_key'),
                                 'meta_description'   =>   $request->get('meta_description'),
+                                'canonical_tag'      =>   $request->get('canonical_tag'),
                                 'image' => $request->get('images')]);
             //$blog->save(); 
         }

@@ -23,7 +23,7 @@ function rating(count,product_id){
     for (var i = count; i >= 0; i--) {
          $('#star'+i).css('color','#dd3333');
     } 
-    $('#rating').html('Thank you!').fadeOut(5000);
+    //$('#rating').html('Teşekkürler!').fadeOut(5000);
     var rating =  count; 
     $.ajax({
         type: "GET",
@@ -31,7 +31,13 @@ function rating(count,product_id){
         url: url+'/addReview',
          
         success: function(response) {
-            $('#rating').html('Thank you').fadeOut(15000); 
+            console.log(response);
+            if(response == -1){
+                $('#rating').html('Önce derecelendirmeden önce satın almalısınız!').fadeOut(25000); 
+            }else{
+                $('#rating').html('Teşekkürler!').fadeOut(15000);     
+            }
+            
         }
     });
 }

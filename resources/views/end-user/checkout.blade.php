@@ -55,8 +55,10 @@
                                     </td>
 
                                     <td class="cart_description">
-                                        <h4><a href="">{{$item->name}}</a></h4>
-                                        <p>Web ID: {{$item->id}}</p>
+                                        <h4><a href="">{{$item->name}} {{ ($item->options->size) ? '('.$item->options->size.')' : ''}}</a></h4>
+                                        @if($item->options->color)
+                                            <p style="background-color:#{{$item->options->color}}; width:25px;">&nbsp;</p>
+                                        @endif                                            
                                     </td>
                                     <td class="cart_price">
                                         <p><font style="vertical-align: inherit;">₺</font> {{$item->price}}</p>

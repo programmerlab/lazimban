@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -62,7 +62,9 @@ Route::post('password/email','ProductController@forgetPasswordLink');
 
 Route::match(['get','post'],'myaccount/resetPassword','ProductController@resetPassword');
 
-Route::get('password/reset','ProductController@sendResetPasswordLink');  
+Route::get('password/reset','ProductController@sendResetPasswordLink');
+
+Route::get('sifre/sifirla','ProductController@sendResetPasswordLink');  
 
 
 
@@ -328,7 +330,11 @@ Route::post('hesabim/kaydol',[
           'as' => 'userSignup',
           'uses'  => 'UserController@userSignup'
         ]); 
-        
+
+Route::post('filter_content',[
+          'as' => 'filter_content',
+          'uses'  => 'HomeController@filter_content'
+        ]);        
         
 Route::get('{subCategoryName}/{productName}',[
           'as' => 'productName',
@@ -345,23 +351,65 @@ Route::get('{category}/{name}',[
           'uses'  => 'HomeController@productCategory'
         ]);
 
+Route::post('check_variation',[
+          'as' => 'check_variation',
+          'uses'  => 'HomeController@check_variation'
+        ]);
+Route::post('check_variation_size',[
+          'as' => 'check_variation_size',
+          'uses'  => 'HomeController@check_variation_size'
+        ]);
 
 
 
 Route::post('login',function(App\User $user , Illuminate\Http\Request $request){ 
 
-      $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')];  
-       
-          if (Auth::attempt($credentials)) {
-             $request->session()->put('current_user',Auth::user());
-             
-                return redirect()->intended('/'); 
-          }else{  
-              return redirect()
-                          ->back()
-                          ->withInput()  
-                          ->withErrors(['message'=>'Invalid email or password. Try again!']);
-              } 
+      $credentials = ['email' => Input::get('email'), 'password' => Input::get('password')];
+      
+      $check = DB::table('admin')->select('*')->where('email',Input::get('email'))->first();
+      //print_r($check); die;
+      
+      if(!empty($check)){
+            if (Hash::check(Input::get('password'), $check->password))
+              {
+                         $auth = auth()->guard('admin');
+                         $credentials2 = ['email' => Input::get('email'), 'password' => Input::get('password'),'user_type'=>2,'status'=>1];
+                         if ($auth->attempt($credentials2)) {
+                            $vendor = DB::table('admin')->where('email', Input::get('email'))->first();
+                          
+                                $request->session()->put('current_vendor_id',$vendor->id);
+                                $request->session()->put('current_vendor_name',$vendor->full_name);
+                                $request->session()->put('current_vendor_image',$vendor->image);
+                                $request->session()->put('current_vendor_type',2);
+                                //print_r($vendor->id); die;
+                            return Redirect::to('bana-ozel/satici-paneli');
+                         }else{
+                             return redirect()
+                                ->back()
+                                ->withInput()  
+                                ->withErrors(['message'=>'Geçersiz eposta yada şifre. Lütfen tekrar deneyin!']);
+                         }
+                         
+                          
+              }else{
+                    return redirect()
+                            ->back()
+                            ->withInput()  
+                            ->withErrors(['message'=>'Geçersiz eposta yada şifre. Lütfen tekrar deneyin!']);
+              }
+        }else{
+            // user login
+            if (Auth::attempt($credentials)) {
+               $request->session()->put('current_user',Auth::user());
+               
+                  return redirect()->intended('/'); 
+            }else{  
+                return redirect()
+                            ->back()
+                            ->withInput()  
+                            ->withErrors(['message'=>'Geçersiz eposta yada şifre. Lütfen tekrar deneyin!']);
+                }
+        }
       }); 
              
 

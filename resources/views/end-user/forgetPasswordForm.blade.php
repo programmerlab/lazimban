@@ -13,7 +13,7 @@
                     <div class="col-md-6"></div>
                     <div class="col-md-6 text-right">
                             <span><a href="#">Home</a> </span>                                            
-                            <span> reset </span>  
+                            <span> sifirla </span>  
                        </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-envelope"></i> Şifremi Sıfırla
+                                    <i class="fa fa-btn fa-envelope"></i> ŞİFREMİ SIFIRLA
                                 </button>
                             </div>
                         </div>

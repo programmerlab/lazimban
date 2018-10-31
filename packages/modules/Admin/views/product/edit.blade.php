@@ -1,13 +1,31 @@
 
 
-@extends('packages::layouts.master') 
+@extends('packages::layouts.master_vendor') 
     @section('content') 
-      @include('packages::partials.main-header')
+      @include('packages::partials.vendor-header')
       <!-- Left side column. contains the logo and sidebar -->
-      @include('packages::partials.main-sidebar')
+      <div class="page_title">
+           <div class="page-wrapper">
+               <div class="col-md-6"></div>
+               <div class="col-md-6 text-right">
+                       <span><a href="{{ url('/bana-ozel/satici-paneli') }}">Anasayfa</a> </span>
+                       <span>Satıcı Paneli &nbsp;></span>
+                       <span>Ürünü Düzenle</span> 
+                  </div>
+           </div>
+       </div>
+      
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper"> 
-       @include('packages::partials.breadcrumb')
+      <div class="row vendor_sidebar">
+        <div class="col-md-3">
+            @include('packages::partials.vendor-sidebar')
+        </div>
+         <div class="col-md-9">
+         <section class="content-header">
+          <h1>
+            Ürünü Düzenle          
+          </h1>         
+        </section>
         <!-- Main content -->
           <section class="content">
             <!-- Small boxes (Stat box) -->
@@ -27,7 +45,8 @@
               </div>  
             <!-- Main row --> 
           </section><!-- /.content -->
-      </div> 
+      </div>
+    </div>    
 @stop
 
 

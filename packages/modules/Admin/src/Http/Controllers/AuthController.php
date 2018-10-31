@@ -35,8 +35,8 @@ class AuthController extends Controller
     protected $redirectTo = 'admin';
 	protected $guard = 'admin';
     
-    public function __construct(Request $request)
-    {          
+    public function __construct(Request $request) 
+    {  
         View::share('helper',new Helper);
         
         $cat = $categories = \App\Category::nested()->orderBy('order_id','asc')->get();        
@@ -67,7 +67,8 @@ class AuthController extends Controller
     }
 	 
 	public function index(User $user, Request $request)
-	{  
+	{
+		
 		//echo "<pre>";  print_r($request); die;
         if(Auth::guard('admin')->check()){  
     		return Redirect::to('admin');
@@ -82,7 +83,7 @@ class AuthController extends Controller
 
         $table_cname = \Schema::getColumnListing('admin');
         $except = ['id','created_at','updated_at','password_confirmation'];
-        $user->user_type=2;
+        $user->user_type=2;//$request->vendor_type;
         foreach ($table_cname as $key => $value) {
            
            if(in_array($value, $except )){
@@ -125,11 +126,19 @@ class AuthController extends Controller
 		'vendor_type.required' => 'Satıcı tipini seçmelisiniz.',
 		'city.required' => 'Şehir seçmelisiniz.',
 		'email.required' => 'Geçerli bir eposta adresi girmelisiniz.',
+		'email.unique' => 'Bu eposta adresine ait üyelik mevcut.',
 		'phone.required' => 'Geçerli bir telefon no. girmelisiniz.',
 		'bank_name.required' => 'Banka ismi girmelisiniz.',
 		'iban.required' => 'IBAN no. girmelisiniz.',
 		'password.required' => 'Şifre girmelisiniz.',
 		'password_confirmation.required' => 'Şifrenizi onaylamak için tekrar girmelisiniz.',
+		'company_name.required' => 'Firma ismini girmeniz gerekmektedir.',
+		'manager_name.required' => 'Yetkili kişinin ismini gimelisiniz.',
+		'tax_name.required' => 'Vergi dairesi ismini girmeniz gerekmektedir.',
+		'tax_no.required' => 'Vergi no. girmeniz gerekmektedir.',
+		'iban.min' => 'IBAN en az 26 karakter uzunluğunda olmalıdır.',
+		'full_name.required' => 'Adınızı ve soyadınızı girmelisiniz.',
+		'tc_no.required' => 'T.C. Kimlik numaranızı girmelisiniz.',
 		]);
         /** Return Error Message **/
         if ($validator->fails()) {
@@ -146,6 +155,10 @@ class AuthController extends Controller
         /** --Create admin-- **/
         $user->save();
         
+		//insert notification
+		DB::table('notifications')->insert([
+			['message' => 'New Vendor Registration Requested','url'=>'admin/vendor','vendor_id'=>$user->id]			
+		]);
         //****** register vendor for market place ********
         if($user->user_type == 2){
             $options = configIyzipay::options();
@@ -189,7 +202,10 @@ class AuthController extends Controller
 	} 
 
 	public function signUp( Request $request,User $user)
-	{	 
+	{		
+		if($request->session()->get('current_vendor_type') == 2){
+			return Redirect::to('bana-ozel/satici-paneli');
+		}
         if($request->method()=='POST'){
             return redirect()
                             ->back()
@@ -202,19 +218,20 @@ class AuthController extends Controller
 	
 	public function logout(Request $request){
         $vendor_type = ($request->session()->get('current_vendor_type'));
+		//print_r($vendor_type); die;
 		Auth::logout();
 		auth()->guard('admin')->logout();
         if($vendor_type == 1){
             return redirect('admin/login');    
         }else{
-            return redirect('vendor/signUp');
+			$request->session()->put('current_vendor_type',0);
+            return redirect('satici/giris-kayit');
         }		
 	}
     
     
 	public function login(Request $request)
 	{
-        
 		$credentials = array('email' => Input::get('email'), 'password' => Input::get('password')); 
         if (Auth::attempt($credentials, true)) {
             return Redirect::to('admin');

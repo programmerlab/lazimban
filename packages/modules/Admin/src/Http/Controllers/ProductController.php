@@ -10,6 +10,8 @@ use Modules\Admin\Http\Requests\ProductRequest;
 use Modules\Admin\Models\User;
 use Modules\Admin\Models\Vendor;
 use Modules\Admin\Models\Category;
+use Modules\Admin\Models\Brand;
+use Modules\Admin\Models\Size;
 use Modules\Admin\Models\Product;
 use Input;
 use Validator;
@@ -29,7 +31,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Dispatcher; 
 use Modules\Admin\Helpers\Helper as Helper;
 use Response;
-
+use Cart; 
 /**
  * Class AdminController
  */
@@ -48,6 +50,20 @@ class ProductController extends Controller {
         View::share('viewPage', 'product');
         View::share('helper',new Helper);
         $this->record_per_page = Config::get('app.record_per_page');
+        View::share('total_item',Cart::content()->count());
+        View::share('sub_total',Cart::subtotal());
+        
+        $color = ['Black','Blue','Green','Orange','Purple','Red'];
+        $size  = ['XS','S','M','L'];
+        
+        View::share('cart',Cart::content());
+        $pid = [];
+        foreach (Cart::content() as $key => $value) {
+            $pid[] = $value->id;
+        }
+        $product_photo =   DB::table('products')->select('photo','id')->whereIn('id',$pid)->get();//DB::table('products')->whereIn('id',$pid)->get(['photo','id'])->toArray();
+        //print_r(Cart::content()); die;
+        View::share('product_photo',$product_photo);
     }
 
     protected $categories;
@@ -109,7 +125,61 @@ class ProductController extends Controller {
 
         return view('packages::redirect.index', compact('url1', 'page_title', 'page_action','helper','url2','u'));
     }
+    
+    public function redirects( Request $request){
+        $page_title = 'Redirect 302';
+        $page_action = 'View Redirect 302';  
+ 
+        $search = $request->get('search');
 
+        if(!empty($search)){
+                 $u = Category::with(['product' => function($q) use($search) { 
+                if(!empty($search)){
+                     $q->where('url_302','LIKE',"%$search%");
+                }  
+            }])->where(function($q) use($search) { 
+                if(!empty($search)){
+                     $q->where('slug_302','=',$search);
+                     $q->Orwhere('oldslug_302','=',$search);
+                }  
+            })->Paginate(15); 
+        }else{
+             $u = Category::with('product')->orderBy('id','desc')->Paginate(15); 
+        }
+
+       
+
+          
+
+        if($request->method()=='POST'){ 
+
+            if($request->get('category_id')){
+                $data['slug_302'] =  $request->get('new_url');
+                $data['oldslug_302'] = $request->get('old_url');
+
+                \DB::table('categories')->where(['id'=>$request->get('category_id')])->update($data);
+
+                return Redirect::to(url('admin/redirect-302'))
+                            ->with('flash_alert_notice', 'New Url updated !');
+
+            }
+
+            if($request->get('product_id')){
+
+                $data['url_302'] =  $request->get('new_url');
+                $data['oldurl_302'] = $request->get('old_url');
+
+                \DB::table('products')->where(['id'=>$request->get('product_id')])->update($data);
+                return Redirect::to(url('admin/redirect-302'))
+                            ->with('flash_alert_notice', 'New Url updated !');
+            }
+
+
+        }
+        
+        return view('packages::redirects.index', compact('url1', 'page_title', 'page_action','helper','url2','u'));
+    }
+    
     public function index(Product $product, Request $request) 
     { 
         
@@ -149,8 +219,12 @@ class ProductController extends Controller {
         
         
         //echo "<pre>"; print_r($products); die;
-
-        return view('packages::product.index', compact('products', 'page_title', 'page_action','helper','vendorlist'));
+        if($request->session()->get('current_vendor_type') == 1){
+            return view('packages::product.index_1', compact('products', 'page_title', 'page_action','helper','vendorlist'));
+        }else{
+            return view('packages::product.index', compact('products', 'page_title', 'page_action','helper','vendorlist'));
+        }
+        
    
     }
 
@@ -159,11 +233,14 @@ class ProductController extends Controller {
      * */
 
     public function create(Product $product, Request $request) 
-    {        
+    {  
         $page_title = 'Product';
         $page_action = 'Create Product';
         $sub_category_name  = Product::all();
         $category   = Category::all();
+        $brand   = Brand::all();
+        $size   = Size::all();
+        
         $cat = [];
         foreach ($category as $key => $value) {
              $cat[$value->category_name][$value->id] =  $value->sub_category_name;
@@ -171,8 +248,14 @@ class ProductController extends Controller {
 
          $categories =  Category::attr(['name' => 'product_category','class'=>'form-control form-cascade-control input-small'])
                         ->selected([1])
-                        ->renderAsDropdown(); 
-        return view('packages::product.create', compact('categories','cat','category','product','sub_category_name', 'page_title', 'page_action'));
+                        ->renderAsDropdown();
+                     
+        if($request->session()->get('current_vendor_type') == 1){
+            return view('packages::product.create_1', compact('categories','cat','category','brand','size','product','sub_category_name', 'page_title', 'page_action'));
+        }else{
+            return view('packages::product.create', compact('categories','cat','category','brand','size','product','sub_category_name', 'page_title', 'page_action'));
+        }
+        
      }
 
     /*
@@ -209,7 +292,7 @@ class ProductController extends Controller {
     }
 
     public function store(ProductRequest $request, Product $product) 
-    {              
+    {             
         $cat_url    = $this->getCategoryById($request->get('product_category')); 
         $vendor_id = $request->session()->get('current_vendor_id');
         //echo "<pre>"; print_r($vendor_id); die;
@@ -257,10 +340,16 @@ class ProductController extends Controller {
                 }
                 //echo "<pre>"; print_r($photoname); die;
             }
-
-            //echo $request->get('img_name'); die;
+            
+            $option['size'] = $request->get('size');
+            $option['color'] = $request->get('color');
+            $options = json_encode($option);
+            //echo $options; die;
             $product->product_category   =   $request->get('product_category');
+            $product->short_description        =   $request->get('short_description');
             $product->description        =   $request->get('description');
+            $product->brand              =   $request->get('brand');
+            $product->shipping_charge    =   $request->get('shipping_charge');
             $product->price              =   $request->get('price');
             $product->discount           =   $request->get('discount');
             $product->qty                =   $request->get('qty');
@@ -271,9 +360,10 @@ class ProductController extends Controller {
             if(isset($additionalphotoname) && $additionalphotoname != ''){
                 $product->additional_images  =   isset($additionalphotoname) ? json_encode($additionalphotoname) : '';
             }
-            
+            $product->options            =   $options;
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
+            $product->canonical_tag      =   $request->get('canonical_tag');
             $product->video              =   $request->get('video');
             $product->url                =   $url;
             $product->created_by                =   $vendor_id;
@@ -285,9 +375,15 @@ class ProductController extends Controller {
             $product->save(); 
            
         } 
+        
+        if($request->session()->get('current_vendor_type') == 1){
+            return Redirect::to(route('product'))
+                        ->with('flash_alert_notice', 'New Product was successfully created!');
+        }else{
+            return Redirect::to(route('product'))
+                        ->with('flash_alert_notice', 'Yeni Ürün başarıyla oluşturuldu!');
+        }
        
-        return Redirect::to(route('product'))
-                            ->with('flash_alert_notice', 'New Product was successfully created !');
     }
     /*
      * Edit Group method
@@ -295,12 +391,12 @@ class ProductController extends Controller {
      * object : $category
      * */
 
-    public function edit(Product $product) {
-
+    public function edit(Product $product, ProductRequest $request) {
         $page_title = 'Product';
         $page_action = 'Show Product'; 
         $category   = Category::all();
-        
+        $brand   = Brand::all();
+        //echo "<pre>"; print_r($product); die;
         $cat = [];
         foreach ($category as $key => $value) {
              $cat[$value->category_name][$value->id] =  $value->sub_category_name;
@@ -309,8 +405,15 @@ class ProductController extends Controller {
         $categories =  Category::attr(['name' => 'product_category','class'=>'form-control form-cascade-control input-small'])
                         ->selected(['id'=>$product->product_category])
                         ->renderAsDropdown();
-
-        return view('packages::product.edit', compact( 'categories','product', 'page_title', 'page_action'));
+        
+        $variations = DB::table('product_variations')->select('*')->where('product_id',$product->id)->orderBy('id','asc')->get();
+        //echo "<pre>"; print_r($variations); die;
+        if($request->session()->get('current_vendor_type') == 1){
+            return view('packages::product.edit_1', compact( 'categories','brand','product', 'page_title', 'page_action','variations'));
+        }else{
+            return view('packages::product.edit', compact( 'categories','brand','product', 'page_title', 'page_action','variations'));
+        }
+        
     }
 
     public function update(ProductRequest $request, Product $product) 
@@ -361,26 +464,43 @@ class ProductController extends Controller {
                 $pro_slug   = strtolower(str_replace(" ", "-", $request->get('product_title')));
                 $url        = $cat_url.$pro_slug;
             }
+            
+            $option['size'] = $request->get('size');
+            $option['color'] = $request->get('color');
+            $option['quantity'] = $request->get('quantity');
+            $options = json_encode($option);
+            
             $product->product_category   =   $request->get('product_category');
             $product->description        =   $request->get('description');
+            $product->short_description        =   $request->get('short_description');
+            $product->brand              =   $request->get('brand');
+            $product->shipping_charge    =   $request->get('shipping_charge');
             $product->qty                =   $request->get('qty');
             $product->photo              =   $photo_name;
             $product->img_name           =   $request->get('img_name');
             $product->img_alt           =    $request->get('img_alt');
             $product->additional_images  =   $additional_image;
+            $product->options            =   $options;
             $product->price              =   $request->get('price');
             $product->discount           =   $request->get('discount');
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
+            $product->canonical_tag      =   $request->get('canonical_tag');
             $product->url               =   $url;
             $product->video              =   $request->get('video');
-            $product->is_indexing           =   $request->get('is_indexing');
+            $product->is_indexing           =   $request->get('is_indexing');            
             if($request->get('title')){
                 $product->title  = $request->get('title');
             }
             
-            $product->save(); 
-        }else{            
+            $product->save();
+            DB::table('product_variations')->where('product_id',$product->id)->delete();
+            foreach($option['size'] as $key=>$value){
+                  $pdata[] = array('product_id'=>$product->id,'size'=>$option['size'][$key], 'color'=>$option['color'][$key] , 'quantity'=>$option['quantity'][$key]);      
+            }
+            DB::table('product_variations')->insert($pdata); 
+        }else{
+            
             $product->product_title      =   $request->get('product_title');
             if($request->get('slug') && !empty($request->get('slug'))){
                 $product->slug              =   strtolower(str_replace(" ", "-", $request->get('slug')));  
@@ -393,41 +513,70 @@ class ProductController extends Controller {
             }
             
             
+            $option['size'] = $request->get('size');
+            $option['color'] = $request->get('color');
+            $option['quantity'] = $request->get('quantity');
+            $options = json_encode($option);
+            //echo $options; die;
             $product->product_category   =   $request->get('product_category');
             $product->description        =   $request->get('description');
+            $product->short_description        =   $request->get('short_description');
+            $product->brand              =   $request->get('brand');
+            $product->shipping_charge    =   $request->get('shipping_charge');
             $product->qty                =   $request->get('qty');
             $product->photo              =   $request->get('photo');
             $product->img_name           =   $request->get('img_name');
             $product->img_alt           =    $request->get('img_alt');
             $product->additional_images  =   $additional_image;
+            $product->options            =   $options;
             $product->price              =   $request->get('price');
             $product->discount           =   $request->get('discount');
             $product->meta_key           =   $request->get('meta_key');
             $product->meta_description   =   $request->get('meta_description');
+            $product->canonical_tag      =   $request->get('canonical_tag');
             $product->url                =   $url;
             $product->video              =   $request->get('video');
-            $product->is_indexing           =   $request->get('is_indexing');
+            $product->is_indexing           =   $request->get('is_indexing');            
             //echo "<pre>"; print_r($product); die;
             if($request->get('title')){
                 $product->title  = $request->get('title');
             }
+                        
+            $product->save();            
             
-            $product->save(); 
+            if($option['quantity']){
+                DB::table('product_variations')->where('product_id',$product->id)->delete();
+                foreach($option['size'] as $key=>$value){
+                      $pdata[] = array('product_id'=>$product->id,'size'=>$option['size'][$key], 'color'=>$option['color'][$key] , 'quantity'=>$option['quantity'][$key]);      
+                }
+                DB::table('product_variations')->insert($pdata);    
+            }            
         }
-        return Redirect::to(route('product'))
+        
+        if($request->session()->get('current_vendor_type') == 1){
+            return Redirect::to(route('product'))
                         ->with('flash_alert_notice', 'Product was  successfully updated !');
+        }else{
+            return Redirect::to(route('product'))
+                        ->with('flash_alert_notice', 'Ürün başarıyla güncellendi!');
+        }
     }
     /*
      *Delete User
      * @param ID
      * 
      */
-    public function destroy(Product $product) {
+    public function destroy(Product $product,Request $request) {
         
         Product::where('id',$product->id)->delete();
-
-        return Redirect::to(route('product'))
+        DB::table('featuredProducts')->where('product_id',$product->id)->delete();
+        if($request->session()->get('current_vendor_type') == 1){
+            return Redirect::to(route('product'))
                         ->with('flash_alert_notice', 'Product was successfully deleted!');
+        }else{
+            return Redirect::to(route('product'))
+                        ->with('flash_alert_notice', 'Ürün başarıyla silindi!');
+        }
     }
 
     public function show(Product $product) {

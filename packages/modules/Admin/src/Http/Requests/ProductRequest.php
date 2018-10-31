@@ -24,7 +24,7 @@ class ProductRequest  extends Request {
                             'product_category'  => 'required', 
                             'description'       => 'required',
                             'price'             =>  'required|numeric|min:0',
-                            'discount'             =>  'required|numeric|min:0',
+                            //'discount'             =>  'required|numeric|min:0',
                             'image'             => 'required|mimes:jpeg,bmp,png,gif'
                         ];
                     }
@@ -37,7 +37,7 @@ class ProductRequest  extends Request {
                             'product_category'  => 'required', 
                             'description'       => 'required',
                             'price'             =>  'required|numeric|min:0',
-                            'discount'             =>  'required|numeric|min:0',
+                            //'discount'             =>  'required|numeric|min:0',
                             'image'             => 'mimes:jpeg,bmp,png,gif'
                         ];
                     }

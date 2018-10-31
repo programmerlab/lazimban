@@ -13,7 +13,7 @@ class FaqRequest  extends Request {
      * @return array
      */
     public function rules() { 
-            switch ( $this->method() ) {
+            switch ( $this->method() ) {                
                 case 'GET':
                 case 'DELETE': {
                         return [ ];
@@ -36,6 +36,7 @@ class FaqRequest  extends Request {
                 }
                 default:break;
             }
+            
         //}
     }
 

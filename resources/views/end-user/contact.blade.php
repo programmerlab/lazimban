@@ -12,7 +12,7 @@
                 <div class="page-wrapper">
                     <div class="col-md-6"></div>
                     <div class="col-md-6 text-right">
-                            <span><a href="#">Home</a> </span>                                            
+                            <span><a href="{{ url('/') }}">Anasayfa</a> </span>                                           
                             <span> Yardım Merkezi </span>  
                        </div>
                 </div>
@@ -57,7 +57,7 @@
         
             <div class="form-group">
             <label class="info-title" for="exampleInputName">İsminiz <span>*</span></label>
-            <input type="text" name="name" class="form-control unicase-form-control text-input" id="exampleInputName" placeholder="" required>
+            <input type="text" name="name" class="form-control unicase-form-control text-input" id="exampleInputName" placeholder="İsminiz" required>
           </div>
         
     </div>
@@ -65,7 +65,7 @@
         
             <div class="form-group">
             <label class="info-title" for="exampleInputEmail1">Eposta Adresiniz <span>*</span></label>
-            <input type="email" name="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="" required>
+            <input type="email" name="email" class="form-control unicase-form-control text-input" id="exampleInputEmail1" placeholder="Eposta Adresiniz" required>
           </div>
         
     </div>
@@ -73,7 +73,7 @@
         
             <div class="form-group">
             <label class="info-title" for="exampleInputTitle">Konu <span></span></label>
-            <input type="text" name="title" class="form-control unicase-form-control text-input" id="exampleInputTitle" placeholder="Title" >
+            <input type="text" name="title" class="form-control unicase-form-control text-input" id="exampleInputTitle" placeholder="Konu" >
           </div>
         
     </div>
@@ -105,7 +105,7 @@
     </div>
     <div class="clearfix email">
         <span class="contact-i"><i class="fa fa-envelope"></i></span>
-        <span class="contact-span"><a href="index.htm#"> {{ isset($website_email->field_value)?$website_email->field_value:"info@guruhomeshops.com" }}</a></span>
+        <span class="contact-span"><a href="javascript: return false;"> {{ isset($website_email->field_value)?$website_email->field_value:"info@guruhomeshops.com" }}</a></span>
     </div>
 </div>          </div><!-- /.contact-page -->
         </div>        

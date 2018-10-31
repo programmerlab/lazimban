@@ -34,7 +34,7 @@ class Vendor extends Authenticatable {
      *
      * @var array
      */
-    protected $fillable = ['full_name','address','phone','city','country','email','company_name'];  // All field of user table here    
+    protected $fillable = ['full_name','address','phone','city','country','email','company_name','manager_name','tax_name','tax_no','tc_no','iban','bank_name'];  // All field of user table here    
 
 
     /**

@@ -28,7 +28,7 @@
         </a>
           
       </li>  
-
+        <?php $helper1 = new Helper();?>
       @if(Auth::guard('admin')->user()->user_type==1)
 
       <li class="treeview {{ (isset($page_action) && $page_title=='User')?"active":'' }} ">
@@ -84,7 +84,12 @@
       <li class="treeview {{ (isset($page_action) && $page_title=='Transaction')?"active":'' }} ">
         <a href="#">
           <i class="fa fa-user"></i>
-          <span>Manage Transactions</span>
+          <span>Manage Transactions<span class="">
+          @if(count($helper1->getOrderNotifications()))
+              <button class="btn btn-danger btn-sm">{{ count($helper1->getOrderNotifications()) }}</button></span>
+          @endif      
+          </span>
+          </span>
           <i class="fa fa-angle-left pull-right"></i>
         </a> 
         <ul class="treeview-menu">
@@ -113,7 +118,28 @@
           <li class="{{ (isset($page_action) && $page_action=='View Faq')?"active":'' }}"><a href="{{ route('faq')}}"><i class="fa  fa-list"></i> View Question</a></li>
         </ul>
       </li>
-
+      <li class="treeview {{ (isset($page_action) && $page_title=='Featured Products')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Manage Featured Products</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a> 
+        <ul class="treeview-menu">
+          <li class="{{ (isset($page_action) && $page_action=='Add Featured Product')?"active":'' }}" ><a href="{{ route('featuredProduct.create')}}"><i class="fa fa-user-plus"></i> Add Product</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='View Featured Products')?"active":'' }}"><a href="{{ route('featuredProduct')}}"><i class="fa  fa-list"></i> View Products</a></li>
+        </ul>
+      </li>
+      <li class="treeview {{ (isset($page_action) && $page_title=='Brand')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Manage Brand</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a> 
+        <ul class="treeview-menu">
+          <li class="{{ (isset($page_action) && $page_action=='Create Brand')?"active":'' }}" ><a href="{{ route('brand.create')}}"><i class="fa fa-user-plus"></i> Add Brand</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='View Brand')?"active":'' }}"><a href="{{ route('brand')}}"><i class="fa  fa-list"></i> View Brands</a></li>
+        </ul>
+      </li>
       <li class="treeview {{ (isset($page_action) && $page_title=='setting')?"active":'' }} ">
         <a href="#">
           <i class="fa fa-user"></i>
@@ -127,7 +153,11 @@
       <li class="treeview {{ (isset($page_action) && $page_title=='Vendor')?"active":'' }} ">
         <a href="#">
           <i class="fa fa-user"></i>
-          <span>Manage Vendors</span>
+          <span>Manage Vendors <span class="">
+          @if(count($helper1->getNotifications()))
+              <button class="btn btn-danger btn-sm">{{ count($helper1->getNotifications()) }}</button></span>
+          @endif      
+          </span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
@@ -145,7 +175,20 @@
            <li class="{{ (isset($page_action) && $page_action=='View Pages')?"active":'' }}"><a href="{{ route('page')}}"><i class="fa  fa-list"></i> View Pages</a></li>
         </ul>
       </li>
-        <li class="treeview">
+      <li class="treeview {{ (isset($page_action) && $page_title=='Upload robots.txt' || $page_title=='sitemap' || $page_title=='Redirect 301' || $page_title=='Redirect 302')?"active":'' }} ">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span>Seo Tools</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a> 
+        <ul class="treeview-menu">
+          <li class="{{ (isset($page_action) && $page_action=='Upload robots.txt')?"active":'' }}" ><a href="{{ url('admin/robots') }}"><i class="fa fa-user-plus"></i> Upload robots.txt</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='sitemap')?"active":'' }}"><a href="{{ url('admin/sitemap') }}" target="_blank"><i class="fa  fa-list"></i> Generate Sitemap</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='Redirect 301')?"active":'' }}"><a href="{{ url('admin/redirect-301') }}"><i class="fa  fa-list"></i> 301 Redirection</a></li>
+          <li class="{{ (isset($page_action) && $page_action=='Redirect 302')?"active":'' }}"><a href="{{ url('admin/redirect-302') }}"><i class="fa  fa-list"></i> 302 Redirection</a></li>
+        </ul>
+      </li>  
+      <!--<li class="treeview">
         <a href="{{ url('admin/robots') }}" target="_blank">
           <i class="fa fa-dashboard"></i> <span>Upload robots.txt</span> </i>
         </a>
@@ -163,6 +206,12 @@
         </a>
           
       </li>
+        <li class="treeview">
+        <a href="{{ url('admin/redirect-302') }}" >
+          <i class="fa fa-dashboard"></i> <span>302 Redirection</span> </i>
+        </a>
+          
+      </li>-->
       @else
 
 
