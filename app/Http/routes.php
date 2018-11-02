@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
+if (env('APP_ENV') === 'prod') {
+    URL::forceSchema('https');
+}
+
+
 Route::match(['post','get'],'cat','HomeController@index');
 
  

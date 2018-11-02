@@ -1,5 +1,11 @@
 <?php
 
+ if($_SERVER['HTTPS']!="on")
+  {
+     $redirect= "https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+     header("Location:$redirect");
+  }
+
 ini_set('display_errors', '1');
 if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
     // Ignores notices and reports all other kinds... and warnings

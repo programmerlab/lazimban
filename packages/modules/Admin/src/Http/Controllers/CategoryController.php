@@ -165,9 +165,10 @@ class CategoryController extends Controller {
        // category/106/edit
 
         $category_listing = Category::route(['category' => 'id'])->renderAsHtml();
-        //echo "<pre>"; print_r($result_set); die;
+        $all_cat = Category::nested()->orderBy('order_id')->get();
+        //echo "<pre>"; print_r(Category::nested()->get()); die;
 
-        return view('packages::category.index', compact('result_set','categories','data', 'page_title', 'page_action','html','category_listing'));
+        return view('packages::category.index', compact('all_cat','result_set','categories','data', 'page_title', 'page_action','html','category_listing'));
     }
 
     /*
@@ -332,29 +333,18 @@ class CategoryController extends Controller {
     }
     
     public function save_menu(Request $request) 
-    {            
-        $tmp = [];
-        foreach($_REQUEST['order'] as $row)
-        {
-            $a = explode('-',$row);
-            $tmp[$a[0]][] = $a[1].';'.$a[2];            
+    {
+        //echo "<pre>"; print_r($request->get('array')); die;
+        foreach($request->get('array') as $row){
+            if($row['item_id'] != ''){
+                $parentid = ($row['parent_id']) ? $row['parent_id'] : '0';
+                DB::table('categories')
+                    ->where('id', $row['item_id'])                    
+                    ->update(array('parent_id' => $parentid, 'level'=>$row['depth'], 'order_id'=>$row['left'] ));  
+            }
         }
-        //echo "<pre>"; print_r($_REQUEST['order']); die;
-        foreach($tmp as $key=>$value){
-            
-                $cat = DB::table('categories')->select('id')->where('parent_id',$key)->get();
-                
-                foreach($cat as $key1 => $c){
-                    $catid = explode(';',$value[$key1])[0];
-                    DB::table('categories')
-                    ->where('id', $catid)                    
-                    ->update(['order_id' => $key1]);   
-                }                
-            
-        }
-        //print_r($tmp); die;
-        return Redirect::to(route('category'))
-                        ->with('flash_alert_notice', 'Category was successfully saved!');
+        echo 1;
+        die;        
     }
 
 }

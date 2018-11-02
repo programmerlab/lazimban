@@ -2,7 +2,154 @@
 @section('content') 
 @include('packages::partials.main-header')
 
-    
+<style type="text/css">		
+		
+		a,a:visited {
+			color: #4183C4;
+			text-decoration: none;
+		}
+		
+		a:hover {
+			text-decoration: underline;
+		}
+		
+		pre,code {
+			font-size: 12px;
+		}
+		
+		pre {
+			width: 100%;
+			overflow: auto;
+		}
+		
+		small {
+			font-size: 90%;
+		}
+		
+		small code {
+			font-size: 11px;
+		}
+		
+		.placeholder {
+			outline: 1px dashed #4183C4;
+		}
+		
+		.mjs-nestedSortable-error {
+			background: #fbe3e4;
+			border-color: transparent;
+		}
+		
+		#tree {
+			width: 550px;
+			margin: 0;
+		}
+		
+		ol {
+			max-width: 450px;
+			padding-left: 25px;
+		}
+		
+		ol.sortable,ol.sortable ol {
+			list-style-type: none;
+		}
+		
+		.sortable li div {
+			border: 1px solid #d4d4d4;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			border-radius: 3px;
+			cursor: move;
+			border-color: #D4D4D4 #D4D4D4 #BCBCBC;
+			margin: 0;
+			padding: 3px;
+		}
+		
+		li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
+			border-color: #999;
+		}
+		
+		.disclose, .expandEditor {
+			cursor: pointer;
+			width: 20px;
+			display: none;
+		}
+		
+		.sortable li.mjs-nestedSortable-collapsed > ol {
+			display: none;
+		}
+		
+		.sortable li.mjs-nestedSortable-branch > div > .disclose {
+			display: inline-block;
+		}
+		
+		.sortable span.ui-icon {
+			display: inline-block;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.menuDiv {
+			background: #EBEBEB;
+		}
+		
+		.menuEdit {
+			background: #FFF;
+		}
+		
+		.itemTitle {
+			vertical-align: middle;
+			cursor: pointer;
+		}
+		
+		.deleteMenu {
+			float: right;
+			cursor: pointer;
+		}
+		
+		h1 {
+			font-size: 2em;
+			margin-bottom: 0;
+		}
+		
+		h2 {
+			font-size: 1.2em;
+			font-weight: 400;
+			font-style: italic;
+			margin-top: .2em;
+			margin-bottom: 1.5em;
+		}
+		
+		h3 {
+			font-size: 1em;
+			margin: 1em 0 .3em;
+		}
+		
+		p,ol,ul,pre,form {
+			margin-top: 0;
+			margin-bottom: 1em;
+		}
+		
+		dl {
+			margin: 0;
+		}
+		
+		dd {
+			margin: 0;
+			padding: 0 0 0 1.5em;
+		}
+		
+		code {
+			background: #e5e5e5;
+		}
+		
+		input {
+			vertical-align: text-bottom;
+		}
+		
+		.notice {
+			color: #c33;
+		}
+    </style>    
 <!-- Left side column. contains the logo and sidebar -->
 @include('packages::partials.main-sidebar')
 
@@ -43,7 +190,45 @@
                                       @endif
                                       
                                       
-                                      
+                                <section id="demo">
+                                    <ol class="sortable ui-sortable mjs-nestedSortable-branch mjs-nestedSortable-expanded"> 
+                                      @foreach ($all_cat as $key => $childs)
+                                        
+                                                <li style="display: list-item;" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded" id="menuItem_{{ $childs['id'] }}">
+                                                <div class="menuDiv">			   
+                                                    <span data-id="{{ $childs['id'] }}" class="itemTitle">{{ $childs['name'] }}</span>			   
+                                                </div>
+						<ol>
+						@foreach ($childs['child'] as $key => $child)
+							<li style="display: list-item;" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded" id="menuItem_{{ $child['id'] }}">
+							<div class="menuDiv">			   
+							    <span data-id="{{ $child['id'] }}" class="itemTitle">{{ $child['name'] }}</span>			   
+							</div>
+								<ol>
+								@foreach ($child['child'] as $key => $chil)
+									<li style="display: list-item;" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded" id="menuItem_{{ $chil['id'] }}">
+									<div class="menuDiv">			   
+									    <span data-id="{{ $chil['id'] }}" class="itemTitle">{{ $chil['name'] }}</span>			   
+									</div>
+										<ol>
+										@foreach ($chil['child'] as $key => $chi)
+											<li style="display: list-item;" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded" id="menuItem_{{ $chi['id'] }}">
+											<div class="menuDiv">			   
+											    <span data-id="{{ $chi['id'] }}" class="itemTitle">{{ $chi['name'] }}</span>			   
+											</div>
+										@endforeach
+										</ol>
+								@endforeach
+								</ol>
+						@endforeach
+						</ol>						 
+                                        </li>		                                           
+				      @endforeach
+                                   </ol>                               
+                                        <p><input id="toArray" name="toArray" type="submit" value=
+					"Save Menu"></p><p id="preloader" style="display:none">....saving</p>
+					<p id="menu_success" style="color:red;"></p>   
+                                </section><!-- END #demo -->
                                       
                         
                                       
@@ -51,7 +236,7 @@
                                       
                                       <div class="box-body table-responsive no-padding" >
                                       <!--{!!  $category_listing !!}-->
-                                        <form method="post" action="{{ url('admin/category/save_menu') }}">
+                                        <!--<form method="post" action="{{ url('admin/category/save_menu') }}">
                                         <ul id="sortable">
                                         @foreach ($result_set as $key => $childs)
                                             
@@ -76,7 +261,8 @@
                                              @endforeach
                                           </ul>
                                           <button type="submit"  class="btn btn-primary">Save menu</button>
-                                        </form>
+                                        </form>-->
+                                        
                                         <table class="table table-hover table-condensed">
                                           <thead>
                                             <tr>
